@@ -1,0 +1,11 @@
+{
+  "checkedOn": "2026-10-20",
+  "installExitCode": 0,
+  "installedExecutableVerified": true,
+  "installedBundleDiagnosticPassed": true,
+  "uninstallFinished": true,
+  "uninstallExitCode": 0,
+  "executableRemoved": false,
+  "scope": "Isolated project directory. Standard NSIS direct-directory uninstall. Initial temp-copy uninstall stalled in managed host and was stopped; retry bounded to 30 seconds.",
+  "manualTestDirectoryCleanup": true
+}

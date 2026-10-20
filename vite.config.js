@@ -50,12 +50,17 @@ export default defineConfig(async () => {
       hmr: {
         overlay: false,
       },
-      // 忽略编辑器/工具产生的原子写临时目录，避免 Windows 上 EBUSY 导致 watcher 崩溃
+      // 忽略构建产物/桌面打包目录/编辑器临时目录，避免 Windows 上 EBUSY 导致 watcher 崩溃
       watch: {
         ignored: [
           '**/node_modules/**',
           '**/.pnpm-store/**',
           '**/.git/**',
+          '**/build/**',
+          '**/build-desktop/**',
+          '**/release/**',
+          '**/desktop/**',
+          '**/test-results/**',
           '**/*.tmpdir/**',
           '**/.*.tmpdir/**',
           '**/*.tmp',

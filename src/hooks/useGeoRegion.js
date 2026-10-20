@@ -1,80 +1,44 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DEFAULT_REGION } from "@/lib/gameConfig";
-import { regionForProvince } from "@/lib/gameUtils";
+import { browserStorage, fetchGeo, readGeoCache, writeGeoCache } from "@/services/environment";
 
-const GEO_URL = "https://ipapi.co/json/";
-const CACHE_KEY = "pondclock.geo";
-const TIMEOUT_MS = 4500;
+const pending = () => ({ regionId: null, source: "pending", detail: "", cached: false });
+const disabled = () => ({ regionId: DEFAULT_REGION, source: "disabled", detail: "本地模式", cached: false });
 
-const readCache = () => {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const data = JSON.parse(raw);
-    return data?.regionId ? data : null;
-  } catch {
-    return null;
-  }
-};
-
-const writeCache = (data) => {
-  try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-  } catch {
-    // 隐私模式 / 存储被禁用时静默忽略
-  }
-};
-
-// IP 属地自动跟随：只识别中国省级行政区并映射到 12 个水域之一。
-// 请求失败/超时/境外网络时优雅降级为默认水域（不影响游戏），结果缓存到本地。
-export function useGeoRegion() {
-  const [geo, setGeo] = useState(() => {
-    const cached = readCache();
-    return cached
-      ? { ...cached, cached: true }
-      : { regionId: null, source: "pending", detail: "" };
-  });
+// Every enabled startup asks the current public IP again (VPNs are accepted).
+// Cached results never use "ip", so they cannot grant a new real visit.
+export function useGeoRegion(online = true) {
+  const [state, setState] = useState(() => ({ enabled: online, value: online ? pending() : disabled() }));
+  const [attempt, setAttempt] = useState(0);
+  const refresh = useCallback(() => { if (online) setAttempt((value) => value + 1); }, [online]);
 
   useEffect(() => {
-    let alive = true;
+    const publish = (value) => setState({ enabled: online, value });
+    if (!online) {
+      const cached = readGeoCache(browserStorage());
+      publish(cached ? { ...cached, regionId: DEFAULT_REGION, source: "disabled" } : disabled());
+      return undefined;
+    }
+    let active = true;
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
-
-    fetch(GEO_URL, { signal: controller.signal, headers: { Accept: "application/json" } })
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
-      .then((data) => {
-        if (!alive) return;
-        const isCN = data?.country_code === "CN";
-        const regionId = isCN
-          ? regionForProvince(data.region, data.region_code, data.city, data.country_name)
-          : null;
-        const next = regionId
-          ? { regionId, source: "ip", detail: data.region || data.city || "" }
-          : {
-              regionId: DEFAULT_REGION,
-              source: isCN ? "default" : "oversea",
-              detail: isCN ? "未能匹配到水域" : data.country_name || "境外网络",
-            };
-        setGeo({ ...next, cached: false });
-        writeCache(next);
+    publish(pending());
+    fetchGeo({ signal: controller.signal })
+      .then((next) => {
+        if (!active) return;
+        writeGeoCache(browserStorage(), next);
+        publish(next);
       })
       .catch(() => {
-        if (!alive) return;
-        // 已有缓存时保留缓存区域，否则退回默认水域
-        setGeo((prev) =>
-          prev.regionId
-            ? { ...prev, source: prev.source === "ip" ? "ip-cached" : prev.source, detail: prev.detail }
-            : { regionId: DEFAULT_REGION, source: "fallback", detail: "定位失败，默认水域" }
-        );
-      })
-      .finally(() => clearTimeout(timer));
+        if (!active) return;
+        publish(readGeoCache(browserStorage())
+          || { regionId: DEFAULT_REGION, source: "fallback", detail: "暂未定位，使用默认水域", cached: false });
+      });
+    return () => { active = false; controller.abort(); };
+  }, [online, attempt]);
 
-    return () => {
-      alive = false;
-      controller.abort();
-      clearTimeout(timer);
-    };
-  }, []);
-
-  return geo;
+  // The parent sees pending immediately when enabling network after loading a save,
+  // rather than briefly initializing a new game from the prior disabled default.
+  const geo = online ? (state.enabled ? state.value : pending())
+    : { ...state.value, regionId: DEFAULT_REGION, source: "disabled" };
+  return { ...geo, refresh };
 }

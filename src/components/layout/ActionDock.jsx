@@ -1,4 +1,4 @@
-import { Coins, Fish, BookOpen, Wrench, Plane } from "lucide-react";
+import { Coins, Fish, BookOpen, Wrench, Plane, Settings } from "lucide-react";
 
 // 底部功能坞：默认只露出图标按钮，点击后由 Index 展开对应面板
 export const DOCK_ITEMS = [
@@ -6,6 +6,7 @@ export const DOCK_ITEMS = [
   { id: "codex", label: "图鉴", icon: BookOpen },
   { id: "shop", label: "渔具店", icon: Wrench },
   { id: "travel", label: "漫游", icon: Plane },
+  { id: "settings", label: "设置", icon: Settings },
 ];
 
 const ActionDock = ({ coins, activePanel, onToggle }) => (
@@ -26,7 +27,7 @@ const ActionDock = ({ coins, activePanel, onToggle }) => (
             aria-expanded={active}
             aria-controls="fishing-panel"
             onClick={() => onToggle(id)}
-            className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs transition-colors ${
+            className={`flex items-center gap-1.5 rounded-xl border px-2 py-1.5 text-xs transition-colors sm:px-3 ${
               active
                 ? "border-sky-300/30 bg-sky-400/15 text-sky-200"
                 : "border-transparent text-slate-300 hover:bg-white/10 hover:text-white"

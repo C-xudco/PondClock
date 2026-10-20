@@ -1,0 +1,7 @@
+allowBuilds:
+  esbuild: true
+nodeLinker: hoisted
+storeDir: .pnpm-store
+verifyDepsBeforeRun: warn
+minimumReleaseAgeExclude:
+  - electron@44.9.1

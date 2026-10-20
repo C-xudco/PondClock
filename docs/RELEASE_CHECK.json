@@ -1,0 +1,27 @@
+{
+  "checkedOn": "2026-10-20",
+  "installer": "PondClock-Setup-1.0.0-x64.exe",
+  "bytes": 116619415,
+  "sha256": "994ea8f1aeb1854acca9c913f8e1f6fe763e449667d6624f23f1329c4036ea77",
+  "packedRuntimeFilesMatch": [
+    "build-desktop/index.html",
+    "desktop/environment.cjs",
+    "desktop/main.cjs",
+    "desktop/preload.cjs",
+    "desktop/saveRepository.cjs",
+    "src/domain/gameState.js",
+    "src/domain/market.js",
+    "src/domain/routes.js",
+    "src/domain/saveSchema.js",
+    "src/config/economy.js",
+    "src/config/fishing.js",
+    "src/config/services.js",
+    "src/config/storage.js",
+    "src/config/travel.js",
+    "src/data/regionLocations.js",
+    "src/lib/gameConfig.js",
+    "build-desktop/assets/index-D0iLXeLd.js",
+    "build-desktop/assets/index-BWafergs.css"
+  ],
+  "productionSandboxConfigured": true
+}

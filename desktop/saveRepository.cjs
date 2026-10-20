@@ -41,6 +41,9 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
       const stat = await fileSystem.stat(filename);
       if (stat.size > MAX_SAVE_BYTES + 4096) throw storageError('SAVE_TOO_LARGE', '存档文件过大。');
       const envelope = JSON.parse(await fileSystem.readFile(filename, 'utf8'));
+      if (envelope.format === FORMAT && Number.isSafeInteger(envelope.envelopeVersion) && envelope.envelopeVersion > ENVELOPE_VERSION) {
+        return { filename, future: true, revision: envelope.revision };
+      }
       if (envelope.format !== FORMAT || envelope.envelopeVersion !== ENVELOPE_VERSION ||
           !Number.isSafeInteger(envelope.revision) || envelope.revision < 0 ||
           envelope.snapshot?.revision !== envelope.revision ||
@@ -87,7 +90,24 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
     if (!Number.isSafeInteger(snapshot.revision) || snapshot.revision < 0) {
       throw storageError('SAVE_INVALID_REVISION', '存档修订号必须为非负整数。');
     }
-    const loaded = await loadInternal();
+    let loaded;
+    try {
+      loaded = await loadInternal();
+    } catch (error) {
+      if (!imported || !['SAVE_RECOVERY_REQUIRED', 'SAVE_CONFLICT'].includes(error.code)) throw error;
+      // An explicit import may repair corrupt slots; copy both originals before replacing either.
+      await fileSystem.mkdir(directory, { recursive: true });
+      const recoveryId = randomUUID();
+      for (const filename of slots) {
+        try {
+          const original = await fileSystem.readFile(filename);
+          await fileSystem.writeFile(`${filename}.recovery-${recoveryId}.bak`, original, { flag: 'wx', mode: 0o600 });
+        } catch (backupError) {
+          if (backupError.code !== 'ENOENT') throw backupError;
+        }
+      }
+      loaded = { snapshot: null, recovery: { recovered: true, invalidSlots: slots.map((filename) => path.basename(filename)), backupAvailable: true } };
+    }
     const current = loaded.snapshot;
     if (!imported && current && snapshot.revision === current.revision && checksum(snapshot) === checksum(current)) {
       return { status: 'already-committed', snapshot: current, recovery: loaded.recovery };
@@ -95,6 +115,9 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
     if (!imported && ((current && snapshot.revision !== current.revision + 1) ||
         (!current && ![0, 1].includes(snapshot.revision)))) {
       throw storageError('SAVE_REVISION_CONFLICT', '存档修订号冲突，请重新读取已提交存档后恢复。');
+    }
+    if (!imported && current && snapshot.lastEffectiveNowMs < current.lastEffectiveNowMs) {
+      throw storageError('SAVE_REVISION_CONFLICT', '存档逻辑时间不能倒退，请重新读取已提交存档后恢复。');
     }
     if (imported) snapshot.revision = (current?.revision ?? -1) + 1;
     const normalized = validate(snapshot);

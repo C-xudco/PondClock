@@ -1,0 +1,16 @@
+{
+  "checkedOn": "2026-10-20",
+  "context": "Development host direct HTTPS; not a guarantee for other networks",
+  "checks": [
+    {
+      "service": "ipapi",
+      "success": false,
+      "error": "环境服务暂不可用（HTTP 403）"
+    },
+    {
+      "service": "Open-Meteo",
+      "success": true,
+      "resultType": "online"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+// Fixed representative city points, not airports or exact fishing spots.
+// GeoNames coordinate snapshot: 2026-10-20; attribution in docs/COORDINATES.md.
+const location = (city, latitude, longitude, sourceUrl) => Object.freeze({
+  city, latitude, longitude, sourceUrl,
+});
+
+export const REGION_LOCATIONS = Object.freeze({
+  jiangnan: location("南京", 32.06167, 118.77778, "https://www.geonames.org/1799962/nanjing.html"),
+  huaihe: location("蚌埠", 32.94083, 117.36083, "https://www.geonames.org/1816440/bengbu.html"),
+  huanghe: location("郑州", 34.75778, 113.64861, "https://www.geonames.org/1784658/zhengzhou.html"),
+  changjiang: location("武汉", 30.58333, 114.26667, "https://www.geonames.org/1791247"),
+  dongnan: location("福州", 26.06139, 119.30611, "https://www.geonames.org/1810821/fuzhou.html"),
+  lingnan: location("广州", 23.11667, 113.25, "https://www.geonames.org/1809858/guangzhou.html"),
+  xinan: location("重庆", 29.56026, 106.55771, "https://www.geonames.org/1814906/chongqing.html"),
+  yungui: location("昆明", 25.03889, 102.71833, "https://www.geonames.org/1804651/kunming.html"),
+  hainan: location("海口", 20.03421, 110.34651, "https://www.geonames.org/1809078/haikou.html"),
+  dongbei: location("哈尔滨", 45.75, 126.65, "https://www.geonames.org/2037013/harbin.html"),
+  xibei: location("乌鲁木齐", 43.800965, 87.600459, "https://www.geonames.org/search.html?q=China%2F&startRow=50"),
+  qingzang: location("拉萨", 29.65, 91.1, "https://www.geonames.org/1280737/lhasa.html"),
+});
+
+export const regionLocation = (regionId) => (
+  Object.prototype.hasOwnProperty.call(REGION_LOCATIONS, regionId) ? REGION_LOCATIONS[regionId] : null
+);

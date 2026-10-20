@@ -84,7 +84,7 @@ const CodexPanel = ({ codex, pityCounter, currentRegion }) => {
                     最长 {rec.maxLength}cm · 最重 {rec.maxWeight}kg
                   </div>
                   <div>
-                    累计 {rec.catchCount} 条 · 首获 {rec.firstCaughtAt}
+                    累计 {rec.catchCount} 条 · 首获 {new Date(rec.firstCaughtAtMs).toLocaleDateString('zh-CN')}
                   </div>
                   <div className="text-slate-500">偏好水域：{habitats || "未知"}</div>
                 </div>

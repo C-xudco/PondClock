@@ -1,499 +1,150 @@
-# 《水塘时钟》Web 原型 · 开发者手册
+# 水塘时钟 · 离线桌面钓鱼
 
-> 定位：桌面挂机钓鱼时钟 / 增量收集 / 轻交易
-> 当前形态：**Web 原型 + 桌面挂件式 UI**（半透明天空、玻璃面板、功能坞收起态）
-> 目标平台：桌面软件（正式版建议 Electron/Tauri 包壳或 Godot 重实现，见文末「桌面化迁移」）
+Windows x64 单机桌面应用。挂机等鱼讯、点击收竿，收集全国 12 个水域的 42 种鱼；金币、鱼篓、图鉴与旅途自动保存在本机。无需账号，没有线上交易。
 
-这份 README 面向**第一次接手这个项目的开发者**：读完应该能知道项目怎么跑、每个文件负责什么、
-数据怎么流动、常见需求改哪里、怎么验证，以及往桌面软件迁移要做什么。
+## 1. 安装与日常使用
 
----
+安装程序：`release/PondClock-Setup-1.0.0-x64.exe`。把**完整安装 EXE**发给朋友，下载安装后打开“水塘时钟”即可使用；收件者不需要 Node、pnpm、浏览器开发服务器或另装 WebView2。
 
-## 1. 快速开始
+首发目标是 Windows x64；实际检查范围及未测项目见 [验收记录](docs/ACCEPTANCE.md)。安装器目前没有发布者数字签名。`release/win-unpacked/`是构建中间产物，单独复制其中的 EXE 不能代替安装程序。
 
-环境要求：Node.js 18+（仓库 `.nvmrc` 写的是 18），npm 或 yarn 均可。
+- 浮漂下沉时点击水塘收竿；默认约55–125秒一次鱼讯，装备可加速。
+- 点击鱼篓、图鉴、渔具店、漫游、设置展开面板；再次点击或按Esc收起。
+- 窗口右上角关闭按钮默认最小化；真正退出使用“文件→退出水塘时钟”。
+- 设置支持自动存档、导入/导出、联网增强开关、窗口置顶。退出前不必另点保存；成功交易提示在本地保存确认后出现。
 
-```bash
-npm install       # 安装依赖
-npm run dev       # 开发服务器，默认 http://localhost:8080
-npm run build     # 生产构建，输出到 build/（注意不是 dist/）
-npm run preview   # 本地预览生产构建
+## 2. 现实所在地也能解锁
+
+每次启动联网，按**当次公网IP**识别省级区域，映射到鱼群水系，**免费累计、永久解锁**。接受VPN/代理识别结果，不做反代理验证。
+
+已有游戏位置和家乡不会被定位悄悄覆盖；现实中到新地方后，在漫游面板点击**“在当地垂钓·免费”**，即可进入本次识别的水域，不需要再买游戏机票。若正在飞行，先抵达再使用这个入口。之前解锁过的地方都会保留。
+
+在应用打开期间换网络，可在设置里“重新识别所在地”。首次断网/定位失败可从默认江南开始，之后联网仍能继续累计解锁。未知地区、境外未匹配结果和旧缓存不会伪称本次成功定位。支持全国34个省级行政区（含港澳台地区结果），映射表在 `src/lib/gameConfig.js`。
+
+## 3. 航线与市场规则
+
+### 游戏内漫游
+
+12个水域全互通，共132条有向直达航段。每个水域选一个固定代表城市计算球面距离；这是游戏尺度，不代表真实商业直飞航路。完整坐标与来源见 [坐标说明](docs/COORDINATES.md)。
+
+全图最近路线精确1分钟、最远3分钟，其余线性分配；不同起点到同一终点会使用对应路线。往返地理距离与时长对称，秒数/票价取整后可能相同。机票200–6000金币，**每次游戏内飞行收费**；已经解锁代表拥有到访记录，仍需支付运输费。现实所在地的免费入口另算。
+
+起飞后显示倒计时，途中暂停钓鱼、卖鱼和再次买票；鱼篓随身携带。关闭、重启、休眠后按已保存的绝对抵达时刻恢复，不重扣机票。
+
+### 地区鱼价与七天保鲜
+
+当地供应越丰富越便宜；稀少或不产出的鱼会涨价。价格由**销售地区**决定，不是捕获地决定。最高相对供应地区倍率0.8，无产出地区倍率2，其余连续过渡；品质、重量仍影响新鲜鱼价。
+
+捕获后现实连续168小时保鲜，关闭软件和飞行也计时。**恰好七天起，无论鱼种、品质、重量、销售地区，每条都只值1金币。**过期鱼不会自动消失，卖出也不删除图鉴。跨地区、重启不会刷新捕获时间。
+
+规则与机票/市场完整矩阵可通过 `pnpm run balance` 导出，供调数值和复核。起始水域收益有自然差异，单机版本不强行抹平。
+
+## 4. 简单的当地天气
+
+时钟显示电脑现实所在地的温度与晴雨，优先使用IP坐标；没有可用坐标时采用对应水域代表点。游戏里买票不会改变电脑现实所在地天气。
+
+目前没有接入读取Windows任务栏天气缓存的私有方式；天气通过 [Open-Meteo](https://open-meteo.com/en/docs) 获取，效果类似任务栏天气。它是天气服务的模型数据，不是逐站现场实测。正常每15分钟刷新，最近缓存保留6小时，限流/超时会降级并退避。
+
+界面明确区分**当地天气、缓存天气、离线模拟**，鼠标放上天气可看更新时间。离线模拟不编造温度。断网仍可钓鱼、交易、旅行与读写存档。关闭设置里的联网增强后不再请求定位和天气。
+
+定位来自 [ipapi](https://ipapi.co/api/)，它识别的是公网出口的大致位置，VPN也会改变结果；不持久记录完整IP。服务可达性和免费配额受地区/供应商影响，不作为核心玩法前置。商业发行前需重新核实服务方案与署名要求。
+
+## 5. 本地记忆、备份和换电脑
+
+正式版固定存档目录：
+
+```text
+%APPDATA%/PondClock/saves/
+  save-a.json
+  save-b.json
 ```
 
-开发服务器支持热更新，改 `src/` 下的文件会即时生效。
+两个槽轮流保存完整快照，包含版本、修订号、校验和。保存前校验数据，写临时文件并flush后替换非当前槽，保留上一份有效进度；损坏时尝试备用槽。两槽都坏或发现未来版本会停止写入并保留原文件，不自动重置。
 
-> 本项目是纯前端 SPA（HashRouter，无后端），构建后可以直接丢到任意静态托管。
-> 依赖里体积较大的 `components/ui/*` 是 shadcn/ui 组件库，游戏本身没有用到全部。
+保存内容：金币、鱼竿、鱼饵、保底、鱼篓原始捕获时间、图鉴、初始/游戏/现实/解锁地区、在途航程、设置与命令去重记录。气泡、面板动画和已错过的咬钩不当作离线奖励保存。
 
----
+换电脑前在设置里导出JSON，再到新电脑导入。导入会先确认替换，并保留旧槽或损坏原件备份；安装更新/普通卸载不主动删除用户存档。安装目录和存档目录分开，复制安装EXE本身不会携带进度。
 
-## 2. 技术栈与关键约束
+这是单机保存，不承诺防作弊；校验和用于检测损坏。有效时间尽量不倒退，但完全离线无法证明关闭软件期间是否改过系统钟。
 
-| 项 | 选择 |
-|---|---|
-| 构建 | Vite 5 + React 18 + JSX（JavaScript，非 TypeScript） |
-| 样式 | Tailwind CSS 3 + tailwindcss-animate + shadcn/ui |
-| 场景 | 纯 SVG 绘制（1000×440 坐标系等比缩放），无 canvas、无图片资源 |
-| 状态 | React hooks + refs；**无全局状态库、无后端、当前无持久化** |
-| 路由 | `HashRouter`（只有一页，路由配置在 `src/nav-items.jsx`） |
-| 图标 | `lucide-react` |
-| 提示 | `sonner`（右下角 toast） |
-| 外部服务 | IP 属地 `https://ipapi.co/json/`（失败自动降级）；天气目前为本地模拟 |
+Web开发预览使用localStorage双槽，与正式版用户文件分开。Web预览可导出；原生导入对话框使用Windows版。不要用浏览器缓存作为正式备份。
 
-**必须知道的约定：**
+## 6. 开发环境与运行命令
 
-1. 路径别名 `@/` 指向 `src/`，例如 `@/lib/gameConfig`。
-2. 所有游戏数值都在 `src/lib/gameConfig.js`，组件/hook 里不要写死平衡数字。
-3. 钓鱼状态只有两种：`"idle"`（挂机等待）和 `"bite"`（浮漂下沉、判定窗口）。
-4. 台词语气只有四种：`"idle" | "success" | "high" | "miss"`（决定气泡配色），
-   台词内容池的 key 另有 `rare / impatient / airForce`。
-5. 场景坐标统一在 `src/components/pond/scene.js` 的 1000×440 视角里；不要按屏幕像素摆 SVG。
-6. 深色主题靠 `index.html` 的 `<html class="dark">` + `src/index.css` 里的 CSS 变量；
-   改主题不要逐个组件改，优先改这两处。
-7. `src/components/ui/*` 是通用组件库，**尽量不要动**，除非是全局主题/交互 bug。
+开发需要Node24、pnpm11.25.0。接收安装包的人不需要这些。依赖只使用 `pnpm-lock.yaml`；pnpm11设置在 `pnpm-workspace.yaml`，esbuild构建脚本已明确批准，包版本固定在锁文件。
 
----
-
-## 3. 架构总览
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│ 入口                                                         │
-│ src/main.jsx → App.jsx(HashRouter/Provider) → pages/Index.jsx │
-└───────────────────────────────┬──────────────────────────────┘
-                                │ 组合页面，持有"当前展开面板"状态
-┌───────────────────────────────▼──────────────────────────────┐
-│ 表现层（React 组件）                                          │
-│  ├─ components/header/ClockPanel.jsx   半透明时钟条            │
-│  ├─ components/pond/*                  水塘场景 + 交互 HUD     │
-│  ├─ components/layout/*                桌面底层/功能坞/面板窗   │
-│  └─ components/panels/*                鱼篓/图鉴/渔具店/漫游    │
-└───────────────────────────────┬──────────────────────────────┘
-                                │ 只通过 props / hooks 读写
-┌───────────────────────────────▼──────────────────────────────┐
-│ 玩法层（hooks）                                               │
-│  ├─ useFishingGame.js   状态机 + 产出结算 + 经济 + 说话 + 漫游 │
-│  ├─ useClockWeather.js  本地时钟 + 模拟天气                    │
-│  └─ useGeoRegion.js     IP → 中国水域（含缓存与降级）          │
-└───────────────────────────────┬──────────────────────────────┘
-                                │ 纯函数 / 配置表
-┌───────────────────────────────▼──────────────────────────────┐
-│ 数据与规则层（lib）                                           │
-│  ├─ gameConfig.js  鱼种 / 水域 / 品质 / 鱼竿 / 判定 / 节奏      │
-│  ├─ gameUtils.js   加权随机、产出、卖价、图鉴、省份映射         │
-│  ├─ speech.js      台词库                                     │
-│  └─ utils.js       className 合并工具                         │
-└──────────────────────────────────────────────────────────────┘
+```powershell
+pnpm install --frozen-lockfile
+node node_modules/electron/install.js   # 首次开发下载Electron运行时
+pnpm run dev                           # 原Web开发预览，8080
+pnpm run build                         # Web输出build/
+pnpm run preview
+pnpm run build:desktop                 # 独立桌面构建，build-desktop/，相对资源路径
+pnpm run desktop                       # 本地加载桌面构建
+pnpm run test                          # node:test规则/存档/服务/会话测试
+pnpm run lint                          # JS/JSX/CJS静态检查
+pnpm run balance                       # 输出航线与市场矩阵
+pnpm run package:win                   # 完整NSIS安装EXE，不上传发布
+pnpm run smoke:desktop                 # 真实Electron界面与读档烟测
 ```
 
-### 一局游戏的数据流
+首次安装依赖、下载Electron和NSIS打包工具需要网络；发行安装EXE包含完整运行时和本地资源，安装与核心玩法不依赖网络。
 
-```
-每秒 tick（useFishingGame 内 setInterval）
-  ├─ idle：等待倒计时 -1；到 0 → status="bite"，窗口=20s+鱼竿加成
-  │        等待期间若长时间没鱼 → 随机说"怎么还不上鱼…"
-  ├─ bite：窗口倒计时 -1；到 0 → status="idle"，小人物说"太可惜了…"
-  └─ 玩家点击（判定窗口内）
-        → catchFish()
-        → rollFish(regionId,{qualityBonus,pity})  种类→品质→长度/重量
-        → bucket 追加、codex 更新、pity 重置/累加、鱼饵消耗
-        → 小人根据品质说"太棒了 / 大赚一笔"；toast 展示鱼获
-        → 回到 idle，重新抽取下一次咬钩等待
-```
+受管测试宿主不能正常启动Chromium进程沙箱，诊断测试使用显式 `POND_SMOKE_NO_SANDBOX=1`；这只用于识别宿主限制，**正式产品仍保留sandbox:true且不带该启动参数**。诊断通过不等于普通Windows沙箱运行已验证，详见验收记录。
 
-卖鱼、买鱼饵/鱼竿、买机票都只改 `coins / baitCount / rodLevel / unlockedRegions / currentRegion` 这些状态；
-图鉴记录与资产解耦（卖鱼不会删图鉴）。
+仅Web开发环境保留 `?bite=3`、新档 `?coins=5000`、`?tab=travel`、`?demo=bite`、场景美术参数；生产安装版不接受这些作弊/调试覆盖。
 
-### UI 布局（桌面挂件式）
+## 7. 文件职责与数据流
 
-```
-┌────────────────────────────────────────────┐
-│ ClockPanel（半透明玻璃条：时间/日期/天气/水域）│
-├────────────────────────────────────────────┤
-│ Pond（SVG 场景：半透明天空 + 水面 + 小人 + 浮漂）│
-├────────────────────────────────────────────┤
-│ ActionDock（金币 + 鱼篓/图鉴/渔具店/漫游 按钮） │
-├────────────────────────────────────────────┤  ← 默认到这里为止，面板不展开
-│ PanelWindow（只有点击功能坞后才插入 DOM）      │
-└────────────────────────────────────────────┘
-```
-
-- `Index.jsx` 用 `activePanel`（null / bucket / codex / shop / travel）控制展开；
-  同一个按钮再点一次或点面板右上角 ×、按 `Esc` 都会收起。
-- 面板内容只在展开时挂载，收起时 DOM 里不存在，符合"不点击不展开"。
-- 半透明天空靠两个东西配合：
-  1. `palette.js` 的 `SKY_ALPHA`（默认 0.6）控制天空底色不透明度；
-  2. `layout/DesktopBackdrop.jsx` 在 Web 预览里模拟"桌面壁纸"，让透明效果可见。
-     正式桌面版应删掉这个组件，改为真正的透明窗口（见桌面化迁移）。
-
----
-
-## 4. 目录与文件职责
-
-```
-.
-├─ index.html                  HTML 入口，<html class="dark">，标题/图标/主题色
-├─ vite.config.js              Vite 配置：@ 别名、端口 8080、dev watcher 忽略临时文件
-├─ tailwind.config.js          Tailwind：shadcn 颜色变量、动画插件
-├─ postcss.config.js           PostCSS（Tailwind + autoprefixer）
-├─ jsconfig.json               @/* 路径提示（编辑器用）
-├─ components.json             shadcn/ui 生成配置
-├─ package.json                scripts：dev / build / preview
-├─ .nvmrc                      Node 18
-├─ hmr-client.js               平台 HMR 日志桥（一般不用改）
-└─ src
-   ├─ main.jsx                 React 挂载入口
-   ├─ App.jsx                  QueryClient/Tooltip/sonner/HashRouter 路由
-   ├─ nav-items.jsx           路由表（只有 "/" → pages/Index）
-   ├─ index.css               Tailwind 指令 + 明暗主题 CSS 变量
-   │
-   ├─ pages
-   │  └─ Index.jsx            页面总装：时钟/水塘/功能坞/面板 + 开发调试参数
-   │
-   ├─ hooks
-   │  ├─ useFishingGame.js    ★ 核心玩法 hook（状态机/产出/经济/说话/IP 跟随）
-   │  ├─ useClockWeather.js   每秒刷新本地时间 + 模拟天气（5 分钟随机变）
-   │  └─ useGeoRegion.js      IP 定位 → 省份映射 → 水域；失败降级默认水域
-   │
-   ├─ lib
-   │  ├─ gameConfig.js        ★ 策划配置表（鱼种/12 水域/品质/鱼竿/判定/节奏/省份映射）
-   │  ├─ gameUtils.js         ★ 纯函数：加权随机、rollFish、卖价、图鉴、省份匹配
-   │  ├─ speech.js            台词库 + pickLine 随机不重复
-   │  └─ utils.js             cn()：clsx + tailwind-merge
-   │
-   ├─ components
-   │  ├─ header
-   │  │  └─ ClockPanel.jsx    半透明时钟条（时间/日期/季节/天气/当前水域）
-   │  ├─ pond
-   │  │  ├─ Pond.jsx          ★ 场景总装 + 交互 HUD + 点击热区 + 开发调试覆盖
-   │  │  ├─ SkyLayer.jsx      天空渐变/星月/柔云/三层远山/远岸芦苇（天空底色用 SKY_ALPHA）
-   │  │  ├─ WaterLayer.jsx    水面/倒影/碎光/浅滩湖床/波纹/岸体
-   │  │  ├─ Fisherman.jsx     斗笠剪影渔人 + 鱼竿 + 鱼线（咬钩姿态由 pose 驱动）
-   │  │  ├─ Bobber.jsx        立式浮漂（上红下白/顶珠/水线裁切/咬钩波纹）
-   │  │  ├─ WeatherLayer.jsx  雨/雪粒子（纯视觉、不拦截点击）
-   │  │  ├─ SpeechBubble.jsx  小人对话气泡（tone 映射配色，锚在斗笠上方）
-   │  │  ├─ palette.js        ★ 昼夜/天气色板、SKY_ALPHA、日月轨道
-   │  │  ├─ scene.js          ★ 1000×440 坐标常量、几何/旋转数学、确定性装饰点
-   │  │  └─ useTween.js       0→1 缓动，驱动竿梢/前倾/浮漂下沉
-   │  ├─ layout
-   │  │  ├─ DesktopBackdrop.jsx   Web 预览用桌面壁纸层（桌面端删除）
-   │  │  ├─ ActionDock.jsx        功能坞：金币 + 4 个面板按钮；DOCK_ITEMS 在此
-   │  │  └─ PanelWindow.jsx       玻璃面板容器（标题/关闭/滚动/展开动画）
-   │  ├─ panels
-   │  │  ├─ BucketPanel.jsx   鱼篓列表、单条卖出、全部卖出
-   │  │  ├─ CodexPanel.jsx    图鉴：按水域筛选、三项最佳、首获、偏好水域
-   │  │  ├─ ShopPanel.jsx     渔具店：鱼竿升级、高级鱼饵
-   │  │  └─ TravelPanel.jsx   漫游：12 水域、机票、本地水域、IP 降级提示
-   │  └─ ui/                  shadcn/ui 组件库（按钮/弹窗/Tabs 等，非游戏逻辑）
-   │
-   └─ （无静态资源目录；所有画面都是 SVG/CSS 生成）
+```text
+src/lib/gameConfig.js       鱼种/品质/地区鱼群/省映射/装备的唯一既有表
+src/config/fishing.js       初始资产、等待/台词/品质加成配置（装备规则兼容导出）
+src/config/travel.js        地理半径、路线版本、60–180s、票价上下限
+src/config/economy.js       市场倍率、保鲜期限、过期价、重量曲线
+src/config/services.js      接口、超时、刷新、缓存期限
+src/config/storage.js       schema、命令去重窗口、Web键名
+src/data/regionLocations.js 12个固定代表城市坐标
+src/domain/routes.js       Haversine + 全图航线生成与报价
+src/domain/market.js       地区供应派生矩阵、统一鱼价与过期优先级
+src/domain/gameState.js    纯函数命令：捕获/买卖/启程/抵达/IP解锁/现实入口
+src/domain/saveSchema.js   共享严格校验，拒绝坏值/未知引用/未来schema
+src/application/gameSession.js 串行事务、逻辑时间、回执未知重读
+src/storage/repository.js  桌面桥或Web预览存储适配
+src/services/environment.js IP/天气适配、缓存、来源与退避
+src/hooks/                React订阅、钓鱼节奏、时钟/环境UI适配
+src/components/pond/      原SVG场景（1000×440）、浮漂与台词
+src/components/panels/    鱼篓/图鉴/渔具店/漫游/设置
+desktop/main.cjs          安全窗口、菜单、固定目录、单实例、原生对话框
+desktop/preload.cjs       最小白名单桥，不暴露Node或任意文件访问
+desktop/saveRepository.cjs 文件双槽、校验、原子写入、备份恢复
+desktop/environment.cjs   固定HTTPS端点/字段白名单、超时和响应大小限制
+electron-builder.yml      NSIS完整安装器配置
+vite.desktop.config.js    脱离NoCode平台插件的桌面构建
+tests/                    独立规则、故障注入、存储、环境和会话测试
+scripts/                  真实桌面烟测与矩阵导出
+docs/                     架构、决策、进度、验收和技术债
 ```
 
-★ = 改玩法/数值时最常打开的文件。
+所有资产命令：验证 → 纯函数生成完整状态 → 校验并保存新修订 → 确认后发布UI。保存回执丢失先重读并按命令ID恢复，避免直接重试双扣。导入也经过同一队列。天气和定时刷新不拥有资产结算逻辑。
 
----
+桌面renderer关闭Node权限，开启隔离与进程沙箱；仅加载本地构建，阻止任意导航。IP/天气由主进程HTTPS白名单请求；存档路径由主进程固定，renderer不能传任意路径。架构与四张流程图见 [architecture.md](docs/architecture.md)。
 
-## 5. 核心文件详解
+## 8. 改数值与扩展
 
-### 5.1 `src/hooks/useFishingGame.js`（核心）
+- 增鱼：在 `FISH` 加鱼种，在地区 `fish` 放正权重。图鉴/504格市场自动派生；要保证鱼至少有一个产地。
+- 增地区：加唯一ID、鱼群、省映射、合法代表坐标；航线自动生成。新增地区会改变全图归一化边界，应提升路线版本，不重算已起飞航程。
+- 改票价/航时：只改travel配置，面板和结算统一使用 `quoteRoute`。
+- 改鱼价/保鲜：只改economy配置；预览、单卖和全卖统一 `quoteFish`，七天过期分支优先。
+- 改存档schema：先写版本迁移、保留旧档备份及测试，再提高schema；不能把解析失败当作新游戏。
+- 改主题：HTML的dark class、Tailwind包含index.html、CSS变量三者一致。深色主题生产样式必须实测，不能只看开发服务器。
 
-调用方式：`useFishingGame(geoRegionId)`；`geoRegionId` 来自 `useGeoRegion`。
+## 9. 质量证据与剩余工作
 
-返回值：
+不要把“构建成功”或“78项规则通过”当作所有电脑都安装运行通过。最新状态以 [ACCEPTANCE.md](docs/ACCEPTANCE.md) 为准，明确区分自动检查、禁沙箱诊断、真实网络、休眠与其他电脑实测。
 
-| 字段 | 含义 |
-|---|---|
-| `coins` | 金币 |
-| `currentRegion / homeRegion` | 当前水域 / IP 匹配到的本地水域 |
-| `unlockedRegions` | 已解锁水域 id 数组（含本地水域） |
-| `rodLevel / baitCount / baitLeft` | 鱼竿档位 / 鱼饵库存份数 / 当前一份剩余次数 |
-| `bucket` | 待卖鱼数组（每条含 uid/speciesId/name/quality/length/weight/caughtAt/regionId） |
-| `codex` | 图鉴：`{ [speciesId]: {maxLength,maxWeight,bestQuality,firstCaughtAt,catchCount} }` |
-| `pityCounter` | 距上次高品质（史诗/传说）的连续次数 |
-| `status / windowLeft / waitLeft` | 状态（idle/bite）/ 判定窗口剩余秒 / 下次咬钩剩余秒 |
-| `speech` | 当前气泡 `{text, tone, id}` 或 `null` |
-| `catchFish()` | 判定窗口内收竿（只有 bite 状态有效） |
-| `pokeBobber()` | 待机时点击浮漂：说"别急"；10 秒内第 5 次说"准空军" |
-| `sellOne(uid) / sellAll()` | 卖鱼（只加金币，不动图鉴） |
-| `buyBait() / buyRod()` | 买鱼饵 / 升级鱼竿 |
-| `travelTo(regionId)` | 前往水域；未解锁则扣机票并永久解锁 |
+- [开发进度与留痕](docs/PROGRESS.md)
+- [玩法与工程决策](docs/DECISIONS.md)
+- [技术债与限制](docs/TECH_DEBT.md)
+- [地理来源](docs/COORDINATES.md)
 
-实现要点：
-
-- **状态机**：单个 `setInterval(1000)` + refs（`statusRef/windowRef/waitRef`），避免依赖 state 的定时器重建。
-- **咬钩等待**：`rollWaitSeconds(rodLevel, idleSeconds)` = 随机 55–125 秒 × 鱼竿 `intervalMult` × 挂机提速（最多 12%），下限 25 秒。
-- **鱼饵**：判定窗口内成功收竿才消耗；当前一份用尽会自动启用库存下一份（`baitLeft/baitCount` 联动）。
-- **说话**：`say(pool, tone)` 统一入口，4.6 秒后自动清空；台词池见 `lib/speech.js`。
-  待机时每 30–75 秒触发一次 idle 台词；成功/稀有/高品质/超时分别触发不同语气。
-- **IP 跟随**：`geoRegionId` 变化时，若玩家还没主动漫游，就把本地水域加入解锁、切到该水域。
-- **开发调试**：`?bite=4` 缩短咬钩等待；`?coins=5000` 覆盖初始金币（仅 `import.meta.env.DEV`）。
-
-### 5.2 `src/lib/gameConfig.js`（策划配置表）
-
-所有平衡数值集中在这里，只改数据、不改逻辑。导出：
-
-| 导出 | 说明 |
-|---|---|
-| `QUALITIES` | 4 档品质：id / 名称 / 卖价倍率 mult / 比较用 rank / Tailwind 文字色 |
-| `FISH` | 42 种鱼：id / 中文名 / basePrice / len(cm) / wt(kg) / qw 品质权重 / habitat 习性 |
-| `REGIONS` | 12 个中国水域：id / name / waterSystem / tier / flightPrice / fish:[[fishId,权重]] |
-| `DEFAULT_REGION` | 默认本地水域（`"jiangnan"`） |
-| `RODS` | 4 档鱼竿：cost / windowBonus / intervalMult / qualityBonus |
-| `BAIT_COST / BAIT_CATCHES / BAIT_QUALITY_BONUS` | 鱼饵价格、次数、品质权重加成 |
-| `BITE` | 咬钩等待区间（秒） |
-| `JUDGE` | 判定窗口及"最佳点击区间"预留参数（`qualityBonusBest=0` 默认关闭） |
-| `PITY_THRESHOLD` | 连续 N 条未出高品质后，`rollFish` 将史诗/传说权重 ×5 |
-| `PROVINCE_TO_REGION` | 中国 34 个省级行政区（中文全称/简称/拼音/省码）→ 水域 id |
-
-> 数值口径：初始水域史诗+传说约 1.3%，单条期望约 10 金币；新水域解锁中位约 3 小时。
-
-### 5.3 `src/lib/gameUtils.js`（纯函数）
-
-| 函数 | 说明 |
-|---|---|
-| `randInt(min,max)` | 闭区间整数随机 |
-| `fishById / regionById / qualityById` | 查表（找不到有兜底） |
-| `weightedPick(pairs)` | `[[值,权重],...]` 加权随机 |
-| `rollFish(regionId,{qualityBonus,bestClickBonus,pity})` | 种类→品质→长度/重量；返回完整鱼对象 |
-| `calcSellPrice(fish)` | 基础价 × 品质倍率 × 体重系数 |
-| `updateCodex(codex,fish)` | 三项最佳 + 首获时间 + 累计次数 |
-| `regionForProvince(...tokens)` | 省名/拼音/城市串 → 水域 id（无法识别回默认） |
-| `fishRegions(fishId)` | 哪些水域会出现该鱼（图鉴"偏好水域"用） |
-
-### 5.4 场景层 `src/components/pond/`
-
-- `scene.js`：`VIEW={w:1000,h:440}`、`HORIZON`、岸线/浅滩路径、`FISHER`（人物锚点/握竿点/竿梢/气泡锚点）、
-  `BOBBER`（浮漂 x/水线/高度/下沉距离）、姿态旋转数学、确定性装饰点（星星/云/波纹/卵石/芦苇）。
-  **改构图先改这里**，再改对应图层。
-- `palette.js`：昼夜四段（night/dawn/day/dusk）色板 + 天气微调 + `SKY_ALPHA` + 日月轨道。
-  **换配色/调天空透明度只改这个文件**。
-- `Pond.jsx`：镜头总装、点击热区（咬钩=整块水塘收竿；待机=浮漂戳点）、倒计时 HUD、气泡挂载、
-  以及开发美术参数（`?hour/weather/status/wl/say/tone`）。
-- `SpeechBubble.jsx`：4 种 tone 的玻璃气泡 + 指向人物的小尾巴 + 弹出动画。
-- 其余图层各管一块画面；所有动画 keyframes 都写在组件内 `<style>` 或 Tailwind 类里，不污染全局样式。
-
-### 5.5 服务层 hooks
-
-- `useClockWeather.js`：每秒更新 `now`；天气每 5 分钟随机一次。
-  返回 `{time,date,hour,weather,season}`。接真实天气 API 时替换天气部分即可。
-- `useGeoRegion.js`：请求 `https://ipapi.co/json/`（4.5 秒超时）→ 判断 `country_code === "CN"`
-  → `regionForProvince(region, region_code, city)`；结果缓存到 `localStorage["pondclock.geo"]`；
-  失败/境外网络回退 `DEFAULT_REGION` 并把 `source` 标成 `fallback/oversea` 供 UI 提示。
-  返回值：`{regionId, source, detail, cached}`。
-
----
-
-## 6. 常见需求怎么改
-
-### 6.1 加一条鱼
-
-1. 在 `gameConfig.js` 的 `FISH` 里加一项：
-   ```js
-   { id: "newfish", name: "新鱼", basePrice: 10, len: [20, 40], wt: [0.5, 2],
-     qw: { common: 89, rare: 9.6, epic: 1.2, legendary: 0.2 }, habitat: "某水系底层" }
-   ```
-2. 把 `newfish` 加进一个或多个 `REGIONS[].fish`：`["newfish", 18]`（权重）。
-3. 重新加载页面即可；图鉴会自动出现（按水域筛选）。
-   注意：`qw` 四档最好合计 100；权重必须 > 0。
-
-### 6.2 加一个水域
-
-1. 在 `REGIONS` 里加一项（保持 `id` 唯一）：
-   ```js
-   { id: "newregion", name: "某·水系", waterSystem: "某某干流与湖泊",
-     tier: 13, flightPrice: 6500, fish: [["jiyu", 30], ["newfish", 10]] }
-   ```
-2. 在 `PROVINCE_TO_REGION` 里把对应省份/拼音指过来。
-3. 图鉴、漫游面板、UI 全部按配置自动渲染；无需改组件。
-
-### 6.3 调咬钩频率 / 判定窗口
-
-- 频率：`BITE.minSeconds / BITE.maxSeconds`；鱼竿 `RODS[].intervalMult`；`useFishingGame` 里的
-  `WAIT_FLOOR`（25 秒）与挂机提速系数。
-- 窗口：`JUDGE.windowSeconds`；鱼竿 `RODS[].windowBonus`。
-- 想临时快进测试：URL 加 `?bite=3`。
-
-### 6.4 调品质与保底
-
-- 单鱼种品质：`FISH[].qw`。
-- 装备加成：`RODS[].qualityBonus`、`BAIT_QUALITY_BONUS`；
-  `gameUtils.js` 内部的 `QUALITY_BONUS_RATE`（稀有 +1.0/点、史诗 +0.3/点、传说 +0.1/点）控制加成曲线。
-- 保底：`PITY_THRESHOLD`（默认 30）；触发时史诗/传说权重 ×5（`PITY_WEIGHT_MULT`）。
-  `codex` 面板顶部会显示当前计数。
-
-### 6.5 调经济
-
-- 单条回收：`FISH[].basePrice` × `QUALITIES[].mult` × 体重系数（`calcSellPrice`）。
-- 机票：`REGIONS[].flightPrice`（当前为固定价；要做距离定价就改 `travelTo` 里的价格来源，
-  并给区域补坐标，见原始策划案）。
-- 鱼竿：`RODS[].cost`；鱼饵：`BAIT_COST / BAIT_CATCHES / BAIT_QUALITY_BONUS`。
-
-### 6.6 改小人台词
-
-编辑 `src/lib/speech.js` 的 `SPEECH`：
-
-- `idle`：久等没鱼；`success`：普通鱼；`rare`：稀有鱼；`high`：史诗/传说；
-  `miss`：咬钩没点；`impatient`：待机戳浮漂；`airForce`：10 秒内戳 5 次。
-- 数组里随便增删句子；`pickLine` 会随机且避免连续重复。
-- 台词长度建议 ≤ 18 个汉字（气泡会换行，过长会被裁切）。
-
-### 6.7 改桌面挂件外观
-
-- 天空透明度：`src/components/pond/palette.js` 的 `SKY_ALPHA`（0–1，越小越透）。
-- 桌面壁纸（Web 预览用）：`src/components/layout/DesktopBackdrop.jsx`，可换成图片/纯色；
-  打包成桌面软件时**删掉该组件**，改为真实透明窗口。
-- 面板/时钟/功能坞：Tailwind 类直接改 `bg-slate-950/35`、`backdrop-blur-md` 等即可。
-- 深色主题变量：`src/index.css` 的 `.dark` 段 + `index.html` 的 `class="dark"`。
-
-### 6.8 增加一个"点击展开"的功能面板
-
-1. 在 `src/components/layout/ActionDock.jsx` 的 `DOCK_ITEMS` 加一项 `{ id, label, icon }`。
-2. 在 `src/pages/Index.jsx` 的 `PANEL_TITLES` 加标题、在 `renderPanelContent` 的 `switch` 里返回内容。
-3. 新面板组件放 `src/components/panels/`，接收 props 即可。
-   收起/展开、Esc、点按钮高亮都由 `Index` 统一处理，不用重复写。
-
-### 6.9 加入本地存档（当前未实现）
-
-推荐做法：在 `useFishingGame` 里用 `useEffect` 监听 `coins/unlockedRegions/codex/rodLevel/...`，
-节流写入 `localStorage["pondclock.save"]`；初始化 state 时读取并做版本号/字段兜底。
-注意 `bucket`/`speech`/`status` 属于瞬时状态，不建议存。正式桌面版建议 SQLite/文件存档。
-
----
-
-## 7. 开发调试参数（仅开发模式，生产构建自动移除）
-
-| 参数 | 作用 |
-|---|---|
-| `?bite=3` | 咬钩等待缩短到 3 秒 |
-| `?coins=5000` | 覆盖初始金币 |
-| `?tab=bucket\|codex\|shop\|travel` | 启动时直接展开对应面板 |
-| `?demo=bite` | 预览咬钩态与倒计时 UI |
-| `?demo=idle\|success\|high\|miss` | 预览对应语气的台词气泡 |
-| `?hour=12&weather=晴&status=bite&wl=14&say=文本&tone=high` | 水塘美术自检参数 |
-| `?hour=21` / `?weather=多云` | 固定昼夜/天气（不改变玩法） |
-
-> 生产环境这些参数无效：`import.meta.env.DEV` 守卫 + Vite 死代码消除。
-
----
-
-## 8. 验证清单（改完至少跑一遍）
-
-```bash
-npm run build          # 必须通过
-npm run preview        # 打开 build 产物检查
-```
-
-手动验收：
-
-1. 开局金币 100、本地水域已解锁、其余水域锁定。
-2. 挂机 55–125 秒左右浮漂下沉；点击水塘/小人收竿；超时不点出现"太可惜了…"。
-3. 鱼获进入鱼篓，图鉴出现记录；卖鱼后金币增加、图鉴记录保留。
-4. 鱼饵钓到鱼时自动消耗，用尽自动启用下一份。
-5. 点击浮漂：单击出"别急"类台词；10 秒内连点 5 次出"你这样钓鱼准空军"。
-6. 功能坞默认收起；点击按钮展开面板、再点收起、Esc 收起；同时只有一个面板。
-7. 半透明天空能透出桌面壁纸层；时钟/功能坞/面板都是玻璃质感。
-8. 700–1100px 宽度不塌、不横向滚动；夜晚/白天/雨雪有区分。
-9. 生产构建下 `?demo=` 等调试参数不生效。
-
----
-
-## 9. 桌面化迁移（正式版方向）
-
-当前 Web 原型验证的是玩法与数值。要做真正的"桌面软件"，有三条路线：
-
-### 方案 A：Electron 包壳（最快复用现有代码）
-
-```js
-// main.js（Electron 主进程示意）
-const win = new BrowserWindow({
-  width: 760,
-  height: 560,
-  transparent: true,      // 透明窗口
-  frame: false,           // 无边框
-  resizable: false,
-  alwaysOnTop: true,      // 置顶
-  skipTaskbar: false,
-  hasShadow: false,
-  webPreferences: { contextIsolation: true },
-});
-win.loadFile("build/index.html");
-```
-
-需要配合的改动：
-
-1. **删除** `src/components/layout/DesktopBackdrop.jsx`（桌面端不再需要假壁纸）；
-2. `src/index.css` 把 `body` 背景改为 `background: transparent;`；
-3. `vite.config.js` 生产 `base` 改成 `'./'`（`file://` 加载资源需要相对路径）；
-4. 天空透明度保持 `SKY_ALPHA`（0.6 左右），水面仍不透明，保证可读性；
-5. 若要"不抢焦点/点击穿透"，用 `win.setIgnoreMouseEvents(true, { forward: true })`，
-   在鼠标进入浮漂/按钮等热区时临时关闭；判定窗口内可临时 `focusable`；
-6. 存档改用文件/SQLite（参考 `useFishingGame` 的 6.9）；
-7. Steam 接入用 `steamworks.js`（成就、云存档、库存）。
-
-### 方案 B：Tauri 2 包壳（体积小，Rust）
-
-```json
-// tauri.conf.json（窗口部分示意）
-"windows": [{
-  "transparent": true,
-  "decorations": false,
-  "alwaysOnTop": true,
-  "resizable": false
-}]
-```
-
-同样需要删除 `DesktopBackdrop`、body 透明、`base: './'`；透明窗口在部分 Linux 桌面环境需要额外合成器支持。
-
-### 方案 C：Godot 4 重实现（策划案首选）
-
-策划案原本建议 Godot 4：`DisplayServer.window_set_flag(WINDOW_FLAG_ALWAYS_ON_TOP)`、
-透明窗口、无边框、低响应点击都更原生。Web 原型里的数值、配置结构和状态机可以直接迁移：
-
-- `gameConfig.js`/`gameUtils.js` → JSON 配置表 + GDScript 读取；
-- `useFishingGame` 的状态机 → `FishingStateMachine` 节点；
-- SVG 场景 → Godot 2D 场景（剪影/浮漂/水波 shader）；
-- 存档 → SQLite/文件；Steam → Steamworks SDK。
-
-### 分享给朋友体验（Web 原型）
-
-- 构建后用任意静态托管：Netlify / Vercel / Cloudflare Pages 等，把 `build/` 目录上传即可
-  （本项目用 HashRouter，不需要配置 SPA 重写；但资源路径是 `/assets/...`，请部署在域名根路径）；
-- 或临时用内网穿透（cloudflared/ngrok）把 `npm run dev` 的 8080 端口暴露成公网 https 链接；
-- 若使用本项目的 NoCode/低代码平台，也可以直接用平台的"预览/发布"入口生成分享链接。
-
----
-
-## 10. 已知限制 / TODO
-
-- **无存档**：刷新页面金币、图鉴、解锁水域全部重置（原型限制）。
-- **天气是模拟数据**：`useClockWeather` 随机切换，未接真实天气 API；策划案要求的降温/降级逻辑未实现。
-- **机票是固定价**：未实现按水域距离/档位的动态定价公式。
-- **无音频**：环境音、咬钩提示音、收竿音效尚未接入。
-- **无桌面窗口能力**：置顶/透明/点击穿透需要桌面壳（见第 9 节），浏览器做不到。
-- **UI 未做移动端专门适配**：小屏可用但布局按桌面挂件设计。
-- **无自动化测试**：目前靠构建 + 手动验收清单；可补 Vitest（纯函数）与 Playwright（交互）。
-
----
-
-## 11. 踩坑记录（改代码前必看）
-
-1. **不要直接在组件里写平衡数值**：全部进 `gameConfig.js`，否则策划改表会失效。
-2. **判定窗口点击与待机点击是两套逻辑**：`bite` 时整块水塘是收竿热区（z-30）；
-   `idle` 时只有浮漂处有戳点热区。加 UI 时注意 z-index 不要挡住这两块。
-3. **SVG 场景是等比缩放**：HTML 覆盖层（气泡/倒计时/戳点）要用百分比坐标，
-   并与 `scene.js` 的坐标换算（`x / VIEW.w * 100%`）。别用像素写死。
-4. **台词气泡会被替换**：连续触发台词会直接覆盖上一句并重置 4.6 秒计时，这是预期行为。
-5. **IP 定位可能失败**：headless 浏览器/离线/境外网络会降级到默认水域，属于正常；
-   漫游面板会显示"定位失败，已使用默认水域"。
-6. **Tailwind 的 `animate-in` 类来自 tailwindcss-animate**：新增动画先确认插件已启用。
-7. **shadcn/ui 的按钮在深色下依赖 CSS 变量**：`index.html` 的 `class="dark"`
-   不能删，否则会出现白底白字。
-8. **构建产物在 `build/` 不是 `dist/`**：部署脚本别写错；`vite preview` 会读这个目录。
-
----
-
-## 12. 原始策划案
-
-玩法口径以项目根目录的策划案为准：桌面陪伴、轻张力等待、地域即内容、记录而非囤积、克制经济。
-当前原型已经实现：钓鱼判定、随机产出、12 水域与 IP 跟随、漫游解锁、图鉴最佳记录、鱼竿/鱼饵、卖鱼、
-时钟天气（模拟）、小人说话、半透明桌面挂件 UI。
+后续可选方向：真正透明无边框挂件/点击穿透、音效、更多区域和鱼种；首版不引入账号、云交易、数据库服务或服务器防作弊。

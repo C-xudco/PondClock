@@ -3,7 +3,7 @@ import { Anvil, Bug } from "lucide-react";
 import { RODS, BAIT_COST, BAIT_CATCHES, BAIT_QUALITY_BONUS, BITE } from "@/lib/gameConfig";
 
 // 渔具店：克制经济，只卖鱼竿升级与高级鱼饵
-const ShopPanel = ({ coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait }) => {
+const ShopPanel = ({ coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait, disabled }) => {
   const rod = RODS[rodLevel];
   const next = RODS[rodLevel + 1];
   const rodWait = Math.round(((BITE.minSeconds + BITE.maxSeconds) / 2) * rod.intervalMult);
@@ -28,7 +28,7 @@ const ShopPanel = ({ coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait }
               升级后平均约 {Math.round(((BITE.minSeconds + BITE.maxSeconds) / 2) * next.intervalMult)} 秒一竿，
               窗口 +{next.windowBonus} 秒、品质加成 +{next.qualityBonus}
             </p>
-            <Button size="sm" onClick={onBuyRod} disabled={coins < next.cost}>
+            <Button size="sm" onClick={onBuyRod} disabled={disabled || coins < next.cost}>
               升级到「{next.name}」 ¥{next.cost}
             </Button>
           </>
@@ -49,7 +49,7 @@ const ShopPanel = ({ coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait }
           每份可用 {BAIT_CATCHES} 次钓鱼，品质权重 +{BAIT_QUALITY_BONUS}；钓到鱼时自动消耗，
           用尽后自动启用下一份。
         </p>
-        <Button size="sm" onClick={onBuyBait} disabled={coins < BAIT_COST}>
+        <Button size="sm" onClick={onBuyBait} disabled={disabled || coins < BAIT_COST}>
           购买鱼饵 ¥{BAIT_COST}
         </Button>
       </div>

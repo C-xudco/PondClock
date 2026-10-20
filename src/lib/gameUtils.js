@@ -6,6 +6,8 @@ import {
   PITY_THRESHOLD,
   DEFAULT_REGION,
 } from "./gameConfig.js";
+import { FISHING_CONFIG } from "../config/fishing.js";
+import { quoteFish } from "../domain/market.js";
 
 // ===== 基础随机与查表 =====
 export const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -32,8 +34,8 @@ export function weightedPick(pairs) {
 // ===== 随机产出引擎：种类 → 品质 → 个体尺寸（三套分布互不干扰）=====
 // mods: { qualityBonus: 鱼竿+鱼饵加成, bestClickBonus: 预留-最佳区间加成, pity: 保底计数 }
 // 加成只提升稀有权重（普通档不动），每点加成对应的权重增量见 QUALITY_BONUS_RATE。
-const QUALITY_BONUS_RATE = { rare: 1, epic: 0.3, legendary: 0.1 };
-const PITY_WEIGHT_MULT = 5; // 保底触发时史诗/传说权重放大倍数
+const QUALITY_BONUS_RATE = FISHING_CONFIG.qualityBonusRate;
+const PITY_WEIGHT_MULT = FISHING_CONFIG.pityWeightMultiplier;
 
 const sampleRange = (range, digits) => {
   const [min, max] = Array.isArray(range) && range.length === 2 ? range : [0, 0];
@@ -64,26 +66,19 @@ export function rollFish(regionId, mods = {}) {
     quality,
     length: sampleRange(species.len, 1),
     weight: sampleRange(species.wt, 2),
-    caughtAt: new Date().toLocaleString("zh-CN"),
+    caughtAtMs: Date.now(),
     regionId: region.id,
   };
 }
 
 // 卖价 = 基础价 × 品质倍率 × 个体重量系数（中等体重约 1.3 倍）
-export function calcSellPrice(fish) {
-  const species = fishById(fish?.speciesId);
-  if (!species) return 0;
-  const q = qualityById(fish.quality);
-  const avg = (species.wt[0] + species.wt[1]) / 2 || 1;
-  const factor = Math.min(2.5, Math.max(0.5, 0.7 + ((Number(fish.weight) || avg) / avg) * 0.6));
-  return Math.max(1, Math.round(species.basePrice * q.mult * factor));
-}
+export const calcSellPrice = (fish, regionId = fish?.regionId || DEFAULT_REGION, nowMs = Date.now()) => quoteFish(fish, regionId, nowMs).price;
 
 // 图鉴更新：只记三项最佳 + 首获时间 + 累计次数，与资产解耦
 export function updateCodex(codex, fish) {
   const prev = codex[fish.speciesId] || {
     maxLength: 0, maxWeight: 0, bestQuality: "common",
-    firstCaughtAt: fish.caughtAt, catchCount: 0,
+    firstCaughtAtMs: fish.caughtAtMs, catchCount: 0,
   };
   const better = qualityById(fish.quality).rank > qualityById(prev.bestQuality).rank;
   return {
@@ -92,7 +87,7 @@ export function updateCodex(codex, fish) {
       maxLength: Math.max(prev.maxLength, fish.length),
       maxWeight: Math.max(prev.maxWeight, fish.weight),
       bestQuality: better ? fish.quality : prev.bestQuality,
-      firstCaughtAt: prev.firstCaughtAt,
+      firstCaughtAtMs: prev.firstCaughtAtMs,
       catchCount: prev.catchCount + 1,
     },
   };
@@ -124,13 +119,13 @@ const PROVINCE_KEYS_BY_LENGTH = Object.keys(PROVINCE_TO_REGION)
 
 // 支持多参数（如 regionForProvince("浙江", "杭州")），取第一个能识别的 token；
 // 支持全称/简称/拼音/带城市后缀的字符串；无法识别时回落到默认本地水域。
-export function regionForProvince(...tokens) {
+export function matchRegionForProvince(...tokens) {
   const flat = tokens.flat(Infinity);
   for (const token of flat) {
     if (typeof token !== "string") continue;
     const raw = token.trim().toLowerCase();
     if (!raw) continue;
-    const normalized = normalizeProvinceToken(raw);
+    const normalized = normalizeProvinceToken(raw).replace(/^cn[-_]/, "");
     const candidates = [raw, normalized].filter(Boolean);
     for (const candidate of candidates) {
       if (PROVINCE_TO_REGION[candidate]) return PROVINCE_TO_REGION[candidate];
@@ -138,8 +133,10 @@ export function regionForProvince(...tokens) {
     const hit = PROVINCE_KEYS_BY_LENGTH.find((key) => normalized.includes(key));
     if (hit) return PROVINCE_TO_REGION[hit];
   }
-  return DEFAULT_REGION;
+  return null;
 }
+
+export const regionForProvince = (...tokens) => matchRegionForProvince(...tokens) || DEFAULT_REGION;
 
 // ===== 鱼种 → 区域 =====
 // 返回包含该鱼种的全部区域（配置顺序）
