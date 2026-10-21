@@ -1,7 +1,7 @@
 {
   "name": "pondclock",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "水塘时钟：可离线保存的桌面钓鱼游戏",
   "author": "PondClock",
   "main": "desktop/main.cjs",
@@ -18,7 +18,9 @@
     "package:win": "pnpm run build:desktop && node scripts/package-win.cjs",
     "test": "node --test tests/*.test.js",
     "balance": "node scripts/export-balance.mjs",
-    "smoke:desktop": "node scripts/smoke-electron.cjs"
+    "smoke:desktop": "node scripts/smoke-electron.cjs",
+    "smoke:packaged": "node scripts/smoke-packaged.cjs",
+    "verify:release": "node scripts/verify-release.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",

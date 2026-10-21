@@ -1,5 +1,5 @@
 import { FISH, REGIONS, QUALITIES, RODS, BAIT_CATCHES } from '../lib/gameConfig.js';
-import { STORAGE_CONFIG } from '../config/storage.js';
+import { GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
 
 const regionIds = new Set(REGIONS.map((r) => r.id));
 const fishIds = new Set(FISH.map((f) => f.id));
@@ -72,7 +72,7 @@ export function validateSave(input) {
   const settings = object(s.settings, '设置');
   if (typeof settings.onlineEnhancements !== 'boolean' || typeof settings.alwaysOnTop !== 'boolean') fail('设置字段');
   return {
-    schemaVersion: s.schemaVersion, gameVersion: '1.0.0', revision: num(s.revision, '修订号', 0, true),
+    schemaVersion: s.schemaVersion, gameVersion: GAME_VERSION, revision: num(s.revision, '修订号', 0, true),
     createdAtMs, lastEffectiveNowMs: now, homeRegion, currentRegion, realRegion, unlockedRegions: [...unlockedRegions],
     coins: num(s.coins, '金币', 0, true), rodLevel, baitCount: num(s.baitCount, '鱼饵份数', 0, true), baitLeft,
     pityCounter: num(s.pityCounter, '保底次数', 0, true), bucket, codex, travel,

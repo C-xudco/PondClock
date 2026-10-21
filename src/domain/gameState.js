@@ -1,6 +1,6 @@
 import { DEFAULT_REGION, RODS, BAIT_COST, BAIT_CATCHES, REGIONS, QUALITIES } from '../lib/gameConfig.js';
 import { FISHING_CONFIG } from '../config/fishing.js';
-import { STORAGE_CONFIG } from '../config/storage.js';
+import { GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
 import { quoteRoute } from './routes.js';
 import { quoteFish } from './market.js';
 import { validateSave } from './saveSchema.js';
@@ -10,7 +10,7 @@ const rank = (id) => QUALITIES.find((q) => q.id === id)?.rank ?? -1;
 
 export function createNewGame(regionId = DEFAULT_REGION, nowMs = Date.now()) {
   requireRegion(regionId);
-  return validateSave({ schemaVersion: 1, gameVersion: '1.0.0', revision: 0, createdAtMs: nowMs,
+  return validateSave({ schemaVersion: STORAGE_CONFIG.schemaVersion, gameVersion: GAME_VERSION, revision: 0, createdAtMs: nowMs,
     lastEffectiveNowMs: nowMs, homeRegion: regionId, currentRegion: regionId, realRegion: null,
     unlockedRegions: [regionId], coins: FISHING_CONFIG.startCoins, rodLevel: 0,
     baitCount: FISHING_CONFIG.startBait, baitLeft: 0, bucket: [], codex: {}, pityCounter: 0, travel: null,

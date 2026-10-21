@@ -22,13 +22,18 @@ win:
     - target: nsis
       arch:
         - x64
-  artifactName: PondClock-Setup-${version}-${arch}.${ext}
+    - target: zip
+      arch:
+        - x64
+  artifactName: PondClock-${version}-${arch}.${ext}
   signExecutable: false
 nsis:
+  artifactName: PondClock-Setup-${version}-${arch}.${ext}
+  include: desktop/installer.nsh
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
-  createDesktopShortcut: true
+  createDesktopShortcut: always
   createStartMenuShortcut: true
   shortcutName: 水塘时钟
   deleteAppDataOnUninstall: false

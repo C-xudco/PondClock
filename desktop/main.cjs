@@ -4,21 +4,51 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { createSaveRepository, MAX_SAVE_BYTES } = require('./saveRepository.cjs');
 const { requestEnvironment } = require('./environment.cjs');
+const { resolveUserDataDirectory, createShutdownController, createStartupGuard, startupLogRecord } = require('./lifecycle.cjs');
 
 const APP_ID = 'cn.pondclock.desktop';
 app.setName('PondClock');
 // Keep this stable across package versions, architecture and install locations.
-const developmentUserData = !app.isPackaged && app.commandLine.getSwitchValue('user-data-dir');
-app.setPath('userData', developmentUserData
-  ? path.resolve(developmentUserData)
-  : path.join(app.getPath('appData'), 'PondClock'));
+// An explicit, fully qualified CLI profile also permits isolated verification of
+// the real packaged EXE. The renderer has no API to select a filesystem path.
+let startupPathError;
+let userDataDirectory = path.join(app.getPath('appData'), 'PondClock');
+try {
+  userDataDirectory = resolveUserDataDirectory(app.commandLine.getSwitchValue('user-data-dir'), userDataDirectory);
+} catch (error) { startupPathError = error; }
+app.setPath('userData', userDataDirectory);
 app.setAppUserModelId(APP_ID);
 
 let window;
-let quitting = false;
 let repository;
 let validateSave;
 let documentUrl;
+let startupGuard;
+let startupFailurePending = false;
+const startupLogPath = path.join(userDataDirectory, 'logs', 'startup.log');
+
+async function writeStartupLog(event, error) {
+  try {
+    await fs.mkdir(path.dirname(startupLogPath), { recursive: true });
+    await fs.appendFile(startupLogPath, `${startupLogRecord(event, error)}\n`, { encoding: 'utf8', mode: 0o600 });
+  } catch { /* A read-only or unavailable log directory must not leave an invisible app. */ }
+}
+
+const shutdown = createShutdownController({
+  finish: (code) => { if (code) app.exit(code); else app.quit(); },
+  onWriteFailure: (error) => writeStartupLog('SHUTDOWN_SAVE_FAILED', error),
+});
+
+async function failStartup(reason, error) {
+  if (startupFailurePending || shutdown.isQuitting()) return;
+  startupFailurePending = true;
+  await writeStartupLog(reason, error);
+  try {
+    dialog.showErrorBox('水塘时钟启动失败',
+      `应用窗口未能正常运行，关闭此提示后程序将退出。\n请重新打开或重新安装应用。\n诊断记录：${startupLogPath}`);
+  } catch { /* Exit also when the operating system cannot display an error dialog. */
+  } finally { await shutdown.requestQuit({ code: 1 }); }
+}
 
 function trustedFrame(event) {
   if (!window || event.sender !== window.webContents || event.senderFrame !== window.webContents.mainFrame ||
@@ -57,7 +87,7 @@ function buildMenu() {
 
 function registerHandlers() {
   handle('pond:load-save', () => repository.load());
-  handle('pond:save-game', (snapshot) => repository.save(snapshot));
+  handle('pond:save-game', (snapshot) => shutdown.runWrite(() => repository.save(snapshot)));
   handle('pond:export-save', async (input) => {
     const snapshot = validateSave(input);
     const result = await dialog.showSaveDialog(window, {
@@ -67,7 +97,7 @@ function registerHandlers() {
     if (result.canceled || !result.filePath) return { canceled: true };
     const json = `${JSON.stringify(snapshot, null, 2)}\n`;
     if (Buffer.byteLength(json) > MAX_SAVE_BYTES) throw new Error('导出存档超过大小上限。');
-    await fs.writeFile(result.filePath, json, { encoding: 'utf8', mode: 0o600 });
+    await shutdown.runWrite(() => fs.writeFile(result.filePath, json, { encoding: 'utf8', mode: 0o600 }));
     return { canceled: false };
   });
   handle('pond:import-save', async () => {
@@ -87,14 +117,18 @@ function registerHandlers() {
       buttons: ['取消', '导入'], defaultId: 0, cancelId: 0, noLink: true,
     });
     if (confirmation.response !== 1) return { canceled: true };
-    return { canceled: false, ...(await repository.importSnapshot(snapshot)) };
+    return { canceled: false, ...(await shutdown.runWrite(() => repository.importSnapshot(snapshot))) };
   });
   handle('pond:app-info', () => ({
     name: 'PondClock', displayName: '水塘时钟', version: app.getVersion(),
     platform: process.platform, packaged: app.isPackaged, alwaysOnTop: window.isAlwaysOnTop(),
+    execPath: process.execPath, userData: app.getPath('userData'),
+    versions: { electron: process.versions.electron, chrome: process.versions.chrome, node: process.versions.node },
+    noSandboxSwitch: app.commandLine.hasSwitch('no-sandbox'),
   }));
   handle('pond:window-action', (action) => {
-    if (action === 'minimize' || action === 'close') window.minimize();
+    if (action === 'minimize') window.minimize();
+    else if (action === 'close') app.quit();
     else if (action === 'toggleAlwaysOnTop') { window.setAlwaysOnTop(!window.isAlwaysOnTop()); buildMenu(); }
     else if (action === 'alwaysOnTop:on' || action === 'alwaysOnTop:off') {
       window.setAlwaysOnTop(action === 'alwaysOnTop:on'); buildMenu();
@@ -121,6 +155,7 @@ async function createWindow() {
     await fs.access(buildPath);
   }
   const initialAlwaysOnTop = await repository.load().then((loaded) => loaded.snapshot?.settings?.alwaysOnTop === true).catch(() => false);
+  if (shutdown.isQuitting() || startupFailurePending) return;
   window = new BrowserWindow({
     width: 920, height: 760, minWidth: 700, minHeight: 560,
     title: '水塘时钟', backgroundColor: '#020817', show: false, alwaysOnTop: initialAlwaysOnTop,
@@ -138,9 +173,21 @@ async function createWindow() {
     if (url.split('#')[0] !== documentUrl) event.preventDefault();
   });
   window.webContents.on('will-attach-webview', (event) => event.preventDefault());
-  window.on('close', (event) => { if (!quitting) { event.preventDefault(); window.minimize(); } });
-  window.once('ready-to-show', () => window.show());
-  window.on('closed', () => { window = null; });
+  window.on('close', (event) => {
+    if (!shutdown.isReady()) { event.preventDefault(); app.quit(); }
+  });
+  window.once('ready-to-show', () => startupGuard.ready());
+  window.webContents.on('did-fail-load', (_event, errorCode, _description, _url, isMainFrame) => {
+    if (isMainFrame && !shutdown.isQuitting()) {
+      startupGuard.fail('DOCUMENT_LOAD_FAILED', Object.assign(new Error(), { code: String(errorCode) }));
+    }
+  });
+  window.webContents.on('render-process-gone', (_event, details) => {
+    if (!shutdown.isQuitting()) {
+      startupGuard.fail('RENDER_PROCESS_GONE', Object.assign(new Error(), { code: details.reason }));
+    }
+  });
+  window.on('closed', () => { startupGuard.stop(); window = null; });
   session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
   session.defaultSession.setPermissionCheckHandler(() => false);
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
@@ -158,16 +205,27 @@ async function createWindow() {
 if (!app.requestSingleInstanceLock()) {
   app.quit();
 } else {
-  app.on('second-instance', () => { if (window) { window.restore(); window.show(); window.focus(); } });
-  app.on('before-quit', () => { quitting = true; });
+  startupGuard = createStartupGuard({
+    onReady: () => { if (!shutdown.isQuitting()) { window.show(); void writeStartupLog('WINDOW_READY'); } },
+    onFailure: (reason, error) => { void failStartup(reason, error); },
+  });
+  app.on('second-instance', () => {
+    if (window && !shutdown.isQuitting() && !startupFailurePending) { window.restore(); window.show(); window.focus(); }
+  });
+  app.on('before-quit', (event) => {
+    if (shutdown.isReady()) return;
+    event.preventDefault();
+    startupGuard.stop();
+    void shutdown.requestQuit();
+  });
   app.on('window-all-closed', () => app.quit());
   app.whenReady().then(async () => {
+    if (startupPathError) throw startupPathError;
+    if (shutdown.isQuitting() || startupFailurePending) return;
+    await writeStartupLog('STARTUP_BEGIN');
     ({ validateSave } = await import(pathToFileURL(path.join(__dirname, '..', 'src', 'domain', 'saveSchema.js')).href));
     repository = createSaveRepository({ directory: path.join(app.getPath('userData'), 'saves'), validate: validateSave });
     registerHandlers();
     await createWindow();
-  }).catch((error) => {
-    dialog.showErrorBox('水塘时钟启动失败', `${error.message}\n请确认桌面资源完整，或重新安装应用。`);
-    app.exit(1);
-  });
+  }).catch((error) => startupGuard.fail('STARTUP_FAILED', error));
 }

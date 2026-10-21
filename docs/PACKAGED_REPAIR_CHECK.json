@@ -1,0 +1,71 @@
+{
+  "scope": "Real packaged EXE under Playwright; normal sandbox, isolated profile and blocked HTTP. This does not validate installer or shortcuts.",
+  "startedAt": "2026-10-21T06:40:12.119Z",
+  "host": {
+    "platform": "win32",
+    "architecture": "x64",
+    "release": "10.0.26200"
+  },
+  "passed": false,
+  "hostSandboxEnabled": true,
+  "checks": [],
+  "launches": [
+    {
+      "executable": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\release\\win-unpacked\\PondClock.exe",
+      "args": [
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\packaged smoke-9hOXWq\\profile",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "sandbox": "enabled",
+      "developerToolsRemovedFromChildPath": true,
+      "startedAt": "2026-10-21T06:40:12.415Z",
+      "stderr": "",
+      "failure": {
+        "kind": "UNHANDLED_REJECTION",
+        "error": "Error: Process failed to launch!\n    at waitForLine (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45527:21)\n    at Electron.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45725:37)\n    at async ElectronDispatcher.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:57017:37)\n    at async _ProgressController.run (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:13018:27)\n    at async DispatcherConnection.dispatch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:20191:27)"
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "cleanupErrors": [],
+  "fatalEvents": [
+    {
+      "kind": "UNHANDLED_REJECTION",
+      "at": "2026-10-21T06:40:12.953Z",
+      "error": "Error: Process failed to launch!\n    at waitForLine (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45527:21)\n    at Electron.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45737:36)\n    at async ElectronDispatcher.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:57017:37)\n    at async _ProgressController.run (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:13018:27)\n    at async DispatcherConnection.dispatch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:20191:27)"
+    },
+    {
+      "kind": "UNHANDLED_REJECTION",
+      "at": "2026-10-21T06:40:12.962Z",
+      "error": "Error: Process failed to launch!\n    at waitForLine (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45527:21)\n    at Electron.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45738:43)\n    at async ElectronDispatcher.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:57017:37)\n    at async _ProgressController.run (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:13018:27)\n    at async DispatcherConnection.dispatch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:20191:27)"
+    },
+    {
+      "kind": "UNHANDLED_REJECTION",
+      "at": "2026-10-21T06:40:12.963Z",
+      "error": "Error: Process failed to launch!\n    at waitForLine (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45527:21)\n    at Electron.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45725:37)\n    at async ElectronDispatcher.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:57017:37)\n    at async _ProgressController.run (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:13018:27)\n    at async DispatcherConnection.dispatch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:20191:27)"
+    }
+  ],
+  "limitations": [
+    "UI fishing time is advanced with Playwright clock; this is not a real-time waiting or sleep test.",
+    "Same Windows host with development tools installed; child PATH omits developer tools, not a second clean computer.",
+    "Playwright adds debugging transport; ordinary double-click and shortcut launches require separate checks."
+  ],
+  "directory": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\packaged smoke-9hOXWq",
+  "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\packaged smoke-9hOXWq\\profile",
+  "executable": {
+    "path": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\release\\win-unpacked\\PondClock.exe",
+    "bytes": 246592512,
+    "sha256": "929fc624c15ae9abda9573542d62e287afc3fd61dea923bbbc6ef3b917ffbac1"
+  },
+  "archive": {
+    "path": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\release\\win-unpacked\\resources\\app.asar",
+    "sha256": "02fd614712d98c788df472d33228045853e57df71f2fa37f729c3dc023f774e1"
+  },
+  "error": "Error: Process failed to launch!\n    at waitForLine (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45527:21)\n    at Electron.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:45737:36)\n    at async ElectronDispatcher.launch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:57017:37)\n    at async _ProgressController.run (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:13018:27)\n    at async DispatcherConnection.dispatch (X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\playwright-core\\lib\\coreBundle.js:20191:27)",
+  "finishedAt": "2026-10-21T06:40:12.963Z",
+  "reportPath": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\packaged smoke-9hOXWq\\packaged-smoke.json",
+  "cleanupLimitations": [
+    "Launch failed before Playwright returned an application or PID; no unrelated processes were terminated."
+  ]
+}

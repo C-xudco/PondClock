@@ -4,13 +4,17 @@ Windows x64 单机桌面应用。挂机等鱼讯、点击收竿，收集全国 1
 
 ## 1. 安装与日常使用
 
-安装程序：`release/PondClock-Setup-1.0.0-x64.exe`。把**完整安装 EXE**发给朋友，下载安装后打开“水塘时钟”即可使用；收件者不需要 Node、pnpm、浏览器开发服务器或另装 WebView2。
+安装程序：`release/PondClock-Setup-1.0.1-x64.exe`。安装完成后，桌面和开始菜单入口名为**“水塘时钟”**。分享时发送完整安装 EXE，运行时与资源均已包含，收件者不需要 Node、pnpm、浏览器开发服务器或另装 WebView2；当前仍属于下述待实机验收的修复候选包。
 
-首发目标是 Windows x64；实际检查范围及未测项目见 [验收记录](docs/ACCEPTANCE.md)。安装器目前没有发布者数字签名。`release/win-unpacked/`是构建中间产物，单独复制其中的 EXE 不能代替安装程序。
+免安装备用版：`release/PondClock-1.0.1-x64.zip`。先解压整个 ZIP，再打开解压目录里的 **PondClock.exe**；所有 DLL、resources 和 locales 文件夹都要保留。ZIP 与安装版共用默认本机进度；它不把存档放进解压文件夹。
+
+**1.0.0 安装失败的恢复入口**：先关闭旧安装、卸载窗口；旧游戏需通过“文件→退出水塘时钟”退出。再从安装目录之外运行新版安装包，完成后通过桌面或开始菜单的“水塘时钟”打开。若仍提示文件占用，重启后再安装。不要用“忽略”跳过卸载器写入错误。具体修复与实测边界见 [修复记录](docs/INSTALLER_FIX.md) 和 [新版验收](docs/REPAIR_ACCEPTANCE.md)。
+
+首发目标是 Windows x64；1.0.1 已完成代码修复和构建，**真实 Windows 安装、重装、升级和正常沙箱运行尚未通过验收**，目前应作为修复候选包。当前结果见 [新版验收](docs/REPAIR_ACCEPTANCE.md)；[首版验收](docs/ACCEPTANCE.md)保留为历史记录。安装器目前没有发布者数字签名。`release/win-unpacked/`是构建中间产物，单独复制其中的 EXE 不能代替完整 ZIP 或安装程序。
 
 - 浮漂下沉时点击水塘收竿；默认约55–125秒一次鱼讯，装备可加速。
 - 点击鱼篓、图鉴、渔具店、漫游、设置展开面板；再次点击或按Esc收起。
-- 窗口右上角关闭按钮默认最小化；真正退出使用“文件→退出水塘时钟”。
+- 窗口右上角“×”、Alt+F4 和“文件→退出水塘时钟”都会真正退出，退出前等待已接受的存档写入；“—”按钮单独最小化。
 - 设置支持自动存档、导入/导出、联网增强开关、窗口置顶。退出前不必另点保存；成功交易提示在本地保存确认后出现。
 
 ## 2. 现实所在地也能解锁
@@ -51,7 +55,7 @@ Windows x64 单机桌面应用。挂机等鱼讯、点击收竿，收集全国 1
 
 ## 5. 本地记忆、备份和换电脑
 
-正式版固定存档目录：
+正式版默认存档目录：
 
 ```text
 %APPDATA%/PondClock/saves/
@@ -86,6 +90,8 @@ pnpm run lint                          # JS/JSX/CJS静态检查
 pnpm run balance                       # 输出航线与市场矩阵
 pnpm run package:win                   # 完整NSIS安装EXE，不上传发布
 pnpm run smoke:desktop                 # 真实Electron界面与读档烟测
+pnpm run smoke:packaged -- "X:\路径\PondClock.exe" # 真正发行EXE，正常沙箱与独立测试档
+pnpm run verify:release                # 发行版本/资源/安装EXE/ZIP/hash核验
 ```
 
 首次安装依赖、下载Electron和NSIS打包工具需要网络；发行安装EXE包含完整运行时和本地资源，安装与核心玩法不依赖网络。
@@ -114,7 +120,9 @@ src/services/environment.js IP/天气适配、缓存、来源与退避
 src/hooks/                React订阅、钓鱼节奏、时钟/环境UI适配
 src/components/pond/      原SVG场景（1000×440）、浮漂与台词
 src/components/panels/    鱼篓/图鉴/渔具店/漫游/设置
-desktop/main.cjs          安全窗口、菜单、固定目录、单实例、原生对话框
+desktop/main.cjs          安全窗口、菜单、默认存档目录、单实例、原生对话框
+desktop/lifecycle.cjs     等待写入后退出、启动故障日志与窗口超时保护
+desktop/installer.nsh     精确目标进程与旧卸载器写锁检查，不强杀进程
 desktop/preload.cjs       最小白名单桥，不暴露Node或任意文件访问
 desktop/saveRepository.cjs 文件双槽、校验、原子写入、备份恢复
 desktop/environment.cjs   固定HTTPS端点/字段白名单、超时和响应大小限制
@@ -127,7 +135,7 @@ docs/                     架构、决策、进度、验收和技术债
 
 所有资产命令：验证 → 纯函数生成完整状态 → 校验并保存新修订 → 确认后发布UI。保存回执丢失先重读并按命令ID恢复，避免直接重试双扣。导入也经过同一队列。天气和定时刷新不拥有资产结算逻辑。
 
-桌面renderer关闭Node权限，开启隔离与进程沙箱；仅加载本地构建，阻止任意导航。IP/天气由主进程HTTPS白名单请求；存档路径由主进程固定，renderer不能传任意路径。架构与四张流程图见 [architecture.md](docs/architecture.md)。
+桌面renderer关闭Node权限，开启隔离与进程沙箱；仅加载本地构建，阻止任意导航。IP/天气由主进程HTTPS白名单请求；renderer不能传任意存档路径。高级使用或真实EXE隔离测试可在启动时显式指定完整绝对路径 `--user-data-dir=...`；普通启动无需参数，始终使用上述默认目录。架构与流程图见 [architecture.md](docs/architecture.md)。
 
 ## 8. 改数值与扩展
 
@@ -140,7 +148,7 @@ docs/                     架构、决策、进度、验收和技术债
 
 ## 9. 质量证据与剩余工作
 
-不要把“构建成功”或“78项规则通过”当作所有电脑都安装运行通过。最新状态以 [ACCEPTANCE.md](docs/ACCEPTANCE.md) 为准，明确区分自动检查、禁沙箱诊断、真实网络、休眠与其他电脑实测。
+不要把“构建成功”或“自动测试通过”当作所有电脑都安装运行通过。1.0.1 最新状态以 [REPAIR_ACCEPTANCE.md](docs/REPAIR_ACCEPTANCE.md) 为准，明确区分自动检查、禁沙箱诊断、真实网络、休眠与其他电脑实测。
 
 - [开发进度与留痕](docs/PROGRESS.md)
 - [玩法与工程决策](docs/DECISIONS.md)
