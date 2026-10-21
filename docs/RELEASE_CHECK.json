@@ -1,18 +1,19 @@
 {
-  "checkedAt": "2026-10-21T07:48:19.611Z",
-  "version": "1.1.0",
-  "installer": "PondClock-Setup-1.1.0-x64.exe",
-  "bytes": 116619387,
-  "sha256": "23bb04e1475fabae7e96d4130348c573214298bf1257764d0a11c9eccd508c0b",
+  "checkedAt": "2026-10-21T08:35:00.952Z",
+  "version": "1.1.1",
+  "installer": "PondClock-Setup-1.1.1-x64.exe",
+  "bytes": 116623693,
+  "sha256": "b640d4f68cf3ba405176d60c75086a1ba48a55e16cca3486078a25965241744a",
   "portable": {
-    "file": "PondClock-1.1.0-x64.zip",
-    "bytes": 162363254,
-    "sha256": "e9c67195e69a0a91782ebeedbb0796ac278aef49fa5ef51f4a6fe847a39ba86e"
+    "file": "PondClock-1.1.1-x64.zip",
+    "bytes": 162364901,
+    "sha256": "4589a77994cb6c511ef9533c82c490b6c7a77bc77cc1cfb7ae2dadd817eb1533"
   },
   "installerExtensionSha256": "538322bda5c4eb9edc26c027eb4535dfbd6d61e2057c17d68da244a0121399af",
   "packedRuntimeFilesMatch": [
     "build-desktop/index.html",
     "desktop/environment.cjs",
+    "desktop/environmentNetwork.cjs",
     "desktop/lifecycle.cjs",
     "desktop/main.cjs",
     "desktop/preload.cjs",
@@ -23,14 +24,15 @@
     "src/domain/routes.js",
     "src/domain/saveSchema.js",
     "src/config/economy.js",
+    "src/config/environmentEndpoints.cjs",
     "src/config/fishing.js",
     "src/config/services.js",
     "src/config/storage.js",
     "src/config/travel.js",
     "src/data/regionLocations.js",
     "src/lib/gameConfig.js",
-    "build-desktop/assets/index-CozCJavP.js",
-    "build-desktop/assets/index-3d9Uv7vZ.css"
+    "build-desktop/assets/index-B4VB8c3_.js",
+    "build-desktop/assets/index-CaPJwGgw.css"
   ],
   "productionSandboxConfigured": true
 }

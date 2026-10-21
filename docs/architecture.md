@@ -15,7 +15,7 @@ flowchart TD
   UI --> ENV[geo / clockWeather hooks]
   ENV --> SERVICE[environment超时缓存与来源]
   SERVICE --> BRIDGE
-  MAIN --> NET[白名单ipapi / Open-Meteo]
+  MAIN --> NET[白名单ipapi / IPWhois / Open-Meteo]
   NET --> SERVICE
   SERVICE --> GEO[每次有效IP永久免费解锁]
   GEO --> SESSION
@@ -107,3 +107,31 @@ flowchart LR
 窗口位置与游戏存档分开；置顶设置仍随完整游戏状态保存。透明区域只负责外观，顶部为明确的拖动区，按钮为非拖动区，不将整个水塘变成拖动区域。实现参考 [Electron 自定义窗口交互](https://www.electronjs.org/docs/latest/tutorial/custom-window-interactions)。没有开启整窗鼠标穿透，收竿与面板仍正常接收点击。
 
 新档定位宽限最多1秒，已有档案立即读取；后台 IP 返回成功后才新增现实到访记录。窗口前台与网络恢复事件只触发服务，不直接结算资产。429冷却保留在主进程与前端，VPN切换不绕过供应商限制。
+
+## 1.1.1 双定位服务与独立天气
+
+```mermaid
+flowchart TD
+  A[启动 前台 联网 手动 两分钟] --> B[节流 最新请求控制]
+  B --> C[独立定位session 重载代理 清理旧连接]
+  C --> D[最近成功服务 或默认ipapi]
+  D -->|403 超时 无效响应| E[固定备用IPWhois 或另一服务]
+  D -->|有效地区| F[IP新位置 坐标 来源 时间]
+  E -->|有效地区| F
+  E -->|均失败| G[带日期缓存 或默认 无伪造成功]
+  D -->|429或配额JSON| H[该服务独立冷却 main门禁]
+  H --> E
+  F --> I[会话队列 免费永久解锁]
+  F --> J[现实坐标天气]
+  G --> K[历史或固定参考城市 明确标注]
+  K --> L[独立天气控制器]
+  J --> L
+  L --> M[Open-Meteo 成功15分钟 缓存6小时]
+  L --> N[普通失败1至15分钟 429等待 手动恢复]
+  N --> O[模拟晴雨 无温度 不影响IP]
+  F --> P[脱敏可复制诊断]
+  G --> P
+  N --> P
+```
+
+端点唯一表`src/config/environmentEndpoints.cjs`由main与renderer共同引用；`services.js`集中时限；IP故障切换和资产解锁分开；`weatherRefresh.js`只拥有天气网络状态。依据：[Electron session](https://www.electronjs.org/docs/latest/api/session)、[IPWhois官方端点与配额](https://ipwhois.io/documentation)。真实与模拟证据分别见[网络修复验收](NETWORK_FIX.md)。

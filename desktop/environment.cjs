@@ -1,3 +1,4 @@
+const { isGeoUrl } = require('../src/config/environmentEndpoints.cjs');
 const WEATHER_KEYS = new Set([
   'latitude', 'longitude', 'current', 'timezone', 'timeformat', 'forecast_days',
   'temperature_unit', 'wind_speed_unit', 'precipitation_unit',
@@ -14,7 +15,7 @@ function validateEnvironmentUrl(input) {
   if (url.protocol !== 'https:' || url.port || url.username || url.password || url.hash) {
     throw new Error('只允许固定 HTTPS 环境服务。');
   }
-  if (url.hostname === 'ipapi.co' && url.pathname === '/json/' && !url.search) return url;
+  if (isGeoUrl(url.href)) return url;
   if (url.hostname !== 'api.open-meteo.com' || url.pathname !== '/v1/forecast') {
     throw new Error('环境服务地址不在白名单。');
   }
@@ -61,7 +62,7 @@ function createEnvironmentService({ now = Date.now, timeoutMs = 8000 } = {}) {
     const httpError = (status, retryAtMs = null) => Object.assign(
       new Error(`环境服务暂不可用（HTTP ${status}）。`), { code: `ENV_HTTP_${status}`, status, retryAtMs });
     if ((retryUntil.get(url.origin) || 0) > now()) throw httpError(429, retryUntil.get(url.origin));
-    const geo = url.hostname === 'ipapi.co';
+    const geo = isGeoUrl(url.href);
     if (geo) activeGeo?.abort();
     const controller = new AbortController();
     if (geo) activeGeo = controller;
@@ -93,8 +94,18 @@ function createEnvironmentService({ now = Date.now, timeoutMs = 8000 } = {}) {
           if (bytes > 2 * 1024 * 1024) throw new Error('环境服务响应过大。');
           chunks.push(value);
         }
-        try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }
+        let data;
+        try { data = JSON.parse(Buffer.concat(chunks).toString('utf8')); }
         catch { throw new Error('环境服务未返回有效 JSON。'); }
+        // Some providers encode a quota failure in an HTTP200 JSON body. Keep
+        // that gate in main too so reloading the renderer cannot bypass it.
+        const reason = data?.reason || data?.message;
+        if (geo && (data?.error || data?.success === false) && typeof reason === 'string'
+            && /rate.?limit|quota/i.test(reason.slice(0, 180))) {
+          retryUntil.set(url.origin, rateLimitDeadline(response.headers?.get?.('Retry-After'), now()));
+          throw httpError(429, retryUntil.get(url.origin));
+        }
+        return data;
       });
       const aborted = new Promise((_resolve, reject) => {
         stop = () => reject(Object.assign(new Error(timedOut ? '环境请求超时。' : '环境请求已被更新的请求替代。'),

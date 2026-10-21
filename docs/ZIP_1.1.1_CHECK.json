@@ -1,0 +1,12 @@
+{
+  "version": "1.1.1",
+  "extractedAt": "2026-10-21T08:30:56.561Z",
+  "extractionDirectory": "X:/game/PondClock-1.1.1",
+  "totalFiles": 76,
+  "sourceAndZipMatch": true,
+  "userGuideExists": true,
+  "exeSha256": "5392f6075a5f8627e16963ae7aadd1c6f7189dd340083c9022c890cd92ade4f9",
+  "archiveSha256": "ed440e7324752f0dc6293a24f951b05889b5c5221a7455e4466c233500db1e03",
+  "runtimeLaunchPassed": true,
+  "runtimeEvidence": "NATIVE_1.1.1_CHECK.json"
+}

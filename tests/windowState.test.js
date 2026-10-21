@@ -181,7 +181,11 @@ test('main-process widget options and IPC actions preserve the sandbox, saved pi
     Menu: { setApplicationMenu: (value) => { assert.equal(value, null); } },
     ipcMain: { handle: (channel, handler) => handlers.set(channel, handler) },
     dialog: { showErrorBox: (_title, message) => { assert.fail(message); } },
-    net: {}, session: { defaultSession: { setPermissionRequestHandler: () => {}, setPermissionCheckHandler: () => {},
+    net: {}, session: { fromPartition: (partition, options) => {
+      assert.equal(partition, 'pondclock-location');
+      assert.equal(options.cache, false);
+      return {};
+    }, defaultSession: { setPermissionRequestHandler: () => {}, setPermissionCheckHandler: () => {},
       webRequest: { onHeadersReceived: () => {} } } },
   };
   const fakeRequire = (id) => {

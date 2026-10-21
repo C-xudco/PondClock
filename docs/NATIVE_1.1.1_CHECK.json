@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-10-21T08:33:55.283Z",
+  "version": "1.1.1",
+  "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\native-1.1.1-PBCSfh",
+  "executable": "X:\\game\\PondClock-1.1.1\\PondClock.exe",
+  "normalSandbox": true,
+  "realNetworkBlocked": true,
+  "seededOfflineGame": true,
+  "exeSha256": "5392f6075a5f8627e16963ae7aadd1c6f7189dd340083c9022c890cd92ade4f9",
+  "archiveSha256": "ed440e7324752f0dc6293a24f951b05889b5c5221a7455e4466c233500db1e03",
+  "startupLog": [
+    {
+      "at": "2026-10-21T08:31:45.365Z",
+      "event": "STARTUP_BEGIN"
+    },
+    {
+      "at": "2026-10-21T08:31:45.857Z",
+      "event": "WINDOW_READY"
+    }
+  ],
+  "windowState": {
+    "version": 1,
+    "sizePreset": "compact",
+    "x": 1263,
+    "y": 645
+  },
+  "launchMethod": "Ordinary Windows Start-Process from approved shell; no administrator verb, no no-sandbox or inspector switch",
+  "globalNoSandboxSwitch": false,
+  "inspectorUsed": false,
+  "visibleWindowObserved": true,
+  "nativeWindowId": 2753088,
+  "settingsPanelOpenedThroughNativeClick": true,
+  "uiObserved": [
+    "透明无边框挂件",
+    "模拟天气",
+    "IP地区：联网已关闭",
+    "天气：暂用模拟晴雨",
+    "参考城市说明",
+    "水塘时钟 1.1.1"
+  ],
+  "nativeExitButtonClicked": true,
+  "windowAbsentAfterExit": true,
+  "mainProcessAbsentAfterExit": true,
+  "limitations": [
+    "已知受管直接启动首次失败，批准普通启动成功；不据此推断所有机器情况",
+    "最终普通EXE仅离线profile启动及设置/退出检查；真实联网为另行Electron诊断",
+    "未独立捕获主进程退出码或所有子进程退出状态",
+    "朋友机器、实际VPN变更、旧安装迁移/卸载仍待验"
+  ]
+}

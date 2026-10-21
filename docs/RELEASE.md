@@ -1,4 +1,26 @@
-# 1.1.0 无边框桌面挂件
+# 1.1.1 定位与天气修复
+
+2026-10-21，Asia/Shanghai。主交付完整免安装ZIP，保留无边框挂件与原存档目录；退出旧程序再完整解压新版。新增备用定位、独立代理连接、天气重试/错误说明和可复制脱敏诊断。
+
+| 项目 | 结果 |
+| --- | --- |
+| 完整ZIP | `release/PondClock-1.1.1-x64.zip`，162364901字节 |
+| ZIP SHA-256 | `4589a77994cb6c511ef9533c82c490b6c7a77bc77cc1cfb7ae2dadd817eb1533` |
+| 已解压入口 | `X:/game/PondClock-1.1.1/PondClock.exe`，76文件，使用说明齐全 |
+| 完整性 | 22个运行时/前端文件逐字节匹配；ZIP中EXE、ASAR、使用说明与构建一致 |
+| 普通EXE | 最终解压版经普通Windows入口启动，无禁沙箱/调试参数；独立离线profile，492ms到WINDOW_READY，实际设置显示1.1.1及独立IP/天气状态，退出按钮后窗口和主进程消失、位置落盘 |
+| 自动检查 | 160项中159通过、1项原生安装器默认skip；lint、Web/desktop构建通过 |
+| UI诊断 | 14组通过：原挂件完整回归，以及主定位403备用成功、同坐标天气恢复、双定位失败缓存与独立天气。显式no-sandbox、独立档与mock网络，非生产普通EXE联网验收 |
+| 真实网络 | 经用户限定授权，IPWhois约1045ms成功且省区/坐标有效；返回坐标天气约1363ms成功。另行Electron诊断，不保存IP或位置，非朋友机器或实际VPN实测 |
+| 安装候选 | `PondClock-Setup-1.1.1-x64.exe`，116623693字节，SHA `b640d4f68cf3ba405176d60c75086a1ba48a55e16cca3486078a25965241744a`；旧版升级/重装/卸载仍待验收，主交付ZIP |
+
+打包先在受管shell遇到makensis无法启动，随后对既有win-unpacked目录从获批shell编译成功，无重装/无全局系统修改。frozen install的供应链元数据/attestation受DNS限制已中止，未修改锁文件或依赖版本；不能声称本轮该命令完整通过。普通EXE首次受管启动未显示，随后批准普通入口成功，两种方法不混淆。
+
+详情：[修复及朋友复验](NETWORK_FIX.md)、[真实网络](NETWORK_1.1.1_CHECK.json)、[UI诊断](NETWORK_UI_CHECK.json)、[普通EXE](NATIVE_1.1.1_CHECK.json)、[ZIP](ZIP_1.1.1_CHECK.json)、[发行资源](RELEASE_CHECK.json)。没有公开上传或改写玩家存档。
+
+---
+
+# 1.1.0 无边框桌面挂件（历史）
 
 2026-10-21，Asia/Shanghai。当前主交付为完整免安装ZIP：透明无边框、可拖动、置顶与两档大小，单独记住位置；换网络/VPN后自动重新检测IP。先退出旧版，再打开新版，默认进度目录保持一致。
 

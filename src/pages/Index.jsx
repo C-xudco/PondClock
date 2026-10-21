@@ -29,7 +29,7 @@ export default function Index() {
   const desktop = useDesktopWindow();
   const online = game.booted && !game.error && (game.settings?.onlineEnhancements ?? true);
   const geo = useGeoRegion(online);
-  const env = useClockWeather(game.realRegion || game.currentRegion, geo, online);
+  const env = useClockWeather(game.realRegion || game.homeRegion, geo, online);
   const [activePanel, setActivePanel] = useState(() => PANEL_TITLES[devParam('tab')] ? devParam('tab') : null);
   const [initialGeoGracePassed, setInitialGeoGracePassed] = useState(false);
   const initializing = useRef(false);
@@ -85,7 +85,7 @@ export default function Index() {
       case 'codex': return <CodexPanel codex={game.codex} pityCounter={game.pityCounter} currentRegion={game.currentRegion} />;
       case 'shop': return <ShopPanel coins={game.coins} rodLevel={game.rodLevel} baitCount={game.baitCount} baitLeft={game.baitLeft} onBuyRod={game.buyRod} onBuyBait={game.buyBait} disabled={disabled} />;
       case 'travel': return <TravelPanel coins={game.coins} currentRegion={game.currentRegion} unlockedRegions={game.unlockedRegions} realRegion={game.realRegion} geoSource={geo.source} onTravel={game.travelTo} onVisitReal={game.visitRealRegion} travel={game.travel} busy={game.busy || !!game.error} />;
-      case 'settings': return <SettingsPanel game={game} geo={geo} desktop={desktop} onChangeTop={changeTop} onRefreshGeo={geo.refresh} />;
+      case 'settings': return <SettingsPanel game={game} geo={geo} weather={env} desktop={desktop} onChangeTop={changeTop} onRefreshGeo={geo.refresh} />;
       default: return null;
     }
   };

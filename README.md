@@ -4,7 +4,7 @@ Windows x64 单机桌面应用。挂机等鱼讯、点击收竿，收集全国 1
 
 ## 1. 桌面悬浮挂件与日常使用
 
-当前版本 **1.1.0**：透明、无边框的桌面悬浮挂件。推荐完整免安装版 `release/PondClock-1.1.0-x64.zip`：全部解压到独立文件夹，再打开 **PondClock.exe**。DLL、resources、locales 都要保留，文件夹内附“使用说明.txt”。无需 Node、pnpm、开发服务器或 WebView2。
+当前版本 **1.1.1**：透明、无边框的桌面悬浮挂件，修复单一定位服务失败与天气重试缺口。推荐完整免安装版 `release/PondClock-1.1.1-x64.zip`：全部解压到独立文件夹，再打开 **PondClock.exe**。DLL、resources、locales 都要保留，文件夹内附“使用说明.txt”。无需 Node、pnpm、开发服务器或 WebView2。
 
 按住顶部“水塘时钟”横条拖动。默认小挂件 **420×350**，展开按钮切换为 **640×490**；位置和档位会记住，显示器拔掉或分辨率变化会把窗口移回可见范围。面板在挂件内展开并可滚动。图钉控制置顶，新存档默认置顶，已有进度沿用原设置；“—”最小化到任务栏，“×”等待已接受的保存完成后退出。
 
@@ -25,7 +25,9 @@ Windows x64 单机桌面应用。挂机等鱼讯、点击收竿，收集全国 1
 
 换网络或 VPN 后，**切回挂件、恢复联网以及每 2 分钟的可见窗口轮询**会重新请求当前 IP；左下角地区按钮和设置里的“立即识别所在地”可手动刷新。自动检测最短间隔30秒，手动连点间隔2秒，旧响应不能覆盖新结果。界面显示刷新中、更新时间、缓存与失败原因。
 
-普通失败按1–15分钟退避，手动可在换网络后再试；HTTP429至少等待15分钟并尊重服务端更长的 Retry-After，手动/恢复联网也不能绕过。没有新增定位供应商。新存档最多等1秒让快速定位决定起点，随后从缓存或默认江南开始；已有进度立即读取，后台定位成功再免费累计解锁，不悄悄改变家乡或游戏位置。
+定位先尝试 ipapi，403、超时、无效响应或中国省份未匹配时自动改用 IPWhois；本次运行优先复用最近成功的服务。两家分别执行429冷却，不向受限服务重复请求；全部受限时等最早可恢复的服务。普通失败按1–15分钟退避，手动可在换网络后再试；HTTP429至少等待15分钟并尊重服务端更长的 Retry-After，手动/恢复联网也不能绕过。
+
+桌面定位使用独立内存网络会话，每次识别重新读取系统代理并清理该会话旧连接，避免换VPN后仍复用旧连接；不修改Windows代理。新存档最多等1秒让快速定位决定起点，随后从缓存或默认江南开始；已有进度立即读取，后台定位成功再免费累计解锁，不悄悄改变家乡或游戏位置。
 
 未知地区、境外未匹配结果和旧缓存不会伪称本次成功定位。支持全国34个省级行政区（含港澳台地区结果），映射表在 `src/lib/gameConfig.js`。境外出口会明确显示尚无对应水域。
 
@@ -51,11 +53,11 @@ Windows x64 单机桌面应用。挂机等鱼讯、点击收竿，收集全国 1
 
 时钟显示电脑现实所在地的温度与晴雨，优先使用IP坐标；没有可用坐标时采用对应水域代表点。游戏里买票不会改变电脑现实所在地天气。
 
-目前没有接入读取Windows任务栏天气缓存的私有方式；天气通过 [Open-Meteo](https://open-meteo.com/en/docs) 获取，效果类似任务栏天气。它是天气服务的模型数据，不是逐站现场实测。正常每15分钟刷新，最近缓存保留6小时，限流/超时会降级并退避。
+目前没有接入读取Windows任务栏天气缓存的私有方式；天气通过 [Open-Meteo](https://open-meteo.com/en/docs) 获取，效果类似任务栏天气。它是天气服务的模型数据，不是逐站现场实测。正常每15分钟刷新，最近缓存保留6小时；普通失败1分钟起退避，恢复联网/回到前台也会检查，429尊重Retry-After。设置有独立“刷新天气”入口。
 
-界面明确区分**当地天气、缓存天气、离线模拟**，鼠标放上天气可看更新时间。离线模拟不编造温度。断网仍可钓鱼、交易、旅行与读写存档。关闭设置里的联网增强后不再请求定位和天气。
+界面分别显示 **IP地区** 与 **联网天气 / 缓存天气 / 模拟天气**，两条链路各自显示失败原因。模拟晴雨只影响场景，不编造温度，也不表示IP必然失败。没有IP坐标时采用现实记录地区或家乡的固定代表点，设置明确标“参考城市”；游戏买票不会移动这个参考点。历史位置缓存会明确标出，不能冒充本次所在地。断网仍可钓鱼、交易、旅行与读写存档。关闭设置里的联网增强后不再请求定位和天气。
 
-定位来自 [ipapi](https://ipapi.co/api/)，它识别的是公网出口的大致位置，VPN也会改变结果；不持久记录完整IP。服务可达性和免费配额受地区/供应商影响，不作为核心玩法前置。商业发行前需重新核实服务方案与署名要求。
+定位来自 [ipapi](https://ipapi.co/api/) 与备用 [IPWhois](https://ipwhois.io/documentation)，识别公网出口的大致位置，VPN也会改变结果。联网请求会让服务看到公网IP，天气还会收到大致坐标；本机不持久记录完整IP。设置可关闭联网；“查看联网诊断”可选中文字复制反馈，只包含版本、服务状态和时间，不含IP、位置、代理凭据或游戏存档。服务可达性和免费配额受地区/供应商影响，不作为核心玩法前置。商业发行前需重新核实服务方案与署名要求。
 
 ## 5. 本地记忆、备份和换电脑
 
@@ -115,6 +117,7 @@ src/config/fishing.js       初始资产、等待/台词/品质加成配置（�
 src/config/travel.js        地理半径、路线版本、60–180s、票价上下限
 src/config/economy.js       市场倍率、保鲜期限、过期价、重量曲线
 src/config/services.js      接口、超时、刷新、缓存期限
+src/config/environmentEndpoints.cjs 定位服务唯一白名单，main/renderer共享
 src/config/storage.js       schema、命令去重窗口、Web键名
 src/data/regionLocations.js 12个固定代表城市坐标
 src/domain/routes.js       Haversine + 全图航线生成与报价
@@ -124,6 +127,8 @@ src/domain/saveSchema.js   共享严格校验，拒绝坏值/未知引用/未来
 src/application/gameSession.js 串行事务、逻辑时间、回执未知重读
 src/storage/repository.js  桌面桥或Web预览存储适配
 src/services/environment.js IP/天气适配、缓存、来源与退避
+src/services/weatherRefresh.js 独立天气刷新、恢复、限流和离线过期
+src/services/networkDiagnostics.js 选择性脱敏的可复制联网诊断
 src/hooks/                React订阅、钓鱼节奏、时钟/环境UI适配
 src/components/pond/      原SVG场景（1000×440）、浮漂与台词
 src/components/panels/    鱼篓/图鉴/渔具店/漫游/设置
@@ -134,6 +139,7 @@ desktop/installer.nsh     精确目标进程与旧卸载器写锁检查，不强
 desktop/preload.cjs       最小白名单桥，不暴露Node或任意文件访问
 desktop/saveRepository.cjs 文件双槽、校验、原子写入、备份恢复
 desktop/environment.cjs   固定HTTPS端点/字段白名单、超时和响应大小限制
+desktop/environmentNetwork.cjs 定位独立session代理重载与旧连接清理
 electron-builder.yml      NSIS完整安装器配置
 vite.desktop.config.js    脱离NoCode平台插件的桌面构建
 tests/                    独立规则、故障注入、存储、环境和会话测试
@@ -156,7 +162,7 @@ docs/                     架构、决策、进度、验收和技术债
 
 ## 9. 质量证据与剩余工作
 
-不要把“构建成功”或“自动测试通过”当作所有电脑都安装运行通过。1.1.0最新状态以 [WIDGET_ACCEPTANCE.md](docs/WIDGET_ACCEPTANCE.md) 为准；旧安装问题见 [REPAIR_ACCEPTANCE.md](docs/REPAIR_ACCEPTANCE.md)。普通EXE显示、禁沙箱功能诊断、真实网络与其他电脑实测分开记录。
+不要把“构建成功”或“自动测试通过”当作所有电脑都安装运行通过。1.1.1网络修复见 [NETWORK_FIX.md](docs/NETWORK_FIX.md)，1.1.0挂件历史见 [WIDGET_ACCEPTANCE.md](docs/WIDGET_ACCEPTANCE.md)；旧安装问题见 [REPAIR_ACCEPTANCE.md](docs/REPAIR_ACCEPTANCE.md)。普通EXE显示、禁沙箱功能诊断、真实网络与其他电脑实测分开记录。
 
 - [开发进度与留痕](docs/PROGRESS.md)
 - [玩法与工程决策](docs/DECISIONS.md)

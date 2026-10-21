@@ -83,15 +83,30 @@ async function launch() {
     session.defaultSession.webRequest.onBeforeRequest({ urls: ['http://*/*', 'https://*/*', 'ws://*/*', 'wss://*/*'] }, (_details, done) => done({ cancel: true }));
     globalThis.__widgetFixture = { province: '广东省', city: '广州', regionCode: 'GD', latitude: 23.13, longitude: 113.26 };
     globalThis.__widgetGeoCalls = [];
-    net.fetch = async (input) => {
+    globalThis.__widgetScenario = { primaryStatus: 200, backupStatus: 200, weather: false };
+    const fixtureFetch = async (input) => {
       const url = new URL(String(input));
-      if (url.hostname !== 'ipapi.co') throw new Error('Widget diagnostic blocks real weather and all other HTTP');
+      const scenario = globalThis.__widgetScenario;
+      if (url.hostname === 'api.open-meteo.com') {
+        if (!scenario.weather) return new Response('', { status: 403 });
+        return Response.json({ latitude: Number(url.searchParams.get('latitude')), longitude: Number(url.searchParams.get('longitude')),
+          current_units: { temperature_2m: '°C' }, current: { temperature_2m: 20, weather_code: 0, time: Math.floor(Date.now() / 1000) } });
+      }
+      if (!['ipapi.co', 'ipwho.is'].includes(url.hostname)) throw new Error('Widget diagnostic blocks every unmocked HTTP endpoint');
       const fixture = globalThis.__widgetFixture;
-      globalThis.__widgetGeoCalls.push({ province: fixture.province });
-      return new Response(JSON.stringify({ country_code: 'CN', country_name: 'China', region: fixture.province,
+      globalThis.__widgetGeoCalls.push({ province: fixture.province, provider: url.hostname });
+      const status = url.hostname === 'ipapi.co' ? scenario.primaryStatus : scenario.backupStatus;
+      if (status !== 200) return new Response('', { status });
+      return new Response(JSON.stringify({ success: true, country_code: 'CN', country_name: 'China', region: fixture.province,
         city: fixture.city, region_code: fixture.regionCode, latitude: fixture.latitude, longitude: fixture.longitude }),
       { status: 200, headers: { 'Content-Type': 'application/json' } });
     };
+    net.fetch = fixtureFetch;
+    // The product isolates location sockets so proxy changes cannot reuse old
+    // connections. Block and mock that session as well: never call real IP APIs.
+    const locationSession = session.fromPartition('pondclock-location', { cache: false });
+    locationSession.webRequest.onBeforeRequest({ urls: ['http://*/*', 'https://*/*'] }, (_details, done) => done({ cancel: true }));
+    locationSession.fetch = fixtureFetch;
     return { isPackaged: app.isPackaged, userData: app.getPath('userData'), version: app.getVersion(),
       noSandbox: app.commandLine.hasSwitch('no-sandbox') };
   });
@@ -221,7 +236,7 @@ async function run() {
   report.profile = userData;
   report.sourceHashes = {};
   const index = await fs.readFile(path.join(root, 'build-desktop/index.html'), 'utf8');
-  for (const relative of ['desktop/main.cjs', 'desktop/windowState.cjs', 'src/services/environment.js', 'build-desktop/index.html',
+  for (const relative of ['desktop/main.cjs', 'desktop/windowState.cjs', 'desktop/environmentNetwork.cjs', 'src/services/environment.js', 'src/services/weatherRefresh.js', 'src/config/environmentEndpoints.cjs', 'build-desktop/index.html',
     ...[...index.matchAll(/(?:src|href)="\.\/(assets\/[^"]+)"/g)].map((match) => `build-desktop/${match[1]}`)]) {
     report.sourceHashes[relative] = createHash('sha256').update(await fs.readFile(path.join(root, relative))).digest('hex');
   }
@@ -286,6 +301,46 @@ async function run() {
 
   await page.getByRole('button', { name: '设置', exact: true }).click();
   const settings = page.getByRole('region', { name: '设置与存档', exact: true });
+  await fixture('广东');
+  await application.evaluate(() => { globalThis.__widgetScenario.primaryStatus = 403; });
+  await page.clock.runFor(2100);
+  await settings.getByRole('button', { name: '立即识别所在地', exact: true }).click();
+  await waitRegion(page, 'lingnan');
+  await settings.getByText('IP地区：本次IP识别成功 · IPWhois', { exact: true }).waitFor();
+  await settings.getByText('查看联网诊断', { exact: true }).click();
+  const diagnostic = () => settings.getByRole('textbox', { name: '联网诊断' }).inputValue().then(JSON.parse);
+  let network = await diagnostic();
+  assert.deepEqual(network.location.attempts.map(({ code }) => code), ['HTTP_403', 'OK']);
+  assert.equal(network.weather.source, 'simulated');
+  unchangedAssets(initial, await snapshot(page));
+  check('N01', 'Production IPC falls back from primary HTTP403 to IPWhois, unlocks freely, and weather failure does not erase a successful IP location');
+
+  await application.evaluate(() => { globalThis.__widgetScenario.weather = true; });
+  const nowMs = await page.evaluate(() => Date.now());
+  await page.clock.runFor(Math.max(2100, (network.weather.retryAtMs || nowMs) - nowMs + 1));
+  await settings.getByRole('button', { name: '刷新天气', exact: true }).click();
+  await settings.getByText(/天气：联网天气/).waitFor();
+  network = await diagnostic();
+  assert.equal(network.weather.code, null);
+  assert.equal(network.weather.source, 'online');
+  assert.equal(network.location.source, 'ip');
+  await screenshot(page, 'network-recovered.png');
+  check('N02', 'Weather recovers at the same IP coordinates through its own retry/manual control without resetting assets or requiring a location change');
+
+  await application.evaluate(() => { globalThis.__widgetScenario.backupStatus = 403; });
+  await page.clock.runFor(2100);
+  await settings.getByRole('button', { name: '立即识别所在地', exact: true }).click();
+  await settings.getByText('IP地区：使用历史位置缓存 · IPWhois', { exact: true }).waitFor();
+  network = await diagnostic();
+  assert.equal(network.location.source, 'ip-cached');
+  assert.deepEqual(network.location.attempts.map(({ code }) => code), ['HTTP_403', 'HTTP_403']);
+  assert.equal(network.weather.source, 'online');
+  assert.equal(network.weather.locationSource, 'ip-cached');
+  assert.ok(!/latitude|longitude|city|detail|execPath|userData/.test(JSON.stringify(network)));
+  unchangedAssets(initial, await snapshot(page));
+  await screenshot(page, 'network-provider-failure.png');
+  check('N03', 'Both providers failing is visibly a cached IP result while online weather remains separate; shareable diagnostics contain no coordinates or paths');
+
   await settings.locator('label').filter({ hasText: '保持在其他窗口前面' }).locator('input').click();
   await page.waitForFunction(async () => !(await window.pondDesktop.loadSave()).snapshot.settings.alwaysOnTop && !(await window.pondDesktop.getAppInfo()).alwaysOnTop);
   await settings.locator('label').filter({ hasText: '联网识别所在地与天气' }).locator('input').click();

@@ -4,6 +4,8 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { createSaveRepository, MAX_SAVE_BYTES } = require('./saveRepository.cjs');
 const { requestEnvironment } = require('./environment.cjs');
+const { createGeoNetworkFetch } = require('./environmentNetwork.cjs');
+const { isGeoUrl } = require('../src/config/environmentEndpoints.cjs');
 const { resolveUserDataDirectory, createShutdownController, createStartupGuard, startupLogRecord } = require('./lifecycle.cjs');
 const { createWindowStateRepository, resolveWindowPlacement } = require('./windowState.cjs');
 
@@ -111,6 +113,7 @@ function windowInfo() {
 }
 
 function registerHandlers() {
+  const fetchGeoNetwork = createGeoNetworkFetch(session.fromPartition('pondclock-location', { cache: false }));
   handle('pond:load-save', () => repository.load());
   handle('pond:save-game', (snapshot) => shutdown.runWrite(() => repository.save(snapshot)));
   handle('pond:export-save', async (input) => {
@@ -164,7 +167,8 @@ function registerHandlers() {
     else throw new Error('不支持此窗口操作。');
     return windowInfo();
   });
-  handle('pond:environment', (url) => requestEnvironment(url, (input, init) => net.fetch(input, init)));
+  handle('pond:environment', (url) => requestEnvironment(url, (input, init) =>
+    isGeoUrl(input) ? fetchGeoNetwork(input, init) : net.fetch(input, init)));
 }
 
 async function createWindow() {

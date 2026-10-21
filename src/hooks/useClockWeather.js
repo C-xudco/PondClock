@@ -1,9 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import { SERVICES_CONFIG } from "@/config/services";
-import {
-  browserStorage, fetchWeather, readWeatherCache, writeWeatherCache,
-  simulatedWeather, weatherLocation,
-} from "@/services/environment";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { browserStorage, validCoordinates, weatherLocation } from "@/services/environment";
+import { bindWeatherRefreshTriggers, createWeatherRefreshController, initialWeatherState } from "@/services/weatherRefresh";
 
 const SEASONS = ["冬", "冬", "春", "春", "春", "夏", "夏", "夏", "秋", "秋", "秋", "冬"];
 
@@ -15,8 +12,11 @@ export function useClockWeather(regionId, geo, online = true) {
   const detail = geo?.detail;
   const location = useMemo(() => weatherLocation(regionId, { latitude, longitude, detail }),
     [regionId, latitude, longitude, detail]);
-  const fallback = () => readWeatherCache(browserStorage(), location) || simulatedWeather(location);
+  const fallback = () => initialWeatherState(location, browserStorage());
   const [environment, setEnvironment] = useState(fallback);
+  const initial = useRef({ location, online });
+  const active = useRef(null);
+  const refreshWeather = useCallback(() => active.current?.refresh("manual") || Promise.resolve(), []);
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
@@ -24,38 +24,20 @@ export function useClockWeather(regionId, geo, online = true) {
   }, []);
 
   useEffect(() => {
-    let active = true;
-    let timer;
-    const controller = new AbortController();
-    const stored = () => readWeatherCache(browserStorage(), location) || simulatedWeather(location);
-    setEnvironment(stored());
+    const controller = createWeatherRefreshController({ location: initial.current.location,
+      enabled: initial.current.online, onChange: setEnvironment });
+    active.current = controller;
+    setEnvironment(controller.getState());
+    const stop = bindWeatherRefreshTriggers(controller);
+    return () => { active.current = null; stop(); };
+  }, []);
 
-    const refresh = async () => {
-      const cached = readWeatherCache(browserStorage(), location);
-      const age = cached ? Date.now() - cached.fetchedAtMs : Infinity;
-      if (cached && age < SERVICES_CONFIG.weather.refreshMs) {
-        if (active) {
-          setEnvironment(cached);
-          timer = setTimeout(refresh, SERVICES_CONFIG.weather.refreshMs - age);
-        }
-        return;
-      }
-      try {
-        const next = await fetchWeather(location, { signal: controller.signal });
-        if (!active) return;
-        writeWeatherCache(browserStorage(), location, next);
-        setEnvironment(next);
-      } catch {
-        if (!active) return;
-        setEnvironment(stored());
-      }
-      // Failures, including 429, wait the full refresh interval before retrying.
-      if (active) timer = setTimeout(refresh, SERVICES_CONFIG.weather.refreshMs);
-    };
-
-    if (online) refresh();
-    else timer = setInterval(() => { if (active) setEnvironment(stored()); }, SERVICES_CONFIG.weather.refreshMs);
-    return () => { active = false; controller.abort(); clearTimeout(timer); clearInterval(timer); };
+  useEffect(() => {
+    const controller = active.current;
+    if (!controller) return;
+    controller.setEnabled(online);
+    controller.setLocation(location);
+    if (online) void controller.refresh("context");
   }, [location, online]);
 
   // A late reply from another location never flashes as the new place's weather.
@@ -70,5 +52,13 @@ export function useClockWeather(regionId, geo, online = true) {
     weatherSource: current.weatherSource,
     weatherUpdatedAt: current.weatherUpdatedAt,
     weatherPlace: current.weatherPlace,
+    weatherFetchedAtMs: current.fetchedAtMs,
+    weatherError: online ? current.weatherError : null,
+    weatherErrorCode: online ? current.weatherErrorCode : null,
+    weatherRefreshing: online && current.refreshing,
+    weatherLastAttemptAtMs: current.lastAttemptAtMs,
+    weatherRetryAtMs: current.retryAtMs,
+    weatherLocationSource: validCoordinates(latitude, longitude) ? (geo?.cached ? "ip-cached" : "ip") : "reference",
+    refreshWeather,
   };
 }

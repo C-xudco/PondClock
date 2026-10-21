@@ -2,6 +2,11 @@ import { DEFAULT_REGION, REGIONS } from "../lib/gameConfig.js";
 import { matchRegionForProvince } from "../lib/gameUtils.js";
 import { regionLocation } from "../data/regionLocations.js";
 import { SERVICES_CONFIG } from "../config/services.js";
+import environmentEndpoints from "../config/environmentEndpoints.cjs";
+
+const { GEO_PROVIDERS, isGeoUrl } = environmentEndpoints;
+const providerIds = new Set(GEO_PROVIDERS.map((provider) => provider.id));
+const attemptCodes = new Set(["OK", "HTTP_403", "HTTP_429", "TIMEOUT", "INVALID_RESPONSE", "NETWORK_ERROR", "COOLDOWN"]);
 
 const regionIds = new Set(REGIONS.map((region) => region.id));
 const specialRegions = { HK: "香港", MO: "澳门", TW: "台湾" };
@@ -53,7 +58,7 @@ export function createEnvironmentRequester({
   const retryUntil = new Map();
   return async function requestJson(input, { signal, timeoutMs = SERVICES_CONFIG.weather.timeoutMs } = {}) {
     const url = new URL(input);
-    const isGeo = url.origin === "https://ipapi.co" && url.pathname === "/json/" && !url.search;
+    const isGeo = isGeoUrl(url.href);
     const isWeather = url.origin === "https://api.open-meteo.com" && url.pathname === "/v1/forecast";
     if (url.username || url.password || url.hash || !(isGeo || isWeather)) {
       throw new EnvironmentError("Unknown environment service");
@@ -106,12 +111,13 @@ export function createEnvironmentRequester({
 const defaultRequester = createEnvironmentRequester();
 export const requestEnvironmentJson = (url, options) => defaultRequester(url, options);
 
-export function parseGeoResponse(data) {
+export function parseGeoResponse(data, provider = "ipapi") {
   if (!data || typeof data !== "object" || Array.isArray(data)) throw new EnvironmentError("IP 服务未返回有效地区");
-  if (data.error) {
-    if (/rate.?limit|quota/i.test(cleanText(data.reason, 64))) throw new EnvironmentError("IP 服务请求受限（HTTP 429）", 429);
+  if (data.error || data.success === false) {
+    if (/rate.?limit|quota/i.test(cleanText(data.reason || data.message, 64))) throw new EnvironmentError("IP 服务请求受限（HTTP 429）", 429);
     throw new EnvironmentError("IP 服务未返回有效地区");
   }
+  if (provider === "ipwhois" && data.success !== true) throw new EnvironmentError("IP 服务未确认定位成功");
   const country = cleanText(data.country_code, 10).toUpperCase();
   if (!/^[A-Z]{2}$/.test(country)) throw new EnvironmentError("IP 国家字段无效");
   const isChineseRegion = country === "CN" || Object.prototype.hasOwnProperty.call(specialRegions, country);
@@ -119,7 +125,7 @@ export function parseGeoResponse(data) {
     specialRegions[country], data.region, data.region_code, data.city,
   ) : null;
   const detail = [cleanText(data.region), cleanText(data.city)].filter(Boolean).join(" · ")
-    || cleanText(data.country_name) || "未匹配到具体地区";
+    || cleanText(data.country_name || data.country) || "未匹配到具体地区";
   const result = {
     regionId: matched || DEFAULT_REGION,
     source: matched ? "ip" : isChineseRegion ? "default" : "oversea",
@@ -151,6 +157,7 @@ export function readGeoCache(storage, nowMs = Date.now()) {
     detail: cleanText(data.detail), cached: true,
     fetchedAtMs: data.fetchedAtMs,
   };
+  if (providerIds.has(data.provider)) result.provider = data.provider;
   if (validCoordinates(data.latitude, data.longitude)) {
     result.latitude = data.latitude;
     result.longitude = data.longitude;
@@ -162,12 +169,97 @@ export function writeGeoCache(storage, geo, nowMs = Date.now()) {
   if (!regionIds.has(geo?.regionId) || !["ip", "default", "oversea"].includes(geo.source)) return;
   const { regionId, source, detail, latitude, longitude } = geo;
   writeJson(storage, SERVICES_CONFIG.geo.cacheKey,
-    { regionId, source, detail, latitude, longitude, version: 1, fetchedAtMs: nowMs });
+    { regionId, source, detail, latitude, longitude, version: 1, fetchedAtMs: nowMs,
+      ...(providerIds.has(geo.provider) ? { provider: geo.provider } : {}) });
 }
 
-export async function fetchGeo({ requestJson = requestEnvironmentJson, signal, now = Date.now } = {}) {
-  const data = await requestJson(SERVICES_CONFIG.geo.url, { signal, timeoutMs: SERVICES_CONFIG.geo.timeoutMs });
-  return { ...parseGeoResponse(data), fetchedAtMs: now() };
+function safeGeoAttempts(input) {
+  if (!Array.isArray(input)) return [];
+  return input.filter((attempt) => providerIds.has(attempt?.provider) && attemptCodes.has(attempt.code)
+      && Number.isSafeInteger(attempt.atMs) && attempt.atMs >= 0)
+    .slice(0, GEO_PROVIDERS.length).map(({ provider, code, atMs, retryAtMs }) => ({ provider, code, atMs,
+      ...(Number.isSafeInteger(retryAtMs) && retryAtMs > 0 ? { retryAtMs } : {}) }));
+}
+
+function geoLookupError(code, attempts, status = null, retryAtMs = null) {
+  const error = new EnvironmentError(status === 429 ? "全部定位服务暂受限，请稍后重试。" : "暂时无法识别当前网络。", status, retryAtMs);
+  error.code = code;
+  error.attempts = safeGeoAttempts(attempts);
+  return error;
+}
+
+/** Fail over only between the disclosed providers. Their quotas remain independent. */
+export function createGeoFetcher({
+  requestJson = requestEnvironmentJson, providers = GEO_PROVIDERS, now: clock = Date.now,
+  timeoutMs: defaultTimeoutMs = SERVICES_CONFIG.geo.timeoutMs,
+} = {}) {
+  let preferred = providers[0]?.id;
+  const retryUntil = new Map();
+  return async function lookupGeo({ signal, now = clock, timeoutMs = defaultTimeoutMs } = {}) {
+    const attempts = [];
+    const ordered = [...providers].sort((a, b) => Number(b.id === preferred) - Number(a.id === preferred));
+    for (const provider of ordered) {
+      if (signal?.aborted) {
+        const error = geoLookupError("GEO_ABORTED", attempts); error.name = "AbortError"; throw error;
+      }
+      const retryAtMs = retryUntil.get(provider.id) || 0;
+      if (retryAtMs > now()) {
+        attempts.push({ provider: provider.id, code: "COOLDOWN", atMs: now(), retryAtMs });
+        continue;
+      }
+      const controller = new AbortController();
+      const stop = () => controller.abort();
+      signal?.addEventListener("abort", stop, { once: true });
+      let timedOut = false;
+      const timer = setTimeout(() => { timedOut = true; stop(); }, timeoutMs);
+      let received = false;
+      try {
+        const data = await abortable(Promise.resolve().then(() => {
+          if (controller.signal.aborted) throw abortedError();
+          return requestJson(provider.url, { signal: controller.signal, timeoutMs });
+        }), controller.signal);
+        if (signal?.aborted) throw abortedError();
+        received = true;
+        const next = parseGeoResponse(data, provider.id);
+        if (next.source === "default") throw new EnvironmentError("IP 服务未匹配到省级地区");
+        preferred = provider.id;
+        retryUntil.delete(provider.id);
+        attempts.push({ provider: provider.id, code: "OK", atMs: now() });
+        return { ...next, fetchedAtMs: now(), provider: provider.id, attempts: safeGeoAttempts(attempts) };
+      } catch (error) {
+        if (signal?.aborted || error?.code === "ENV_REQUEST_SUPERSEDED") {
+          const canceled = geoLookupError("GEO_ABORTED", attempts); canceled.name = "AbortError"; throw canceled;
+        }
+        const status = error?.status || Number((error?.message || "").match(/HTTP\s*(\d{3})/)?.[1]);
+        let code = received || error instanceof SyntaxError || /有效 JSON/.test(error?.message || "")
+          ? "INVALID_RESPONSE" : timedOut || error?.code === "ENV_TIMEOUT" || error?.name === "AbortError" ? "TIMEOUT" : "NETWORK_ERROR";
+        if (status === 403) code = "HTTP_403";
+        if (status === 429) {
+          code = "HTTP_429";
+          retryUntil.set(provider.id, Math.max(now() + SERVICES_CONFIG.geo.rateLimitCooldownMs,
+            Number.isSafeInteger(error?.retryAtMs) ? error.retryAtMs : 0));
+        }
+        attempts.push({ provider: provider.id, code, atMs: now(),
+          ...(status === 429 ? { retryAtMs: retryUntil.get(provider.id) } : {}) });
+      } finally {
+        clearTimeout(timer);
+        signal?.removeEventListener("abort", stop);
+      }
+    }
+    const allLimited = providers.length > 0 && providers.every((provider) => (retryUntil.get(provider.id) || 0) > now());
+    if (allLimited) {
+      throw geoLookupError("GEO_RATE_LIMITED", attempts, 429,
+        Math.min(...providers.map((provider) => retryUntil.get(provider.id))));
+    }
+    throw geoLookupError("GEO_UNAVAILABLE", attempts);
+  };
+}
+
+const defaultGeoFetcher = createGeoFetcher();
+export function fetchGeo(options = {}) {
+  // Injectable requesters remain isolated in tests; production shares preference
+  // and cooldowns across automatic/manual refreshes and React remounts.
+  return options.requestJson ? createGeoFetcher({ requestJson: options.requestJson })(options) : defaultGeoFetcher(options);
 }
 
 const fallbackGeo = () => ({ regionId: DEFAULT_REGION, source: "fallback",
@@ -175,7 +267,7 @@ const fallbackGeo = () => ({ regionId: DEFAULT_REGION, source: "fallback",
 
 export function initialGeoState(storage = browserStorage(), nowMs = Date.now()) {
   return { ...(readGeoCache(storage, nowMs) || fallbackGeo()), refreshing: false,
-    lastAttemptAtMs: null, error: null, retryAtMs: 0, refreshReason: null };
+    lastAttemptAtMs: null, error: null, errorCode: null, attempts: [], retryAtMs: 0, refreshReason: null };
 }
 
 function geoFailureMessage(error) {
@@ -205,9 +297,9 @@ export function createGeoRefreshController({
     if (cached) return cached;
     if (Number.isFinite(state.fetchedAtMs) && now() >= state.fetchedAtMs &&
         now() - state.fetchedAtMs <= config.cacheMaxAgeMs) {
-      const { regionId, source, detail, latitude, longitude, fetchedAtMs } = state;
+      const { regionId, source, detail, latitude, longitude, fetchedAtMs, provider } = state;
       return { regionId, source: source === "ip" ? "ip-cached" : source,
-        detail, latitude, longitude, fetchedAtMs, cached: true };
+        detail, latitude, longitude, fetchedAtMs, provider, cached: true };
     }
     return fallbackGeo();
   };
@@ -220,7 +312,7 @@ export function createGeoRefreshController({
     const manual = reason === "manual";
     if (rateLimitedUntil > nowMs) {
       return Promise.resolve(publish({ ...state, refreshing: false,
-        error: geoFailureMessage({ status: 429 }), retryAtMs: rateLimitedUntil }));
+        error: geoFailureMessage({ status: 429 }), errorCode: "GEO_RATE_LIMITED", retryAtMs: rateLimitedUntil }));
     }
     if (!manual && reason !== "online" && state.retryAtMs > nowMs) {
       return Promise.resolve(state);
@@ -234,7 +326,7 @@ export function createGeoRefreshController({
     const requestGeneration = ++generation;
     lastStartedAt = nowMs;
     publish({ ...state, refreshing: true, lastAttemptAtMs: nowMs,
-      error: null, retryAtMs: 0, refreshReason: reason });
+      error: null, errorCode: null, attempts: [], retryAtMs: 0, refreshReason: reason });
     const operation = Promise.resolve().then(() => fetchGeoImpl({ signal: controller.signal, now }))
       .then((next) => {
         if (disposed || requestGeneration !== generation) return state;
@@ -242,19 +334,23 @@ export function createGeoRefreshController({
         failures = 0;
         rateLimitedUntil = 0;
         writeGeoCache(storage, next, fetchedAtMs);
-        return publish({ ...next, fetchedAtMs, refreshing: false, error: null, retryAtMs: 0,
+        return publish({ ...next, fetchedAtMs, refreshing: false, error: null, errorCode: null,
+          attempts: safeGeoAttempts(next.attempts), retryAtMs: 0,
           lastAttemptAtMs: nowMs, refreshReason: reason });
       }).catch((error) => {
         if (disposed || requestGeneration !== generation) return state;
         failures++;
         const rateLimited = error?.status === 429 || /HTTP\s*429/.test(error?.message || "");
         if (rateLimited) {
-          rateLimitedUntil = Math.max(now() + config.rateLimitCooldownMs,
-            Number.isSafeInteger(error?.retryAtMs) ? error.retryAtMs : 0);
+          rateLimitedUntil = Number.isSafeInteger(error?.retryAtMs) && error.retryAtMs > now()
+            ? error.retryAtMs : now() + config.rateLimitCooldownMs;
         }
         const delay = Math.min(config.maxFailureRetryMs, config.failureRetryMs * 2 ** Math.min(failures - 1, 10));
         return publish({ ...cachedOrFallback(), refreshing: false, lastAttemptAtMs: nowMs,
-          error: geoFailureMessage(error), retryAtMs: rateLimited ? rateLimitedUntil : now() + delay, refreshReason: reason });
+          error: geoFailureMessage(error), errorCode: ["GEO_UNAVAILABLE", "GEO_RATE_LIMITED", "GEO_ABORTED"].includes(error?.code)
+            ? error.code : rateLimited ? "GEO_RATE_LIMITED" : "GEO_UNAVAILABLE",
+          attempts: safeGeoAttempts(error?.attempts),
+          retryAtMs: rateLimited ? rateLimitedUntil : now() + delay, refreshReason: reason });
       }).finally(() => { if (requestGeneration === generation) { active = null; inFlight = null; } });
     inFlight = operation;
     return operation;
@@ -270,7 +366,8 @@ export function createGeoRefreshController({
     // A subsequent real online event may retry immediately, but never bypass 429.
     lastStartedAt = -Infinity;
     publish({ ...cachedOrFallback(), refreshing: false, lastAttemptAtMs: state.lastAttemptAtMs,
-      error: "网络离线，恢复联网后会自动重新识别。", retryAtMs: rateLimitedUntil, refreshReason: "offline" });
+      error: "网络离线，恢复联网后会自动重新识别。", errorCode: "OFFLINE", attempts: state.attempts,
+      retryAtMs: rateLimitedUntil, refreshReason: "offline" });
   }
 
   function dispose() { disposed = true; generation++; active?.abort(); active = null; inFlight = null; }
