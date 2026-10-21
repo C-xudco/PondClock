@@ -1,10 +1,11 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog, session, net } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog, session, net, screen } = require('electron');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { createSaveRepository, MAX_SAVE_BYTES } = require('./saveRepository.cjs');
 const { requestEnvironment } = require('./environment.cjs');
 const { resolveUserDataDirectory, createShutdownController, createStartupGuard, startupLogRecord } = require('./lifecycle.cjs');
+const { createWindowStateRepository, resolveWindowPlacement } = require('./windowState.cjs');
 
 const APP_ID = 'cn.pondclock.desktop';
 app.setName('PondClock');
@@ -25,6 +26,9 @@ let validateSave;
 let documentUrl;
 let startupGuard;
 let startupFailurePending = false;
+let windowStateRepository;
+let sizePreset = 'compact';
+let defaultAlwaysOnTop = false;
 const startupLogPath = path.join(userDataDirectory, 'logs', 'startup.log');
 
 async function writeStartupLog(event, error) {
@@ -39,6 +43,37 @@ const shutdown = createShutdownController({
   onWriteFailure: (error) => writeStartupLog('SHUTDOWN_SAVE_FAILED', error),
 });
 
+function workAreas() {
+  const primary = screen.getPrimaryDisplay();
+  return [primary, ...screen.getAllDisplays().filter((display) => display.id !== primary.id)]
+    .map((display) => display.workArea);
+}
+
+function rememberWindowBounds() {
+  if (!window || window.isDestroyed() || window.isMinimized() || shutdown.isQuitting()) return;
+  const bounds = window.getBounds();
+  windowStateRepository?.schedule({ version: 1, sizePreset, x: bounds.x, y: bounds.y });
+}
+
+function applyWindowPlacement(options = {}) {
+  if (!window || window.isDestroyed() || shutdown.isQuitting()) return;
+  const current = window.getNormalBounds();
+  const placement = resolveWindowPlacement({ version: 1, sizePreset, x: current.x, y: current.y }, workAreas(), options);
+  sizePreset = placement.sizePreset;
+  if (Object.keys(placement.bounds).some((key) => placement.bounds[key] !== current[key])) {
+    window.setBounds(placement.bounds);
+  }
+  rememberWindowBounds();
+}
+
+function requestApplicationQuit(options) {
+  if (!shutdown.isQuitting()) {
+    rememberWindowBounds();
+    if (windowStateRepository) void shutdown.runWrite(() => windowStateRepository.flush()).catch(() => {});
+  }
+  return shutdown.requestQuit(options);
+}
+
 async function failStartup(reason, error) {
   if (startupFailurePending || shutdown.isQuitting()) return;
   startupFailurePending = true;
@@ -47,7 +82,7 @@ async function failStartup(reason, error) {
     dialog.showErrorBox('水塘时钟启动失败',
       `应用窗口未能正常运行，关闭此提示后程序将退出。\n请重新打开或重新安装应用。\n诊断记录：${startupLogPath}`);
   } catch { /* Exit also when the operating system cannot display an error dialog. */
-  } finally { await shutdown.requestQuit({ code: 1 }); }
+  } finally { await requestApplicationQuit({ code: 1 }); }
 }
 
 function trustedFrame(event) {
@@ -63,26 +98,16 @@ function handle(channel, action) {
       trustedFrame(event);
       return { ok: true, value: await action(input) };
     } catch (error) {
-      return { ok: false, error: { code: error.code || 'DESKTOP_OPERATION_FAILED', message: error.message } };
+      const details = { code: error?.code || 'DESKTOP_OPERATION_FAILED', message: error?.message || '桌面操作未完成。' };
+      if (Number.isInteger(error?.status) && error.status >= 100 && error.status <= 599) details.status = error.status;
+      if (Number.isSafeInteger(error?.retryAtMs) && error.retryAtMs > 0) details.retryAtMs = error.retryAtMs;
+      return { ok: false, error: details };
     }
   });
 }
 
-function buildMenu() {
-  Menu.setApplicationMenu(Menu.buildFromTemplate([
-    { label: '文件', submenu: [
-      { label: '最小化', click: () => window?.minimize() },
-      { type: 'separator' },
-      { label: '退出水塘时钟', accelerator: 'Alt+F4', click: () => app.quit() },
-    ] },
-    { label: '窗口', submenu: [
-      { label: '总在最前', type: 'checkbox', checked: window?.isAlwaysOnTop() ?? false,
-        click: (item) => window?.setAlwaysOnTop(item.checked) },
-      { role: 'resetZoom', label: '恢复缩放' },
-      { role: 'zoomIn', label: '放大' },
-      { role: 'zoomOut', label: '缩小' },
-    ] },
-  ]));
+function windowInfo() {
+  return { widgetMode: true, sizePreset, alwaysOnTop: window?.isAlwaysOnTop() ?? false };
 }
 
 function registerHandlers() {
@@ -121,7 +146,7 @@ function registerHandlers() {
   });
   handle('pond:app-info', () => ({
     name: 'PondClock', displayName: '水塘时钟', version: app.getVersion(),
-    platform: process.platform, packaged: app.isPackaged, alwaysOnTop: window.isAlwaysOnTop(),
+    platform: process.platform, packaged: app.isPackaged, ...windowInfo(),
     execPath: process.execPath, userData: app.getPath('userData'),
     versions: { electron: process.versions.electron, chrome: process.versions.chrome, node: process.versions.node },
     noSandboxSwitch: app.commandLine.hasSwitch('no-sandbox'),
@@ -129,13 +154,15 @@ function registerHandlers() {
   handle('pond:window-action', (action) => {
     if (action === 'minimize') window.minimize();
     else if (action === 'close') app.quit();
-    else if (action === 'toggleAlwaysOnTop') { window.setAlwaysOnTop(!window.isAlwaysOnTop()); buildMenu(); }
+    else if (action === 'toggleAlwaysOnTop') window.setAlwaysOnTop(!window.isAlwaysOnTop());
     else if (action === 'alwaysOnTop:on' || action === 'alwaysOnTop:off') {
-      window.setAlwaysOnTop(action === 'alwaysOnTop:on'); buildMenu();
+      window.setAlwaysOnTop(action === 'alwaysOnTop:on');
     }
+    else if (action === 'compact' || action === 'comfortable') applyWindowPlacement({ sizePreset: action });
+    else if (action === 'resetPosition') applyWindowPlacement({ resetPosition: true });
     else if (action === 'quit') app.quit();
     else throw new Error('不支持此窗口操作。');
-    return { alwaysOnTop: window?.isAlwaysOnTop() ?? false };
+    return windowInfo();
   });
   handle('pond:environment', (url) => requestEnvironment(url, (input, init) => net.fetch(input, init)));
 }
@@ -154,11 +181,17 @@ async function createWindow() {
   } else {
     await fs.access(buildPath);
   }
-  const initialAlwaysOnTop = await repository.load().then((loaded) => loaded.snapshot?.settings?.alwaysOnTop === true).catch(() => false);
+  const initialAlwaysOnTop = await repository.load().then((loaded) => {
+    const stored = loaded.snapshot?.settings?.alwaysOnTop;
+    return typeof stored === 'boolean' ? stored : defaultAlwaysOnTop;
+  }).catch(() => defaultAlwaysOnTop);
+  const placement = resolveWindowPlacement(await windowStateRepository.load(), workAreas());
+  sizePreset = placement.sizePreset;
   if (shutdown.isQuitting() || startupFailurePending) return;
   window = new BrowserWindow({
-    width: 920, height: 760, minWidth: 700, minHeight: 560,
-    title: '水塘时钟', backgroundColor: '#020817', show: false, alwaysOnTop: initialAlwaysOnTop,
+    ...placement.bounds, frame: false, thickFrame: false, hasShadow: false, transparent: true, backgroundColor: '#00000000',
+    resizable: false, maximizable: false, fullscreenable: false, skipTaskbar: false, autoHideMenuBar: true,
+    title: '水塘时钟', show: false, alwaysOnTop: initialAlwaysOnTop,
     icon: app.isPackaged
       ? path.join(process.resourcesPath, 'icon.ico')
       : path.join(__dirname, 'assets', 'icon.ico'),
@@ -168,6 +201,13 @@ async function createWindow() {
       backgroundThrottling: false,
     },
   });
+  // Windows can adjust the constructor bounds when applying fixed transparent
+  // window styles. Calibrate once after those styles exist, using the preset.
+  window.setBounds(placement.bounds);
+  Menu.setApplicationMenu(null);
+  window.setMenu(null);
+  window.on('move', rememberWindowBounds);
+  rememberWindowBounds();
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   window.webContents.on('will-navigate', (event, url) => {
     if (url.split('#')[0] !== documentUrl) event.preventDefault();
@@ -198,7 +238,6 @@ async function createWindow() {
       ],
     } });
   });
-  buildMenu();
   await window.loadURL(documentUrl);
 }
 
@@ -216,7 +255,7 @@ if (!app.requestSingleInstanceLock()) {
     if (shutdown.isReady()) return;
     event.preventDefault();
     startupGuard.stop();
-    void shutdown.requestQuit();
+    void requestApplicationQuit();
   });
   app.on('window-all-closed', () => app.quit());
   app.whenReady().then(async () => {
@@ -224,7 +263,14 @@ if (!app.requestSingleInstanceLock()) {
     if (shutdown.isQuitting() || startupFailurePending) return;
     await writeStartupLog('STARTUP_BEGIN');
     ({ validateSave } = await import(pathToFileURL(path.join(__dirname, '..', 'src', 'domain', 'saveSchema.js')).href));
+    const storageConfig = await import(pathToFileURL(path.join(__dirname, '..', 'src', 'config', 'storage.js')).href);
+    defaultAlwaysOnTop = storageConfig.DEFAULT_SETTINGS?.alwaysOnTop === true;
     repository = createSaveRepository({ directory: path.join(app.getPath('userData'), 'saves'), validate: validateSave });
+    windowStateRepository = createWindowStateRepository({ directory: app.getPath('userData'),
+      onError: (error) => writeStartupLog('WINDOW_STATE_SAVE_FAILED', error) });
+    for (const event of ['display-added', 'display-removed', 'display-metrics-changed']) {
+      screen.on(event, () => applyWindowPlacement());
+    }
     registerHandlers();
     await createWindow();
   }).catch((error) => startupGuard.fail('STARTUP_FAILED', error));

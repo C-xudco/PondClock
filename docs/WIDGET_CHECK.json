@@ -1,0 +1,2440 @@
+{
+  "startedAt": "2026-10-21T07:44:53.310Z",
+  "passed": true,
+  "diagnostic": true,
+  "hostSandboxEnabled": false,
+  "scope": "Developer Electron loads real desktop/main.cjs and build-desktop UI. Explicit global --no-sandbox; all IP responses are simulated and real HTTP is blocked.",
+  "checks": [
+    {
+      "id": "W01",
+      "description": "420x350 transparent document, draggable toolbar, non-draggable window controls, no document overflow",
+      "passed": true
+    },
+    {
+      "id": "W02",
+      "description": "All five compact panels, panel-close controls and window buttons remain inside the viewport",
+      "passed": true
+    },
+    {
+      "id": "W03",
+      "description": "Real window expands to 640x490 and all five panels remain contained",
+      "passed": true
+    },
+    {
+      "id": "W04",
+      "description": "Toolbar shrinks the real window back to 420x350",
+      "passed": true
+    },
+    {
+      "id": "W05",
+      "description": "Pin toolbar button durably saves both directions and immediately changes the native always-on-top state",
+      "passed": true
+    },
+    {
+      "id": "W06",
+      "description": "Minimize button minimizes the native window, which restores through native APIs (taskbar click not tested)",
+      "passed": true
+    },
+    {
+      "id": "W07",
+      "description": "Simulated offline/online events automatically replace Guangdong IP with Beijing and freely retain both unlocks without asset/home/game-location changes",
+      "passed": true
+    },
+    {
+      "id": "W08",
+      "description": "Focus after automatic throttle rechecks IP through production event bindings (clock advanced, mocked response)",
+      "passed": true
+    },
+    {
+      "id": "W09",
+      "description": "Production two-minute timer rechecks IP without a button click (clock advanced, mocked response)",
+      "passed": true
+    },
+    {
+      "id": "W10",
+      "description": "X exits normally and flushes the chosen window preset and programmatically changed position",
+      "passed": true
+    },
+    {
+      "id": "W11",
+      "description": "Restart restores window position/preset and saved pin/offline settings and assets; X exits again",
+      "passed": true
+    }
+  ],
+  "launches": [
+    {
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\profile",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "executable": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\electron\\dist\\electron.exe",
+      "diagnostic": true,
+      "hostSandboxEnabled": false,
+      "pid": 204588,
+      "runtime": {
+        "isPackaged": false,
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\profile",
+        "version": "44.9.1",
+        "noSandbox": true,
+        "bounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 420,
+          "height": 350
+        },
+        "backgroundColor": "#000000",
+        "menuIsNull": true,
+        "resizable": false,
+        "preferences": {
+          "sandbox": true,
+          "contextIsolation": true,
+          "nodeIntegration": false
+        }
+      },
+      "earlyRuntime": {
+        "isPackaged": false,
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\profile",
+        "version": "44.9.1",
+        "noSandbox": true
+      }
+    },
+    {
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\profile",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "executable": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\node_modules\\electron\\dist\\electron.exe",
+      "diagnostic": true,
+      "hostSandboxEnabled": false,
+      "pid": 182052,
+      "runtime": {
+        "isPackaged": false,
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\profile",
+        "version": "44.9.1",
+        "noSandbox": true,
+        "bounds": {
+          "x": 40,
+          "y": 60,
+          "width": 640,
+          "height": 490
+        },
+        "contentBounds": {
+          "x": 40,
+          "y": 60,
+          "width": 640,
+          "height": 490
+        },
+        "backgroundColor": "#000000",
+        "menuIsNull": true,
+        "resizable": false,
+        "preferences": {
+          "sandbox": true,
+          "contextIsolation": true,
+          "nodeIntegration": false
+        }
+      },
+      "earlyRuntime": {
+        "isPackaged": false,
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\profile",
+        "version": "44.9.1",
+        "noSandbox": true
+      }
+    }
+  ],
+  "screenshots": [
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\compact-main.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\settings-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\comfortable-main.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\settings-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\settings-saved.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\restarted-comfortable.png"
+  ],
+  "consoleErrors": [],
+  "fatalEvents": [],
+  "cleanupErrors": [],
+  "layouts": [
+    {
+      "name": "compact-main",
+      "viewport": {
+        "width": 420,
+        "height": 350
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "展开挂件",
+          "appRegion": "no-drag",
+          "x": 304.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 329.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 331.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 356.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 358.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 383.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 385.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 410.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 218.6666717529297,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 253.00000762939453,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 257,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 291.33333587646484,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 295.3333435058594,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 329.6666793823242,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 333.66668701171875,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 368.0000228881836,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 372,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 406.33333587646484,
+          "bottom": 313.3333339691162
+        }
+      ],
+      "panel": null,
+      "panelClose": null,
+      "overflow": {
+        "width": 420,
+        "height": 350
+      },
+      "native": {
+        "bounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 420,
+          "height": 350
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "420x350:鱼篓",
+      "viewport": {
+        "width": 420,
+        "height": 350
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "展开挂件",
+          "appRegion": "no-drag",
+          "x": 304.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 329.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 331.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 356.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 358.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 383.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 385.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 410.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 218.6666717529297,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 253.00000762939453,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 257,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 291.33333587646484,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 295.3333435058594,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 329.6666793823242,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 333.66668701171875,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 368.0000228881836,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 372,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 406.33333587646484,
+          "bottom": 313.3333339691162
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 408,
+        "height": 304,
+        "right": 414,
+        "bottom": 344
+      },
+      "panelClose": {
+        "x": 369.3333435058594,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 397.3333435058594,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 420,
+        "height": 350
+      },
+      "native": {
+        "bounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 420,
+          "height": 350
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "420x350:图鉴",
+      "viewport": {
+        "width": 420,
+        "height": 350
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "展开挂件",
+          "appRegion": "no-drag",
+          "x": 304.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 329.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 331.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 356.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 358.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 383.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 385.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 410.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 218.6666717529297,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 253.00000762939453,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 257,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 291.33333587646484,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 295.3333435058594,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 329.6666793823242,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 333.66668701171875,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 368.0000228881836,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 372,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 406.33333587646484,
+          "bottom": 313.3333339691162
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 408,
+        "height": 304,
+        "right": 414,
+        "bottom": 344
+      },
+      "panelClose": {
+        "x": 369.3333435058594,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 397.3333435058594,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 420,
+        "height": 350
+      },
+      "native": {
+        "bounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 420,
+          "height": 350
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "420x350:渔具店",
+      "viewport": {
+        "width": 420,
+        "height": 350
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "展开挂件",
+          "appRegion": "no-drag",
+          "x": 304.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 329.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 331.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 356.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 358.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 383.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 385.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 410.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 218.6666717529297,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 253.00000762939453,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 257,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 291.33333587646484,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 295.3333435058594,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 329.6666793823242,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 333.66668701171875,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 368.0000228881836,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 372,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 406.33333587646484,
+          "bottom": 313.3333339691162
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 408,
+        "height": 304,
+        "right": 414,
+        "bottom": 344
+      },
+      "panelClose": {
+        "x": 369.3333435058594,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 397.3333435058594,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 420,
+        "height": 350
+      },
+      "native": {
+        "bounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 420,
+          "height": 350
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "420x350:漫游",
+      "viewport": {
+        "width": 420,
+        "height": 350
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "展开挂件",
+          "appRegion": "no-drag",
+          "x": 304.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 329.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 331.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 356.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 358.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 383.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 385.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 410.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 218.6666717529297,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 253.00000762939453,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 257,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 291.33333587646484,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 295.3333435058594,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 329.6666793823242,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 333.66668701171875,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 368.0000228881836,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 372,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 406.33333587646484,
+          "bottom": 313.3333339691162
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 408,
+        "height": 304,
+        "right": 414,
+        "bottom": 344
+      },
+      "panelClose": {
+        "x": 369.3333435058594,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 397.3333435058594,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 420,
+        "height": 350
+      },
+      "native": {
+        "bounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 420,
+          "height": 350
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "420x350:设置与存档",
+      "viewport": {
+        "width": 420,
+        "height": 350
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "展开挂件",
+          "appRegion": "no-drag",
+          "x": 304.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 329.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 331.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 356.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 358.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 383.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 385.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 410.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 218.6666717529297,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 253.00000762939453,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 257,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 291.33333587646484,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 295.3333435058594,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 329.6666793823242,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 333.66668701171875,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 368.0000228881836,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 372,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 406.33333587646484,
+          "bottom": 313.3333339691162
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 408,
+        "height": 304,
+        "right": 414,
+        "bottom": 344
+      },
+      "panelClose": {
+        "x": 369.3333435058594,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 397.3333435058594,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 420,
+        "height": 350
+      },
+      "native": {
+        "bounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1263,
+          "y": 645,
+          "width": 420,
+          "height": 350
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "comfortable-main",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": null,
+      "panelClose": null,
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 641,
+          "height": 491
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "640x490:鱼篓",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 628,
+        "height": 444,
+        "right": 634,
+        "bottom": 484
+      },
+      "panelClose": {
+        "x": 589.3333740234375,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 617.3333740234375,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 641,
+          "height": 491
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "640x490:图鉴",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 628,
+        "height": 444,
+        "right": 634,
+        "bottom": 484
+      },
+      "panelClose": {
+        "x": 589.3333740234375,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 617.3333740234375,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 641,
+          "height": 491
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "640x490:渔具店",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 628,
+        "height": 444,
+        "right": 634,
+        "bottom": 484
+      },
+      "panelClose": {
+        "x": 589.3333740234375,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 617.3333740234375,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 641,
+          "height": 491
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "640x490:漫游",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 628,
+        "height": 444,
+        "right": 634,
+        "bottom": 484
+      },
+      "panelClose": {
+        "x": 589.3333740234375,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 617.3333740234375,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 641,
+          "height": 491
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "640x490:设置与存档",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 628,
+        "height": 444,
+        "right": 634,
+        "bottom": 484
+      },
+      "panelClose": {
+        "x": 589.3333740234375,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 617.3333740234375,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 641,
+          "height": 491
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "compact-restored",
+      "viewport": {
+        "width": 420,
+        "height": 350
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "展开挂件",
+          "appRegion": "no-drag",
+          "x": 304.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 329.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "取消窗口置顶",
+          "appRegion": "no-drag",
+          "x": 331.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 356.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 358.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 383.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 385.3333435058594,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 410.3333435058594,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 218.6666717529297,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 253.00000762939453,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 257,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 291.33333587646484,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 295.3333435058594,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 329.6666793823242,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 333.66668701171875,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 368.0000228881836,
+          "bottom": 313.3333339691162
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 372,
+          "y": 283,
+          "width": 34.333335876464844,
+          "height": 30.33333396911621,
+          "right": 406.33333587646484,
+          "bottom": 313.3333339691162
+        }
+      ],
+      "panel": null,
+      "panelClose": null,
+      "overflow": {
+        "width": 420,
+        "height": 350
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 421,
+          "height": 351
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 420,
+          "height": 350
+        },
+        "scaleFactor": 1.5,
+        "top": true,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "comfortable-before-exit",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": {
+        "x": 6,
+        "y": 40,
+        "width": 628,
+        "height": 444,
+        "right": 634,
+        "bottom": 484
+      },
+      "panelClose": {
+        "x": 589.3333740234375,
+        "y": 50.66666793823242,
+        "width": 28,
+        "height": 28,
+        "right": 617.3333740234375,
+        "bottom": 78.66666793823242
+      },
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 641,
+          "height": 491
+        },
+        "contentBounds": {
+          "x": 1067,
+          "y": 529,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": false,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    },
+    {
+      "name": "restarted-comfortable",
+      "viewport": {
+        "width": 640,
+        "height": 490
+      },
+      "backgrounds": [
+        {
+          "selector": "html",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "body",
+          "color": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "selector": "#root",
+          "color": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "dragRegion": "drag",
+      "buttons": [
+        {
+          "label": "缩小挂件",
+          "appRegion": "no-drag",
+          "x": 524.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 549.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "窗口置顶",
+          "appRegion": "no-drag",
+          "x": 551.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 576.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "最小化水塘时钟",
+          "appRegion": "no-drag",
+          "x": 578.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 603.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "退出水塘时钟",
+          "appRegion": "no-drag",
+          "x": 605.3333740234375,
+          "y": 8,
+          "width": 25,
+          "height": 23,
+          "right": 630.3333740234375,
+          "bottom": 31
+        },
+        {
+          "label": "鱼篓",
+          "appRegion": "none",
+          "x": 241.6666717529297,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 312.00000762939453,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "图鉴",
+          "appRegion": "none",
+          "x": 316,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 386.33333587646484,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "渔具店",
+          "appRegion": "none",
+          "x": 390.3333435058594,
+          "y": 407.3958435058594,
+          "width": 82.33333587646484,
+          "height": 29.33333396911621,
+          "right": 472.6666793823242,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "漫游",
+          "appRegion": "none",
+          "x": 476.66668701171875,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 547.0000228881836,
+          "bottom": 436.7291774749756
+        },
+        {
+          "label": "设置",
+          "appRegion": "none",
+          "x": 551,
+          "y": 407.3958435058594,
+          "width": 70.33333587646484,
+          "height": 29.33333396911621,
+          "right": 621.3333358764648,
+          "bottom": 436.7291774749756
+        }
+      ],
+      "panel": null,
+      "panelClose": null,
+      "overflow": {
+        "width": 640,
+        "height": 490
+      },
+      "native": {
+        "bounds": {
+          "x": 40,
+          "y": 60,
+          "width": 640,
+          "height": 490
+        },
+        "contentBounds": {
+          "x": 40,
+          "y": 60,
+          "width": 640,
+          "height": 490
+        },
+        "scaleFactor": 1.5,
+        "top": false,
+        "minimized": false,
+        "nativeEnvelopeTolerance": 1
+      }
+    }
+  ],
+  "pending": [
+    "Normal sandbox launch of final distributed EXE",
+    "Windows native title-bar dragging with mouse",
+    "Windows transparent compositor appearance and taskbar restoration by user",
+    "Actual network/VPN change and real IP service responsiveness"
+  ],
+  "directory": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX",
+  "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\profile",
+  "sourceHashes": {
+    "desktop/main.cjs": "3b49cf6027a3ae08473e488f55abbba32490495c46869b4244a8a600848db867",
+    "desktop/windowState.cjs": "569df5f0454cc07eff5a83f769080464655956433f19d45be3f93395f9a62f2a",
+    "src/services/environment.js": "344d4cf78debdeab07cb554c7556c4c68b1814684e8d6f1ca6fd4ab848b679c3",
+    "build-desktop/index.html": "b65ca90e8483cca5398f1376b1036626e9756dae1db6c087047bc2db03d0451c",
+    "build-desktop/assets/index-CozCJavP.js": "1350e543fa12d648b2de33d2035a16ad293f1bae2fb606c5ed72426b9cc08bb6",
+    "build-desktop/assets/index-3d9Uv7vZ.css": "c8f45658ad36d1ad6bc6c2bb7e17c89ae12dd7497d7ac2271ab3530086369c05"
+  },
+  "lastExpectedLayout": {
+    "name": "restarted-comfortable",
+    "width": 640,
+    "height": 490
+  },
+  "lastActualViewport": {
+    "width": 640,
+    "height": 490
+  },
+  "simulatedGeoRequests": [
+    {
+      "province": "广东省"
+    },
+    {
+      "province": "广东省"
+    },
+    {
+      "province": "广东省"
+    },
+    {
+      "province": "北京市"
+    },
+    {
+      "province": "广东省"
+    },
+    {
+      "province": "北京市"
+    }
+  ],
+  "finishedAt": "2026-10-21T07:45:01.725Z",
+  "reportPath": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\widget-smoke-kZeuvX\\widget-smoke.json"
+}

@@ -10,8 +10,8 @@ export const DOCK_ITEMS = [
 ];
 
 const ActionDock = ({ coins, activePanel, onToggle }) => (
-  <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/10 bg-slate-950/35 px-3 py-2 shadow-xl backdrop-blur-md">
-    <div className="flex items-center gap-1.5 rounded-xl bg-black/20 px-3 py-1.5 text-sm font-medium text-amber-300">
+  <div className="action-dock mt-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-white/10 bg-slate-950/35 px-3 py-2 shadow-xl backdrop-blur-md">
+    <div className="dock-coins flex items-center gap-1.5 rounded-xl bg-black/20 px-3 py-1.5 text-sm font-medium text-amber-300">
       <Coins size={16} />
       <span className="tabular-nums">¥{coins}</span>
     </div>
@@ -26,15 +26,17 @@ const ActionDock = ({ coins, activePanel, onToggle }) => (
             aria-pressed={active}
             aria-expanded={active}
             aria-controls="fishing-panel"
+            aria-label={label}
+            title={label}
             onClick={() => onToggle(id)}
-            className={`flex items-center gap-1.5 rounded-xl border px-2 py-1.5 text-xs transition-colors sm:px-3 ${
+            className={`dock-button flex items-center gap-1.5 rounded-xl border px-2 py-1.5 text-xs transition-colors sm:px-3 ${
               active
                 ? "border-sky-300/30 bg-sky-400/15 text-sky-200"
                 : "border-transparent text-slate-300 hover:bg-white/10 hover:text-white"
             }`}
           >
             <Icon size={15} />
-            {label}
+            <span className="dock-label">{label}</span>
           </button>
         );
       })}

@@ -45,34 +45,71 @@ function validateEnvironmentUrl(input) {
   return url;
 }
 
-async function requestEnvironment(input, fetchImplementation = fetch) {
-  const url = validateEnvironmentUrl(input);
-  const controller = new AbortController();
-  const deadline = setTimeout(() => controller.abort(), 8000);
-  let reader;
-  try {
-    const response = await fetchImplementation(url.href, {
-      headers: { Accept: 'application/json' }, signal: controller.signal,
-      redirect: 'error', credentials: 'omit', cache: 'no-store',
-    });
-    if (!response.ok) throw new Error(`环境服务暂不可用（HTTP ${response.status}）。`);
-    if (!response.body) throw new Error('环境服务返回空响应。');
-    reader = response.body.getReader();
-    const chunks = [];
-    let bytes = 0;
-    for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      bytes += value.byteLength;
-      if (bytes > 2 * 1024 * 1024) throw new Error('环境服务响应过大。');
-      chunks.push(value);
-    }
-    try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }
-    catch { throw new Error('环境服务未返回有效 JSON。'); }
-  } finally {
-    clearTimeout(deadline);
-    if (reader) await reader.cancel().catch(() => {});
-  }
+function rateLimitDeadline(header, nowMs) {
+  const seconds = header && /^\s*\d+(?:\.\d+)?\s*$/.test(header) ? Number(header) : NaN;
+  const delay = Number.isFinite(seconds) ? seconds * 1000 : Math.max(0, Date.parse(header) - nowMs) || 0;
+  return Math.min(Number.MAX_SAFE_INTEGER, Math.ceil(nowMs + Math.max(15 * 60 * 1000, delay)));
 }
 
-module.exports = { requestEnvironment, validateEnvironmentUrl };
+// The main process keeps its own 429 gate, so renderer recreation cannot bypass
+// Retry-After. A newer IP refresh aborts the previous main-process HTTPS request.
+function createEnvironmentService({ now = Date.now, timeoutMs = 8000 } = {}) {
+  const retryUntil = new Map();
+  let activeGeo;
+  return async function requestEnvironment(input, fetchImplementation = fetch) {
+    const url = validateEnvironmentUrl(input);
+    const httpError = (status, retryAtMs = null) => Object.assign(
+      new Error(`环境服务暂不可用（HTTP ${status}）。`), { code: `ENV_HTTP_${status}`, status, retryAtMs });
+    if ((retryUntil.get(url.origin) || 0) > now()) throw httpError(429, retryUntil.get(url.origin));
+    const geo = url.hostname === 'ipapi.co';
+    if (geo) activeGeo?.abort();
+    const controller = new AbortController();
+    if (geo) activeGeo = controller;
+    let timedOut = false;
+    const deadline = setTimeout(() => { timedOut = true; controller.abort(); }, timeoutMs);
+    let reader;
+    let stop;
+    try {
+      const operation = Promise.resolve().then(async () => {
+        if (controller.signal.aborted) throw Object.assign(new Error('环境请求已取消。'), { name: 'AbortError' });
+        const response = await fetchImplementation(url.href, {
+          headers: { Accept: 'application/json' }, signal: controller.signal,
+          redirect: 'error', credentials: 'omit', cache: 'no-store',
+        });
+        if (!response.ok) {
+          if (response.status === 429) {
+            retryUntil.set(url.origin, rateLimitDeadline(response.headers?.get?.('Retry-After'), now()));
+          }
+          throw httpError(response.status, response.status === 429 ? retryUntil.get(url.origin) : null);
+        }
+        if (!response.body) throw new Error('环境服务返回空响应。');
+        reader = response.body.getReader();
+        const chunks = [];
+        let bytes = 0;
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          bytes += value.byteLength;
+          if (bytes > 2 * 1024 * 1024) throw new Error('环境服务响应过大。');
+          chunks.push(value);
+        }
+        try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }
+        catch { throw new Error('环境服务未返回有效 JSON。'); }
+      });
+      const aborted = new Promise((_resolve, reject) => {
+        stop = () => reject(Object.assign(new Error(timedOut ? '环境请求超时。' : '环境请求已被更新的请求替代。'),
+          { name: 'AbortError', code: timedOut ? 'ENV_TIMEOUT' : 'ENV_REQUEST_SUPERSEDED' }));
+        controller.signal.addEventListener('abort', stop, { once: true });
+      });
+      return await Promise.race([operation, aborted]);
+    } finally {
+      clearTimeout(deadline);
+      if (stop) controller.signal.removeEventListener('abort', stop);
+      if (reader) void reader.cancel().catch(() => {});
+      if (geo && activeGeo === controller) activeGeo = null;
+    }
+  };
+}
+
+const requestEnvironment = createEnvironmentService();
+module.exports = { requestEnvironment, validateEnvironmentUrl, createEnvironmentService };

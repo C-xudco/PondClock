@@ -1,13 +1,13 @@
 {
-  "checkedAt": "2026-10-21T06:40:08.634Z",
-  "version": "1.0.1",
-  "installer": "PondClock-Setup-1.0.1-x64.exe",
-  "bytes": 116611789,
-  "sha256": "b4598f611f2e1fcf897e2e3d3a306fc4b40ac2ebd8f504e3cdb06f48248d8859",
+  "checkedAt": "2026-10-21T07:48:19.611Z",
+  "version": "1.1.0",
+  "installer": "PondClock-Setup-1.1.0-x64.exe",
+  "bytes": 116619387,
+  "sha256": "23bb04e1475fabae7e96d4130348c573214298bf1257764d0a11c9eccd508c0b",
   "portable": {
-    "file": "PondClock-1.0.1-x64.zip",
-    "bytes": 162354431,
-    "sha256": "5bc8469ad48d7bca04cc967dda20336f505818699c7e3bbad1ed12bdfc4097cb"
+    "file": "PondClock-1.1.0-x64.zip",
+    "bytes": 162363254,
+    "sha256": "e9c67195e69a0a91782ebeedbb0796ac278aef49fa5ef51f4a6fe847a39ba86e"
   },
   "installerExtensionSha256": "538322bda5c4eb9edc26c027eb4535dfbd6d61e2057c17d68da244a0121399af",
   "packedRuntimeFilesMatch": [
@@ -17,6 +17,7 @@
     "desktop/main.cjs",
     "desktop/preload.cjs",
     "desktop/saveRepository.cjs",
+    "desktop/windowState.cjs",
     "src/domain/gameState.js",
     "src/domain/market.js",
     "src/domain/routes.js",
@@ -28,8 +29,8 @@
     "src/config/travel.js",
     "src/data/regionLocations.js",
     "src/lib/gameConfig.js",
-    "build-desktop/assets/index-IbooDnVx.js",
-    "build-desktop/assets/index-BWafergs.css"
+    "build-desktop/assets/index-CozCJavP.js",
+    "build-desktop/assets/index-3d9Uv7vZ.css"
   ],
   "productionSandboxConfigured": true
 }

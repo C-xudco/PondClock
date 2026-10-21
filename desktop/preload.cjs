@@ -5,6 +5,12 @@ async function invoke(channel, value) {
   if (!response?.ok) {
     const error = new Error(response?.error?.message || '桌面操作未完成。');
     error.code = response?.error?.code || 'DESKTOP_OPERATION_FAILED';
+    if (Number.isInteger(response?.error?.status) && response.error.status >= 100 && response.error.status <= 599) {
+      error.status = response.error.status;
+    }
+    if (Number.isSafeInteger(response?.error?.retryAtMs) && response.error.retryAtMs > 0) {
+      error.retryAtMs = response.error.retryAtMs;
+    }
     throw error;
   }
   return response.value;

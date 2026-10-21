@@ -1,44 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DEFAULT_REGION } from "@/lib/gameConfig";
-import { browserStorage, fetchGeo, readGeoCache, writeGeoCache } from "@/services/environment";
+import {
+  bindGeoRefreshTriggers, browserStorage, createGeoRefreshController, initialGeoState,
+} from "@/services/environment";
 
-const pending = () => ({ regionId: null, source: "pending", detail: "", cached: false });
-const disabled = () => ({ regionId: DEFAULT_REGION, source: "disabled", detail: "本地模式", cached: false });
+const disabled = () => ({ ...initialGeoState(), regionId: DEFAULT_REGION,
+  source: "disabled", detail: "本地模式", refreshing: false, error: null, retryAtMs: 0 });
 
-// Every enabled startup asks the current public IP again (VPNs are accepted).
-// Cached results never use "ip", so they cannot grant a new real visit.
+// Cached/default data is usable immediately. Only a fresh `source: ip` result
+// grants a real visit; requests never block game initialization or asset writes.
 export function useGeoRegion(online = true) {
-  const [state, setState] = useState(() => ({ enabled: online, value: online ? pending() : disabled() }));
-  const [attempt, setAttempt] = useState(0);
-  const refresh = useCallback(() => { if (online) setAttempt((value) => value + 1); }, [online]);
+  const [state, setState] = useState(() => ({ enabled: online,
+    value: online ? initialGeoState() : disabled() }));
+  const active = useRef(null);
+  const refresh = useCallback(() => active.current?.refresh("manual") || Promise.resolve(), []);
 
   useEffect(() => {
-    const publish = (value) => setState({ enabled: online, value });
     if (!online) {
-      const cached = readGeoCache(browserStorage());
-      publish(cached ? { ...cached, regionId: DEFAULT_REGION, source: "disabled" } : disabled());
+      setState({ enabled: false, value: disabled() });
       return undefined;
     }
-    let active = true;
-    const controller = new AbortController();
-    publish(pending());
-    fetchGeo({ signal: controller.signal })
-      .then((next) => {
-        if (!active) return;
-        writeGeoCache(browserStorage(), next);
-        publish(next);
-      })
-      .catch(() => {
-        if (!active) return;
-        publish(readGeoCache(browserStorage())
-          || { regionId: DEFAULT_REGION, source: "fallback", detail: "暂未定位，使用默认水域", cached: false });
-      });
-    return () => { active = false; controller.abort(); };
-  }, [online, attempt]);
+    const controller = createGeoRefreshController({ storage: browserStorage(),
+      onChange: (value) => setState({ enabled: true, value }) });
+    active.current = controller;
+    setState({ enabled: true, value: controller.getState() });
+    const stop = bindGeoRefreshTriggers(controller);
+    return () => { active.current = null; stop(); };
+  }, [online]);
 
-  // The parent sees pending immediately when enabling network after loading a save,
-  // rather than briefly initializing a new game from the prior disabled default.
-  const geo = online ? (state.enabled ? state.value : pending())
-    : { ...state.value, regionId: DEFAULT_REGION, source: "disabled" };
+  const geo = online ? (state.enabled ? state.value : initialGeoState()) : disabled();
   return { ...geo, refresh };
 }

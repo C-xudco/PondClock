@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-10-21T07:54:34.5712580Z",
+  "version": "1.1.0",
+  "executable": "X:/game/PondClock-1.1.0/PondClock.exe",
+  "exeSha256": "03653D466F6A07F09314DCE56E114E59E3EABA59906BC814EBFF35309DBDFD9C",
+  "archiveSha256": "AB4ED63F61911FE41CE49C3D9CB2CD31C61F99F8CDF56A403332C1AE90E6F1F7",
+  "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\native-widget-36vZvT",
+  "launchArguments": [
+    "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\native-widget-36vZvT",
+    "--proxy-server=http://127.0.0.1:1",
+    "--proxy-bypass-list=<-loopback>"
+  ],
+  "globalNoSandboxSwitch": false,
+  "inspectorUsed": false,
+  "realNetworkBlocked": true,
+  "seededOfflineGame": true,
+  "startupLog": [
+    {
+      "at": "2026-10-21T07:49:09.236Z",
+      "event": "STARTUP_BEGIN"
+    },
+    {
+      "at": "2026-10-21T07:49:09.656Z",
+      "event": "WINDOW_READY"
+    }
+  ],
+  "visibleWindowObserved": true,
+  "nativeWindowId": 789344,
+  "nativeWindowApplication": "process:X:\\game\\PondClock-1.1.0\\PondClock.exe",
+  "uiObserved": [
+    "透明无边框挂件",
+    "水塘时钟",
+    "窗口操作",
+    "420x350小挂件外观",
+    "离线垂钓",
+    "时钟持续更新",
+    "钓鱼倒计时与鱼讯"
+  ],
+  "normalAltF4Sent": true,
+  "windowAbsentAfterAltF4": true,
+  "windowState": {
+    "version": 1,
+    "sizePreset": "compact",
+    "x": 1263,
+    "y": 645
+  },
+  "limitations": [
+    "未独立捕获原生进程退出码或全部子进程退出状态",
+    "原生鼠标点击因自动化命中ChatGPT的校验而拒绝，未计为操作通过",
+    "置顶/展开/恢复/保存重启通过项来自另行的显式禁沙箱诊断",
+    "真实VPN切换与真实IP服务响应未测",
+    "安装迁移/卸载门禁仍未关闭"
+  ]
+}

@@ -1,6 +1,6 @@
 import { DEFAULT_REGION, RODS, BAIT_COST, BAIT_CATCHES, REGIONS, QUALITIES } from '../lib/gameConfig.js';
 import { FISHING_CONFIG } from '../config/fishing.js';
-import { GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
+import { DEFAULT_SETTINGS, GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
 import { quoteRoute } from './routes.js';
 import { quoteFish } from './market.js';
 import { validateSave } from './saveSchema.js';
@@ -14,7 +14,7 @@ export function createNewGame(regionId = DEFAULT_REGION, nowMs = Date.now()) {
     lastEffectiveNowMs: nowMs, homeRegion: regionId, currentRegion: regionId, realRegion: null,
     unlockedRegions: [regionId], coins: FISHING_CONFIG.startCoins, rodLevel: 0,
     baitCount: FISHING_CONFIG.startBait, baitLeft: 0, bucket: [], codex: {}, pityCounter: 0, travel: null,
-    settings: { onlineEnhancements: true, alwaysOnTop: false }, lastCommittedCommandId: null, recentCommittedCommandIds: [] });
+    settings: { ...DEFAULT_SETTINGS }, lastCommittedCommandId: null, recentCommittedCommandIds: [] });
 }
 
 export function applyCommand(state, command, nowMs) {

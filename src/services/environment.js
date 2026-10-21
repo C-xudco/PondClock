@@ -15,11 +15,18 @@ export const validCoordinates = (latitude, longitude) => Number.isFinite(latitud
   && Number.isFinite(longitude) && Math.abs(latitude) <= 90 && Math.abs(longitude) <= 180;
 
 export class EnvironmentError extends Error {
-  constructor(message, status = null) {
+  constructor(message, status = null, retryAtMs = null) {
     super(message);
     this.name = "EnvironmentError";
     this.status = status;
+    this.retryAtMs = retryAtMs;
   }
+}
+
+function retryAfterTime(header, nowMs, minimumMs) {
+  const seconds = header && /^\s*\d+(?:\.\d+)?\s*$/.test(header) ? Number(header) : NaN;
+  const delay = Number.isFinite(seconds) ? seconds * 1000 : Math.max(0, Date.parse(header) - nowMs) || 0;
+  return Math.min(Number.MAX_SAFE_INTEGER, Math.ceil(nowMs + Math.max(minimumMs, delay)));
 }
 
 function abortedError() {
@@ -51,12 +58,16 @@ export function createEnvironmentRequester({
     if (url.username || url.password || url.hash || !(isGeo || isWeather)) {
       throw new EnvironmentError("Unknown environment service");
     }
-    if ((retryUntil.get(url.origin) || 0) > now()) throw new EnvironmentError("环境服务稍后再试（HTTP 429）", 429);
+    const rateLimitMinimum = isGeo ? SERVICES_CONFIG.geo.rateLimitCooldownMs : SERVICES_CONFIG.weather.refreshMs;
+    if ((retryUntil.get(url.origin) || 0) > now()) {
+      throw new EnvironmentError("环境服务稍后再试（HTTP 429）", 429, retryUntil.get(url.origin));
+    }
     if (signal?.aborted) throw abortedError();
     const controller = new AbortController();
     const stop = () => controller.abort();
     signal?.addEventListener("abort", stop, { once: true });
-    const timer = setTimeout(stop, timeoutMs);
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; stop(); }, timeoutMs);
     try {
       const operation = Promise.resolve().then(async () => {
         if (controller.signal.aborted) throw abortedError();
@@ -68,14 +79,10 @@ export function createEnvironmentRequester({
         });
         if (!response.ok) {
           if (response.status === 429) {
-            const retryHeader = response.headers?.get?.("Retry-After");
-            const seconds = Number(retryHeader);
-            const suggested = retryHeader && Number.isFinite(seconds)
-              ? seconds * 1000 : Math.max(0, Date.parse(retryHeader) - now()) || 0;
-            retryUntil.set(url.origin, now() + Math.max(SERVICES_CONFIG.weather.refreshMs,
-              Math.min(24 * 60 * 60 * 1000, suggested)));
+            retryUntil.set(url.origin, retryAfterTime(response.headers?.get?.("Retry-After"), now(), rateLimitMinimum));
           }
-          throw new EnvironmentError(`环境服务暂不可用（HTTP ${response.status}）`, response.status);
+          throw new EnvironmentError(`环境服务暂不可用（HTTP ${response.status}）`, response.status,
+            response.status === 429 ? retryUntil.get(url.origin) : null);
         }
         return response.json();
       });
@@ -84,8 +91,10 @@ export function createEnvironmentRequester({
       // Electron serializes Error custom fields, so also recognize its HTTP text.
       if (error?.status === 429 || /HTTP\s*429/.test(error?.message || "")) {
         retryUntil.set(url.origin, Math.max(retryUntil.get(url.origin) || 0,
-          now() + SERVICES_CONFIG.weather.refreshMs));
+          now() + rateLimitMinimum, Number.isSafeInteger(error?.retryAtMs) ? error.retryAtMs : 0));
+        throw new EnvironmentError("环境服务稍后再试（HTTP 429）", 429, retryUntil.get(url.origin));
       }
+      if (timedOut && !signal?.aborted) error.code = "ENV_TIMEOUT";
       throw error;
     } finally {
       clearTimeout(timer);
@@ -98,7 +107,11 @@ const defaultRequester = createEnvironmentRequester();
 export const requestEnvironmentJson = (url, options) => defaultRequester(url, options);
 
 export function parseGeoResponse(data) {
-  if (!data || typeof data !== "object" || Array.isArray(data) || data.error) throw new EnvironmentError("IP 服务未返回有效地区");
+  if (!data || typeof data !== "object" || Array.isArray(data)) throw new EnvironmentError("IP 服务未返回有效地区");
+  if (data.error) {
+    if (/rate.?limit|quota/i.test(cleanText(data.reason, 64))) throw new EnvironmentError("IP 服务请求受限（HTTP 429）", 429);
+    throw new EnvironmentError("IP 服务未返回有效地区");
+  }
   const country = cleanText(data.country_code, 10).toUpperCase();
   if (!/^[A-Z]{2}$/.test(country)) throw new EnvironmentError("IP 国家字段无效");
   const isChineseRegion = country === "CN" || Object.prototype.hasOwnProperty.call(specialRegions, country);
@@ -136,6 +149,7 @@ export function readGeoCache(storage, nowMs = Date.now()) {
   const result = {
     regionId: data.regionId, source: data.source === "ip" ? "ip-cached" : data.source,
     detail: cleanText(data.detail), cached: true,
+    fetchedAtMs: data.fetchedAtMs,
   };
   if (validCoordinates(data.latitude, data.longitude)) {
     result.latitude = data.latitude;
@@ -146,12 +160,149 @@ export function readGeoCache(storage, nowMs = Date.now()) {
 
 export function writeGeoCache(storage, geo, nowMs = Date.now()) {
   if (!regionIds.has(geo?.regionId) || !["ip", "default", "oversea"].includes(geo.source)) return;
-  writeJson(storage, SERVICES_CONFIG.geo.cacheKey, { ...geo, version: 1, fetchedAtMs: nowMs });
+  const { regionId, source, detail, latitude, longitude } = geo;
+  writeJson(storage, SERVICES_CONFIG.geo.cacheKey,
+    { regionId, source, detail, latitude, longitude, version: 1, fetchedAtMs: nowMs });
 }
 
-export async function fetchGeo({ requestJson = requestEnvironmentJson, signal } = {}) {
+export async function fetchGeo({ requestJson = requestEnvironmentJson, signal, now = Date.now } = {}) {
   const data = await requestJson(SERVICES_CONFIG.geo.url, { signal, timeoutMs: SERVICES_CONFIG.geo.timeoutMs });
-  return parseGeoResponse(data);
+  return { ...parseGeoResponse(data), fetchedAtMs: now() };
+}
+
+const fallbackGeo = () => ({ regionId: DEFAULT_REGION, source: "fallback",
+  detail: "暂未定位，使用默认水域", cached: false, fetchedAtMs: null });
+
+export function initialGeoState(storage = browserStorage(), nowMs = Date.now()) {
+  return { ...(readGeoCache(storage, nowMs) || fallbackGeo()), refreshing: false,
+    lastAttemptAtMs: null, error: null, retryAtMs: 0, refreshReason: null };
+}
+
+function geoFailureMessage(error) {
+  if (error?.status === 429 || /HTTP\s*429/.test(error?.message || "")) return "定位服务请求受限，已暂停重试，请等待倒计时结束。";
+  if (error?.status === 403 || /HTTP\s*403/.test(error?.message || "")) return "定位服务暂时拒绝请求，可换网络后重新识别。";
+  if (error?.code === "ENV_TIMEOUT" || error?.name === "AbortError") return "定位请求超时，可在网络恢复后重新识别。";
+  return "暂时无法识别当前网络，已有解锁和离线钓鱼不受影响。";
+}
+
+/** Owns only network state; it never initializes or changes game assets. */
+export function createGeoRefreshController({
+  fetchGeoImpl = fetchGeo, storage = browserStorage(), now = Date.now,
+  onChange = () => {}, config = SERVICES_CONFIG.geo,
+} = {}) {
+  let state = initialGeoState(storage, now());
+  let generation = 0;
+  let active;
+  let inFlight;
+  let disposed = false;
+  let networkOffline = false;
+  let failures = 0;
+  let lastStartedAt = -Infinity;
+  let rateLimitedUntil = 0;
+  const publish = (next) => { state = next; if (!disposed) onChange(state); return state; };
+  const cachedOrFallback = () => {
+    const cached = readGeoCache(storage, now());
+    if (cached) return cached;
+    if (Number.isFinite(state.fetchedAtMs) && now() >= state.fetchedAtMs &&
+        now() - state.fetchedAtMs <= config.cacheMaxAgeMs) {
+      const { regionId, source, detail, latitude, longitude, fetchedAtMs } = state;
+      return { regionId, source: source === "ip" ? "ip-cached" : source,
+        detail, latitude, longitude, fetchedAtMs, cached: true };
+    }
+    return fallbackGeo();
+  };
+
+  function refresh(reason = "manual") {
+    if (disposed) return Promise.resolve(state);
+    if (reason === "online") networkOffline = false;
+    if (networkOffline) return Promise.resolve(state);
+    const nowMs = now();
+    const manual = reason === "manual";
+    if (rateLimitedUntil > nowMs) {
+      return Promise.resolve(publish({ ...state, refreshing: false,
+        error: geoFailureMessage({ status: 429 }), retryAtMs: rateLimitedUntil }));
+    }
+    if (!manual && reason !== "online" && state.retryAtMs > nowMs) {
+      return Promise.resolve(state);
+    }
+    if (!manual && inFlight) return inFlight;
+    const throttleMs = manual ? config.manualThrottleMs : config.autoThrottleMs;
+    if (nowMs - lastStartedAt < throttleMs) return Promise.resolve(state);
+    active?.abort();
+    const controller = new AbortController();
+    active = controller;
+    const requestGeneration = ++generation;
+    lastStartedAt = nowMs;
+    publish({ ...state, refreshing: true, lastAttemptAtMs: nowMs,
+      error: null, retryAtMs: 0, refreshReason: reason });
+    const operation = Promise.resolve().then(() => fetchGeoImpl({ signal: controller.signal, now }))
+      .then((next) => {
+        if (disposed || requestGeneration !== generation) return state;
+        const fetchedAtMs = now();
+        failures = 0;
+        rateLimitedUntil = 0;
+        writeGeoCache(storage, next, fetchedAtMs);
+        return publish({ ...next, fetchedAtMs, refreshing: false, error: null, retryAtMs: 0,
+          lastAttemptAtMs: nowMs, refreshReason: reason });
+      }).catch((error) => {
+        if (disposed || requestGeneration !== generation) return state;
+        failures++;
+        const rateLimited = error?.status === 429 || /HTTP\s*429/.test(error?.message || "");
+        if (rateLimited) {
+          rateLimitedUntil = Math.max(now() + config.rateLimitCooldownMs,
+            Number.isSafeInteger(error?.retryAtMs) ? error.retryAtMs : 0);
+        }
+        const delay = Math.min(config.maxFailureRetryMs, config.failureRetryMs * 2 ** Math.min(failures - 1, 10));
+        return publish({ ...cachedOrFallback(), refreshing: false, lastAttemptAtMs: nowMs,
+          error: geoFailureMessage(error), retryAtMs: rateLimited ? rateLimitedUntil : now() + delay, refreshReason: reason });
+      }).finally(() => { if (requestGeneration === generation) { active = null; inFlight = null; } });
+    inFlight = operation;
+    return operation;
+  }
+
+  function offline() {
+    if (disposed) return;
+    networkOffline = true;
+    generation++;
+    active?.abort();
+    active = null;
+    inFlight = null;
+    // A subsequent real online event may retry immediately, but never bypass 429.
+    lastStartedAt = -Infinity;
+    publish({ ...cachedOrFallback(), refreshing: false, lastAttemptAtMs: state.lastAttemptAtMs,
+      error: "网络离线，恢复联网后会自动重新识别。", retryAtMs: rateLimitedUntil, refreshReason: "offline" });
+  }
+
+  function dispose() { disposed = true; generation++; active?.abort(); active = null; inFlight = null; }
+  return Object.freeze({ refresh, offline, dispose, getState: () => state });
+}
+
+/** Browser events are isolated from React so focus/network behavior is directly testable. */
+export function bindGeoRefreshTriggers(controller, {
+  windowTarget = globalThis.window, documentTarget = globalThis.document,
+  navigatorTarget = globalThis.navigator, schedule = setInterval, cancel = clearInterval,
+} = {}) {
+  const visible = () => documentTarget?.visibilityState !== "hidden";
+  const connected = () => navigatorTarget?.onLine !== false;
+  const automatic = (reason) => { if (visible() && connected()) void controller.refresh(reason); };
+  const onOnline = () => { void controller.refresh("online"); };
+  const onOffline = () => controller.offline();
+  const onFocus = () => automatic("focus");
+  const onVisibility = () => automatic("visibility");
+  windowTarget?.addEventListener("online", onOnline);
+  windowTarget?.addEventListener("offline", onOffline);
+  windowTarget?.addEventListener("focus", onFocus);
+  documentTarget?.addEventListener("visibilitychange", onVisibility);
+  const timer = schedule(() => automatic("poll"), SERVICES_CONFIG.geo.refreshMs);
+  if (connected()) void controller.refresh("startup"); else controller.offline();
+  return () => {
+    cancel(timer);
+    windowTarget?.removeEventListener("online", onOnline);
+    windowTarget?.removeEventListener("offline", onOffline);
+    windowTarget?.removeEventListener("focus", onFocus);
+    documentTarget?.removeEventListener("visibilitychange", onVisibility);
+    controller.dispose();
+  };
 }
 
 export function weatherLocation(regionId = DEFAULT_REGION, geo) {

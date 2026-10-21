@@ -74,3 +74,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+html.desktop-widget,
+html.desktop-widget body,
+html.desktop-widget #root {
+  width: 100%; height: 100%; margin: 0; background: transparent; overflow: hidden;
+}
+.drag-region { -webkit-app-region: drag; app-region: drag; user-select: none; }
+.no-drag, .no-drag * { -webkit-app-region: no-drag; app-region: no-drag; }
+.widget-surface { width: 100%; height: 100%; padding: 6px; background: transparent; }
+.widget-main { position: relative; display: flex; flex-direction: column; width: 100%; height: 100%; gap: 6px; }
+.widget-toolbar { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; height: 27px; padding: 0 3px 0 5px; border-radius: 10px; background: rgba(2, 8, 23, .82); border: 1px solid rgba(255,255,255,.1); }
+.widget-window-button { display: grid; place-items: center; width: 25px; height: 23px; border-radius: 6px; color: #94a3b8; transition: color .15s, background .15s; }
+.widget-window-button:hover { color: #f8fafc; background: rgba(255,255,255,.1); }
+.widget-window-button:disabled { opacity: .4; }
+.widget-window-button:focus-visible { outline: 1px solid #7dd3fc; outline-offset: -1px; }
+.widget-window-button.widget-exit:hover { background: rgba(244,63,94,.22); color: #fda4af; }
+.widget-panel { position: absolute; left: 0; right: 0; top: 34px; bottom: 0; z-index: 60; display: flex; flex-direction: column; }
+.widget-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding: 2px 7px; border-radius: 7px; background: rgba(2,8,23,.82); color: #a8b5c8; font-size: 9px; line-height: 15px; }
+.widget-main .clock-panel { flex-shrink: 0; background: rgba(2,8,23,.82); }
+.widget-main .pond-container { margin-top: 0; min-height: 0; }
+.widget-main .action-dock { margin-top: 0; flex-shrink: 0; background: rgba(2,8,23,.82); }
+.widget-main .fishing-status { display: none; }
+@media (max-width: 520px) {
+  .desktop-widget .widget-drag-hint { display: none; }
+  .desktop-widget .clock-panel { padding: 6px 10px; gap: 5px; }
+  .desktop-widget .clock-time { font-size: 25px; }
+  .desktop-widget .clock-date { font-size: 9px; }
+  .desktop-widget .weather-display { font-size: 11px; }
+  .desktop-widget .weather-detail { max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 8px; }
+  .desktop-widget .action-dock { padding: 5px 7px; gap: 3px; }
+  .desktop-widget .dock-label { display: none; }
+  .desktop-widget .dock-button { padding: 7px 9px; }
+  .desktop-widget .dock-coins { padding: 5px 8px; font-size: 12px; }
+}

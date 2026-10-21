@@ -28,6 +28,7 @@ for (const file of files) {
   if (!fs.readFileSync(path.join(root, file)).equals(asar.extractFile(archive, path.normalize(file)))) throw new Error(`Packed resource differs: ${file}`);
 }
 if (!fs.readFileSync(path.join(root, 'desktop/assets/icon.ico')).equals(fs.readFileSync(path.join(root, 'release/win-unpacked/resources/icon.ico')))) throw new Error('Application icon resource missing or mismatched');
+if (!fs.readFileSync(path.join(root, 'desktop/使用说明.txt')).equals(fs.readFileSync(path.join(root, 'release/win-unpacked/使用说明.txt')))) throw new Error('User guide missing or mismatched');
 const bytes = fs.readFileSync(installer);
 if (bytes.subarray(0, 2).toString() !== 'MZ') throw new Error('Not a Windows executable');
 const portableBytes = fs.readFileSync(portable);

@@ -1,9 +1,12 @@
 {
-  "archiveSha256": "02FD614712D98C788DF472D33228045853E57DF71F2FA37F729C3DC023F774E1",
-  "totalFiles": 75,
-  "extractedAt": "2026-10-21T06:40:11.8123338Z",
-  "runtimeLaunchPassed": false,
-  "extractionDirectory": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\免安装 验证-f72c94c7d41d44b1a9c32e7f35882bab",
-  "exeSha256": "929FC624C15AE9ABDA9573542D62E287AFC3FD61DEA923BBBC6EF3B917FFBAC1",
-  "sourceAndZipMatch": true
+  "archiveSha256": "AB4ED63F61911FE41CE49C3D9CB2CD31C61F99F8CDF56A403332C1AE90E6F1F7",
+  "version": "1.1.0",
+  "extractionDirectory": "X:\\game\\PondClock-1.1.0",
+  "userGuideExists": true,
+  "extractedAt": "2026-10-21T07:48:24.8884655Z",
+  "sourceAndZipMatch": true,
+  "totalFiles": 76,
+  "runtimeLaunchPassed": true,
+  "exeSha256": "03653D466F6A07F09314DCE56E114E59E3EABA59906BC814EBFF35309DBDFD9C",
+  "runtimeEvidence": "NATIVE_WIDGET_CHECK.json"
 }

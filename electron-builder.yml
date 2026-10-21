@@ -5,6 +5,9 @@ electronDist: node_modules/electron/dist
 extraResources:
   - from: desktop/assets/icon.ico
     to: icon.ico
+extraFiles:
+  - from: desktop/使用说明.txt
+    to: 使用说明.txt
 directories:
   output: release
 files:
