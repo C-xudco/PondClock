@@ -1,0 +1,61 @@
+{
+  "clientDate": "2026-10-23",
+  "timeZone": "Asia/Shanghai",
+  "checkedAtUtc": "2026-10-23T13:44:13.033Z",
+  "scope": "Documentation only; no product, visual, network, performance or release acceptance performed",
+  "baseline": "6685447",
+  "packageVersion": "1.1.1",
+  "passed": true,
+  "roleReadmes": 8,
+  "markdownFiles": 12,
+  "localLinksChecked": 73,
+  "missingLocalLinks": [],
+  "regionIds": [
+    "jiangnan",
+    "huaihe",
+    "huanghe",
+    "changjiang",
+    "dongnan",
+    "lingnan",
+    "xinan",
+    "yungui",
+    "hainan",
+    "dongbei",
+    "xibei",
+    "qingzang"
+  ],
+  "requirementIds": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12"
+  ],
+  "acceptanceItemsPending": 13,
+  "productSourcesUnchanged": true,
+  "referenceImages": [
+    "landscape-reference.jpg",
+    "fisherman-reference.jpg"
+  ],
+  "documentHashes": {
+    "docs/inkwash/ENVIRONMENT.md": "0822e3461b592154397b521e18ebae18b71d53d50ca7deefc960df09b5dbfc20",
+    "docs/inkwash/README.md": "40c9fac79e99af4cdf4a1f5070428cd8f52dd28271189dc2fe97a02afdba82a5",
+    "docs/inkwash/references/README.md": "8cafecadbd979cdc530c0ee648715e72a1b0ea80d8021347a9605a209173aec5",
+    "docs/inkwash/roles/acceptance/README.md": "f4e2840566dac86506e7cfb3a5fc94ba6b2770d5e303a7a3eac73e2ee616fdfa",
+    "docs/inkwash/roles/architecture/README.md": "dfc41914a5edc99a1fc900bac193e91db997632ba1ee3e0c6a1d0354a27b221f",
+    "docs/inkwash/roles/art-direction/README.md": "f5d2e7cbcc728268d5c5c2bc107d7816867a21651278ca7110f6d38767095599",
+    "docs/inkwash/roles/rendering/README.md": "b9c2763b06151e69ef078414c950f65db6e71bf989cc96ee4bb9a01f678ac0d8",
+    "docs/inkwash/roles/requirements/README.md": "cf5c27aaaee8c8de3702f2789ed5a384e2167c754deef43c0e252e5708bb0d19",
+    "docs/inkwash/roles/review/README.md": "3b9af615cef3a2468827d0875dde9c5889d2e49d341e28dc608c00deb54bdd51",
+    "docs/inkwash/roles/ui/README.md": "439faaee7de8c6fe2d7384eb410da90ec4b217f28b1d88182f0a20664f96aaf3",
+    "docs/inkwash/roles/weather/README.md": "b30038d218b154bd86fa85573ace2cca01eb3b344dcb49a34febbba5c5bbad4a",
+    "docs/inkwash/STATUS.md": "ce4c5ace4bf8eeb989365ecd1553c6e00bd57482ff2746d8c8162e3e17273be0"
+  }
+}
