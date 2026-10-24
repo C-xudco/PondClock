@@ -1,0 +1,129 @@
+{
+  "clientDate": "2026-10-24",
+  "timeZone": "Asia/Shanghai",
+  "checkedAtUtc": "2026-10-24T14:11:20.597Z",
+  "baseline": "4d43e2c",
+  "phase": "planning-awaiting-user-approval",
+  "implementationAuthorized": false,
+  "scope": "Documentation, local catalogue structure and proposal arithmetic only; no game, audio, save migration, real network or release acceptance",
+  "passed": true,
+  "source": {
+    "sourcePath": "X:/全球可钓鱼类名录_10类栖息地与垂钓方式.txt",
+    "sha256": "21b81697c65c5564b301ed70768c57181a9b402ac7bcec1d9cb386771774d46d",
+    "bytes": 3623092,
+    "utf8Bom": true,
+    "lines": 38612,
+    "total": 2701,
+    "categoryCounts": {
+      "A": 1556,
+      "B": 1132,
+      "C": 13
+    },
+    "uniqueIds": 2701,
+    "uniqueScientificNames": 2701,
+    "duplicateScientificNames": [],
+    "missingScientificName": [],
+    "contiguousIds": true,
+    "habitatCounts": {
+      "H01": 52,
+      "H02": 639,
+      "H03": 339,
+      "H04": 52,
+      "H05": 920,
+      "H06": 1248,
+      "H07": 477,
+      "H08": 748,
+      "H09": 240,
+      "H10": 198
+    },
+    "freshwaterFlag": 743,
+    "chinaExample": 634,
+    "methodLabelNonEmptyCount": 2701,
+    "methodTextNonEmptyCount": 2701,
+    "missingMethodRecordIds": []
+  },
+  "fishCatalogue": {
+    "newCandidates": 20,
+    "existingReviews": 42,
+    "allPending": true,
+    "regionalEvidence": {
+      "R1_original_research": 10,
+      "R2_official_basin_or_suitability": 2,
+      "R3_pending": 8
+    },
+    "exactLandmarkVerified": 0,
+    "memberships": 71,
+    "allRuntimeMappingsMatch": true
+  },
+  "proposalArithmetic": {
+    "dropWeights": [
+      {
+        "outcome": "鱼（沿用当地既有鱼种/品质/体型抽样）",
+        "weight": 9820
+      },
+      {
+        "outcome": "破鞋",
+        "weight": 150
+      },
+      {
+        "outcome": "泡水手表",
+        "weight": 20
+      },
+      {
+        "outcome": "网红修炼秘籍",
+        "weight": 10
+      }
+    ],
+    "dropDenominator": 10000,
+    "repairWeights": [
+      {
+        "outcome": "失败",
+        "weight": 400
+      },
+      {
+        "outcome": "普通",
+        "weight": 550
+      },
+      {
+        "outcome": "名贵",
+        "weight": 49
+      },
+      {
+        "outcome": "顶级",
+        "weight": 1
+      }
+    ],
+    "repairDenominator": 1000,
+    "jackpotProbability": 0.001,
+    "grossExpected": 337.2255,
+    "netExpected": -162.7745,
+    "incrementOverDirectSale": -212.7745,
+    "assumptions": "failure residual zero; inclusive uniform integer ranges ordinary10..200 and luxury1000..9999; jackpot fixed10000"
+  },
+  "futureAcceptanceItemsPending": 20,
+  "markdownFiles": 13,
+  "localLinksChecked": 70,
+  "missingLocalLinks": [],
+  "productSourcesUnchanged": true,
+  "documentHashes": {
+    "docs/team/BASELINE.md": "8919b57a365b6122f53936e42da30bc2a32f502773637c4442fee55cdc8c31c3",
+    "docs/team/CHANGE_PROTOCOL.md": "d75f55d8a9cc5ece46aed88c5aea3e2de60197b92c2613969b42e496506254c5",
+    "docs/team/README.md": "f69fd3bcb1aa09685f787854067090d40f51ebbc522ab8c3acbd54172893a6a8",
+    "docs/team/REQUESTS.md": "81295f68e4a4195e5b70611cd286b222f29d135a659f7a33d6fbf1e6bad71be9",
+    "docs/next-iteration/DEVELOPMENT_STANDARD.md": "ffd7e1a9a261787e0fae490b59955af2835537861382efa23fb45a75ac4e9c61",
+    "docs/next-iteration/README.md": "728d20f8e542f63381299671f29b2c6f1972fbac666645952ba893c11a249b8a",
+    "docs/next-iteration/roles/creative/README.md": "cf3766e366a2972d7623228c2766ca574fecfe8cc89a362991a48754571b2d96",
+    "docs/next-iteration/roles/fish-catalogue/README.md": "c0fbd07407565e130701dc9e82323b634893bf4baf0521a928c6ef4d5c51054a",
+    "docs/next-iteration/roles/review/README.md": "56e8f8660c3eef59045efe8647a2a7e54c09087abceda4473da44297d0ff0ae9",
+    "README.md": "fde22ef23979569f9f450339d43819974aae159e1dadad99b3465061d6236824",
+    "docs/DECISIONS.md": "4e44970bd3c8d55382a8fb9e8b22d1844d9315dc66d411904e1fef24b4bfcf10",
+    "docs/PROGRESS.md": "36634d706c284588a67efaf160bed871f61dcbe262a13c2d62448aa4245ff3cc",
+    "docs/TECH_DEBT.md": "9719f8662c66f628e8fd4b2e1645a29e0da5f765b6ae8578ece780610e0c5341"
+  },
+  "documentationToolChecks": {
+    "nodeSyntax": "passed for both local catalogue scripts",
+    "eslint": "passed for local catalogue scripts",
+    "csvImportRows": 62,
+    "allRowsPending": true
+  }
+}
