@@ -40,7 +40,8 @@
   "inputs": {
     "gameConfig": {
       "path": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\src\\lib\\gameConfig.js",
-      "sha256": "e1d164d5726c337dff4a13d75e235ccbcb76b5f3b472273351db011c5bb208fa"
+      "sha256": "e1d164d5726c337dff4a13d75e235ccbcb76b5f3b472273351db011c5bb208fa",
+      "revision": "a270e84"
     },
     "artDirection": {
       "path": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\docs\\inkwash\\roles\\art-direction\\README.md",
@@ -872,5 +873,6 @@
       "xibei": 6,
       "qingzang": 5
     }
-  }
+  },
+  "baselineMode": "historical-1.1.1-approved-planning-snapshot"
 }

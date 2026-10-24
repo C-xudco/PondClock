@@ -1,221 +1,141 @@
-import { useMemo } from "react";
+import { useId, useMemo } from "react";
 import { JUDGE } from "@/lib/gameConfig";
+import { toWeatherVisualState } from "@/domain/weatherVisualState";
 import SkyLayer from "./SkyLayer";
 import WaterLayer from "./WaterLayer";
 import Fisherman from "./Fisherman";
 import Bobber from "./Bobber";
 import WeatherLayer from "./WeatherLayer";
 import SpeechBubble from "./SpeechBubble";
-import { getPalette, phaseOf, sunMoonOf } from "./palette";
-import { VIEW, BOBBER } from "./scene";
+import { getPalette } from "./palette";
+import { VIEW, BOBBER, geometryForRegion, actorPlacementFor } from "./scene";
 import { useTween } from "./useTween";
+import { useVisualClock } from "./useVisualClock";
 
-// 美术自检用覆盖（仅 dev 生效）：?hour=12 & ?weather=雪 & ?status=bite & ?wl=14 & ?say=文本&tone=high
-// 生产构建里 import.meta.env.DEV 为 false，这段不会执行，Pond 仍严格以入参为准
-const readDevOverrides = () => {
-  if (!import.meta.env.DEV || typeof window === "undefined") return {};
-  try {
-    const q = new URLSearchParams(window.location.search);
-    const hourNum = Number(q.get("hour"));
-    const wlNum = Number(q.get("wl"));
-    const status = q.get("status");
-    const tone = q.get("tone");
-    const say = q.get("say");
-    return {
-      hour: q.get("hour") !== null && Number.isFinite(hourNum) ? ((hourNum % 24) + 24) % 24 : undefined,
-      weather: q.get("weather") || undefined,
-      status: status === "bite" || status === "idle" ? status : undefined,
-      windowLeft: q.get("wl") !== null && Number.isFinite(wlNum) ? Math.max(0, wlNum) : undefined,
-      speech:
-        say && ["idle", "success", "high", "miss"].includes(tone)
-          ? { text: say, tone }
-          : say
-            ? { text: say, tone: "idle" }
-            : undefined,
-    };
-  } catch {
-    return {};
-  }
-};
-
+const SOURCE_LABEL = { online: "实时天气", cached: "缓存天气", simulated: "离线模拟" };
+const LEGACY_CODE = { 晴: 0, 多云: 2, 阴: 3, 小雨: 61, 雨: 63, 雪: 71, 小雪: 71 };
 const POND_STYLES = `
-@keyframes mc-twinkle{0%,100%{opacity:.32}50%{opacity:1}}
-@keyframes mc-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-720}}
-@keyframes mc-ring{0%{transform:scale(.55);opacity:.26}55%{opacity:.1}100%{transform:scale(1.75);opacity:0}}
-@keyframes mc-ring-fast{0%{transform:scale(.5);opacity:.34}100%{transform:scale(2.1);opacity:0}}
-@keyframes mc-ring-slow{0%{transform:scale(.6);opacity:.2}100%{transform:scale(2.6);opacity:0}}
-@keyframes mc-bubble-in{0%{opacity:0;transform:translateY(7px) scale(.94)}62%{opacity:1;transform:translateY(-1px) scale(1.015)}100%{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes mc-bubble-tail-in{0%,40%{opacity:0}100%{opacity:1}}
-@keyframes mc-fall{0%{transform:translate3d(0,-24px,0)}100%{transform:translate3d(-6px,260px,0)}}
-@keyframes mc-snow{0%{transform:translate3d(0,-20px,0)}100%{transform:translate3d(16px,250px,0)}}
-@keyframes mc-pop{0%{opacity:0;transform:translateY(-5px)}100%{opacity:1;transform:translateY(0)}}
-.mc-twinkle{animation:mc-twinkle 6.5s ease-in-out infinite}
-.mc-flow{animation:mc-flow 30s linear infinite}
+@keyframes mc-ring{0%{transform:scale(.55);opacity:.26}100%{transform:scale(1.75);opacity:0}}
+@keyframes mc-ring-fast{0%{transform:scale(.5);opacity:.5}100%{transform:scale(2.1);opacity:0}}
+@keyframes mc-ring-slow{0%{transform:scale(.6);opacity:.3}100%{transform:scale(2.6);opacity:0}}
+@keyframes mc-bubble-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .mc-ring{animation:mc-ring 4.6s ease-out infinite}
 .mc-ring-fast{animation:mc-ring-fast 1.7s ease-out infinite}
 .mc-ring-slow{animation:mc-ring-slow 2.6s ease-out infinite}
-.mc-bubble{animation:mc-bubble-in .4s cubic-bezier(.22,.9,.3,1.18) both;transform-origin:bottom left}
-.mc-bubble-tail{animation:mc-bubble-tail-in .4s ease-out both}
-.mc-pop{animation:mc-pop .28s ease-out both}
+.mc-bubble{animation:mc-bubble-in .24s ease-out both}
+.ink-pond .pond-label{background:rgba(243,240,226,.87);border:1px solid rgba(80,92,78,.2);color:#344c44;box-shadow:0 2px 6px #263d3315}
+.ink-pond button:focus-visible{outline:2px solid #9e5745;outline-offset:-3px}
+@media(prefers-reduced-motion:reduce){.ink-pond *, .ink-pond *::before, .ink-pond *::after{animation:none!important;transition:none!important}}
 `;
 
-// 水塘主场景：天空 / 水面 / 剪影渔人 / 立式浮漂 / 天气 / 气泡 / 交互 HUD
-const Pond = ({ status, windowLeft = 0, weather = "晴", hour = 12, speech = null, onCatch, onPoke = null }) => {
-  const dev = readDevOverrides();
-  const effHour = dev.hour ?? hour;
-  const effWeather = dev.weather ?? weather;
-  const effStatus = dev.status ?? status;
-  const effWindowLeft = dev.windowLeft ?? windowLeft;
-  const effSpeech = dev.speech ?? speech ?? null;
-
-  const biting = effStatus === "bite";
-  const t = useTween(biting, 380);
-  const phase = phaseOf(effHour);
-  const palette = useMemo(() => getPalette(phase, effWeather), [phase, effWeather]);
-  const sun = useMemo(() => sunMoonOf(effHour, phase), [effHour, phase]);
-
+/**
+ * Display only: the caller selects the committed region/site and its weather.
+ * Header IP weather and viewer selections never enter this scene selector.
+ */
+const Pond = ({
+  status, windowLeft = 0, weather, hour = 12, speech = null,
+  onCatch, onPoke = null, regionId = "jiangnan",
+  sceneDefinition, sceneSite, visualState, weatherEntry, entry,
+}) => {
+  const rawId = useId();
+  const uid = `ink-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  const actualRegion = sceneDefinition?.regionId || sceneSite?.regionId || regionId;
+  const geometry = geometryForRegion(sceneDefinition?.geometryId || actualRegion);
+  const actorPlacement = actorPlacementFor(geometry);
+  const snapshot = (weatherEntry || entry)?.snapshot;
+  // Compatibility with old callers is explicit and isolated. Production supplies visualState.
+  const fallback = useMemo(() => {
+    const nowMs = Date.now();
+    return toWeatherVisualState({
+      weatherCode: LEGACY_CODE[weather] ?? null,
+      isDay: hour >= 6 && hour < 18,
+      observedAtMs: nowMs,
+      source: "simulated",
+      quality: "legacy",
+    }, { nowMs, timeZone: sceneSite?.timeZone });
+  }, [weather, hour, sceneSite?.timeZone]);
+  const visual = visualState || fallback;
+  const biting = status === "bite";
+  const pose = useTween(biting, 380);
+  const palette = useMemo(
+    () => getPalette(visual.daylight.isDay === false ? "night" : "day", "多云"),
+    [visual.daylight.isDay],
+  );
+  const precipitation = visual.precipitation.kind;
+  const { timeMs, reducedMotion } = useVisualClock(
+    precipitation === "rain" || precipitation === "snow",
+    `${geometry.id}:${precipitation}:${visual.precipitation.intensity}`,
+  );
   const span = Math.max(1, JUDGE?.windowSeconds || 20);
-  const leftPct = Math.max(0, Math.min(100, (effWindowLeft / span) * 100));
-  const ringC = 2 * Math.PI * 15.5;
+  const leftPct = Math.max(0, Math.min(100, windowLeft / span * 100));
+  const circumference = 2 * Math.PI * 15.5;
+  const source = snapshot?.source || "simulated";
+  const temperature = Number.isFinite(snapshot?.temperatureC) ? `${Math.round(snapshot.temperatureC)}°` : "";
+  const place = sceneSite?.place || "秦淮河 · 文德桥";
+  const weatherText = weather || "天气未知";
+  const labelTitle = [sceneSite?.address, sceneSite?.weatherReferenceLabel,
+    snapshot?.observedAtMs ? new Date(snapshot.observedAtMs).toLocaleString("zh-CN") : ""].filter(Boolean).join(" · ");
 
   return (
-    <div
-      className={`relative select-none overflow-hidden rounded-2xl border border-white/10 bg-transparent shadow-2xl backdrop-blur-[2px] ${
-        biting ? "cursor-pointer" : ""
-      }`}
-    >
+    <div className="ink-pond relative select-none overflow-hidden rounded-2xl border shadow-lg"
+      style={{ borderColor: "#788b6b55", background: "#e6e9de", fontFamily: '"KaiTi","STKaiti","FangSong",serif' }}
+      data-scene-region={actualRegion} data-scene-site={sceneSite?.siteId || ""}
+      data-sky={visual.sky.coverage} data-precipitation={precipitation}
+      data-water-response={visual.waterResponse} data-weather-source={source}
+      data-reduced-motion={reducedMotion ? "true" : "false"}>
       <style>{POND_STYLES}</style>
-
-      <svg
-        viewBox={`0 0 ${VIEW.w} ${VIEW.h}`}
-        className="block h-auto w-full"
-        role="img"
-        aria-label="水塘垂钓场景"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <SkyLayer p={palette} sun={sun} />
-        <WaterLayer p={palette} sun={sun} />
-        <Fisherman p={palette} pose={t} />
-        <Bobber p={palette} biting={biting} sinkT={t} />
-
-        {/* 四周压暗，把视线收到"水面—浮漂—渔人"这条线上 */}
+      <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} className="block h-auto w-full"
+        role="img" aria-label="水塘垂钓场景" preserveAspectRatio="xMidYMid meet">
         <defs>
-          <radialGradient id="mcVignette" cx="0.5" cy="0.44" r="0.74">
-            <stop offset="52%" stopColor={palette.ink} stopOpacity="0" />
-            <stop offset="100%" stopColor={palette.ink} stopOpacity={palette.isNight ? 0.6 : 0.34} />
-          </radialGradient>
+          <clipPath id={`${uid}-water`}><path d={geometry.waterPath}/></clipPath>
         </defs>
-        <rect
-          x="0"
-          y="0"
-          width={VIEW.w}
-          height={VIEW.h}
-          fill="url(#mcVignette)"
-          pointerEvents="none"
-        />
+        <image href={`${import.meta.env.BASE_URL}${geometry.asset}`} width={VIEW.w} height={VIEW.h} preserveAspectRatio="none"
+          data-scene-art={geometry.id}/>
+        <SkyLayer visualState={visual} geometry={geometry} uid={uid}/>
+        <WaterLayer visualState={visual} geometry={geometry} uid={uid}/>
+        <WeatherLayer key={geometry.id} visualState={visual} geometry={geometry} uid={uid} timeMs={timeMs} reducedMotion={reducedMotion}/>
+        <Fisherman key={geometry.id} p={palette} pose={pose} visualState={visual} geometry={geometry}/>
+        <Bobber p={palette} biting={biting} sinkT={pose} uid={uid}/>
       </svg>
 
-      {/* 天气：雨 / 雪 / 雾（纯视觉，不拦截点击） */}
-      <WeatherLayer weather={effWeather} night={phase === "night"} />
+      <div className="pond-label pointer-events-none absolute bottom-[5%] left-[2.5%] z-10 max-w-[70%] rounded-md px-2 py-1"
+        title={labelTitle}>
+        <div className="truncate text-[12px] leading-[1.35]">{place}</div>
+        {sceneSite?.address && <div className="mt-0.5 truncate text-[10px] leading-[1.35]" title={sceneSite.address}>{sceneSite.address}</div>}
+        <div className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-[10px] leading-[1.35]">
+          <span>{weatherText}{temperature ? ` · ${temperature}` : ""}</span>
+          <span style={{ color: source === "simulated" ? "#986b46" : "#5e7361" }}>{SOURCE_LABEL[source] || "天气未知"}</span>
+        </div>
+      </div>
+      {speech ? <SpeechBubble speech={speech} placement={actorPlacement}/> : null}
+      {!biting && <div className="pond-label pointer-events-none absolute left-[2.5%] top-[4%] rounded-full px-2 py-1 text-[10px] tracking-widest">静候鱼汛</div>}
 
-      {/* 对话气泡 */}
-      {effSpeech ? <SpeechBubble speech={effSpeech} /> : null}
-
-      {/* 待机时点击浮漂：小人会劝"别急"；10 秒内连点 5 次会吐槽"准空军" */}
-      {!biting && onPoke ? (
-        <button
-          type="button"
-          onClick={onPoke}
-          aria-label="点击浮漂"
-          title="轻轻点一下浮漂"
-          className="group absolute z-20 -translate-x-1/2 cursor-pointer bg-transparent focus:outline-none"
-          style={{
-            left: `${(BOBBER.x / VIEW.w) * 100}%`,
-            top: `${((BOBBER.surfaceY - BOBBER.height - 10) / VIEW.h) * 100}%`,
-            width: "8%",
-            height: `${((BOBBER.height + 26) / VIEW.h) * 100}%`,
-          }}
-        >
-          <span className="pointer-events-none absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/0 transition-colors group-hover:border-white/25 group-active:border-white/45" />
-        </button>
-      ) : null}
-
-      {/* 咬钩：倒计时贴近浮漂上方，环形进度 + 秒数，点击水塘任意处收竿 */}
-      {biting ? (
-        <div
-          className="pointer-events-none absolute z-20 -translate-x-1/2"
-          style={{ left: "48.5%", bottom: "36.5%" }}
-        >
-          <div className="flex flex-col items-center gap-1 mc-pop">
-            <div
-              className="relative flex h-11 w-11 items-center justify-center rounded-full border shadow-[0_6px_18px_rgba(0,0,0,.45)] backdrop-blur-sm"
-              style={{
-                borderColor: "rgba(226,150,130,.42)",
-                background: "rgba(22,16,19,.66)",
-              }}
-            >
-              <svg viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90">
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="15.5"
-                  fill="none"
-                  stroke="rgba(255,255,255,.12)"
-                  strokeWidth="1.8"
-                />
-                <circle
-                  cx="18"
-                  cy="18"
-                  r="15.5"
-                  fill="none"
-                  stroke="#e79c86"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeDasharray={ringC.toFixed(1)}
-                  strokeDashoffset={(ringC * (1 - leftPct / 100)).toFixed(1)}
-                  style={{ transition: "stroke-dashoffset 1s linear" }}
-                />
-              </svg>
-              <span className="text-[15px] font-semibold leading-none tabular-nums text-rose-50">
-                {effWindowLeft}
-              </span>
-            </div>
-            <span className="rounded-full bg-black/35 px-1.5 py-[2px] text-[9px] leading-none tracking-[0.14em] text-rose-50/75 backdrop-blur-[2px]">
-              点击收竿
-            </span>
+      {!biting && onPoke ? <>
+        <button type="button" onClick={onPoke} aria-label="点击浮漂" title="轻轻点一下浮漂"
+          className="absolute z-20 -translate-x-1/2 cursor-pointer rounded-full bg-transparent"
+          style={{ left: `${BOBBER.x / VIEW.w * 100}%`, top: `${(BOBBER.surfaceY - BOBBER.height - 12) / VIEW.h * 100}%`, width: "10%", height: "17%" }}/>
+        <button type="button" onClick={onPoke} aria-label="点击渔翁" title="和渔翁说句话"
+          className="absolute z-20 cursor-pointer rounded-lg bg-transparent"
+          style={{ left: `${actorPlacement.image.x / VIEW.w * 100}%`, top: `${actorPlacement.image.y / VIEW.h * 100}%`, width: `${actorPlacement.image.width / VIEW.w * 100}%`, height: `${actorPlacement.image.height / VIEW.h * 100}%` }}/>
+      </> : null}
+      {biting ? <>
+        <div className="pointer-events-none absolute z-20 -translate-x-1/2" style={{ left: "52.8%", bottom: "36%" }}>
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-full border shadow-md"
+            style={{ background: "#f5f0dfe8", color: "#984c3d", borderColor: "#af7868" }}>
+            <svg viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
+              <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a8774c33" strokeWidth="1.8"/>
+              <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a55340" strokeWidth="1.8" strokeLinecap="round"
+                strokeDasharray={circumference.toFixed(1)} strokeDashoffset={(circumference * (1 - leftPct / 100)).toFixed(1)}/>
+            </svg>
+            <span className="text-[15px] font-semibold tabular-nums">{windowLeft}</span>
           </div>
+          <span className="pond-label mt-1 block rounded px-1.5 py-0.5 text-center text-[10px]">点击收竿</span>
         </div>
-      ) : (
-        <div className="pointer-events-none absolute left-[2.5%] top-[4%] z-20 flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/30 px-3 py-1.5 backdrop-blur-[2px]">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300/70" />
-          <span className="text-[11px] tracking-[0.16em] text-slate-200/70">挂机垂钓中</span>
-        </div>
-      )}
-
-      {/* 咬钩时整块水塘都能点，外加一圈内高亮 */}
-      {biting ? (
-        <>
-          <div className="pointer-events-none absolute inset-0 z-[15] rounded-2xl ring-2 ring-inset ring-rose-200/20" />
-          <button
-            type="button"
-            onClick={onCatch}
-            aria-label="点击收竿"
-            className="absolute inset-0 z-30 h-full w-full cursor-pointer bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-rose-200/40"
-          />
-          {/* 浮漂处的极淡点击提示环，随咬钩呼吸 */}
-          <span
-            className="pointer-events-none absolute z-[16] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-rose-200/25"
-            style={{
-              left: `${(BOBBER.x / VIEW.w) * 100}%`,
-              top: `${((BOBBER.surfaceY - 18) / VIEW.h) * 100}%`,
-              animation: "mc-target 1.6s ease-out infinite",
-            }}
-          />
-        </>
-      ) : null}
-      <style>{`@keyframes mc-target{0%{transform:translate(-50%,-50%) scale(.7);opacity:.55}70%{opacity:.12}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}`}</style>
+        <button type="button" onClick={onCatch} aria-label="点击收竿"
+          className="absolute inset-0 z-30 h-full w-full cursor-pointer rounded-2xl bg-transparent ring-2 ring-inset"
+          style={{ "--tw-ring-color": "#a5534066" }}/>
+      </> : null}
     </div>
   );
 };
-
 export default Pond;

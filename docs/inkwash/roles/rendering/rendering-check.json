@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-24T18:24:10.531Z",
+  "phase": "implementation",
+  "approvedBaseline": "a270e84 + 4d43e2c; user 开始迭代吧 2026-10-25",
+  "passed": true,
+  "testCommand": "node --test --test-reporter=tap tests/ink-rendering.test.js",
+  "testOutput": "TAP version 13\n# Subtest: all 12 shipped scenes have their own geometry, valid float water, and excluded banks\nok 1 - all 12 shipped scenes have their own geometry, valid float water, and excluded banks\n  ---\n  duration_ms: 1.2805\n  type: 'test'\n  ...\n# Subtest: painted foreground stones and Tarim poplar peninsula reject water contact\nok 2 - painted foreground stones and Tarim poplar peninsula reject water contact\n  ---\n  duration_ms: 0.1133\n  type: 'test'\n  ...\n# Subtest: rain/snow are bounded and every deterministic contact belongs to the authored water polygon\nok 3 - rain/snow are bounded and every deterministic contact belongs to the authored water polygon\n  ---\n  duration_ms: 10.3096\n  type: 'test'\n  ...\n# Subtest: a particle reaches its own exact water point before the response; skipped frames never create another location\nok 4 - a particle reaches its own exact water point before the response; skipped frames never create another location\n  ---\n  duration_ms: 2.3807\n  type: 'test'\n  ...\n# Subtest: scenes have isolated contact identity and long running animation keeps constant bounded state\nok 5 - scenes have isolated contact identity and long running animation keeps constant bounded state\n  ---\n  duration_ms: 0.5079\n  type: 'test'\n  ...\n# Subtest: seated body and rod share the exact transform, while line end follows the real float\nok 6 - seated body and rod share the exact transform, while line end follows the real float\n  ---\n  duration_ms: 0.4422\n  type: 'test'\n  ...\n# Subtest: all production image headers retain dimensions and both character variants have real decoded alpha\nok 7 - all production image headers retain dimensions and both character variants have real decoded alpha\n  ---\n  duration_ms: 165.1667\n  type: 'test'\n  ...\n# Subtest: every region grounds the seated figure and moves body, rod, click target and speech together\nok 8 - every region grounds the seated figure and moves body, rod, click target and speech together\n  ---\n  duration_ms: 1.4733\n  type: 'test'\n  ...\n1..8\n# tests 8\n# suites 0\n# pass 8\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 279.1209\n",
+  "lintCommand": "node node_modules/eslint/bin/eslint.js src/components/pond scripts/audit-ink-art.cjs tests/ink-rendering.test.js --ext js,jsx,cjs --max-warnings 0",
+  "lintExitCode": 0,
+  "sourceSha256": {
+    "src/components/pond/Bobber.jsx": "aac4b9704fcbcd0a8b3eb3a3741e24edc202a953264598e0784eba5bf4beb85e",
+    "src/components/pond/Fisherman.jsx": "32a19e67183255f8bb993b9a713b4ffe05fd695eac99d560fdf98c37d9d961fb",
+    "src/components/pond/palette.js": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd",
+    "src/components/pond/Pond.jsx": "4f1e8932eb448f66f5cae60471c8d06df9c0cd1e5188c9b7448fbc2cdf1d00a7",
+    "src/components/pond/precipitation.js": "a6a42983c40bcbb2731045c629363d7bb8244f47931a8d2844523a80a39e52e3",
+    "src/components/pond/scene.js": "b3bfd0416f23b24910a166cc6751defe5acba0e7182d7ef3a8d7e603e45270f3",
+    "src/components/pond/SkyLayer.jsx": "fddb63765351702505bef63ab2a3ca9f2d9acd0d600aa1587c3db64704587be3",
+    "src/components/pond/SpeechBubble.jsx": "f4c15abde6b2104b2a2870f7a3c13a51c297cc9cb0ca0f28919f78692a580bb9",
+    "src/components/pond/useTween.js": "76a8d5819858fd9b5d6c0ef39d44bb04ce85351828be93b98e11f3e417c4bc74",
+    "src/components/pond/useVisualClock.js": "2a353c70b59ad16acfcddf2ad4804586d43ff308b8a5e69f98854bf59652833a",
+    "src/components/pond/WaterLayer.jsx": "666ad34f9d2f1a55eed24d87f7784c28f4a3642b6b399c4c8b8a7b1038b78cf5",
+    "src/components/pond/WeatherLayer.jsx": "f4d95c24e88ec2e3e0788b8292ec16751e5bf659aa1477f5bed5efcf6a79c8b6",
+    "scripts/audit-ink-art.cjs": "05e5d33852ec8345e17412c792a4008b33ec3d2d646a17fe059138781777687e",
+    "tests/ink-rendering.test.js": "032434639b3a4a729f0363815df1507a0085993f9bf7f6b1c09904ac32bb9826"
+  },
+  "artManifest": "art-production-manifest.json",
+  "scope": "8 rendering/geometry/resource unit groups and module lint only; not full application or native release acceptance",
+  "pending": [
+    "Independent production UI and continuous-frame review",
+    "Rebuilt 12-scene grounding review after geometry revision 3",
+    "Scene/client readability across all sizes and DPRs",
+    "Measured rendering p95/CPU/memory",
+    "Final normal EXE and ZIP release evidence"
+  ]
+}

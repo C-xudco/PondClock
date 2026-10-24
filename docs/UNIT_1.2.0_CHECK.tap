@@ -1,0 +1,1416 @@
+TAP version 13
+# Subtest: new save, complete snapshot and in-flight travel survive repository restart
+ok 1 - new save, complete snapshot and in-flight travel survive repository restart
+  ---
+  duration_ms: 21.4315
+  type: 'test'
+  ...
+# Subtest: revision and checksum identity make uncertain-receipt retry idempotent
+ok 2 - revision and checksum identity make uncertain-receipt retry idempotent
+  ---
+  duration_ms: 22.0881
+  type: 'test'
+  ...
+# Subtest: concurrent stale writers cannot duplicate a purchase or sale
+ok 3 - concurrent stale writers cannot duplicate a purchase or sale
+  ---
+  duration_ms: 20.2428
+  type: 'test'
+  ...
+# Subtest: corrupt latest slot recovers the previous complete commit
+ok 4 - corrupt latest slot recovers the previous complete commit
+  ---
+  duration_ms: 20.3331
+  type: 'test'
+  ...
+# Subtest: checksum catches a syntactically valid modified balance
+ok 5 - checksum catches a syntactically valid modified balance
+  ---
+  duration_ms: 35.0096
+  type: 'test'
+  ...
+# Subtest: failure before atomic rename preserves the previous committed state
+ok 6 - failure before atomic rename preserves the previous committed state
+  ---
+  duration_ms: 29.3023
+  type: 'test'
+  ...
+# Subtest: lost verification receipt is resolved by reload without another transaction
+ok 7 - lost verification receipt is resolved by reload without another transaction
+  ---
+  duration_ms: 44.4815
+  type: 'test'
+  ...
+# Subtest: future schema is preserved even when an older valid backup exists
+ok 8 - future schema is preserved even when an older valid backup exists
+  ---
+  duration_ms: 41.8408
+  type: 'test'
+  ...
+# Subtest: explicit import repairs corrupt slots only after retaining original bytes
+ok 9 - explicit import repairs corrupt slots only after retaining original bytes
+  ---
+  duration_ms: 80.3007
+  type: 'test'
+  ...
+# Subtest: import advances local revision and leaves previous valid slot available
+ok 10 - import advances local revision and leaves previous valid slot available
+  ---
+  duration_ms: 45.4983
+  type: 'test'
+  ...
+# Subtest: environment bridge permits only fixed endpoints and bounded weather queries
+ok 11 - environment bridge permits only fixed endpoints and bounded weather queries
+  ---
+  duration_ms: 1.4948
+  type: 'test'
+  ...
+# Subtest: environment response bounds and invalid JSON fail without impacting saves
+ok 12 - environment response bounds and invalid JSON fail without impacting saves
+  ---
+  duration_ms: 39.1626
+  type: 'test'
+  ...
+# Subtest: dialogue pools are complete and avoid immediate repeat without fixed rotation
+ok 13 - dialogue pools are complete and avoid immediate repeat without fixed rotation
+  ---
+  duration_ms: 1.6718
+  type: 'test'
+  ...
+# Subtest: poke stages survive groups, count despite throttling, reset after quiet and respect bubble priority
+ok 14 - poke stages survive groups, count despite throttling, reset after quiet and respect bubble priority
+  ---
+  duration_ms: 0.5385
+  type: 'test'
+  ...
+# Subtest: arrival only uses supplied current-region fish and independent dialogue RNG
+ok 15 - arrival only uses supplied current-region fish and independent dialogue RNG
+  ---
+  duration_ms: 0.3507
+  type: 'test'
+  ...
+# Subtest: audio plays once per fresh bite, mute/background policy and no stale replay
+ok 16 - audio plays once per fresh bite, mute/background policy and no stale replay
+  ---
+  duration_ms: 0.3602
+  type: 'test'
+  ...
+# Subtest: autoplay failure does not queue a replay, notifies once and can unlock by gesture
+ok 17 - autoplay failure does not queue a replay, notifies once and can unlock by gesture
+  ---
+  duration_ms: 0.3233
+  type: 'test'
+  ...
+# Subtest: route network contains every ordered pair exactly once and no self routes
+ok 18 - route network contains every ordered pair exactly once and no self routes
+  ---
+  duration_ms: 1.5979
+  type: 'test'
+  ...
+# Subtest: geographical distance handles known equatorial and antipodal cases
+ok 19 - geographical distance handles known equatorial and antipodal cases
+  ---
+  duration_ms: 0.3228
+  type: 'test'
+  ...
+# Subtest: global distance scaling has exact 60/180 second limits, 200/6000 fares, and symmetric trips
+ok 20 - global distance scaling has exact 60/180 second limits, 200/6000 fares, and symmetric trips
+  ---
+  duration_ms: 0.4981
+  type: 'test'
+  ...
+# Subtest: market matrix covers all species x regions from the habitat shares
+ok 21 - market matrix covers all species x regions from the habitat shares
+  ---
+  duration_ms: 3.5523
+  type: 'test'
+  ...
+# Subtest: fresh quotes use the sale region and round only after applying the market multiplier
+ok 22 - fresh quotes use the sale region and round only after applying the market multiplier
+  ---
+  duration_ms: 9.6703
+  type: 'test'
+  ...
+# Subtest: every fish and quality becomes exactly 1 at seven days in every sale region
+ok 23 - every fish and quality becomes exactly 1 at seven days in every sale region
+  ---
+  duration_ms: 4.0749
+  type: 'test'
+  ...
+# Subtest: missing or corrupt catch time cannot be converted into a newly fresh fish
+ok 24 - missing or corrupt catch time cannot be converted into a newly fresh fish
+  ---
+  duration_ms: 0.4045
+  type: 'test'
+  ...
+# Subtest: new save unlocks only its actual initial region and is schema-valid
+ok 25 - new save unlocks only its actual initial region and is schema-valid
+  ---
+  duration_ms: 7.6275
+  type: 'test'
+  ...
+# Subtest: new games reject unknown regions rather than silently unlocking a default
+ok 26 - new games reject unknown regions rather than silently unlocking a default
+  ---
+  duration_ms: 0.3206
+  type: 'test'
+  ...
+# Subtest: new startup IP/VPN region is permanently unlocked for free without teleportation
+ok 27 - new startup IP/VPN region is permanently unlocked for free without teleportation
+  ---
+  duration_ms: 1.3957
+  type: 'test'
+  ...
+# Subtest: flying to a free IP-unlocked region still charges the origin/destination route
+ok 28 - flying to a free IP-unlocked region still charges the origin/destination route
+  ---
+  duration_ms: 0.4923
+  type: 'test'
+  ...
+# Subtest: real-location entry is free, preserves home, and only uses the recorded IP region
+ok 29 - real-location entry is free, preserves home, and only uses the recorded IP region
+  ---
+  duration_ms: 0.4861
+  type: 'test'
+  ...
+# Subtest: invalid and unaffordable departures do not change the input state
+ok 30 - invalid and unaffordable departures do not change the input state
+  ---
+  duration_ms: 0.6017
+  type: 'test'
+  ...
+# Subtest: travel blocks a second takeoff, fishing, and selling until arrival
+ok 31 - travel blocks a second takeoff, fishing, and selling until arrival
+  ---
+  duration_ms: 0.4295
+  type: 'test'
+  ...
+# Subtest: new startup IP region during a flight unlocks for free without cancelling the flight
+ok 32 - new startup IP region during a flight unlocks for free without cancelling the flight
+  ---
+  duration_ms: 0.3613
+  type: 'test'
+  ...
+# Subtest: arrival uses its persisted deadline once, including a long offline period
+ok 33 - arrival uses its persisted deadline once, including a long offline period
+  ---
+  duration_ms: 0.424
+  type: 'test'
+  ...
+# Subtest: one-by-one and batch selling agree while expired fish override local premiums
+ok 34 - one-by-one and batch selling agree while expired fish override local premiums
+  ---
+  duration_ms: 0.8686
+  type: 'test'
+  ...
+# Subtest: sale replay remains idempotent after JSON save/restore
+ok 35 - sale replay remains idempotent after JSON save/restore
+  ---
+  duration_ms: 0.9507
+  type: 'test'
+  ...
+# Subtest: sale credits the actual current region and cannot reset age by changing regions
+ok 36 - sale credits the actual current region and cannot reset age by changing regions
+  ---
+  duration_ms: 0.3917
+  type: 'test'
+  ...
+# Subtest: commands keep the saved logical time when the supplied wall clock goes backwards
+ok 37 - commands keep the saved logical time when the supplied wall clock goes backwards
+  ---
+  duration_ms: 0.791
+  type: 'test'
+  ...
+# Subtest: a different command cannot resell an already removed fish
+ok 38 - a different command cannot resell an already removed fish
+  ---
+  duration_ms: 0.5104
+  type: 'test'
+  ...
+# Subtest: catch is persisted with codex and consumes bait once; replay cannot duplicate the fish
+ok 39 - catch is persisted with codex and consumes bait once; replay cannot duplicate the fish
+  ---
+  duration_ms: 2.1218
+  type: 'test'
+  ...
+# Subtest: different catch commands cannot duplicate a fish UID or introduce an out-of-region fish
+ok 40 - different catch commands cannot duplicate a fish UID or introduce an out-of-region fish
+  ---
+  duration_ms: 0.7757
+  type: 'test'
+  ...
+# Subtest: equipment purchases deduct exactly once and reject insufficient funds
+ok 41 - equipment purchases deduct exactly once and reject insufficient funds
+  ---
+  duration_ms: 0.3624
+  type: 'test'
+  ...
+# Subtest: unknown commands and missing command IDs cannot modify game assets
+ok 42 - unknown commands and missing command IDs cannot modify game assets
+  ---
+  duration_ms: 0.2118
+  type: 'test'
+  ...
+# Subtest: schema rejects future versions, corrupt assets, IDs, fish times, and duplicate fish
+ok 43 - schema rejects future versions, corrupt assets, IDs, fish times, and duplicate fish
+  ---
+  duration_ms: 1.1401
+  type: 'test'
+  ...
+# Subtest: valid logical save time survives a system clock rollback without rejecting existing fish
+ok 44 - valid logical save time survives a system clock rollback without rejecting existing fish
+  ---
+  duration_ms: 0.2889
+  type: 'test'
+  ...
+# Subtest: schema rejects inconsistent flight endpoints, deadlines, and negative paid fare
+ok 45 - schema rejects inconsistent flight endpoints, deadlines, and negative paid fare
+  ---
+  duration_ms: 0.3186
+  type: 'test'
+  ...
+# Subtest: CN and HK/MO/TW fresh matches alone are marked ip
+ok 46 - CN and HK/MO/TW fresh matches alone are marked ip
+  ---
+  duration_ms: 2.0277
+  type: 'test'
+  ...
+# Subtest: all 34 province names have an actual mapping rather than accidental default
+ok 47 - all 34 province names have an actual mapping rather than accidental default
+  ---
+  duration_ms: 0.8385
+  type: 'test'
+  ...
+# Subtest: unknown CN and overseas responses never masquerade as a fresh successful match
+ok 48 - unknown CN and overseas responses never masquerade as a fresh successful match
+  ---
+  duration_ms: 1.4965
+  type: 'test'
+  ...
+# Subtest: geo cache is versioned, validated, expires, and always downgrades ip to ip-cached
+ok 49 - geo cache is versioned, validated, expires, and always downgrades ip to ip-cached
+  ---
+  duration_ms: 1.0411
+  type: 'test'
+  ...
+# Subtest: successive geo requests can follow a changed VPN rather than reusing cache
+ok 50 - successive geo requests can follow a changed VPN rather than reusing cache
+  ---
+  duration_ms: 1.4967
+  type: 'test'
+  ...
+# Subtest: desktop request bridge is preferred and bridge failure never uses renderer fetch
+ok 51 - desktop request bridge is preferred and bridge failure never uses renderer fetch
+  ---
+  duration_ms: 1.7523
+  type: 'test'
+  ...
+# Subtest: Web requests omit credentials, use no-store, and reject HTTP or malformed JSON
+ok 52 - Web requests omit credentials, use no-store, and reject HTTP or malformed JSON
+  ---
+  duration_ms: 47.8836
+  type: 'test'
+  ...
+# Subtest: HTTP 429 cools down for at least 15 minutes and honors longer Retry-After
+ok 53 - HTTP 429 cools down for at least 15 minutes and honors longer Retry-After
+  ---
+  duration_ms: 1.8652
+  type: 'test'
+  ...
+# Subtest: desktop serialized 429 also receives a cooldown
+ok 54 - desktop serialized 429 also receives a cooldown
+  ---
+  duration_ms: 0.6201
+  type: 'test'
+  ...
+# Subtest: timeout and caller abort settle even if a desktop request never resolves
+ok 55 - timeout and caller abort settle even if a desktop request never resolves
+  ---
+  duration_ms: 24.7894
+  type: 'test'
+  ...
+# Subtest: weather uses valid IP coordinates even if the game travels elsewhere
+ok 56 - weather uses valid IP coordinates even if the game travels elsewhere
+  ---
+  duration_ms: 0.4204
+  type: 'test'
+  ...
+# Subtest: weather URL requests only current Celsius temperature and WMO code
+ok 57 - weather URL requests only current Celsius temperature and WMO code
+  ---
+  duration_ms: 0.4545
+  type: 'test'
+  ...
+# Subtest: WMO codes map to the existing simple scene effects
+ok 58 - WMO codes map to the existing simple scene effects
+  ---
+  duration_ms: 0.2241
+  type: 'test'
+  ...
+# Subtest: weather responses validate coordinates, age, units, fields, and return observation epoch
+ok 59 - weather responses validate coordinates, age, units, fields, and return observation epoch
+  ---
+  duration_ms: 0.6969
+  type: 'test'
+  ...
+# Subtest: weather cache is isolated by coordinates, expires, and never claims live weather
+ok 60 - weather cache is isolated by coordinates, expires, and never claims live weather
+  ---
+  duration_ms: 0.4539
+  type: 'test'
+  ...
+# Subtest: offline simulation exposes its source and no invented temperature
+ok 61 - offline simulation exposes its source and no invented temperature
+  ---
+  duration_ms: 0.1946
+  type: 'test'
+  ...
+# Subtest: approved fish expansion preserves every old fish value and non-fish config
+ok 62 - approved fish expansion preserves every old fish value and non-fish config
+  ---
+  duration_ms: 3.0898
+  type: 'test'
+  ...
+# Subtest: eight new species have independent identities and research-backed producing basins only
+ok 63 - eight new species have independent identities and research-backed producing basins only
+  ---
+  duration_ms: 1.1694
+  type: 'test'
+  ...
+# Subtest: real persistent catch streams can produce each new species in every configured basin
+ok 64 - real persistent catch streams can produce each new species in every configured basin
+  ---
+  duration_ms: 10.5725
+  type: 'test'
+  ...
+# Subtest: full old/new market comparison covers all old prices, all new markets and seven-day expiry
+ok 65 - full old/new market comparison covers all old prices, all new markets and seven-day expiry
+  ---
+  duration_ms: 17.8536
+  type: 'test'
+  ...
+# Subtest: renderer accepts the two exact disclosed provider URLs and rejects modified paths or fields
+ok 66 - renderer accepts the two exact disclosed provider URLs and rejects modified paths or fields
+  ---
+  duration_ms: 5.1375
+  type: 'test'
+  ...
+# Subtest: 403 falls back successfully and that successful provider is preferred on the next VPN refresh
+ok 67 - 403 falls back successfully and that successful provider is preferred on the next VPN refresh
+  ---
+  duration_ms: 4.1637
+  type: 'test'
+  ...
+# Subtest: a formerly preferred provider can fail after changing network and the other provider becomes preferred
+ok 68 - a formerly preferred provider can fail after changing network and the other provider becomes preferred
+  ---
+  duration_ms: 1.2077
+  type: 'test'
+  ...
+# Subtest: an unresponsive primary times out and uses backup even when its mocked request ignores abort
+ok 69 - an unresponsive primary times out and uses backup even when its mocked request ignores abort
+  ---
+  duration_ms: 5.7434
+  type: 'test'
+  ...
+# Subtest: malformed responses and an unmatched Chinese province both trigger fallback
+ok 70 - malformed responses and an unmatched Chinese province both trigger fallback
+  ---
+  duration_ms: 1.5887
+  type: 'test'
+  ...
+# Subtest: malformed HTTP JSON and browser network failures have bounded diagnostic codes
+ok 71 - malformed HTTP JSON and browser network failures have bounded diagnostic codes
+  ---
+  duration_ms: 1.0916
+  type: 'test'
+  ...
+# Subtest: a valid overseas result is accepted without inventing a Chinese region or probing another provider
+ok 72 - a valid overseas result is accepted without inventing a Chinese region or probing another provider
+  ---
+  duration_ms: 0.3192
+  type: 'test'
+  ...
+# Subtest: ipwhois success:false cannot unlock a province, while country names and HK/MO/TW remain usable
+ok 73 - ipwhois success:false cannot unlock a province, while country names and HK/MO/TW remain usable
+  ---
+  duration_ms: 0.5476
+  type: 'test'
+  ...
+# Subtest: one provider 429 has its own cooldown while the independent disclosed provider still works
+ok 74 - one provider 429 has its own cooldown while the independent disclosed provider still works
+  ---
+  duration_ms: 0.8348
+  type: 'test'
+  ...
+# Subtest: only all-provider throttling returns global 429 with the earliest permitted retry time
+ok 75 - only all-provider throttling returns global 429 with the earliest permitted retry time
+  ---
+  duration_ms: 1.2353
+  type: 'test'
+  ...
+# Subtest: mixed provider denial and throttling is unavailable rather than a misleading global quota failure
+ok 76 - mixed provider denial and throttling is unavailable rather than a misleading global quota failure
+  ---
+  duration_ms: 0.5312
+  type: 'test'
+  ...
+# Subtest: provider application-level quota responses also enter that provider cooldown
+ok 77 - provider application-level quota responses also enter that provider cooldown
+  ---
+  duration_ms: 0.5175
+  type: 'test'
+  ...
+# Subtest: explicit caller cancellation immediately stops lookup and never attempts backup
+ok 78 - explicit caller cancellation immediately stops lookup and never attempts backup
+  ---
+  duration_ms: 4.3587
+  type: 'test'
+  ...
+# Subtest: new main-process superseding cancellation never causes a stale request to launch backup
+ok 79 - new main-process superseding cancellation never causes a stale request to launch backup
+  ---
+  duration_ms: 0.4367
+  type: 'test'
+  ...
+# Subtest: controller exposes safe failure attempts and preserves only a valid provider in its geo cache
+ok 80 - controller exposes safe failure attempts and preserves only a valid provider in its geo cache
+  ---
+  duration_ms: 2.7143
+  type: 'test'
+  ...
+# Subtest: controller uses the earliest valid all-provider retry rather than adding another global minimum
+ok 81 - controller uses the earliest valid all-provider retry rather than adding another global minimum
+  ---
+  duration_ms: 0.3735
+  type: 'test'
+  ...
+# Subtest: new games have a usable fallback immediately and cached visits never claim a new live IP
+ok 82 - new games have a usable fallback immediately and cached visits never claim a new live IP
+  ---
+  duration_ms: 2.5655
+  type: 'test'
+  ...
+# Subtest: even a recent geo cache cannot suppress a fresh startup lookup after a VPN change
+ok 83 - even a recent geo cache cannot suppress a fresh startup lookup after a VPN change
+  ---
+  duration_ms: 1.1732
+  type: 'test'
+  ...
+# Subtest: newer manual refresh cancels an old lookup and late old replies cannot overwrite state or cache
+ok 84 - newer manual refresh cancels an old lookup and late old replies cannot overwrite state or cache
+  ---
+  duration_ms: 5.5438
+  type: 'test'
+  ...
+# Subtest: automatic focus/poll requests deduplicate in-flight work and respect the throttle
+ok 85 - automatic focus/poll requests deduplicate in-flight work and respect the throttle
+  ---
+  duration_ms: 1.0703
+  type: 'test'
+  ...
+# Subtest: automatic errors back off while an explicit manual retry can follow a repaired VPN
+ok 86 - automatic errors back off while an explicit manual retry can follow a repaired VPN
+  ---
+  duration_ms: 1.183
+  type: 'test'
+  ...
+# Subtest: manual, foreground and online events cannot bypass an explicit 429 Retry-After
+ok 87 - manual, foreground and online events cannot bypass an explicit 429 Retry-After
+  ---
+  duration_ms: 0.5843
+  type: 'test'
+  ...
+# Subtest: offline cancels a pending lookup and reconnection refreshes without reviving an old reply
+ok 88 - offline cancels a pending lookup and reconnection refreshes without reviving an old reply
+  ---
+  duration_ms: 1.4637
+  type: 'test'
+  ...
+# Subtest: disabled/unmounted geo controllers abort pending work and never publish or cache a late reply
+ok 89 - disabled/unmounted geo controllers abort pending work and never publish or cache a late reply
+  ---
+  duration_ms: 1.4942
+  type: 'test'
+  ...
+# Subtest: browser online, focus, visible resume and interval triggers refresh; cleanup removes every trigger
+ok 90 - browser online, focus, visible resume and interval triggers refresh; cleanup removes every trigger
+  ---
+  duration_ms: 2.3159
+  type: 'test'
+  ...
+# Subtest: failed refresh falls back to dated cached data without claiming a current IP visit
+ok 91 - failed refresh falls back to dated cached data without claiming a current IP visit
+  ---
+  duration_ms: 0.9521
+  type: 'test'
+  ...
+# Subtest: desktop 429 metadata survives the renderer requester and a fresh controller cannot bypass its gate
+ok 92 - desktop 429 metadata survives the renderer requester and a fresh controller cannot bypass its gate
+  ---
+  duration_ms: 2.283
+  type: 'test'
+  ...
+# Subtest: desktop IP service aborts the old network request while leaving concurrent weather alone
+ok 93 - desktop IP service aborts the old network request while leaving concurrent weather alone
+  ---
+  duration_ms: 39.9489
+  type: 'test'
+  ...
+# Subtest: main-process 429 gate respects long HTTP-date Retry-After across repeated bridge calls
+ok 94 - main-process 429 gate respects long HTTP-date Retry-After across repeated bridge calls
+  ---
+  duration_ms: 7.2852
+  type: 'test'
+  ...
+# Subtest: desktop service deadline settles a hung fetch even when the implementation ignores abort
+ok 95 - desktop service deadline settles a hung fetch even when the implementation ignores abort
+  ---
+  duration_ms: 6.3536
+  type: 'test'
+  ...
+# Subtest: quota errors in an HTTP-200 provider body still activate controller cooldown
+ok 96 - quota errors in an HTTP-200 provider body still activate controller cooldown
+  ---
+  duration_ms: 0.5998
+  type: 'test'
+  ...
+# Subtest: geo cache stores only location fields, excluding IP and refresh-control errors
+ok 97 - geo cache stores only location fields, excluding IP and refresh-control errors
+  ---
+  duration_ms: 0.2541
+  type: 'test'
+  ...
+# Subtest: all 12 shipped scenes have their own geometry, valid float water, and excluded banks
+ok 98 - all 12 shipped scenes have their own geometry, valid float water, and excluded banks
+  ---
+  duration_ms: 2.7781
+  type: 'test'
+  ...
+# Subtest: painted foreground stones and Tarim poplar peninsula reject water contact
+ok 99 - painted foreground stones and Tarim poplar peninsula reject water contact
+  ---
+  duration_ms: 0.3031
+  type: 'test'
+  ...
+# Subtest: rain/snow are bounded and every deterministic contact belongs to the authored water polygon
+ok 100 - rain/snow are bounded and every deterministic contact belongs to the authored water polygon
+  ---
+  duration_ms: 19.5255
+  type: 'test'
+  ...
+# Subtest: a particle reaches its own exact water point before the response; skipped frames never create another location
+ok 101 - a particle reaches its own exact water point before the response; skipped frames never create another location
+  ---
+  duration_ms: 4.401
+  type: 'test'
+  ...
+# Subtest: scenes have isolated contact identity and long running animation keeps constant bounded state
+ok 102 - scenes have isolated contact identity and long running animation keeps constant bounded state
+  ---
+  duration_ms: 0.8755
+  type: 'test'
+  ...
+# Subtest: seated body and rod share the exact transform, while line end follows the real float
+ok 103 - seated body and rod share the exact transform, while line end follows the real float
+  ---
+  duration_ms: 0.7557
+  type: 'test'
+  ...
+# Subtest: all production image headers retain dimensions and both character variants have real decoded alpha
+ok 104 - all production image headers retain dimensions and both character variants have real decoded alpha
+  ---
+  duration_ms: 297.725
+  type: 'test'
+  ...
+# Subtest: every region grounds the seated figure and moves body, rod, click target and speech together
+ok 105 - every region grounds the seated figure and moves body, rod, click target and speech together
+  ---
+  duration_ms: 2.7525
+  type: 'test'
+  ...
+# Subtest: native installer check isolates the exact app path and refuses a running target
+ok 106 - native installer check isolates the exact app path and refuses a running target # SKIP
+  ---
+  duration_ms: 1.1081
+  type: 'test'
+  ...
+# Subtest: quit waits for the actual atomic save and refuses new writes while closing
+ok 107 - quit waits for the actual atomic save and refuses new writes while closing
+  ---
+  duration_ms: 68.476
+  type: 'test'
+  ...
+# Subtest: repeated quit requests share a drain and a failed pending write cannot strand the process
+ok 108 - repeated quit requests share a drain and a failed pending write cannot strand the process
+  ---
+  duration_ms: 0.9087
+  type: 'test'
+  ...
+# Subtest: a quit immediately after accepting a write still executes and drains it
+ok 109 - a quit immediately after accepting a write still executes and drains it
+  ---
+  duration_ms: 0.3494
+  type: 'test'
+  ...
+# Subtest: a window that never shows fails once and cannot later appear behind the failure dialog
+ok 110 - a window that never shows fails once and cannot later appear behind the failure dialog
+  ---
+  duration_ms: 0.3877
+  type: 'test'
+  ...
+# Subtest: a shown window cancels startup timeout and a later renderer crash remains fatal
+ok 111 - a shown window cancels startup timeout and a later renderer crash remains fatal
+  ---
+  duration_ms: 0.2235
+  type: 'test'
+  ...
+# Subtest: intentional shutdown suppresses spurious renderer or load failure reports
+ok 112 - intentional shutdown suppresses spurious renderer or load failure reports
+  ---
+  duration_ms: 0.1975
+  type: 'test'
+  ...
+# Subtest: CLI profile accepts fully qualified Windows paths and rejects relative or device paths
+ok 113 - CLI profile accepts fully qualified Windows paths and rejects relative or device paths
+  ---
+  duration_ms: 0.6572
+  type: 'test'
+  ...
+# Subtest: startup diagnostics omit messages, stacks, URLs, IPs and arbitrary error properties
+ok 114 - startup diagnostics omit messages, stacks, URLs, IPs and arbitrary error properties
+  ---
+  duration_ms: 6.0942
+  type: 'test'
+  ...
+# Subtest: enumerate all 10000 mutually exclusive catch slots and all 1000 paid repair slots
+ok 115 - enumerate all 10000 mutually exclusive catch slots and all 1000 paid repair slots
+  ---
+  duration_ms: 11.3053
+  type: 'test'
+  ...
+# Subtest: repair integer ranges include both endpoints and only top branch can yield 10000
+ok 116 - repair integer ranges include both endpoints and only top branch can yield 10000
+  ---
+  duration_ms: 0.7414
+  type: 'test'
+  ...
+# Subtest: named capture streams keep item rates independent of rod/bait/quality and retry IDs
+ok 117 - named capture streams keep item rates independent of rod/bait/quality and retry IDs
+  ---
+  duration_ms: 11.6606
+  type: 'test'
+  ...
+# Subtest: nonfish captures are exclusive, leave bait/pity/codex alone and are schema-valid
+ok 118 - nonfish captures are exclusive, leave bait/pity/codex alone and are schema-valid
+  ---
+  duration_ms: 4.4967
+  type: 'test'
+  ...
+# Subtest: new fish remains local, consumes bait once, and old catch replay fails beyond 128 command IDs
+ok 119 - new fish remains local, consumes bait once, and old catch replay fails beyond 128 command IDs
+  ---
+  duration_ms: 5.7571
+  type: 'test'
+  ...
+# Subtest: shoe and unopened watch sell once at fixed prices, manuals cannot be sold
+ok 120 - shoe and unopened watch sell once at fixed prices, manuals cannot be sold
+  ---
+  duration_ms: 0.6451
+  type: 'test'
+  ...
+# Subtest: repair charges 500 and saves a fixed terminal outcome; failed balance and second repair change nothing
+ok 121 - repair charges 500 and saves a fixed terminal outcome; failed balance and second repair change nothing
+  ---
+  duration_ms: 0.8131
+  type: 'test'
+  ...
+# Subtest: repair retry, lost receipt, restart and sell/repair races cannot reroll or charge twice
+ok 122 - repair retry, lost receipt, restart and sell/repair races cannot reroll or charge twice
+  ---
+  duration_ms: 1.8692
+  type: 'test'
+  ...
+# Subtest: terminal item receipts do not depend on the bounded recent-command history
+ok 123 - terminal item receipts do not depend on the bounded recent-command history
+  ---
+  duration_ms: 3.1689
+  type: 'test'
+  ...
+# Subtest: using a manual consumes it atomically, excludes same-millisecond old fish, and blocks stacking
+ok 124 - using a manual consumes it atomically, excludes same-millisecond old fish, and blocks stacking
+  ---
+  duration_ms: 0.6072
+  type: 'test'
+  ...
+# Subtest: only three fresh post-use fish gain 50%; old fish, items and exactly 168h fish do not spend charges
+ok 125 - only three fresh post-use fish gain 50%; old fish, items and exactly 168h fish do not spend charges
+  ---
+  duration_ms: 0.9858
+  type: 'test'
+  ...
+# Subtest: batch uses catchSequence/uid order, rounds per fish and agrees with the same single-sale order
+ok 126 - batch uses catchSequence/uid order, rounds per fish and agrees with the same single-sale order
+  ---
+  duration_ms: 0.5887
+  type: 'test'
+  ...
+# Subtest: two eligible fish worth three each sell for five each rather than a rounded aggregate of nine
+ok 127 - two eligible fish worth three each sell for five each rather than a rounded aggregate of nine
+  ---
+  duration_ms: 0.4218
+  type: 'test'
+  ...
+# Subtest: buff qualification and charges persist through JSON, region changes, then next activation excludes existing fish
+ok 128 - buff qualification and charges persist through JSON, region changes, then next activation excludes existing fish
+  ---
+  duration_ms: 0.478
+  type: 'test'
+  ...
+# Subtest: arrival event is committed only for actual arrival and consume watermarks survive replay and restart
+ok 129 - arrival event is committed only for actual arrival and consume watermarks survive replay and restart
+  ---
+  duration_ms: 0.3189
+  type: 'test'
+  ...
+# Subtest: schema rejects inconsistent item terminals, shared IDs/sequences, buff fields, audio and watermark values
+ok 130 - schema rejects inconsistent item terminals, shared IDs/sequences, buff fields, audio and watermark values
+  ---
+  duration_ms: 0.6522
+  type: 'test'
+  ...
+# Subtest: both exact HTTPS provider URLs pass desktop and shared allowlists; extra fields/credentials do not
+ok 131 - both exact HTTPS provider URLs pass desktop and shared allowlists; extra fields/credentials do not
+  ---
+  duration_ms: 1.9431
+  type: 'test'
+  ...
+# Subtest: a newer request to the alternate provider cancels an older main-process location request
+ok 132 - a newer request to the alternate provider cancels an older main-process location request
+  ---
+  duration_ms: 36.3094
+  type: 'test'
+  ...
+# Subtest: location session reloads proxy and discards pooled connections before fetch
+ok 133 - location session reloads proxy and discards pooled connections before fetch
+  ---
+  duration_ms: 1.018
+  type: 'test'
+  ...
+# Subtest: main also gates HTTP200 provider quota errors across repeated bridge calls
+ok 134 - main also gates HTTP200 provider quota errors across repeated bridge calls
+  ---
+  duration_ms: 2.7116
+  type: 'test'
+  ...
+# Subtest: cancelled proxy reload never closes a newer request socket or starts a stale request
+ok 135 - cancelled proxy reload never closes a newer request socket or starts a stale request
+  ---
+  duration_ms: 0.4164
+  type: 'test'
+  ...
+# Subtest: diagnostics selects safe status fields and discards location, IPs, proxy errors, paths and save assets
+ok 136 - diagnostics selects safe status fields and discards location, IPs, proxy errors, paths and save assets
+  ---
+  duration_ms: 1.0001
+  type: 'test'
+  ...
+# Subtest: packaged smoke preserves unhandled-rejection as failure without starting a GUI or hanging
+ok 137 - packaged smoke preserves unhandled-rejection as failure without starting a GUI or hanging
+  ---
+  duration_ms: 256.7685
+  type: 'test'
+  ...
+# Subtest: packaged smoke preserves uncaught-exception as failure without starting a GUI or hanging
+ok 138 - packaged smoke preserves uncaught-exception as failure without starting a GUI or hanging
+  ---
+  duration_ms: 162.0129
+  type: 'test'
+  ...
+# Subtest: packaged smoke preserves rejected-launch as failure without starting a GUI or hanging
+ok 139 - packaged smoke preserves rejected-launch as failure without starting a GUI or hanging
+  ---
+  duration_ms: 104.9836
+  type: 'test'
+  ...
+# Subtest: review followup: a preexisting corrupted migration backup prevents replacement of the legacy original
+ok 140 - review followup: a preexisting corrupted migration backup prevents replacement of the legacy original
+  ---
+  duration_ms: 33.7197
+  type: 'test'
+  ...
+# Subtest: review followup: recovery backup permission failure leaves both conflicting original slots intact
+ok 141 - review followup: recovery backup permission failure leaves both conflicting original slots intact
+  ---
+  duration_ms: 37.9344
+  type: 'test'
+  ...
+# Subtest: review followup: losing a whole-repository import verification read reports unknown but restart keeps the import
+ok 142 - review followup: losing a whole-repository import verification read reports unknown but restart keeps the import
+  ---
+  duration_ms: 57.798
+  type: 'test'
+  ...
+# Subtest: review followup: cancelled same-key transport retains its slot and budget through re-enable
+ok 143 - review followup: cancelled same-key transport retains its slot and budget through re-enable
+  ---
+  duration_ms: 1.638
+  type: 'test'
+  ...
+# Subtest: review followup: the 50-fish market metadata reproduces from approved baseline and current real quotes
+ok 144 - review followup: the 50-fish market metadata reproduces from approved baseline and current real quotes
+  ---
+  duration_ms: 235.3322
+  type: 'test'
+  ...
+# Subtest: review: explicit conflict recovery import remains authoritative after restart
+ok 145 - review: explicit conflict recovery import remains authoritative after restart
+  ---
+  duration_ms: 49.7638
+  type: 'test'
+  ...
+# Subtest: review: ENOENT during backup write is not mistaken for a missing original
+ok 146 - review: ENOENT during backup write is not mistaken for a missing original
+  ---
+  duration_ms: 15.3181
+  type: 'test'
+  ...
+# Subtest: review: independently enumerate the complete loot and paid-repair denominators
+ok 147 - review: independently enumerate the complete loot and paid-repair denominators
+  ---
+  duration_ms: 11.658
+  type: 'test'
+  ...
+# Subtest: review: mixed-age preview and all permutations of batch/single sales agree without spending preview charges
+ok 148 - review: mixed-age preview and all permutations of batch/single sales agree without spending preview charges
+  ---
+  duration_ms: 5.2712
+  type: 'test'
+  ...
+# Subtest: review: paid repair survives unknown acknowledgment and its replay after command-history eviction
+ok 149 - review: paid repair survives unknown acknowledgment and its replay after command-history eviction
+  ---
+  duration_ms: 28.1321
+  type: 'test'
+  ...
+# Subtest: review: concurrent real-visit callbacks speak once for one durable arrival
+ok 150 - review: concurrent real-visit callbacks speak once for one durable arrival
+  ---
+  duration_ms: 5.358
+  type: 'test'
+  ...
+# Subtest: review: import consumes old arrival without speaking and without nested-enqueue deadlock
+ok 151 - review: import consumes old arrival without speaking and without nested-enqueue deadlock
+  ---
+  duration_ms: 3.6662
+  type: 'test'
+  ...
+# Subtest: v1 migration preserves every existing asset, identity and paid deadline with deterministic old-fish sequence
+ok 152 - v1 migration preserves every existing asset, identity and paid deadline with deterministic old-fish sequence
+  ---
+  duration_ms: 4.7588
+  type: 'test'
+  ...
+# Subtest: desktop startup retains exact old slots before atomically persisting schema2 and can restart
+ok 153 - desktop startup retains exact old slots before atomically persisting schema2 and can restart
+  ---
+  duration_ms: 60.5065
+  type: 'test'
+  ...
+# Subtest: corrupt primary can migrate a valid v1 backup without losing either original
+ok 154 - corrupt primary can migrate a valid v1 backup without losing either original
+  ---
+  duration_ms: 35.214
+  type: 'test'
+  ...
+# Subtest: migration backup failure and interrupted rename preserve original bytes and allow a safe retry
+ok 155 - migration backup failure and interrupted rename preserve original bytes and allow a safe retry
+  ---
+  duration_ms: 37.4477
+  type: 'test'
+  ...
+# Subtest: future desktop schema blocks v1 migration and leaves all bytes unchanged
+ok 156 - future desktop schema blocks v1 migration and leaves all bytes unchanged
+  ---
+  duration_ms: 17.0461
+  type: 'test'
+  ...
+# Subtest: explicit v1 import uses the same migration while retaining the previous valid v2 slot
+ok 157 - explicit v1 import uses the same migration while retaining the previous valid v2 slot
+  ---
+  duration_ms: 30.2547
+  type: 'test'
+  ...
+# Subtest: Web migration retains all original slots and persists the identical normalized schema
+ok 158 - Web migration retains all original slots and persists the identical normalized schema
+  ---
+  duration_ms: 2.0925
+  type: 'test'
+  ...
+# Subtest: Web backup quota failure refuses to migrate rather than silently starting empty
+ok 159 - Web backup quota failure refuses to migrate rather than silently starting empty
+  ---
+  duration_ms: 1.143
+  type: 'test'
+  ...
+# Subtest: Web migration interrupted after backups keeps the original loadable for retry
+ok 160 - Web migration interrupted after backups keeps the original loadable for retry
+  ---
+  duration_ms: 0.9557
+  type: 'test'
+  ...
+# Subtest: future Web schema blocks legacy migration without even creating backup keys
+ok 161 - future Web schema blocks legacy migration without even creating backup keys
+  ---
+  duration_ms: 0.6975
+  type: 'test'
+  ...
+# Subtest: conflict import advances above every valid slot, retains both originals, and stays authoritative for restart and next save
+ok 162 - conflict import advances above every valid slot, retains both originals, and stays authoritative for restart and next save
+  ---
+  duration_ms: 33.2448
+  type: 'test'
+  ...
+# Subtest: ENOENT while creating an explicit recovery backup aborts before either original is replaced
+ok 163 - ENOENT while creating an explicit recovery backup aborts before either original is replaced
+  ---
+  duration_ms: 9.5549
+  type: 'test'
+  ...
+# Subtest: lost conflict-import verification receipt leaves the imported revision recoverable without reverting to an old slot
+ok 164 - lost conflict-import verification receipt leaves the imported revision recoverable without reverting to an old slot
+  ---
+  duration_ms: 18.3982
+  type: 'test'
+  ...
+# Subtest: explicit import cannot bypass a future schema when valid old slots would otherwise permit recovery
+ok 165 - explicit import cannot bypass a future schema when valid old slots would otherwise permit recovery
+  ---
+  duration_ms: 12.3809
+  type: 'test'
+  ...
+# Subtest: initialization publishes only after save acknowledgment, then stays idempotent
+ok 166 - initialization publishes only after save acknowledgment, then stays idempotent
+  ---
+  duration_ms: 4.8835
+  type: 'test'
+  ...
+# Subtest: initialization that reached disk survives a lost reply without creating another save
+ok 167 - initialization that reached disk survives a lost reply without creating another save
+  ---
+  duration_ms: 0.9359
+  type: 'test'
+  ...
+# Subtest: a clearly failed first write leaves no game and allows an explicit retry
+ok 168 - a clearly failed first write leaves no game and allows an explicit retry
+  ---
+  duration_ms: 1.0868
+  type: 'test'
+  ...
+# Subtest: a durable purchase with a lost reply is reconciled and cannot be charged twice after restart
+ok 169 - a durable purchase with a lost reply is reconciled and cannot be charged twice after restart
+  ---
+  duration_ms: 2.3487
+  type: 'test'
+  ...
+# Subtest: an explicitly failed transaction preserves confirmed assets and can be retried
+ok 170 - an explicitly failed transaction preserves confirmed assets and can be retried
+  ---
+  duration_ms: 0.8337
+  type: 'test'
+  ...
+# Subtest: failed write plus failed reconciliation blocks all subsequent economic commands
+ok 171 - failed write plus failed reconciliation blocks all subsequent economic commands
+  ---
+  duration_ms: 0.7209
+  type: 'test'
+  ...
+# Subtest: reconciliation with no durable save cannot silently recreate an existing game
+ok 172 - reconciliation with no durable save cannot silently recreate an existing game
+  ---
+  duration_ms: 0.8074
+  type: 'test'
+  ...
+# Subtest: concurrent sales are serialized so one fish is sold exactly once
+ok 173 - concurrent sales are serialized so one fish is sold exactly once
+  ---
+  duration_ms: 2.5478
+  type: 'test'
+  ...
+# Subtest: an invalid queued command does not stop a later valid command
+ok 174 - an invalid queued command does not stop a later valid command
+  ---
+  duration_ms: 0.7239
+  type: 'test'
+  ...
+# Subtest: effective time continues after wall-clock forward and backward changes
+ok 175 - effective time continues after wall-clock forward and backward changes
+  ---
+  duration_ms: 0.6014
+  type: 'test'
+  ...
+# Subtest: restoring a logical time ahead of the wall clock keeps advancing monotonically
+ok 176 - restoring a logical time ahead of the wall clock keeps advancing monotonically
+  ---
+  duration_ms: 0.5306
+  type: 'test'
+  ...
+# Subtest: catch and arrival both persist before notification and can recover lost acknowledgments
+ok 177 - catch and arrival both persist before notification and can recover lost acknowledgments
+  ---
+  duration_ms: 2.0005
+  type: 'test'
+  ...
+# Subtest: a rejected or mismatched save acknowledgment is reconciled before success is published
+ok 178 - a rejected or mismatched save acknowledgment is reconciled before success is published
+  ---
+  duration_ms: 0.4435
+  type: 'test'
+  ...
+# Subtest: UI subscriber exceptions cannot turn a confirmed disk commit into an unknown transaction
+ok 179 - UI subscriber exceptions cannot turn a confirmed disk commit into an unknown transaction
+  ---
+  duration_ms: 0.3607
+  type: 'test'
+  ...
+# Subtest: actual schema, file repository and session preserve catches and paid flights across restart
+ok 180 - actual schema, file repository and session preserve catches and paid flights across restart
+  ---
+  duration_ms: 61.5842
+  type: 'test'
+  ...
+# Subtest: weather starts with usable simulation or location-specific cache without a network dependency
+ok 181 - weather starts with usable simulation or location-specific cache without a network dependency
+  ---
+  duration_ms: 2.0193
+  type: 'test'
+  ...
+# Subtest: successful 15-minute cache suppresses startup, focus, online and polling; manual refresh remains available
+ok 182 - successful 15-minute cache suppresses startup, focus, online and polling; manual refresh remains available
+  ---
+  duration_ms: 1.6747
+  type: 'test'
+  ...
+# Subtest: first timeout reports safe state and waits one minute, including manual and online attempts
+ok 183 - first timeout reports safe state and waits one minute, including manual and online attempts
+  ---
+  duration_ms: 1.2269
+  type: 'test'
+  ...
+# Subtest: reconnecting clears an offline badge using a fresh cache without forcing a network request
+ok 184 - reconnecting clears an offline badge using a fresh cache without forcing a network request
+  ---
+  duration_ms: 0.3842
+  type: 'test'
+  ...
+# Subtest: a fresh cache cannot erase an active HTTP cooldown when reconnecting
+ok 185 - a fresh cache cannot erase an active HTTP cooldown when reconnecting
+  ---
+  duration_ms: 0.6769
+  type: 'test'
+  ...
+# Subtest: failure backoff doubles from one minute and stops growing at fifteen minutes
+ok 186 - failure backoff doubles from one minute and stops growing at fifteen minutes
+  ---
+  duration_ms: 1.0944
+  type: 'test'
+  ...
+# Subtest: HTTP 429 honors long Retry-After across manual, reconnect, location change and local-mode toggles
+ok 187 - HTTP 429 honors long Retry-After across manual, reconnect, location change and local-mode toggles
+  ---
+  duration_ms: 1.0788
+  type: 'test'
+  ...
+# Subtest: 429 without a valid Retry-After uses at least the weather service fifteen-minute cooldown
+ok 188 - 429 without a valid Retry-After uses at least the weather service fifteen-minute cooldown
+  ---
+  duration_ms: 0.3504
+  type: 'test'
+  ...
+# Subtest: disabled enhancements or navigator offline never send a weather request; focus can recover a missed online event
+ok 189 - disabled enhancements or navigator offline never send a weather request; focus can recover a missed online event
+  ---
+  duration_ms: 0.5191
+  type: 'test'
+  ...
+# Subtest: local-mode polling expires a six-hour cache without any network request or error
+ok 190 - local-mode polling expires a six-hour cache without any network request or error
+  ---
+  duration_ms: 0.4555
+  type: 'test'
+  ...
+# Subtest: local-mode cache expiry preserves a longer service Retry-After deadline
+ok 191 - local-mode cache expiry preserves a longer service Retry-After deadline
+  ---
+  duration_ms: 0.4056
+  type: 'test'
+  ...
+# Subtest: automatic requests deduplicate pending work and a newer manual refresh owns state and cache
+ok 192 - automatic requests deduplicate pending work and a newer manual refresh owns state and cache
+  ---
+  duration_ms: 8.5826
+  type: 'test'
+  ...
+# Subtest: changing location aborts the old request and its late reply cannot contaminate the new weather or old cache
+ok 193 - changing location aborts the old request and its late reply cannot contaminate the new weather or old cache
+  ---
+  duration_ms: 1.0042
+  type: 'test'
+  ...
+# Subtest: offline and disabled transitions cancel work and late failures do not start retry timers
+ok 194 - offline and disabled transitions cancel work and late failures do not start retry timers
+  ---
+  duration_ms: 1.0054
+  type: 'test'
+  ...
+# Subtest: disabling or disposing before dispatch prevents the queued network operation itself
+ok 195 - disabling or disposing before dispatch prevents the queued network operation itself
+  ---
+  duration_ms: 0.5153
+  type: 'test'
+  ...
+# Subtest: disposing aborts the active request and isolates late replies from state, observers and cache
+ok 196 - disposing aborts the active request and isolates late replies from state, observers and cache
+  ---
+  duration_ms: 1.1215
+  type: 'test'
+  ...
+# Subtest: network failures retain valid cached weather and safe error codes without exposing raw service messages
+ok 197 - network failures retain valid cached weather and safe error codes without exposing raw service messages
+  ---
+  duration_ms: 0.4695
+  type: 'test'
+  ...
+# Subtest: blocked storage retains the latest valid successful weather in memory for offline fallback
+ok 198 - blocked storage retains the latest valid successful weather in memory for offline fallback
+  ---
+  duration_ms: 0.4841
+  type: 'test'
+  ...
+# Subtest: memory fallback expires by observation age even when its fetched timestamp is newer
+ok 199 - memory fallback expires by observation age even when its fetched timestamp is newer
+  ---
+  duration_ms: 0.4473
+  type: 'test'
+  ...
+# Subtest: mismatched response is rejected and a later success clears error/backoff and failure count
+ok 200 - mismatched response is rejected and a later success clears error/backoff and failure count
+  ---
+  duration_ms: 0.7564
+  type: 'test'
+  ...
+# Subtest: browser triggers poll only while visible/online, recover on focus and remove all listeners on cleanup
+ok 201 - browser triggers poll only while visible/online, recover on focus and remove all listeners on cleanup
+  ---
+  duration_ms: 1.9457
+  type: 'test'
+  ...
+# Subtest: 12 scene sites preserve IDs, each has its own documented weather point and immutable route-independent scene
+ok 202 - 12 scene sites preserve IDs, each has its own documented weather point and immutable route-independent scene
+  ---
+  duration_ms: 2.7882
+  type: 'test'
+  ...
+# Subtest: v2 request retains exact coordinates and unit-bearing raw fields; missing or wrong units remain unknown
+ok 203 - v2 request retains exact coordinates and unit-bearing raw fields; missing or wrong units remain unknown
+  ---
+  duration_ms: 1.0631
+  type: 'test'
+  ...
+# Subtest: v2 snapshots reject wrong positions, invalid epochs, Fahrenheit and null temperature
+ok 204 - v2 snapshots reject wrong positions, invalid epochs, Fahrenheit and null temperature
+  ---
+  duration_ms: 0.5777
+  type: 'test'
+  ...
+# Subtest: independent v2 cache validates observation/fetch age, exact identity, structure and never writes simulation
+ok 205 - independent v2 cache validates observation/fetch age, exact identity, structure and never writes simulation
+  ---
+  duration_ms: 0.9629
+  type: 'test'
+  ...
+# Subtest: overcast light snow gates sun and reflection together, equips snow, and uses dissolve instead of rain impact
+ok 206 - overcast light snow gates sun and reflection together, equips snow, and uses dissolve instead of rain impact
+  ---
+  duration_ms: 0.6277
+  type: 'test'
+  ...
+# Subtest: mixed/hail/unknown are conservative; fog is not snow; cache daylight derives from the scene timezone
+ok 207 - mixed/hail/unknown are conservative; fog is not snow; cache daylight derives from the scene timezone
+  ---
+  duration_ms: 25.1807
+  type: 'test'
+  ...
+# Subtest: transport concurrency <=2 and >=1s start spacing hold across distinct scene requests
+ok 208 - transport concurrency <=2 and >=1s start spacing hold across distinct scene requests
+  ---
+  duration_ms: 10.7471
+  type: 'test'
+  ...
+# Subtest: a renderer timeout and cancellation retain transport slots until the actual bridge operation settles
+ok 209 - a renderer timeout and cancellation retain transport slots until the actual bridge operation settles
+  ---
+  duration_ms: 1.602
+  type: 'test'
+  ...
+# Subtest: rolling total26 and point3 budgets include manual/reconnection attempts and survive scheduler recreation
+ok 210 - rolling total26 and point3 budgets include manual/reconnection attempts and survive scheduler recreation
+  ---
+  duration_ms: 2.2302
+  type: 'test'
+  ...
+# Subtest: HTTP429 cools every point, preserves longer RetryAfter across remount, and cannot be bypassed by enable/focus
+ok 211 - HTTP429 cools every point, preserves longer RetryAfter across remount, and cannot be bypassed by enable/focus
+  ---
+  duration_ms: 1.1292
+  type: 'test'
+  ...
+# Subtest: header +12 scene prefetch is nonblocking, cached, view-only and follows separate real/game targets
+ok 212 - header +12 scene prefetch is nonblocking, cached, view-only and follows separate real/game targets
+  ---
+  duration_ms: 5.1979
+  type: 'test'
+  ...
+# Subtest: a superseded header reply cannot publish to the new header and disabled generations reject late transport
+ok 213 - a superseded header reply cannot publish to the new header and disabled generations reject late transport
+  ---
+  duration_ms: 2.9181
+  type: 'test'
+  ...
+# Subtest: actual bridge observer outlives renderer timeout; HTTP200 weather quota receives origin-wide gating
+ok 214 - actual bridge observer outlives renderer timeout; HTTP200 weather quota receives origin-wide gating
+  ---
+  duration_ms: 52.629
+  type: 'test'
+  ...
+# Subtest: offline-online replaces aborted same-key jobs after transport settles without a stuck queued entry
+ok 215 - offline-online replaces aborted same-key jobs after transport settles without a stuck queued entry
+  ---
+  duration_ms: 1.5841
+  type: 'test'
+  ...
+# Subtest: main accepts only existing single-point extended weather fields and guards HTTP200 weather quotas
+ok 216 - main accepts only existing single-point extended weather fields and guards HTTP200 weather quotas
+  ---
+  duration_ms: 3.2201
+  type: 'test'
+  ...
+# Subtest: Web storage saves two complete revisions and an identical retry writes nothing
+ok 217 - Web storage saves two complete revisions and an identical retry writes nothing
+  ---
+  duration_ms: 9.08
+  type: 'test'
+  ...
+# Subtest: future schema in either Web slot blocks loading and writing without changing any bytes
+ok 218 - future schema in either Web slot blocks loading and writing without changing any bytes
+  ---
+  duration_ms: 1.817
+  type: 'test'
+  ...
+# Subtest: corrupt Web slot recovers the complete valid backup and reports recovery explicitly
+ok 219 - corrupt Web slot recovers the complete valid backup and reports recovery explicitly
+  ---
+  duration_ms: 0.8199
+  type: 'test'
+  ...
+# Subtest: two corrupt Web slots are retained and cannot be overwritten as a fresh game
+ok 220 - two corrupt Web slots are retained and cannot be overwritten as a fresh game
+  ---
+  duration_ms: 0.8566
+  type: 'test'
+  ...
+# Subtest: equal Web revisions with different balances are a conflict rather than an arbitrary winner
+ok 221 - equal Web revisions with different balances are a conflict rather than an arbitrary winner
+  ---
+  duration_ms: 1.0075
+  type: 'test'
+  ...
+# Subtest: stale, skipped and backwards-time Web saves cannot overwrite the confirmed revision
+ok 222 - stale, skipped and backwards-time Web saves cannot overwrite the confirmed revision
+  ---
+  duration_ms: 1.0421
+  type: 'test'
+  ...
+# Subtest: Web quota failure preserves previous progress and remains readable
+ok 223 - Web quota failure preserves previous progress and remains readable
+  ---
+  duration_ms: 1.1021
+  type: 'test'
+  ...
+# Subtest: widget defaults to a compact preset at the work-area lower right
+ok 224 - widget defaults to a compact preset at the work-area lower right
+  ---
+  duration_ms: 2.4768
+  type: 'test'
+  ...
+# Subtest: restored position stays on a secondary display, including negative coordinates
+ok 225 - restored position stays on a secondary display, including negative coordinates
+  ---
+  duration_ms: 0.3402
+  type: 'test'
+  ...
+# Subtest: removed displays and resolution changes clamp the whole widget into a remaining work area
+ok 226 - removed displays and resolution changes clamp the whole widget into a remaining work area
+  ---
+  duration_ms: 0.3275
+  type: 'test'
+  ...
+# Subtest: reset returns to the primary lower right and keeps the selected size
+ok 227 - reset returns to the primary lower right and keeps the selected size
+  ---
+  duration_ms: 0.1789
+  type: 'test'
+  ...
+# Subtest: window state strips game fields and rejects corrupt coordinates and arbitrary dimensions
+ok 228 - window state strips game fields and rejects corrupt coordinates and arbitrary dimensions
+  ---
+  duration_ms: 0.3746
+  type: 'test'
+  ...
+# Subtest: debounced placement flush persists only the latest layout, independently of game saves
+ok 229 - debounced placement flush persists only the latest layout, independently of game saves
+  ---
+  duration_ms: 22.6926
+  type: 'test'
+  ...
+# Subtest: concurrent flushes are serialized and the most recent position wins
+ok 230 - concurrent flushes are serialized and the most recent position wins
+  ---
+  duration_ms: 9.9369
+  type: 'test'
+  ...
+# Subtest: corrupt or excessive layout files reset without affecting the game
+ok 231 - corrupt or excessive layout files reset without affecting the game
+  ---
+  duration_ms: 8.0142
+  type: 'test'
+  ...
+# Subtest: unwritable layout storage never rejects and can recover for later changes
+ok 232 - unwritable layout storage never rejects and can recover for later changes
+  ---
+  duration_ms: 1.3111
+  type: 'test'
+  ...
+# Subtest: preload preserves validated HTTP backoff metadata and strips malformed numbers
+ok 233 - preload preserves validated HTTP backoff metadata and strips malformed numbers
+  ---
+  duration_ms: 2.8956
+  type: 'test'
+  ...
+# (node:273732) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: main-process widget options and IPC actions preserve the sandbox, saved pin setting and exit drain
+ok 234 - main-process widget options and IPC actions preserve the sandbox, saved pin setting and exit drain
+  ---
+  duration_ms: 68.4789
+  type: 'test'
+  ...
+1..234
+# tests 234
+# suites 0
+# pass 233
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 850.4413

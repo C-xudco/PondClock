@@ -5,6 +5,7 @@ import { ROUTES, quoteRoute, routeBounds, haversineKm } from "../src/domain/rout
 import { MARKET_QUOTES, marketFor, quoteFish, calcMarketPrice } from "../src/domain/market.js";
 import { createNewGame, applyCommand } from "../src/domain/gameState.js";
 import { validateSave } from "../src/domain/saveSchema.js";
+import { catchOutcome } from "../src/domain/loot.js";
 
 // Business invariants use deterministic inputs; no network, timers, or desktop writes.
 const NOW = Date.UTC(2026, 9, 20, 8);
@@ -28,6 +29,7 @@ function fishFixture(species = FISH[0], fields = {}) {
     caughtAtMs: NOW,
     regionId: HOME,
     originRegionId: HOME,
+    catchSequence: 1,
     ...fields,
   };
 }
@@ -41,7 +43,7 @@ function freezeDeep(value) {
 }
 
 function richGame() {
-  return { ...createNewGame(HOME, NOW), coins: 100_000 };
+  return { ...createNewGame(HOME, NOW, { randomSeed: 1 }), coins: 100_000, catchSequence: 2 };
 }
 
 function supplyShare(speciesId, region) {
@@ -114,10 +116,10 @@ test("global distance scaling has exact 60/180 second limits, 200/6000 fares, an
   }
 });
 
-test("market matrix covers 42 x 12 combinations from the habitat shares", () => {
-  assert.equal(FISH.length, 42);
-  assert.equal(MARKET_QUOTES.length, 504);
-  assert.equal(new Set(MARKET_QUOTES.map((row) => `${row.speciesId}:${row.regionId}`)).size, 504);
+test("market matrix covers all species x regions from the habitat shares", () => {
+  assert.ok(FISH.length >= 42);
+  assert.equal(MARKET_QUOTES.length, FISH.length * REGIONS.length);
+  assert.equal(new Set(MARKET_QUOTES.map((row) => `${row.speciesId}:${row.regionId}`)).size, FISH.length * REGIONS.length);
   for (const species of FISH) {
     const shares = REGIONS.map((region) => supplyShare(species.id, region));
     const maximum = Math.max(...shares);
@@ -295,7 +297,7 @@ test("arrival uses its persisted deadline once, including a long offline period"
 test("one-by-one and batch selling agree while expired fish override local premiums", () => {
   const fish = [
     fishFixture(FISH[0], { uid: "fresh", caughtAtMs: NOW }),
-    fishFixture(FISH[1], { uid: "expired", quality: "legendary", caughtAtMs: NOW - SEVEN_DAYS }),
+    fishFixture(FISH[1], { uid: "expired", quality: "legendary", caughtAtMs: NOW - SEVEN_DAYS, catchSequence: 2 }),
   ];
   const base = { ...richGame(), bucket: fish };
   const originalCodex = structuredClone(base.codex);
@@ -353,9 +355,9 @@ test("a different command cannot resell an already removed fish", () => {
 });
 
 test("catch is persisted with codex and consumes bait once; replay cannot duplicate the fish", () => {
-  const state = createNewGame(HOME, NOW);
-  const fish = fishFixture();
-  const action = command("CATCH", { fish });
+  const state = createNewGame(HOME, NOW, { randomSeed: 1 });
+  const fish = catchOutcome(state).fish;
+  const action = command("CATCH", { expectedCatchSequence: 1 });
   const caught = applyCommand(freezeDeep(state), action, NOW);
   assert.equal(caught.bucket.length, 1);
   assert.equal(caught.bucket[0].uid, fish.uid);
@@ -367,13 +369,13 @@ test("catch is persisted with codex and consumes bait once; replay cannot duplic
 });
 
 test("different catch commands cannot duplicate a fish UID or introduce an out-of-region fish", () => {
-  const fish = fishFixture();
-  const caught = applyCommand(createNewGame(HOME, NOW), command("CATCH", { fish }), NOW);
-  assert.throws(() => applyCommand(freezeDeep(caught), command("CATCH", { fish }), NOW + 1));
+  const fish = catchOutcome(createNewGame(HOME, NOW, { randomSeed: 1 })).fish;
+  const caught = applyCommand(createNewGame(HOME, NOW, { randomSeed: 1 }), command("CATCH", { expectedCatchSequence: 1 }), NOW);
+  assert.throws(() => applyCommand(freezeDeep(caught), command("CATCH", { expectedCatchSequence: 1 }), NOW + 1));
   const habitat = REGIONS.find((region) => region.id === HOME).fish.map(([id]) => id);
   const foreignSpecies = FISH.find((species) => !habitat.includes(species.id));
   assert.ok(foreignSpecies);
-  assert.throws(() => applyCommand(caught, command("CATCH", { fish: fishFixture(foreignSpecies) }), NOW + 1));
+  assert.throws(() => applyCommand(caught, command("CATCH", { expectedCatchSequence: 2, fish: fishFixture(foreignSpecies) }), NOW + 1));
   assert.equal(caught.bucket.length, 1);
   assert.equal(caught.codex[fish.speciesId].catchCount, 1);
 });
@@ -425,6 +427,7 @@ test("valid logical save time survives a system clock rollback without rejecting
   const logicalNow = Date.now() + 24 * 60 * 60 * 1_000;
   const state = {
     ...createNewGame(HOME, logicalNow),
+    catchSequence: 1,
     bucket: [fishFixture(FISH[0], { caughtAtMs: logicalNow })],
   };
   const restored = validateSave(JSON.parse(JSON.stringify(state)));

@@ -2,13 +2,17 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const {execFileSync} = require('node:child_process');
 const {summary,records} = require('./analyse-catalogue.cjs');
 const root = path.resolve(__dirname,'../../../..');
 const configPath = path.join(root,'src/lib/gameConfig.js');
 const artPath = path.join(root,'docs/inkwash/roles/art-direction/README.md');
-// Node 24 can synchronously require this ESM constants file (no top-level await).
-// Preserve complete nested fish arrays; regex matching their first closing bracket is invalid.
-const {FISH: runtimeFish, REGIONS: runtimeRegions} = require(configPath);
+// Historical planning export stays pinned to the approved 1.1.1 baseline after new fish ship.
+const baselineRevision='a270e84';
+const baselineConfig=execFileSync('git',['show',`${baselineRevision}:src/lib/gameConfig.js`],{cwd:root,encoding:'utf8'});
+async function buildHistoricalSnapshot(){
+// Preserve complete nested fish arrays by importing the actual ESM constants.
+const {FISH: runtimeFish, REGIONS: runtimeRegions} = await import(`data:text/javascript;base64,${Buffer.from(baselineConfig).toString('base64')}`);
 const fish = runtimeFish.map(({id,name,habitat})=>({id,name,habitat}));
 const regions = runtimeRegions.map(({id,name,waterSystem,fish})=>({id,name,waterSystem,fish:fish.map(([fishId])=>fishId)}));
 const sources = {
@@ -80,5 +84,9 @@ fs.writeFileSync(path.join(__dirname,'candidates.csv'),'\uFEFF'+[headers.map(quo
 const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const checks={reviewState:'pending-user-review-no-game-changes',date:'2026-10-24',timezone:'Asia/Shanghai',source:summary,inputs:{gameConfig:{path:configPath,sha256:hash(configPath)},artDirection:{path:artPath,sha256:hash(artPath)}},structure:{expectedSections:7,sectionHeadings:[...fs.readFileSync(summary.sourcePath,'utf8').matchAll(/^[一二三四五六七]、.+$/gm)].map(x=>x[0].trim()),referenceBibliographyRows:(fs.readFileSync(summary.sourcePath,'utf8').match(/^FB#\d+/gm)??[]).length,methods:24,methodCodes:'M00—M23',sourceDate:'2026-10-22',sourceSnapshot:'FishBase v25.04 (2025-04)',freshwaterAndMainlandExample:records.filter(r=>r.ecology.startsWith('淡水')&&/中国大陆/.test(r.distribution)).length,countryExamplesAreNonExhaustive:true},screening:{workflow:'2701条完整结构解析→生态/水域/名称人工分层→20条审核候选；未对未入选2681条作逐种科学排除',newCandidateCount:20,existingReviewCount:fish.length,csvDataRows:rows.length,newCategories:selected.reduce((o,[id])=>(o[records.find(r=>r.id===id).category]=(o[records.find(r=>r.id===id).category]??0)+1,o),{}),regionalEvidenceCounts:{R1_original_research:10,R2_official_basin_or_suitability:2,R3_pending:8},exactLandmarkVerifiedCount:0,regionCoverageIsNotQuota:true,sourceTaxonStringDuplicates:summary.duplicateScientificNames,taxonomicSynonymClosureCompleted:false},existing:{fishCount:fish.length,regionCount:regions.length,matchCounts:existingAudit.reduce((o,x)=>(o[x.matchStatus]=(o[x.matchStatus]??0)+1,o),{}),rows:existingAudit},regions,sources,limits:['R1证明调查时间/水系内记录，不证明2026年当下丰度或每个子水体','R2适配/官方材料不升级成实测存在','所有20新增候选仍待用户审核；8个待核不能直接上线','A/B/C与R1/R2/R3是相互独立的证据轴','仅做学名字符串唯一性统计，未声称2701是去科学异名后的独立有效物种数','不包含海外/远洋扩区、法律结论、现实垂钓许可或实地钓法指导'],mutationScope:{allowedDirectory:'docs/next-iteration/roles/fish-catalogue',gameConfigChanged:false,fishOrWeightsOrPricesChanged:false,routesChanged:false,savesChanged:false},verification:{sourceBytesRead:summary.bytes,allFRecordsParsed:summary.total===2701,sourceClassTotalsMatch:summary.categoryCounts.A===1556&&summary.categoryCounts.B===1132&&summary.categoryCounts.C===13,idsContinuous:summary.contiguousIds,exactSnapshotNameUnique:summary.uniqueScientificNames===2701,candidatesAllHaveValidFId:rows.filter(x=>x.record_kind==='new_candidate').every(x=>records.some(r=>r.id===x.source_f_ids)),candidateIdsUnique:new Set(selected.map(x=>x[0])).size===20,regionIdsValid:rows.every(r=>[r.supported_region_ids,r.potential_region_ids_unverified,r.current_region_ids].flatMap(x=>x.split('|').filter(Boolean)).every(id=>regions.some(x=>x.id===id))),candidateDoesNotReuseMappedExistingFId:selected.every(([id])=>!Object.values(mapped).includes(id)),gameRuntimeTests:'not_run_documentation_only'}};
 Object.assign(checks.verification,{regionFishMembershipMatchesRuntime,existingRegionMappingsMatchesRuntime,sourceMethodsAllNonEmpty,regionFishMembershipTotal:regions.reduce((sum,r)=>sum+r.fish.length,0),regionFishCounts:Object.fromEntries(regions.map(r=>[r.id,r.fish.length]))});
+Object.assign(checks.inputs.gameConfig,{revision:baselineRevision,sha256:crypto.createHash('sha256').update(baselineConfig).digest('hex')});
+checks.baselineMode='historical-1.1.1-approved-planning-snapshot';
 fs.writeFileSync(path.join(__dirname,'catalogue-check.json'),JSON.stringify(checks,null,2)+'\n','utf8');
 console.log(JSON.stringify({csvRows:rows.length,existingFish:fish.length,regions:regions.length,candidates:selected.length,existingMatchCounts:checks.existing.matchCounts,newCategories:checks.screening.newCategories,verification:checks.verification},null,2));
+}
+buildHistoricalSnapshot().catch(error=>{console.error(error);process.exitCode=1;});

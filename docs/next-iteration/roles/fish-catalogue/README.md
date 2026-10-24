@@ -1,4 +1,54 @@
-# 鱼类名录筛选交接（待审核）
+# 鱼类数据实施与历史筛选交接
+
+## 2026-10-25 已批准实施：首批八种
+
+当前阶段为1.2.0数据实施，批准依据是[BASELINE当前有效批准](../../../team/BASELINE.md)中的用户“开始迭代吧”，对照提交`a270e84`。
+本节是实施记录；以下2026-10-24候选、待审状态及源快照保留为历史，不表示剩余候选自动获准入池。
+
+输入为既有筛选结果、当前42种/12区配置、批准开发规范。输出为50种/12区配置、逐种来源元数据、独立测试与完整前后市场矩阵。
+本角色独占修改`src/lib/gameConfig.js`的鱼及四区fish字段、新`src/data/fishSources.js`、`tests/fish-data.test.js`及本目录；未改domain/hook/UI/天气/路线/包版本/真实存档，未提交git。
+
+| 新鱼稳定ID | 中文名 | 基础价 | 游戏长度cm／重量kg | 追加区域权重 |
+| --- | --- | --- | --- | --- |
+| guangzehuangsang | 光泽黄颡鱼 | 7 | 10—20／0.04—0.2 | jiangnan4、changjiang4 |
+| washihuangsang | 瓦氏黄颡鱼 | 10 | 15—35／0.1—1 | jiangnan3、changjiang4 |
+| hongqiyuanbai | 红鳍原鲌 | 11 | 15—40／0.15—1.3 | jiangnan3、changjiang4 |
+| menggubai | 蒙古鲌 | 14 | 20—55／0.3—2.5 | jiangnan3、changjiang4 |
+| ganyu | 鳡 | 32 | 35—100／1.2—12 | jiangnan1、changjiang1 |
+| chiyanzun | 赤眼鳟 | 9 | 15—40／0.15—1.5 | jiangnan4、changjiang4 |
+| chunhuan | 唇䱻 | 10 | 18—45／0.2—2 | changjiang3 |
+| banli | 斑鳢 | 14 | 18—45／0.25—2 | changjiang2、dongnan4、lingnan6 |
+
+学名、sourceFids、原始研究URL、R1层、具体水系与别名集中在[fishSources.js](../../../../src/data/fishSources.js)，没有用R2适宜性或国家示例替代实测水系记录。
+12区继续是宽水系鱼池，景观只是代表地标；斑鳢的闽江邵武/湘江记录不声称金山寺/武汉桥头有该样本。
+未加入黑斑狗鱼、丁鱥、两种海鲷和其余待核八种；本轮也不修正旧42种尚未解决的分类身份。
+所有新体型/价格/品质/投放权重都是游戏平衡参数，未引用野外最大值、样本丰度来背书。大体型鳡用低权重1，但仍是普通掠食品质组。
+42个旧鱼对象逐字段不变，旧区域成员的原始权重也不变，只追加获批新鱼；产区归一化及市场相对供应仍会变化。
+
+[市场前后完整导出](implementation/)使用`git show a270e84`载入旧版真实quoteFish，再与当前quoteFish逐格比较，不维护第二套报价公式。
+产物：[旧矩阵504格](implementation/market-before.csv)、[新矩阵600格](implementation/market-after.csv)、[旧鱼价格逐品质2016格](implementation/old-fish-price-deltas.csv)、[12区条件收益](implementation/region-yield-comparison.csv)、[新增参数理由](implementation/new-fish-parameters.csv)、[统计摘要](implementation/market-diff-report.json)。
+旧鱼基础价0变动；2016个“旧鱼×销售区×品质”单元中72格变化，涉及鲫/鲤/草/鳜/鳙/黄颡/鲮/胡子鲶/罗非9种。
+最大增加是中游传说草鱼137→180（+43），最大减少是淮河传说鳙200→166（-34），源于区域供应相对占比，不是暗改基础价。
+
+| 本地每条鱼条件收益 | a270e84 | 当前 | 变化 |
+| --- | --- | --- | --- |
+| jiangnan | 13.0179 | 14.0220 | +7.71% |
+| huaihe（鱼池未加鱼，市场联动仍变） | 13.9155 | 13.0964 | -5.89% |
+| changjiang | 23.8567 | 23.5059 | -1.47% |
+| dongnan | 20.7543 | 20.9903 | +1.14% |
+| lingnan | 22.2041 | 21.7472 | -2.06% |
+
+其余七区详见CSV；这是中等体重、原始品质权重、当地销售的每条鱼条件期望，不包含物品掉落、等待、机票、秘籍/鱼竿/鱼饵/保底收益。
+新鱼总占比江南15.25%、中游20.63%、东南3.85%、岭南5.66%；其他八区本轮没有新增，避免用新增数量配额迫使跨水系入池。
+
+验证：`node --test tests/fish-data.test.js`四项通过，覆盖旧对象/非鱼配置不变、来源与实际入池一致、真实持久随机捕获流可产全部新鱼且重放一致、全矩阵/七天过期仍1。
+ESLint针对本角色源码、独立测试及导出脚本通过（pnpm另提示现有依赖树与lockfile不同步，未安装依赖或改锁文件）。
+未做真实UI、独立存档迁移/打包验收；测试不读取或写入玩家真实存档。旧ID未删改，新图鉴条目由既有动态鱼表消费，是否需要UI展示调整由Leader接线验收。
+复跑本轮矩阵：`node docs/next-iteration/roles/fish-catalogue/market-comparison.mjs`；历史`build-deliverables.cjs`现固定读取`a270e84`，保留42条旧鱼对照与原始TXT哈希，避免重跑把新8种误列旧鱼。
+
+---
+
+## 2026-10-24 历史筛选快照（保留原状态）
 
 日期：2026-10-24（Asia/Shanghai）。本轮只交候选资料与数据规划，未改游戏。
 结论：完整解析2,701条源记录，提出20个新增审核候选，并逐项对照现有42条鱼。

@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-10-24T18:38:17.415Z",
+  "version": "1.2.0",
+  "passed": true,
+  "executable": "X:\\game\\PondClock-1.2.0\\PondClock.exe",
+  "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\native-1.2.0-WxfZeG\\profile",
+  "processId": 271832,
+  "mainCommandLine": "\"X:\\game\\PondClock-1.2.0\\PondClock.exe\" --user-data-dir=\"X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\native-1.2.0-WxfZeG\\profile\" --proxy-server=http://127.0.0.1:1 --proxy-bypass-list=<-loopback>",
+  "normalSandboxLaunch": true,
+  "startupToWindowReadyMs": 426,
+  "observed": {
+    "source": "Windows computer-use screenshot and accessibility from exact extracted EXE window",
+    "asarPage": true,
+    "framelessFloatingWindow": true,
+    "realLocationClock": true,
+    "scenePlaceAndAddress": true,
+    "settingsVersion": "1.2.0",
+    "audioVolume": 35,
+    "weatherViewer": true,
+    "deliberatelyOffline": true
+  },
+  "exit": {
+    "action": "Native visible X clicked through computer-use",
+    "remainingOwnWindows": 0,
+    "remainingOwnProcesses": 0,
+    "windowState": {
+      "version": 1,
+      "sizePreset": "compact",
+      "x": 1263,
+      "y": 645
+    },
+    "exitCode": "not captured"
+  },
+  "limitations": [
+    "Same host with development tools installed; no clean second computer test",
+    "No actual IP/weather requests in this isolated offline check",
+    "No installer upgrade/uninstall validation",
+    "No human listening or real speaker-output claim"
+  ]
+}

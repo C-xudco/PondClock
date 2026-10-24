@@ -17,7 +17,7 @@ const clone = (value) => structuredClone(value);
 const { createSaveRepository } = createRequire(import.meta.url)("../desktop/saveRepository.cjs");
 
 function seed() {
-  return { ...createNewGame(HOME, NOW), coins: 20_000 };
+  return { ...createNewGame(HOME, NOW, { randomSeed: 1 }), coins: 20_000 };
 }
 
 function fishFixture() {
@@ -26,7 +26,7 @@ function fishFixture() {
     uid: "session-fish", speciesId: species.id, name: species.name, quality: "common",
     length: (species.len[0] + species.len[1]) / 2,
     weight: (species.wt[0] + species.wt[1]) / 2,
-    caughtAtMs: NOW, regionId: HOME, originRegionId: HOME,
+    caughtAtMs: NOW, regionId: HOME, originRegionId: HOME, catchSequence: 1,
   };
 }
 
@@ -175,7 +175,7 @@ test("reconciliation with no durable save cannot silently recreate an existing g
 });
 
 test("concurrent sales are serialized so one fish is sold exactly once", async () => {
-  const initial = { ...seed(), bucket: [fishFixture()] };
+  const initial = { ...seed(), bucket: [fishFixture()], catchSequence: 1 };
   const repo = repository(initial);
   const { session } = setup(repo);
   await session.load();
@@ -239,9 +239,9 @@ test("catch and arrival both persist before notification and can recover lost ac
     assert.equal(repo.disk.revision, state.revision);
     notifications.push(state.lastCommittedCommandId);
   });
-  await session.dispatch({ type: "CATCH", id: "persist-catch", fish: fishFixture() });
+  await session.dispatch({ type: "CATCH", id: "persist-catch", expectedCatchSequence: 1 });
   assert.equal(repo.disk.bucket.length, 1);
-  assert.equal(repo.disk.codex[FISH[0].id].catchCount, 1);
+  assert.equal(repo.disk.codex[repo.disk.bucket[0].speciesId].catchCount, 1);
   const flight = await session.dispatch({ type: "START_TRAVEL", id: "persist-takeoff", toId: AWAY });
   assert.equal(repo.disk.travel.farePaid, quoteRoute(HOME, AWAY).price);
   time.wall = flight.travel.arriveAtMs + 1;
@@ -302,7 +302,7 @@ test("actual schema, file repository and session preserve catches and paid fligh
   };
   const { session } = setup(adapter);
   await session.load();
-  const caught = await session.dispatch({ type: "CATCH", id: "real-repository-catch", fish: fishFixture() });
+  const caught = await session.dispatch({ type: "CATCH", id: "real-repository-catch", expectedCatchSequence: 1 });
   assert.equal(caught.bucket.length, 1);
   loseReply = true;
   const takeoff = { type: "START_TRAVEL", id: "real-repository-flight", toId: AWAY };
@@ -320,7 +320,7 @@ test("actual schema, file repository and session preserve catches and paid fligh
   assert.equal(arrived.travel, null);
   assert.equal(arrived.bucket[0].caughtAtMs, NOW);
   assert.equal(arrived.coins, flight.coins);
-  assert.equal(arrived.codex[FISH[0].id].catchCount, 1);
+  assert.equal(arrived.codex[arrived.bucket[0].speciesId].catchCount, 1);
   const stored = (await reopenedFiles.load()).snapshot;
   assert.deepEqual(stored, arrived);
   assert.equal(stored.revision, 3);

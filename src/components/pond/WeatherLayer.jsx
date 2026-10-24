@@ -1,85 +1,36 @@
 import { useMemo } from "react";
-
-// 确定性伪随机：同一场天气每次渲染的雨雪位置一致（截图稳定，不闪烁）
-const seeded = (seed) => {
-  let s = seed >>> 0;
-  return () => {
-    s = (s * 1664525 + 1013904223) >>> 0;
-    return s / 4294967296;
-  };
+import { createPrecipitation, precipitationFrame } from "./precipitation";
+// A water response is derived from this falling particle's endpoint and timeline.
+const WeatherLayer = ({
+  visualState,
+  geometry,
+  uid,
+  timeMs,
+  reducedMotion
+}) => {
+  const {
+    kind,
+    intensity
+  } = visualState.precipitation;
+  const particles = useMemo(() => createPrecipitation(geometry, kind, intensity), [geometry, kind, intensity]);
+  if (!particles.length) return null;
+  return <g pointerEvents="none" data-layer="precipitation" data-particle-count={particles.length}>
+    {particles.map(p => {
+      const f = precipitationFrame(p, reducedMotion ? 1217 : timeMs);
+      if (f.stage === "fall") return kind === "rain" ? <path key={p.id} data-particle={p.id} d={`M${f.x} ${f.y - 9}l-1.8 9`} stroke="#cbd9d9" strokeWidth={p.size} opacity=".72" strokeLinecap="round" /> : <circle key={p.id} data-particle={p.id} cx={f.x} cy={f.y} r={p.size} fill="#fffef6" opacity=".9" />;
+      if (f.stage !== "contact" || reducedMotion || visualState.waterResponse === "none") return null;
+      const progress = f.progress;
+      const rain = visualState.waterResponse === "rain-impact";
+      return <g key={p.id} clipPath={`url(#${uid}-water)`} data-contact-id={`${p.id}:${f.cycle}`} data-contact-x={p.x.toFixed(3)} data-contact-y={p.y.toFixed(3)} data-contact-age={f.ageMs.toFixed(1)} data-hit-time={f.hitTimeMs.toFixed(1)} data-contact-kind={rain ? "rain-impact" : "snow-dissolve"}>
+        {rain ? <g fill="none" stroke="#dbe6de" opacity={(1 - progress) * .67}>
+          {progress < .2 && <path d={`M${p.x - 3} ${p.y - 2}q3 -6 6 0`} strokeWidth="1" />}
+          <ellipse cx={p.x} cy={p.y} rx={2 + progress * 17} ry={.65 + progress * 3.1} strokeWidth="1" />
+        </g> : <g fill="#fbfff8" opacity={(1 - progress) * .8}>
+          <ellipse cx={p.x} cy={p.y} rx={p.size * (1 - progress) + .25} ry={p.size * .5 * (1 - progress) + .1} />
+          <ellipse cx={p.x} cy={p.y} rx={2.5 + progress * 3} ry={.7 + progress * .6} opacity={.25 * (1 - progress)} />
+        </g>}
+      </g>;
+    })}
+  </g>;
 };
-
-// 天气层：只做视觉（雨 / 雪 / 雾），不拦截鼠标、不遮挡关键 UI
-const WeatherLayer = ({ weather, night = false }) => {
-  const particles = useMemo(() => {
-    const isRain = weather === "小雨";
-    const isSnow = weather === "雪";
-    if (!isRain && !isSnow) return [];
-    const r = seeded(isRain ? 48121 : 90210);
-    const count = isRain ? 54 : 46;
-    return Array.from({ length: count }, () => ({
-      left: r() * 100,
-      top: -12 - r() * 60,
-      delay: -r() * (isRain ? 1.6 : 7),
-      dur: isRain ? 0.55 + r() * 0.45 : 5 + r() * 4.5,
-      size: isRain ? 0.9 + r() * 0.7 : 2.4 + r() * 3,
-      len: isRain ? 9 + r() * 9 : 0,
-      op: isRain ? 0.18 + r() * 0.28 : 0.5 + r() * 0.42,
-    }));
-  }, [weather]);
-
-  const isRain = weather === "小雨";
-  const isSnow = weather === "雪";
-  if (!isRain && !isSnow) return null;
-
-  return (
-    <div className="pointer-events-none absolute inset-0 z-[12] overflow-hidden">
-      {/* 雨 / 雪 的湿冷空气感 */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: isRain
-            ? "linear-gradient(180deg, rgba(30,44,56,.18) 0%, rgba(20,32,44,.05) 55%, rgba(16,26,36,.16) 100%)"
-            : "linear-gradient(180deg, rgba(190,206,222,.1) 0%, rgba(190,206,222,.02) 60%, rgba(190,206,222,.08) 100%)",
-        }}
-      />
-      {particles.map((p, i) =>
-        isRain ? (
-          <span
-            key={`rain-${i}`}
-            className="absolute rounded-full"
-            style={{
-              left: `${p.left}%`,
-              top: `${p.top}px`,
-              width: "1px",
-              height: `${p.len}px`,
-              opacity: p.op,
-              background: night
-                ? "linear-gradient(180deg, rgba(206,226,244,0) 0%, rgba(206,226,244,.95) 70%, rgba(206,226,244,0) 100%)"
-                : "linear-gradient(180deg, rgba(232,242,250,0) 0%, rgba(232,242,250,.9) 70%, rgba(232,242,250,0) 100%)",
-              transform: "rotate(7deg)",
-              animation: `mc-fall ${p.dur}s linear ${p.delay}s infinite`,
-            }}
-          />
-        ) : (
-          <span
-            key={`snow-${i}`}
-            className="absolute rounded-full"
-            style={{
-              left: `${p.left}%`,
-              top: `${p.top}px`,
-              width: `${p.size}px`,
-              height: `${p.size}px`,
-              opacity: p.op,
-              background: "radial-gradient(circle at 35% 30%, #ffffff, #dbe6f0)",
-              boxShadow: "0 0 4px rgba(255,255,255,.45)",
-              animation: `mc-snow ${p.dur}s linear ${p.delay}s infinite`,
-            }}
-          />
-        )
-      )}
-    </div>
-  );
-};
-
 export default WeatherLayer;

@@ -33,7 +33,9 @@ function weatherFailureMessage(error) {
   return "暂时无法更新天气，正在使用缓存或模拟天气。";
 }
 
-/** Weather has no authority over game regions, unlocks or asset saves. */
+/** @deprecated Single-point compatibility controller. Production uses the
+ * shared regionWeatherStore scheduler; do not create a controller per scene.
+ * Weather has no authority over game regions, unlocks or asset saves. */
 export function createWeatherRefreshController({
   location: initialLocation, enabled: initiallyEnabled = true, fetchWeatherImpl = fetchWeather,
   storage = browserStorage(), now = Date.now, onChange = () => {},

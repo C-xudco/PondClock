@@ -12,18 +12,19 @@ if (GAME_VERSION !== version) throw new Error('Package and game versions differ'
 const archive = path.join(root, 'release/win-unpacked/resources/app.asar');
 const installer = path.join(root, `release/PondClock-Setup-${version}-x64.exe`);
 const portable = path.join(root, `release/PondClock-${version}-x64.zip`);
-const files = ['build-desktop/index.html'];
-const walk = (relative) => {
+const files = [];
+const walk = (relative, allAssets = false) => {
   for (const item of fs.readdirSync(path.join(root, relative), { withFileTypes: true })) {
     const name = `${relative}/${item.name}`;
-    if (item.isDirectory()) walk(name);
-    else if (/\.(js|cjs)$/.test(name)) files.push(name);
+    if (item.isDirectory()) walk(name, allAssets);
+    else if (allAssets ? !name.endsWith('.map') : /\.(js|cjs)$/.test(name)) files.push(name);
   }
 };
 for (const directory of ['desktop', 'src/domain', 'src/config', 'src/data']) walk(directory);
+// Every emitted image and sound is a runtime dependency, including files not
+// directly referenced by index.html. Verify them all before release.
+walk('build-desktop', true);
 files.push('src/lib/gameConfig.js');
-const index = fs.readFileSync(path.join(root, 'build-desktop/index.html'), 'utf8');
-for (const match of index.matchAll(/(?:src|href)="\.\/(assets\/[^"]+)"/g)) files.push(`build-desktop/${match[1]}`);
 for (const file of files) {
   if (!fs.readFileSync(path.join(root, file)).equals(asar.extractFile(archive, path.normalize(file)))) throw new Error(`Packed resource differs: ${file}`);
 }

@@ -1,0 +1,1818 @@
+{
+  "startedAt": "2026-10-24T18:30:49.367Z",
+  "passed": true,
+  "version": "1.2.0",
+  "mode": "Production bundle + real desktop/main.cjs in developer Electron, explicit --no-sandbox diagnostic only. All HTTP is blocked/mocked. Audio constructor is a silent event spy, not a listening test.",
+  "checks": [
+    {
+      "id": "I01",
+      "description": "Production header Guangzhou sunny20 and game Heilongjiang overcast snow-7 are separate; no sun/reflection and supported character snow appears",
+      "passed": true
+    },
+    {
+      "id": "I02",
+      "description": "Selecting all12 weather viewer regions, including locked ones, displays the correct address without spending, unlocking, moving or changing header/scene",
+      "passed": true
+    },
+    {
+      "id": "I03",
+      "description": "Both exact client sizes, all five real panels, internal scrolling and window/footer bounds fit with transparent document",
+      "passed": true
+    },
+    {
+      "id": "I04",
+      "description": "Real inventory repair deducts500 once, durable result matches seeded identity; manual consumes once, preserves spare; old/expired fish do not consume charges",
+      "passed": true
+    },
+    {
+      "id": "I05",
+      "description": "Production fishing handles four actual catches, one sound per bite and mute persistence; batch quote and saved three-charge bonus agree, fourth gets no bonus",
+      "passed": true
+    },
+    {
+      "id": "I06",
+      "description": "Paid travel preserves origin while flying, commits actual destination and one arrival bubble, header stays real location, reload does not replay",
+      "passed": true
+    },
+    {
+      "id": "I07",
+      "description": "Rain and snow have separate same-particle contact timelines in real production SVG frames, all sampled contacts inside their shared water geometry",
+      "passed": true
+    },
+    {
+      "id": "I08",
+      "description": "Normal X exit and offline restart preserve complete state including fixed repair, unused manual, consumed buff, arrival watermark and audio switches",
+      "passed": true
+    }
+  ],
+  "launches": [
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\gameplay-profile",
+      "pid": 291876,
+      "allClear": false,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\gameplay-profile",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\gameplay-profile",
+        "noSandbox": true,
+        "isPackaged": false,
+        "sandboxPreference": true
+      }
+    },
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\gameplay-profile",
+      "pid": 281732,
+      "allClear": false,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\gameplay-profile",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\gameplay-profile",
+        "noSandbox": true,
+        "isPackaged": false
+      }
+    }
+  ],
+  "screenshots": [
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\dual-weather-snow.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-0.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-1.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-2.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-3.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-4.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-5.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-6.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\snow-dissolve-frame-7.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\viewer-locked-region.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-鱼篓-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-图鉴-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-渔具店-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-漫游-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-设置-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-鱼篓-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-图鉴-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-渔具店-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-漫游-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\panel-设置-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\inventory-repair-manual.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\arrival-qinhuai.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-0.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-1.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-2.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-3.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-4.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-5.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-6.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\rain-impact-frame-7.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z\\offline-restart.png"
+  ],
+  "frames": [
+    {
+      "kind": "snow-dissolve",
+      "frames": [
+        [
+          {
+            "id": "dongbei@3:snow:7:0",
+            "kind": "snow-dissolve",
+            "x": 555.336,
+            "y": 329.147,
+            "ageMs": 167.7,
+            "hitTimeMs": 8
+          },
+          {
+            "id": "dongbei@3:snow:8:0",
+            "kind": "snow-dissolve",
+            "x": 922.879,
+            "y": 264.804,
+            "ageMs": 833.8,
+            "hitTimeMs": -658.1
+          },
+          {
+            "id": "dongbei@3:snow:9:0",
+            "kind": "snow-dissolve",
+            "x": 888.598,
+            "y": 256.217,
+            "ageMs": 667.6,
+            "hitTimeMs": -491.9
+          },
+          {
+            "id": "dongbei@3:snow:10:0",
+            "kind": "snow-dissolve",
+            "x": 793.445,
+            "y": 323.161,
+            "ageMs": 47.4,
+            "hitTimeMs": 128.3
+          },
+          {
+            "id": "dongbei@3:snow:15:0",
+            "kind": "snow-dissolve",
+            "x": 296.805,
+            "y": 422.896,
+            "ageMs": 925.3,
+            "hitTimeMs": -749.6
+          }
+        ],
+        [
+          {
+            "id": "dongbei@3:snow:3:0",
+            "kind": "snow-dissolve",
+            "x": 329.739,
+            "y": 372.325,
+            "ageMs": 229.1,
+            "hitTimeMs": 286.1
+          },
+          {
+            "id": "dongbei@3:snow:7:0",
+            "kind": "snow-dissolve",
+            "x": 555.336,
+            "y": 329.147,
+            "ageMs": 507.2,
+            "hitTimeMs": 8
+          },
+          {
+            "id": "dongbei@3:snow:8:0",
+            "kind": "snow-dissolve",
+            "x": 922.879,
+            "y": 264.804,
+            "ageMs": 1173.3,
+            "hitTimeMs": -658.1
+          },
+          {
+            "id": "dongbei@3:snow:9:0",
+            "kind": "snow-dissolve",
+            "x": 888.598,
+            "y": 256.217,
+            "ageMs": 1007.1,
+            "hitTimeMs": -491.9
+          },
+          {
+            "id": "dongbei@3:snow:10:0",
+            "kind": "snow-dissolve",
+            "x": 793.445,
+            "y": 323.161,
+            "ageMs": 386.9,
+            "hitTimeMs": 128.3
+          },
+          {
+            "id": "dongbei@3:snow:12:0",
+            "kind": "snow-dissolve",
+            "x": 744.8,
+            "y": 249.25,
+            "ageMs": 61.1,
+            "hitTimeMs": 454.1
+          }
+        ],
+        [
+          {
+            "id": "dongbei@3:snow:3:0",
+            "kind": "snow-dissolve",
+            "x": 329.739,
+            "y": 372.325,
+            "ageMs": 568.6,
+            "hitTimeMs": 286.1
+          },
+          {
+            "id": "dongbei@3:snow:7:0",
+            "kind": "snow-dissolve",
+            "x": 555.336,
+            "y": 329.147,
+            "ageMs": 846.7,
+            "hitTimeMs": 8
+          },
+          {
+            "id": "dongbei@3:snow:10:0",
+            "kind": "snow-dissolve",
+            "x": 793.445,
+            "y": 323.161,
+            "ageMs": 726.4,
+            "hitTimeMs": 128.3
+          },
+          {
+            "id": "dongbei@3:snow:12:0",
+            "kind": "snow-dissolve",
+            "x": 744.8,
+            "y": 249.25,
+            "ageMs": 400.6,
+            "hitTimeMs": 454.1
+          }
+        ],
+        [
+          {
+            "id": "dongbei@3:snow:0:0",
+            "kind": "snow-dissolve",
+            "x": 402.967,
+            "y": 366.876,
+            "ageMs": 276.6,
+            "hitTimeMs": 875
+          },
+          {
+            "id": "dongbei@3:snow:3:0",
+            "kind": "snow-dissolve",
+            "x": 329.739,
+            "y": 372.325,
+            "ageMs": 865.5,
+            "hitTimeMs": 286.1
+          },
+          {
+            "id": "dongbei@3:snow:7:0",
+            "kind": "snow-dissolve",
+            "x": 555.336,
+            "y": 329.147,
+            "ageMs": 1143.6,
+            "hitTimeMs": 8
+          },
+          {
+            "id": "dongbei@3:snow:10:0",
+            "kind": "snow-dissolve",
+            "x": 793.445,
+            "y": 323.161,
+            "ageMs": 1023.3,
+            "hitTimeMs": 128.3
+          },
+          {
+            "id": "dongbei@3:snow:12:0",
+            "kind": "snow-dissolve",
+            "x": 744.8,
+            "y": 249.25,
+            "ageMs": 697.5,
+            "hitTimeMs": 454.1
+          }
+        ],
+        [
+          {
+            "id": "dongbei@3:snow:0:0",
+            "kind": "snow-dissolve",
+            "x": 402.967,
+            "y": 366.876,
+            "ageMs": 615.9,
+            "hitTimeMs": 875
+          },
+          {
+            "id": "dongbei@3:snow:12:0",
+            "kind": "snow-dissolve",
+            "x": 744.8,
+            "y": 249.25,
+            "ageMs": 1036.8,
+            "hitTimeMs": 454.1
+          }
+        ],
+        [
+          {
+            "id": "dongbei@3:snow:0:0",
+            "kind": "snow-dissolve",
+            "x": 402.967,
+            "y": 366.876,
+            "ageMs": 955.3,
+            "hitTimeMs": 875
+          },
+          {
+            "id": "dongbei@3:snow:2:0",
+            "kind": "snow-dissolve",
+            "x": 459.046,
+            "y": 335.352,
+            "ageMs": 108.2,
+            "hitTimeMs": 1722.1
+          },
+          {
+            "id": "dongbei@3:snow:11:0",
+            "kind": "snow-dissolve",
+            "x": 245.894,
+            "y": 253.997,
+            "ageMs": 175.4,
+            "hitTimeMs": 1654.9
+          }
+        ],
+        [
+          {
+            "id": "dongbei@3:snow:2:0",
+            "kind": "snow-dissolve",
+            "x": 459.046,
+            "y": 335.352,
+            "ageMs": 405.2,
+            "hitTimeMs": 1722.1
+          },
+          {
+            "id": "dongbei@3:snow:11:0",
+            "kind": "snow-dissolve",
+            "x": 245.894,
+            "y": 253.997,
+            "ageMs": 472.4,
+            "hitTimeMs": 1654.9
+          }
+        ],
+        [
+          {
+            "id": "dongbei@3:snow:2:0",
+            "kind": "snow-dissolve",
+            "x": 459.046,
+            "y": 335.352,
+            "ageMs": 744.4,
+            "hitTimeMs": 1722.1
+          },
+          {
+            "id": "dongbei@3:snow:11:0",
+            "kind": "snow-dissolve",
+            "x": 245.894,
+            "y": 253.997,
+            "ageMs": 811.6,
+            "hitTimeMs": 1654.9
+          }
+        ]
+      ]
+    },
+    {
+      "kind": "rain-impact",
+      "frames": [
+        [
+          {
+            "id": "jiangnan@3:rain:1:0",
+            "kind": "rain-impact",
+            "x": 416.491,
+            "y": 404.396,
+            "ageMs": 626.1,
+            "hitTimeMs": -434.1
+          },
+          {
+            "id": "jiangnan@3:rain:3:0",
+            "kind": "rain-impact",
+            "x": 309.361,
+            "y": 425.261,
+            "ageMs": 102,
+            "hitTimeMs": 90
+          },
+          {
+            "id": "jiangnan@3:rain:4:0",
+            "kind": "rain-impact",
+            "x": 448.787,
+            "y": 306.924,
+            "ageMs": 233.6,
+            "hitTimeMs": -41.6
+          },
+          {
+            "id": "jiangnan@3:rain:5:0",
+            "kind": "rain-impact",
+            "x": 508.927,
+            "y": 345.263,
+            "ageMs": 601.6,
+            "hitTimeMs": -409.6
+          },
+          {
+            "id": "jiangnan@3:rain:11:0",
+            "kind": "rain-impact",
+            "x": 262.722,
+            "y": 339.355,
+            "ageMs": 405.2,
+            "hitTimeMs": -213.2
+          },
+          {
+            "id": "jiangnan@3:rain:14:0",
+            "kind": "rain-impact",
+            "x": 419.039,
+            "y": 267.681,
+            "ageMs": 614.5,
+            "hitTimeMs": -422.5
+          },
+          {
+            "id": "jiangnan@3:rain:15:0",
+            "kind": "rain-impact",
+            "x": 411.533,
+            "y": 329.132,
+            "ageMs": 416.2,
+            "hitTimeMs": -224.2
+          },
+          {
+            "id": "jiangnan@3:rain:16:0",
+            "kind": "rain-impact",
+            "x": 77.027,
+            "y": 431.228,
+            "ageMs": 221.8,
+            "hitTimeMs": -29.8
+          },
+          {
+            "id": "jiangnan@3:rain:18:0",
+            "kind": "rain-impact",
+            "x": 235.109,
+            "y": 330.848,
+            "ageMs": 344.1,
+            "hitTimeMs": -152.1
+          },
+          {
+            "id": "jiangnan@3:rain:19:0",
+            "kind": "rain-impact",
+            "x": 381.57,
+            "y": 337.8,
+            "ageMs": 591.1,
+            "hitTimeMs": -399.1
+          },
+          {
+            "id": "jiangnan@3:rain:20:0",
+            "kind": "rain-impact",
+            "x": 316.068,
+            "y": 349.085,
+            "ageMs": 245.5,
+            "hitTimeMs": -53.5
+          }
+        ],
+        [
+          {
+            "id": "jiangnan@3:rain:3:0",
+            "kind": "rain-impact",
+            "x": 309.361,
+            "y": 425.261,
+            "ageMs": 485,
+            "hitTimeMs": 90
+          },
+          {
+            "id": "jiangnan@3:rain:4:0",
+            "kind": "rain-impact",
+            "x": 448.787,
+            "y": 306.924,
+            "ageMs": 616.6,
+            "hitTimeMs": -41.6
+          },
+          {
+            "id": "jiangnan@3:rain:6:0",
+            "kind": "rain-impact",
+            "x": 759.737,
+            "y": 289.221,
+            "ageMs": 349.9,
+            "hitTimeMs": 225.1
+          },
+          {
+            "id": "jiangnan@3:rain:7:0",
+            "kind": "rain-impact",
+            "x": 235.213,
+            "y": 374.903,
+            "ageMs": 140,
+            "hitTimeMs": 435
+          },
+          {
+            "id": "jiangnan@3:rain:10:0",
+            "kind": "rain-impact",
+            "x": 30.348,
+            "y": 255.083,
+            "ageMs": 327.2,
+            "hitTimeMs": 247.8
+          },
+          {
+            "id": "jiangnan@3:rain:12:0",
+            "kind": "rain-impact",
+            "x": 494.79,
+            "y": 345.488,
+            "ageMs": 126.2,
+            "hitTimeMs": 448.8
+          },
+          {
+            "id": "jiangnan@3:rain:13:0",
+            "kind": "rain-impact",
+            "x": 867.92,
+            "y": 257.882,
+            "ageMs": 53.9,
+            "hitTimeMs": 521.1
+          },
+          {
+            "id": "jiangnan@3:rain:16:0",
+            "kind": "rain-impact",
+            "x": 77.027,
+            "y": 431.228,
+            "ageMs": 604.8,
+            "hitTimeMs": -29.8
+          },
+          {
+            "id": "jiangnan@3:rain:18:0",
+            "kind": "rain-impact",
+            "x": 235.109,
+            "y": 330.848,
+            "ageMs": 727.1,
+            "hitTimeMs": -152.1
+          },
+          {
+            "id": "jiangnan@3:rain:20:0",
+            "kind": "rain-impact",
+            "x": 316.068,
+            "y": 349.085,
+            "ageMs": 628.5,
+            "hitTimeMs": -53.5
+          }
+        ],
+        [
+          {
+            "id": "jiangnan@3:rain:7:0",
+            "kind": "rain-impact",
+            "x": 235.213,
+            "y": 374.903,
+            "ageMs": 573,
+            "hitTimeMs": 435
+          },
+          {
+            "id": "jiangnan@3:rain:8:0",
+            "kind": "rain-impact",
+            "x": 600.1,
+            "y": 264.246,
+            "ageMs": 316.9,
+            "hitTimeMs": 691.1
+          },
+          {
+            "id": "jiangnan@3:rain:9:0",
+            "kind": "rain-impact",
+            "x": 141.58,
+            "y": 293.934,
+            "ageMs": 127.8,
+            "hitTimeMs": 880.2
+          },
+          {
+            "id": "jiangnan@3:rain:12:0",
+            "kind": "rain-impact",
+            "x": 494.79,
+            "y": 345.488,
+            "ageMs": 559.2,
+            "hitTimeMs": 448.8
+          },
+          {
+            "id": "jiangnan@3:rain:13:0",
+            "kind": "rain-impact",
+            "x": 867.92,
+            "y": 257.882,
+            "ageMs": 486.9,
+            "hitTimeMs": 521.1
+          },
+          {
+            "id": "jiangnan@3:rain:17:0",
+            "kind": "rain-impact",
+            "x": 198.519,
+            "y": 407.918,
+            "ageMs": 399.3,
+            "hitTimeMs": 608.7
+          },
+          {
+            "id": "jiangnan@3:rain:21:0",
+            "kind": "rain-impact",
+            "x": 670.194,
+            "y": 304.356,
+            "ageMs": 173,
+            "hitTimeMs": 835
+          }
+        ],
+        [
+          {
+            "id": "jiangnan@3:rain:0:1",
+            "kind": "rain-impact",
+            "x": 443.04,
+            "y": 367.265,
+            "ageMs": 146.3,
+            "hitTimeMs": 1245.7
+          },
+          {
+            "id": "jiangnan@3:rain:1:1",
+            "kind": "rain-impact",
+            "x": 416.491,
+            "y": 404.396,
+            "ageMs": 26.3,
+            "hitTimeMs": 1365.7
+          },
+          {
+            "id": "jiangnan@3:rain:2:1",
+            "kind": "rain-impact",
+            "x": 671.22,
+            "y": 349.983,
+            "ageMs": 2.2,
+            "hitTimeMs": 1389.8
+          },
+          {
+            "id": "jiangnan@3:rain:5:1",
+            "kind": "rain-impact",
+            "x": 508.927,
+            "y": 345.263,
+            "ageMs": 103.2,
+            "hitTimeMs": 1288.8
+          },
+          {
+            "id": "jiangnan@3:rain:8:0",
+            "kind": "rain-impact",
+            "x": 600.1,
+            "y": 264.246,
+            "ageMs": 700.9,
+            "hitTimeMs": 691.1
+          },
+          {
+            "id": "jiangnan@3:rain:9:0",
+            "kind": "rain-impact",
+            "x": 141.58,
+            "y": 293.934,
+            "ageMs": 511.8,
+            "hitTimeMs": 880.2
+          },
+          {
+            "id": "jiangnan@3:rain:11:1",
+            "kind": "rain-impact",
+            "x": 262.722,
+            "y": 339.355,
+            "ageMs": 32.1,
+            "hitTimeMs": 1359.9
+          },
+          {
+            "id": "jiangnan@3:rain:21:0",
+            "kind": "rain-impact",
+            "x": 670.194,
+            "y": 304.356,
+            "ageMs": 557,
+            "hitTimeMs": 835
+          }
+        ],
+        [
+          {
+            "id": "jiangnan@3:rain:0:1",
+            "kind": "rain-impact",
+            "x": 443.04,
+            "y": 367.265,
+            "ageMs": 577.3,
+            "hitTimeMs": 1245.7
+          },
+          {
+            "id": "jiangnan@3:rain:1:1",
+            "kind": "rain-impact",
+            "x": 416.491,
+            "y": 404.396,
+            "ageMs": 457.3,
+            "hitTimeMs": 1365.7
+          },
+          {
+            "id": "jiangnan@3:rain:2:1",
+            "kind": "rain-impact",
+            "x": 671.22,
+            "y": 349.983,
+            "ageMs": 433.2,
+            "hitTimeMs": 1389.8
+          },
+          {
+            "id": "jiangnan@3:rain:3:1",
+            "kind": "rain-impact",
+            "x": 309.361,
+            "y": 425.261,
+            "ageMs": 23.7,
+            "hitTimeMs": 1799.3
+          },
+          {
+            "id": "jiangnan@3:rain:4:1",
+            "kind": "rain-impact",
+            "x": 448.787,
+            "y": 306.924,
+            "ageMs": 44.3,
+            "hitTimeMs": 1778.7
+          },
+          {
+            "id": "jiangnan@3:rain:5:1",
+            "kind": "rain-impact",
+            "x": 508.927,
+            "y": 345.263,
+            "ageMs": 534.2,
+            "hitTimeMs": 1288.8
+          },
+          {
+            "id": "jiangnan@3:rain:11:1",
+            "kind": "rain-impact",
+            "x": 262.722,
+            "y": 339.355,
+            "ageMs": 463.1,
+            "hitTimeMs": 1359.9
+          },
+          {
+            "id": "jiangnan@3:rain:14:1",
+            "kind": "rain-impact",
+            "x": 419.039,
+            "y": 267.681,
+            "ageMs": 95.8,
+            "hitTimeMs": 1727.2
+          },
+          {
+            "id": "jiangnan@3:rain:19:1",
+            "kind": "rain-impact",
+            "x": 381.57,
+            "y": 337.8,
+            "ageMs": 282.6,
+            "hitTimeMs": 1540.4
+          }
+        ],
+        [
+          {
+            "id": "jiangnan@3:rain:3:1",
+            "kind": "rain-impact",
+            "x": 309.361,
+            "y": 425.261,
+            "ageMs": 456.7,
+            "hitTimeMs": 1799.3
+          },
+          {
+            "id": "jiangnan@3:rain:4:1",
+            "kind": "rain-impact",
+            "x": 448.787,
+            "y": 306.924,
+            "ageMs": 477.3,
+            "hitTimeMs": 1778.7
+          },
+          {
+            "id": "jiangnan@3:rain:6:1",
+            "kind": "rain-impact",
+            "x": 759.737,
+            "y": 289.221,
+            "ageMs": 55.6,
+            "hitTimeMs": 2200.4
+          },
+          {
+            "id": "jiangnan@3:rain:14:1",
+            "kind": "rain-impact",
+            "x": 419.039,
+            "y": 267.681,
+            "ageMs": 528.8,
+            "hitTimeMs": 1727.2
+          },
+          {
+            "id": "jiangnan@3:rain:15:1",
+            "kind": "rain-impact",
+            "x": 411.533,
+            "y": 329.132,
+            "ageMs": 166.3,
+            "hitTimeMs": 2089.7
+          },
+          {
+            "id": "jiangnan@3:rain:16:1",
+            "kind": "rain-impact",
+            "x": 77.027,
+            "y": 431.228,
+            "ageMs": 428,
+            "hitTimeMs": 1828
+          },
+          {
+            "id": "jiangnan@3:rain:18:1",
+            "kind": "rain-impact",
+            "x": 235.109,
+            "y": 330.848,
+            "ageMs": 119.5,
+            "hitTimeMs": 2136.5
+          },
+          {
+            "id": "jiangnan@3:rain:19:1",
+            "kind": "rain-impact",
+            "x": 381.57,
+            "y": 337.8,
+            "ageMs": 715.6,
+            "hitTimeMs": 1540.4
+          },
+          {
+            "id": "jiangnan@3:rain:20:1",
+            "kind": "rain-impact",
+            "x": 316.068,
+            "y": 349.085,
+            "ageMs": 422.3,
+            "hitTimeMs": 1833.7
+          }
+        ],
+        [
+          {
+            "id": "jiangnan@3:rain:6:1",
+            "kind": "rain-impact",
+            "x": 759.737,
+            "y": 289.221,
+            "ageMs": 439.6,
+            "hitTimeMs": 2200.4
+          },
+          {
+            "id": "jiangnan@3:rain:7:1",
+            "kind": "rain-impact",
+            "x": 235.213,
+            "y": 374.903,
+            "ageMs": 247.1,
+            "hitTimeMs": 2392.9
+          },
+          {
+            "id": "jiangnan@3:rain:8:1",
+            "kind": "rain-impact",
+            "x": 600.1,
+            "y": 264.246,
+            "ageMs": 16,
+            "hitTimeMs": 2624
+          },
+          {
+            "id": "jiangnan@3:rain:9:1",
+            "kind": "rain-impact",
+            "x": 141.58,
+            "y": 293.934,
+            "ageMs": 31.4,
+            "hitTimeMs": 2608.6
+          },
+          {
+            "id": "jiangnan@3:rain:10:1",
+            "kind": "rain-impact",
+            "x": 30.348,
+            "y": 255.083,
+            "ageMs": 35.9,
+            "hitTimeMs": 2604.1
+          },
+          {
+            "id": "jiangnan@3:rain:12:1",
+            "kind": "rain-impact",
+            "x": 494.79,
+            "y": 345.488,
+            "ageMs": 180.4,
+            "hitTimeMs": 2459.6
+          },
+          {
+            "id": "jiangnan@3:rain:13:1",
+            "kind": "rain-impact",
+            "x": 867.92,
+            "y": 257.882,
+            "ageMs": 114.9,
+            "hitTimeMs": 2525.1
+          },
+          {
+            "id": "jiangnan@3:rain:15:1",
+            "kind": "rain-impact",
+            "x": 411.533,
+            "y": 329.132,
+            "ageMs": 550.3,
+            "hitTimeMs": 2089.7
+          },
+          {
+            "id": "jiangnan@3:rain:17:1",
+            "kind": "rain-impact",
+            "x": 198.519,
+            "y": 407.918,
+            "ageMs": 150.8,
+            "hitTimeMs": 2489.2
+          },
+          {
+            "id": "jiangnan@3:rain:18:1",
+            "kind": "rain-impact",
+            "x": 235.109,
+            "y": 330.848,
+            "ageMs": 503.5,
+            "hitTimeMs": 2136.5
+          }
+        ],
+        [
+          {
+            "id": "jiangnan@3:rain:5:2",
+            "kind": "rain-impact",
+            "x": 508.927,
+            "y": 345.263,
+            "ageMs": 84.7,
+            "hitTimeMs": 2987.3
+          },
+          {
+            "id": "jiangnan@3:rain:7:1",
+            "kind": "rain-impact",
+            "x": 235.213,
+            "y": 374.903,
+            "ageMs": 679.1,
+            "hitTimeMs": 2392.9
+          },
+          {
+            "id": "jiangnan@3:rain:8:1",
+            "kind": "rain-impact",
+            "x": 600.1,
+            "y": 264.246,
+            "ageMs": 448,
+            "hitTimeMs": 2624
+          },
+          {
+            "id": "jiangnan@3:rain:9:1",
+            "kind": "rain-impact",
+            "x": 141.58,
+            "y": 293.934,
+            "ageMs": 463.4,
+            "hitTimeMs": 2608.6
+          },
+          {
+            "id": "jiangnan@3:rain:10:1",
+            "kind": "rain-impact",
+            "x": 30.348,
+            "y": 255.083,
+            "ageMs": 467.9,
+            "hitTimeMs": 2604.1
+          },
+          {
+            "id": "jiangnan@3:rain:11:2",
+            "kind": "rain-impact",
+            "x": 262.722,
+            "y": 339.355,
+            "ageMs": 138.9,
+            "hitTimeMs": 2933.1
+          },
+          {
+            "id": "jiangnan@3:rain:12:1",
+            "kind": "rain-impact",
+            "x": 494.79,
+            "y": 345.488,
+            "ageMs": 612.4,
+            "hitTimeMs": 2459.6
+          },
+          {
+            "id": "jiangnan@3:rain:13:1",
+            "kind": "rain-impact",
+            "x": 867.92,
+            "y": 257.882,
+            "ageMs": 546.9,
+            "hitTimeMs": 2525.1
+          },
+          {
+            "id": "jiangnan@3:rain:17:1",
+            "kind": "rain-impact",
+            "x": 198.519,
+            "y": 407.918,
+            "ageMs": 582.8,
+            "hitTimeMs": 2489.2
+          },
+          {
+            "id": "jiangnan@3:rain:21:1",
+            "kind": "rain-impact",
+            "x": 670.194,
+            "y": 304.356,
+            "ageMs": 416.4,
+            "hitTimeMs": 2655.6
+          }
+        ]
+      ]
+    }
+  ],
+  "layouts": [
+    {
+      "name": "main-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "鱼篓-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "图鉴-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "渔具店-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "漫游-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "设置-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "main-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "鱼篓-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "图鉴-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "渔具店-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "漫游-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "设置-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    }
+  ],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "pending": [
+    "Ordinary final EXE with normal sandbox",
+    "Actual network/VPN and real weather",
+    "Human listening and visual quality judgment",
+    "Native dragging and taskbar restore",
+    "DPR 1/2 and long-duration performance"
+  ],
+  "directory": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-t8Ci3z",
+  "bundleHashes": {
+    "build-desktop/index.html": "3b3ba3fdc83540ed4d62712bb40077ab9447395956a563a64ccf3b6d76a5858b",
+    "build-desktop/assets/index-U0xDe1rM.js": "4b969bec61881943c373179ea7ec603f33590e335b994d5740845118d5b17087",
+    "build-desktop/assets/index-BMkb6PjA.css": "7e193a0261a027d00bbc117b6dd8f47417e83d87f542b16c55668080883c1832"
+  },
+  "arrivalText": "秦淮水慢，适合把心事也放慢。",
+  "gameplayFinal": {
+    "coins": 27019,
+    "catchSequence": 10,
+    "settings": {
+      "onlineEnhancements": false,
+      "alwaysOnTop": true,
+      "biteSoundEnabled": true,
+      "biteSoundVolume": 35,
+      "backgroundBiteSound": false
+    },
+    "arrivalConsumedSequence": 1,
+    "repair": {
+      "uid": "fixture-item-4",
+      "type": "waterlogged_watch",
+      "caughtAtMs": 1792866648373,
+      "originRegionId": "jiangnan",
+      "catchSequence": 4,
+      "status": "repaired",
+      "repairSeed": 12,
+      "repairAttempted": true,
+      "repairOutcome": "ordinary",
+      "salePrice": 92,
+      "repairedAtMs": 1792866656034,
+      "repairCommandId": "4f8f55f7-2290-420a-a5be-9acb86209c8d"
+    }
+  },
+  "artStatus": "Not run in this functional-only pass; renderer is revising final artwork.",
+  "finishedAt": "2026-10-24T18:31:37.354Z"
+}

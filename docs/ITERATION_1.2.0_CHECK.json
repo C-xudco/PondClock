@@ -1,0 +1,67 @@
+{
+  "checkedAt": "2026-10-24T18:27:27.667Z",
+  "version": "1.2.0",
+  "unit": {
+    "tests": 234,
+    "pass": 233,
+    "fail": 0,
+    "skipped": 1,
+    "tapSha256": "bfcfc6412679bc6184fd6f3d80d0323f60d5e0b643ca61aefd5127987d3242ee"
+  },
+  "lint": {
+    "exitCode": 0
+  },
+  "build": {
+    "web": true,
+    "desktop": true
+  },
+  "ui": [
+    {
+      "report": "docs/ITERATION_1.2.0_UI_CHECK.json",
+      "checks": 10,
+      "screenshots": 55,
+      "dpr": [
+        1.5
+      ],
+      "bundleHashes": {
+        "build-desktop/index.html": "3b3ba3fdc83540ed4d62712bb40077ab9447395956a563a64ccf3b6d76a5858b",
+        "build-desktop/assets/index-U0xDe1rM.js": "4b969bec61881943c373179ea7ec603f33590e335b994d5740845118d5b17087",
+        "build-desktop/assets/index-BMkb6PjA.css": "7e193a0261a027d00bbc117b6dd8f47417e83d87f542b16c55668080883c1832"
+      }
+    },
+    {
+      "report": "docs/DPR1_1.2.0_CHECK.json",
+      "checks": 2,
+      "screenshots": 18,
+      "dpr": [
+        1
+      ],
+      "bundleHashes": {
+        "build-desktop/index.html": "3b3ba3fdc83540ed4d62712bb40077ab9447395956a563a64ccf3b6d76a5858b",
+        "build-desktop/assets/index-U0xDe1rM.js": "4b969bec61881943c373179ea7ec603f33590e335b994d5740845118d5b17087",
+        "build-desktop/assets/index-BMkb6PjA.css": "7e193a0261a027d00bbc117b6dd8f47417e83d87f542b16c55668080883c1832"
+      }
+    },
+    {
+      "report": "docs/DPR2_1.2.0_CHECK.json",
+      "checks": 2,
+      "screenshots": 18,
+      "dpr": [
+        2
+      ],
+      "bundleHashes": {
+        "build-desktop/index.html": "3b3ba3fdc83540ed4d62712bb40077ab9447395956a563a64ccf3b6d76a5858b",
+        "build-desktop/assets/index-U0xDe1rM.js": "4b969bec61881943c373179ea7ec603f33590e335b994d5740845118d5b17087",
+        "build-desktop/assets/index-BMkb6PjA.css": "7e193a0261a027d00bbc117b6dd8f47417e83d87f542b16c55668080883c1832"
+      }
+    }
+  ],
+  "ordinaryExe": "passed; see NATIVE_1.2.0_CHECK.json",
+  "installer": "unverified candidate",
+  "realNetwork": "not run; all acceptance requests mocked",
+  "all12Viewer": {
+    "passed": true,
+    "report": "docs/VIEWER12_1.2.0_CHECK.json",
+    "checks": 8
+  }
+}

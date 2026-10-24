@@ -2,18 +2,22 @@ import { DEFAULT_REGION, RODS, BAIT_COST, BAIT_CATCHES, REGIONS, QUALITIES } fro
 import { FISHING_CONFIG } from '../config/fishing.js';
 import { DEFAULT_SETTINGS, GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
 import { quoteRoute } from './routes.js';
-import { quoteFish } from './market.js';
+import { quoteSaleFish, quoteBucketSale } from './market.js';
 import { validateSave } from './saveSchema.js';
+import { LOOT_CONFIG } from '../config/lootConfig.js';
+import { catchOutcome, watchRepairOutcome, itemSalePrice } from './loot.js';
 
 const requireRegion = (id) => { if (!REGIONS.some((r) => r.id === id)) throw new Error('未知水域'); return id; };
 const rank = (id) => QUALITIES.find((q) => q.id === id)?.rank ?? -1;
 
-export function createNewGame(regionId = DEFAULT_REGION, nowMs = Date.now()) {
+export function createNewGame(regionId = DEFAULT_REGION, nowMs = Date.now(), options = {}) {
   requireRegion(regionId);
+  const randomSeed = options.randomSeed ?? globalThis.crypto.getRandomValues(new Uint32Array(1))[0];
   return validateSave({ schemaVersion: STORAGE_CONFIG.schemaVersion, gameVersion: GAME_VERSION, revision: 0, createdAtMs: nowMs,
     lastEffectiveNowMs: nowMs, homeRegion: regionId, currentRegion: regionId, realRegion: null,
     unlockedRegions: [regionId], coins: FISHING_CONFIG.startCoins, rodLevel: 0,
     baitCount: FISHING_CONFIG.startBait, baitLeft: 0, bucket: [], codex: {}, pityCounter: 0, travel: null,
+    items: [], catchSequence: 0, randomSeed, saleBuff: null, arrivalSequence: 0, arrivalConsumedSequence: 0, arrivalEvent: null,
     settings: { ...DEFAULT_SETTINGS }, lastCommittedCommandId: null, recentCommittedCommandIds: [] });
 }
 
@@ -37,6 +41,8 @@ export function applyCommand(state, command, nowMs) {
       if (!state.realRegion) throw new Error('本次尚未取得有效 IP 地区');
       if (state.currentRegion === state.realRegion) return state;
       next.currentRegion = state.realRegion;
+      next.arrivalSequence = state.arrivalSequence + 1;
+      next.arrivalEvent = { id: command.id, regionId: next.currentRegion, sequence: next.arrivalSequence };
       break;
     case 'START_TRAVEL': {
       onGround();
@@ -52,13 +58,27 @@ export function applyCommand(state, command, nowMs) {
       if (!state.travel || now < state.travel.arriveAtMs) return state;
       next.currentRegion = state.travel.toId;
       next.unlockedRegions = [...new Set([...state.unlockedRegions, next.currentRegion])];
+      next.arrivalSequence = state.arrivalSequence + 1;
+      next.arrivalEvent = { id: state.travel.id, regionId: next.currentRegion, sequence: next.arrivalSequence };
       next.travel = null;
+      break;
+    case 'CONSUME_ARRIVAL':
+      if (!Number.isSafeInteger(command.sequence) || command.sequence > state.arrivalSequence || command.sequence < 1) throw new Error('到达事件无效');
+      if (command.sequence <= state.arrivalConsumedSequence) return state;
+      next.arrivalConsumedSequence = command.sequence;
       break;
     case 'CATCH': {
       onGround();
-      const fish = command.fish;
-      const habitat = REGIONS.find((r) => r.id === state.currentRegion);
-      if (!fish || fish.regionId !== state.currentRegion || !habitat.fish.some(([id]) => id === fish.speciesId) || state.bucket.some((f) => f.uid === fish.uid)) throw new Error('鱼获无效');
+      if (command.expectedCatchSequence !== state.catchSequence + 1 || Object.hasOwn(command, 'fish') || Object.hasOwn(command, 'item')) throw new Error('收竿事件已处理或无效，请等待新鱼讯');
+      if (command.bestClick !== undefined && typeof command.bestClick !== 'boolean') throw new Error('收竿时机无效');
+      const outcome = catchOutcome(state, { bestClick: command.bestClick });
+      next.catchSequence += 1;
+      if (outcome.kind === 'item') {
+        next.items = [...state.items, { ...outcome.item, caughtAtMs: now, originRegionId: state.currentRegion,
+          repairAttempted: false, repairOutcome: null, salePrice: null, repairedAtMs: null, repairCommandId: null }];
+        break;
+      }
+      const fish = outcome.fish;
       const captured = { ...fish, caughtAtMs: now, originRegionId: state.currentRegion };
       next.bucket = [...state.bucket, captured];
       const prev = state.codex[fish.speciesId];
@@ -74,16 +94,51 @@ export function applyCommand(state, command, nowMs) {
       onGround();
       const fish = state.bucket.find((f) => f.uid === command.uid);
       if (!fish) throw new Error('这条鱼已经卖出或不存在');
-      next.coins += quoteFish(fish, state.currentRegion, now).price;
+      const quote = quoteSaleFish(fish, state, now);
+      next.coins += quote.price;
+      if (quote.buffApplied) next.saleBuff = { ...state.saleBuff, remaining: state.saleBuff.remaining - 1 };
       next.bucket = state.bucket.filter((f) => f.uid !== command.uid);
       break;
     }
-    case 'SELL_ALL':
+    case 'SELL_ALL': {
       onGround();
       if (!state.bucket.length) return state;
-      next.coins += state.bucket.reduce((sum, f) => sum + quoteFish(f, state.currentRegion, now).price, 0);
+      const quote = quoteBucketSale(state, now);
+      next.coins += quote.price;
+      if (state.saleBuff) next.saleBuff = { ...state.saleBuff, remaining: quote.buffRemaining };
       next.bucket = [];
       break;
+    }
+    case 'SELL_ITEM': {
+      onGround();
+      const item = state.items.find((entry) => entry.uid === command.uid);
+      if (!item) throw new Error('这件物品已经处理或不存在');
+      next.coins += itemSalePrice(item);
+      next.items = state.items.filter((entry) => entry.uid !== item.uid);
+      break;
+    }
+    case 'REPAIR_ITEM': {
+      onGround();
+      const item = state.items.find((entry) => entry.uid === command.uid);
+      if (!item) throw new Error('这件物品已经处理或不存在');
+      if (item.type !== 'waterlogged_watch' || item.status !== 'found') throw new Error('这块表已经修过或无法修理');
+      if (state.coins < LOOT_CONFIG.repairCost) throw new Error('金币不足，修理需要500金币');
+      const result = watchRepairOutcome(item);
+      next.coins -= LOOT_CONFIG.repairCost;
+      next.items = state.items.map((entry) => entry.uid === item.uid ? { ...item, status: 'repaired',
+        repairAttempted: true, repairOutcome: result.kind, salePrice: result.salePrice, repairedAtMs: now, repairCommandId: command.id } : entry);
+      break;
+    }
+    case 'USE_ITEM': {
+      onGround();
+      const item = state.items.find((entry) => entry.uid === command.uid);
+      if (!item || item.type !== 'influencer_manual') throw new Error('这本秘籍已经使用或不存在');
+      if (state.saleBuff?.remaining > 0) throw new Error('先用完当前秘籍的加成，新秘籍会为你保留');
+      next.items = state.items.filter((entry) => entry.uid !== item.uid);
+      next.saleBuff = { version: LOOT_CONFIG.version, activationCatchSequence: state.catchSequence,
+        remaining: LOOT_CONFIG.buffCharges, sourceItemUid: item.uid };
+      break;
+    }
     case 'BUY_BAIT':
       onGround();
       if (state.coins < BAIT_COST) throw new Error('金币不足');
@@ -101,7 +156,7 @@ export function applyCommand(state, command, nowMs) {
     }
     case 'SETTINGS': {
       const patch = command.patch || {};
-      if (Object.keys(patch).some((key) => !['onlineEnhancements', 'alwaysOnTop'].includes(key))) throw new Error('未知设置');
+      if (Object.keys(patch).some((key) => !Object.hasOwn(DEFAULT_SETTINGS, key))) throw new Error('未知设置');
       next.settings = { ...state.settings, ...patch };
       break;
     }

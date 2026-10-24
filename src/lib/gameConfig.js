@@ -14,7 +14,8 @@ export const QUALITIES = [
 
 // ===== 鱼种表 =====
 // basePrice 为普通品质、中等体型的基础价（金币）
-// len / wt 为现实体长(cm) / 体重(kg)区间
+// len / wt 为游戏生成体长(cm) / 体重(kg)区间；不代表野外最大值或实测分布。
+// 1.2.0 新鱼科学身份/来源在 src/data/fishSources.js；区域为宽水系鱼池，景观只是代表地标。
 // qw 为该鱼种的品质权重（四档权重合计 100）
 //   G 常见：89.5 / 9.3 / 1 / 0.2      A 普通：89 / 9.6 / 1.2 / 0.2
 //   B 略稀有：88 / 10.4 / 1.4 / 0.2   H 掠食：88.5 / 10 / 1.3 / 0.2
@@ -71,6 +72,16 @@ export const FISH = [
   { id: "lasaliefuyu", name: "拉萨裂腹鱼", basePrice: 24, len: [20, 50], wt: [0.2, 1.8], qw: { common: 87.5, rare: 10.2, epic: 1.9, legendary: 0.4 }, habitat: "雅鲁藏布江与拉萨河" },
   { id: "gaoyuanluoli", name: "高原裸鲤", basePrice: 26, len: [18, 38], wt: [0.15, 1], qw: { common: 88, rare: 10.4, epic: 1.4, legendary: 0.2 }, habitat: "羊卓雍错等高原湖泊" },
   { id: "xiweigaoyuanqiu", name: "细尾高原鳅", basePrice: 4, len: [6, 15], wt: [0.005, 0.04], qw: { common: 89, rare: 9.6, epic: 1.2, legendary: 0.2 }, habitat: "青藏高原溪流石隙" },
+
+  // —— 1.2.0 首批：水系记录可靠的八种；数值均为游戏平衡参数 ——
+  { id: "guangzehuangsang", name: "光泽黄颡鱼", basePrice: 7, len: [10, 20], wt: [0.04, 0.2], qw: { common: 89, rare: 9.6, epic: 1.2, legendary: 0.2 }, habitat: "长江中下游干流与太湖底层；宽水系鱼池" },
+  { id: "washihuangsang", name: "瓦氏黄颡鱼", basePrice: 10, len: [15, 35], wt: [0.1, 1], qw: { common: 89, rare: 9.6, epic: 1.2, legendary: 0.2 }, habitat: "长江中下游干流与太湖底层；宽水系鱼池" },
+  { id: "hongqiyuanbai", name: "红鳍原鲌", basePrice: 11, len: [15, 40], wt: [0.15, 1.3], qw: { common: 88, rare: 10.4, epic: 1.4, legendary: 0.2 }, habitat: "长江中下游干流与湖泊；宽水系鱼池" },
+  { id: "menggubai", name: "蒙古鲌", basePrice: 14, len: [20, 55], wt: [0.3, 2.5], qw: { common: 88, rare: 10.4, epic: 1.4, legendary: 0.2 }, habitat: "长江中下游干流与湖泊；宽水系鱼池" },
+  { id: "ganyu", name: "鳡", basePrice: 32, len: [35, 100], wt: [1.2, 12], qw: { common: 88.5, rare: 10, epic: 1.3, legendary: 0.2 }, habitat: "长江中下游干流敞水区；宽水系鱼池" },
+  { id: "chiyanzun", name: "赤眼鳟", basePrice: 9, len: [15, 40], wt: [0.15, 1.5], qw: { common: 89, rare: 9.6, epic: 1.2, legendary: 0.2 }, habitat: "长江中下游江湖水域；宽水系鱼池" },
+  { id: "chunhuan", name: "唇䱻", basePrice: 10, len: [18, 45], wt: [0.2, 2], qw: { common: 89, rare: 9.6, epic: 1.2, legendary: 0.2 }, habitat: "长江中游枝江、黄石调查江段；宽水系鱼池" },
+  { id: "banli", name: "斑鳢", basePrice: 14, len: [18, 45], wt: [0.25, 2], qw: { common: 88.5, rare: 10, epic: 1.3, legendary: 0.2 }, habitat: "珠江、闽江与湘江水系野生群体记录；宽水系鱼池" },
 ];
 
 // ===== 区域表 =====
@@ -79,7 +90,7 @@ export const FISH = [
 export const REGIONS = [
   {
     id: "jiangnan", name: "华东·长江下游", waterSystem: "长江下游干流、太湖与巢湖水系", tier: 1, flightPrice: 0,
-    fish: [["baitiao", 30], ["jiyu", 32], ["bianyu", 12], ["liyu", 11], ["caoyu", 10], ["guiyu", 5]],
+    fish: [["baitiao", 30], ["jiyu", 32], ["bianyu", 12], ["liyu", 11], ["caoyu", 10], ["guiyu", 5], ["guangzehuangsang", 4], ["washihuangsang", 3], ["hongqiyuanbai", 3], ["menggubai", 3], ["ganyu", 1], ["chiyanzun", 4]],
   },
   {
     id: "huaihe", name: "黄淮·淮河水系", waterSystem: "淮河干流及洪泽湖、南四湖水系", tier: 2, flightPrice: 1000,
@@ -91,15 +102,15 @@ export const REGIONS = [
   },
   {
     id: "changjiang", name: "华中·长江中游", waterSystem: "长江中游干流、洞庭湖与鄱阳湖水系", tier: 4, flightPrice: 1800,
-    fish: [["caoyu", 20], ["yongyu", 18], ["guiyu", 14], ["qiaozuibai", 22], ["qingyu", 12], ["tuantoufang", 14]],
+    fish: [["caoyu", 20], ["yongyu", 18], ["guiyu", 14], ["qiaozuibai", 22], ["qingyu", 12], ["tuantoufang", 14], ["guangzehuangsang", 4], ["washihuangsang", 4], ["hongqiyuanbai", 4], ["menggubai", 4], ["ganyu", 1], ["chiyanzun", 4], ["chunhuan", 3], ["banli", 2]],
   },
   {
     id: "dongnan", name: "东南·闽江与东南沿海", waterSystem: "闽江干流与东南沿海河口", tier: 5, flightPrice: 2200,
-    fish: [["xiangyu", 18], ["hualu", 16], ["manyu", 14], ["ziyu", 22], ["huangsang", 16], ["caoyu", 14]],
+    fish: [["xiangyu", 18], ["hualu", 16], ["manyu", 14], ["ziyu", 22], ["huangsang", 16], ["caoyu", 14], ["banli", 4]],
   },
   {
     id: "lingnan", name: "岭南·珠江流域", waterSystem: "珠江流域西江、北江水系与珠江三角洲", tier: 6, flightPrice: 2400,
-    fish: [["guiyu", 36], ["caoyu", 16], ["yongyu", 16], ["lingyu", 14], ["huzinian", 10], ["luofeiyu", 8]],
+    fish: [["guiyu", 36], ["caoyu", 16], ["yongyu", 16], ["lingyu", 14], ["huzinian", 10], ["luofeiyu", 8], ["banli", 6]],
   },
   {
     id: "xinan", name: "西南·长江上游", waterSystem: "长江上游金沙江、岷江与嘉陵江水系", tier: 7, flightPrice: 3200,

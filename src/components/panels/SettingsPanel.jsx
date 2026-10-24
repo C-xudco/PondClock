@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { GAME_VERSION } from '@/config/storage.js';
 import { networkDiagnostics } from '@/services/networkDiagnostics.js';
+import WaterWeatherViewer from './WaterWeatherViewer';
 
 export default function SettingsPanel({ game, geo, weather, desktop, onChangeTop, onRefreshGeo }) {
   const lastGeo = geo?.fetchedAtMs ? new Date(geo.fetchedAtMs).toLocaleString('zh-CN') : null;
@@ -9,6 +10,16 @@ export default function SettingsPanel({ game, geo, weather, desktop, onChangeTop
   const geoSource = ({ ip: '本次IP识别成功', 'ip-cached': '使用历史位置缓存', oversea: '已识别境外出口，无对应水域', default: '省份尚未匹配', fallback: '尚未获取所在地', disabled: '联网已关闭' })[geo?.source] || '等待识别';
   const providerName = ({ ipapi: 'ipapi', ipwhois: 'IPWhois' })[geo?.provider];
   return <div className="space-y-3 text-sm">
+    <div className="rounded-xl bg-white/5 p-3" aria-label="鱼讯声音设置">
+      <h3 className="font-medium text-sky-200">浮漂有声</h3>
+      <label className="mt-3 flex items-center justify-between gap-3"><span>咬钩时播放咕咚声</span><input type="checkbox" aria-label="咬钩提示音" checked={game.settings.biteSoundEnabled} disabled={game.busy} onChange={(event) => game.updateSettings({ biteSoundEnabled: event.target.checked })} /></label>
+      <label className="mt-3 flex items-center justify-between gap-3"><span>后台也提醒</span><input type="checkbox" aria-label="后台鱼讯声音" checked={game.settings.backgroundBiteSound} disabled={game.busy} onChange={(event) => game.updateSettings({ backgroundBiteSound: event.target.checked })} /></label>
+      <label className="mt-3 block text-xs">音量 · {game.settings.biteSoundVolume}%<input className="mt-2 w-full" aria-label="鱼讯音量" type="range" min="0" max="100" defaultValue={game.settings.biteSoundVolume} onPointerUp={(event) => game.updateSettings({ biteSoundVolume: Number(event.target.value) })} onKeyUp={(event) => game.updateSettings({ biteSoundVolume: Number(event.target.value) })} /></label>
+      <p className="mt-2 text-xs leading-relaxed text-slate-500">同一次鱼讯只响一次，过期不会补播。声音随安装包提供，断网也可用。</p>
+      {game.audioBlocked && <p role="status" className="mt-2 text-xs text-amber-200">系统暂未允许声音，点击下方按钮开启。</p>}
+      <Button className="mt-3" size="sm" variant="outline" onClick={() => void game.enableAudio()}>开启声音</Button>
+    </div>
+    <WaterWeatherViewer currentRegion={game.currentRegion} online={game.settings.onlineEnhancements} />
     {desktop?.enabled && <div className="rounded-xl bg-white/5 p-3">
       <p className="font-medium text-sky-200">桌面悬浮挂件</p>
       <p className="mt-1 text-xs leading-relaxed text-slate-400">拖动顶部时钟条移动，位置会记住。“—”缩到任务栏，“×”保存后退出。</p>

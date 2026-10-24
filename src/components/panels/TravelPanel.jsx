@@ -26,10 +26,10 @@ const TravelPanel = ({ coins, currentRegion, unlockedRegions, realRegion, geoSou
       <svg viewBox="0 0 600 225" className="w-full rounded-xl bg-slate-950/35" role="img" aria-label="从当前水域出发的全国航线示意图">
         {REGIONS.filter((r) => r.id !== currentRegion).map((r) => {
           const to = point(r.id);
-          return <line key={r.id} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke={travel?.toId === r.id ? '#fbbf24' : '#38bdf8'} strokeOpacity={travel?.toId === r.id ? 0.9 : 0.19} strokeWidth={travel?.toId === r.id ? 2 : 1} />;
+          return <line key={r.id} x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke={travel?.toId === r.id ? '#a25f45' : '#658575'} strokeOpacity={travel?.toId === r.id ? 0.9 : 0.19} strokeWidth={travel?.toId === r.id ? 2 : 1} />;
         })}
-        {REGIONS.map((r) => { const p = point(r.id); return <g key={r.id}><circle cx={p.x} cy={p.y} r={r.id === currentRegion ? 5 : 3.5} fill={r.id === currentRegion ? '#6ee7b7' : unlockedRegions.includes(r.id) ? '#7dd3fc' : '#64748b'} /><text x={p.x + 7} y={p.y - 7} fontSize="10" fill="#cbd5e1">{REGION_LOCATIONS[r.id].city}</text></g>; })}
-        <text x="16" y="212" fontSize="9" fill="#64748b">代表城市直达路线示意 · 地区已解锁 ≠ 游戏航程免费 · 最近 1 分钟，最远 3 分钟</text>
+        {REGIONS.map((r) => { const p = point(r.id); return <g key={r.id}><circle cx={p.x} cy={p.y} r={r.id === currentRegion ? 5 : 3.5} fill={r.id === currentRegion ? '#4b7961' : unlockedRegions.includes(r.id) ? '#839989' : '#a8aaa0'} /><text x={p.x + 7} y={p.y - 7} fontSize="10" fill="#4d6558">{REGION_LOCATIONS[r.id].city}</text></g>; })}
+        <text x="16" y="212" fontSize="9" fill="#647364">代表城市直达路线示意 · 地区已解锁 ≠ 游戏航程免费 · 最近 1 分钟，最远 3 分钟</text>
       </svg>
       <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
         {REGIONS.map((r) => {
@@ -47,3 +47,4 @@ const TravelPanel = ({ coins, currentRegion, unlockedRegions, realRegion, geoSou
   );
 };
 export default TravelPanel;
+

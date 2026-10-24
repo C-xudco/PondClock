@@ -56,7 +56,7 @@ export function createEnvironmentRequester({
   now = Date.now,
 } = {}) {
   const retryUntil = new Map();
-  return async function requestJson(input, { signal, timeoutMs = SERVICES_CONFIG.weather.timeoutMs } = {}) {
+  return async function requestJson(input, { signal, timeoutMs = SERVICES_CONFIG.weather.timeoutMs, onTransport } = {}) {
     const url = new URL(input);
     const isGeo = isGeoUrl(url.href);
     const isWeather = url.origin === "https://api.open-meteo.com" && url.pathname === "/v1/forecast";
@@ -89,8 +89,16 @@ export function createEnvironmentRequester({
           throw new EnvironmentError(`环境服务暂不可用（HTTP ${response.status}）`, response.status,
             response.status === 429 ? retryUntil.get(url.origin) : null);
         }
-        return response.json();
+        const data = await response.json();
+        if ((data?.error || data?.success === false) && /rate.?limit|quota/i.test(cleanText(data.reason || data.message, 180))) {
+          retryUntil.set(url.origin, retryAfterTime(response.headers?.get?.("Retry-After"), now(), rateLimitMinimum));
+          throw new EnvironmentError("环境服务稍后再试（HTTP 429）", 429, retryUntil.get(url.origin));
+        }
+        return data;
       });
+      // The observer sees the actual bridge/fetch lifetime. A renderer timeout
+      // only ends its wait; it must not free a scheduler transport slot early.
+      onTransport?.(operation);
       return await abortable(operation, controller.signal);
     } catch (error) {
       // Electron serializes Error custom fields, so also recognize its HTTP text.

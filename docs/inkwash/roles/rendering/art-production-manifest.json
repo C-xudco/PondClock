@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-24T18:24:57.219Z",
+  "passed": true,
+  "scope": "Offline format, dimensions, real alpha, packaged asset coverage and SHA256 only; not geographic or visual quality certification.",
+  "provider": "built-in image_gen",
+  "assets": [
+    {
+      "id": "jiangnan",
+      "assetRevision": 1,
+      "regionId": "jiangnan",
+      "runtimePath": "public/art/inkwash/jiangnan-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/jiangnan-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 492381,
+      "sourceBytes": 3076948,
+      "runtimeSha256": "1dfd6b3f973ad2a6a4f682c855c03965976ebd832e3ad67a5f2ae10cb894ac46",
+      "sourceSha256": "0c9288bde1595a56d99401b1dcbdcfc90358a4afea3407bb12d21086883d4bda",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#jiangnan"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "jiangnan",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "huaihe",
+      "assetRevision": 1,
+      "regionId": "huaihe",
+      "runtimePath": "public/art/inkwash/huaihe-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/huaihe-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 351833,
+      "sourceBytes": 2584336,
+      "runtimeSha256": "8f0697e97d4b842d5130f84c16ccfb219ac5dfb500972331ff305ab871dceff0",
+      "sourceSha256": "3d317ff3a4c47c8674fef9d8b1ec508b30e11bb745f423e220afd3222ba25169",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#huaihe"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "huaihe",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "huanghe",
+      "assetRevision": 1,
+      "regionId": "huanghe",
+      "runtimePath": "public/art/inkwash/huanghe-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/huanghe-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 292733,
+      "sourceBytes": 2176130,
+      "runtimeSha256": "55fd617410c3b786340d3cf2600d4145ed0e14c0fb2039cc8861416a60be71a1",
+      "sourceSha256": "a709df401ada898c8d086f1319e8f7ba9394db6f5402fa02c50a04474b34f321",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#huanghe"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "huanghe",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "changjiang",
+      "assetRevision": 1,
+      "regionId": "changjiang",
+      "runtimePath": "public/art/inkwash/changjiang-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/changjiang-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 328740,
+      "sourceBytes": 2441141,
+      "runtimeSha256": "c2e484fc7b616848044b8acb225ddd2e47113826d7886a4c49c37a622f7fa617",
+      "sourceSha256": "a58c92bfdb7cd5157512472753b995c985eb56ac7a74643c86d14a607a62dcb3",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#changjiang"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "changjiang",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "dongnan",
+      "assetRevision": 1,
+      "regionId": "dongnan",
+      "runtimePath": "public/art/inkwash/dongnan-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/dongnan-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 394652,
+      "sourceBytes": 2701126,
+      "runtimeSha256": "0240829cca7a961fe3d5f54dc336c6bb1f18db2aa73618ea19a9f0ec9ffa6a12",
+      "sourceSha256": "bcaa8aa761bd9e83f9987bdb56644e1354fafccb985f687e37bf8e34145755c3",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#dongnan"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "dongnan",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "lingnan",
+      "assetRevision": 1,
+      "regionId": "lingnan",
+      "runtimePath": "public/art/inkwash/lingnan-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/lingnan-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 375679,
+      "sourceBytes": 2539171,
+      "runtimeSha256": "af177026748999d63701aae8d7e3138b678a788456153b716c7d15de366bad71",
+      "sourceSha256": "4798b92abbfd266e6a777016b62f5c7d5825aaa31fb9d181052d0f19e92b64a6",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#lingnan"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "lingnan",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "xinan",
+      "assetRevision": 1,
+      "regionId": "xinan",
+      "runtimePath": "public/art/inkwash/xinan-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/xinan-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 538763,
+      "sourceBytes": 3136096,
+      "runtimeSha256": "1e0b1e0c4f5b3f75de07ca81de68720efcdd18084ddf3425118e46c782297491",
+      "sourceSha256": "d9c17609a6a3d1e149c27c92a247d2743f6669c07f575c49090ac900f3081bd3",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#xinan"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "xinan",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "yungui",
+      "assetRevision": 1,
+      "regionId": "yungui",
+      "runtimePath": "public/art/inkwash/yungui-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/yungui-v1.png",
+      "width": 1890,
+      "height": 832,
+      "runtimeBytes": 316727,
+      "sourceBytes": 2398748,
+      "runtimeSha256": "e933530e03d031e0c7fca37884059502993e21c514732cc392bbd13c65c62af0",
+      "sourceSha256": "61ccd0afd00868a247a8b15fda0dac9c74398338bef6a02a9f8437576bbad609",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#yungui"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "yungui",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "hainan",
+      "assetRevision": 1,
+      "regionId": "hainan",
+      "runtimePath": "public/art/inkwash/hainan-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/hainan-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 347873,
+      "sourceBytes": 2524733,
+      "runtimeSha256": "67eea09cc956e3a9a6c655123719df9732baf4eb5cd4f0578af80df945134df7",
+      "sourceSha256": "f67ca781be2268d98faf496db33dc148422aa504a4b0da4640c26e0d22839fbe",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#hainan"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "hainan",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "xibei",
+      "assetRevision": 1,
+      "regionId": "xibei",
+      "runtimePath": "public/art/inkwash/xibei-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/xibei-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 389337,
+      "sourceBytes": 2580154,
+      "runtimeSha256": "6fada109d601ccfa0e4598085db38aa9d82c7886600c8d24f12f10fa3630a0cf",
+      "sourceSha256": "df5eda3eb162c727fdddfcb9398bddbe98d7e7b33c76b0de5a70ca0dd1d4fc33",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#xibei"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "xibei",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "qingzang",
+      "assetRevision": 1,
+      "regionId": "qingzang",
+      "runtimePath": "public/art/inkwash/qingzang-v1.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/qingzang-v1.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 388525,
+      "sourceBytes": 2693388,
+      "runtimeSha256": "57d017d1afa24a874b6033c5bb0587ad22397aa95c5fecb2b23fc3f57a013451",
+      "sourceSha256": "e5d5bace550e7ec7cff30e29078b7128cbad54f63d78a578dfb21e4c3de92f54",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#qingzang"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "qingzang",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "fisherman",
+      "assetRevision": 1,
+      "regionId": null,
+      "runtimePath": "public/art/inkwash/fisherman-v1.png",
+      "sourcePath": "public/art/inkwash/fisherman-v1.png",
+      "width": 1225,
+      "height": 1284,
+      "runtimeBytes": 2105323,
+      "sourceBytes": 2105323,
+      "runtimeSha256": "fb43e2181daee291350d8e301d3c5d3c7e563f81a96a82553eebfc9ce1260e0a",
+      "sourceSha256": "fb43e2181daee291350d8e301d3c5d3c7e563f81a96a82553eebfc9ce1260e0a",
+      "alpha": {
+        "pixels": 1572900,
+        "transparent": 795796,
+        "opaque": 459,
+        "partial": 776645,
+        "nearOpaque": 718818,
+        "saturatedEdge": 0,
+        "saturatedColorMaxAlpha": 5,
+        "alphaMean": 116.53492656875835,
+        "transparentFraction": 0.5059418907750016,
+        "cornerAlphas": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#fisherman"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "shared-seated-v1",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "fisherman-rain",
+      "assetRevision": 1,
+      "regionId": null,
+      "runtimePath": "public/art/inkwash/fisherman-rain-v1.png",
+      "sourcePath": "public/art/inkwash/fisherman-rain-v1.png",
+      "width": 1225,
+      "height": 1284,
+      "runtimeBytes": 2318200,
+      "sourceBytes": 2318200,
+      "runtimeSha256": "0b7ae3e9b19c8dfdb73d6bc78d44d908cb72037ad6c32303952909408a5847d0",
+      "sourceSha256": "0b7ae3e9b19c8dfdb73d6bc78d44d908cb72037ad6c32303952909408a5847d0",
+      "alpha": {
+        "pixels": 1572900,
+        "transparent": 729791,
+        "opaque": 351,
+        "partial": 842758,
+        "nearOpaque": 781147,
+        "saturatedEdge": 0,
+        "saturatedColorMaxAlpha": 7,
+        "alphaMean": 127.56468815563609,
+        "transparentFraction": 0.46397800241591963,
+        "cornerAlphas": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#fisherman-rain"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "shared-seated-v1",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    },
+    {
+      "id": "dongbei",
+      "assetRevision": 2,
+      "regionId": "dongbei",
+      "runtimePath": "public/art/inkwash/dongbei-v2.jpg",
+      "sourcePath": "docs/inkwash/roles/rendering/source-art/dongbei-v2.png",
+      "width": 1891,
+      "height": 832,
+      "runtimeBytes": 391952,
+      "sourceBytes": 2590487,
+      "runtimeSha256": "6f630ec0a3e8177af4f107c1a4b64f9cd6c7cfa92f6ef19971a3f56142d7d8c9",
+      "sourceSha256": "fadfb400d348d8ed7d8bcb8c4d9a1b8940b10a7b1ecce20f3fa391957c5bf84b",
+      "alpha": null,
+      "generation": {
+        "provider": "built-in image_gen",
+        "generatedOn": "2026-10-25",
+        "promptRecord": "generation-prompts.json#dongbei"
+      },
+      "logicalViewBox": {
+        "width": 1000,
+        "height": 440
+      },
+      "geometryId": "dongbei",
+      "reviewStatus": "implementation-reviewed; independent product visual acceptance tracked separately"
+    }
+  ],
+  "runtimeBytes": 9032718,
+  "pending": [
+    "Independent scene and character visual review",
+    "Production UI motion and performance evidence"
+  ]
+}

@@ -100,7 +100,7 @@ function createEnvironmentService({ now = Date.now, timeoutMs = 8000 } = {}) {
         // Some providers encode a quota failure in an HTTP200 JSON body. Keep
         // that gate in main too so reloading the renderer cannot bypass it.
         const reason = data?.reason || data?.message;
-        if (geo && (data?.error || data?.success === false) && typeof reason === 'string'
+        if ((data?.error || data?.success === false) && typeof reason === 'string'
             && /rate.?limit|quota/i.test(reason.slice(0, 180))) {
           retryUntil.set(url.origin, rateLimitDeadline(response.headers?.get?.('Retry-After'), now()));
           throw httpError(429, retryUntil.get(url.origin));

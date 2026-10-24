@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-24T18:35:02.191Z",
+  "version": "1.2.0",
+  "passed": true,
+  "files": 76,
+  "extractedTo": "X:/game/PondClock-1.2.0",
+  "omittedInstallerOnly": [
+    "resources\\elevate.exe"
+  ],
+  "omissionEvidence": "app-builder-lib/out/targets/nsis/nsisUtil.js CopyElevateHelper.copy adds this installer helper to appOutDir after the ZIP target.",
+  "zipSha256": "865a7026d4006988ebe4bcc1afc6d48957a56cbb4c4583e0441477fa20f8c111",
+  "exeSha256": "5027e3aaf4bce6a84b3243c37c840e27444aa8dcd47af39bd834557a1b4e054c",
+  "asarSha256": "09a2975195fe82b7feb194aaf8659e8afcb72d4e15afdce41980fcfcde551c92",
+  "guideIncluded": true,
+  "scope": "All76 extracted files byte-match their builder counterparts; the installer-only helper is separately accounted for. Native launch is reported separately."
+}

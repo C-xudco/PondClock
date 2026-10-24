@@ -1,3 +1,57 @@
+# 水墨场景、人物与动效：实施交接
+
+日期：2026-10-25（Asia/Shanghai）。角色：rendering_implementation。获准基线：用户“开始迭代吧”，对应 `a270e84` 推荐主方案及 `4d43e2c` 水墨契约。本节记录本次实际实现；后面的 2026-10-23 规划保留为历史，不能代替当前运行证据。
+
+## 本次意图、输入与输出
+
+把十二个既有中国水域做成淡彩水墨场景，使用独立于现实顶部天气的水域天气。输入为已提交的 regionId、SceneDefinition、SceneSite、WeatherVisualState、钓鱼状态及交互回调；输出只有可交互场景和表现层，不读取网络、不改存档、鱼种、航线、市场或捕获判定。
+
+独占范围：`src/components/pond/**`、`public/art/inkwash/**`、本角色目录、`scripts/audit-ink-art.cjs` 与 `tests/ink-rendering.test.js`。Leader 独占 Index 和游戏 hook；天气角色交付场景地标与唯一天气转换；独立验收角色控制生产构建、截图与发行结论。
+
+## 接口与资源
+
+`Pond` 保留 `status/windowLeft/speech/onCatch/onPoke`，新增 `regionId/sceneDefinition/sceneSite/visualState/weatherEntry`（`entry` 兼容别名）。场景实际由 sceneDefinition.regionId → sceneSite.regionId → regionId 选择；天气只消费传入的 nested visualState。旧 weather/hour 入口仅作显式 legacy 兼容，不会替换已传入的 scene visualState。
+
+场景牌显示代表地点、可见地址及天气/温度/来源；完整地址与景点参考天气范围保留 title。未知温度不显示数字。data-scene-region/site、data-sky、data-precipitation、data-water-response、data-weather-source、data-reduced-motion 供可访问性和诊断观察；不会打开生产调试入口。鱼讯整场“点击收竿”，待机“点击浮漂”与“点击渔翁”共用既有 onPoke。
+
+- 十二幅背景采用内置 image_gen 分别制作，约 1891×832（洱海 1890×832），未剪裁；发布版仅转 JPEG，质量 92、无缩放。人物为 1225×1284 同画布晴装/蓑衣装 PNG，保留真实 alpha。逻辑画布统一 1000×440。
+- 当前 14 项发布素材共 **9,032,718 bytes**，均位于 [运行资源目录](../../../../public/art/inkwash)。完整逐项尺寸、字节数、SHA256、alpha 和源文件映射见 [素材清单](art-production-manifest.json)，原始提示词与工具来源见 [生成记录](generation-prompts.json)。
+- PNG 背景母版及退役东北 v1 在 [source-art](source-art) 中；运行包只使用 public 中的发布文件。东北现用 v2，按 Leader 复核去除了容易被读成常年积雪的白色地面，改为灰棕裸地/草色，水线与构图保持。
+- 景观是对应地标的游戏绘画，不是地理测量或精确机位复原；气象点与坐标来源由天气角色文件维护。纳木错远峰常驻山顶雪不代表当前降雪；东北不烘焙雪/冰/极光。所有底图均不包含固定太阳、月亮、雨雪、人物和日照光柱。
+
+## 绘制、接触与人物决定
+
+1. 位图负责手绘山水/建筑/植被；SVG 负责云层、日月星、光照门控、雨雪、竿线漂和帽肩积雪。SkyLayer/WaterLayer 共用 visualState.celestial，阴雪不会仅关掉日盘而遗留金光反射。
+2. 每景一份 authored waterPolygon，SVG clip 与 isWaterPoint 共用同一数据。它是保守可接触水域，留开远岸、桥/小岛、前景石面和人物坐点；不是整个地平线下的矩形，也不把不确定边缘当水。几何 revision=3；assetRevision 独立（东北2/其余1）。
+3. createPrecipitation 用独立固定视觉种子生成有界粒子：雨最多58、雪最多44。每粒子只含一个水面端点与 fall/response/cycle 时间；precipitationFrame 在同点衔接空中/接触，cycle ID 去重，跳帧不会另抽水圈位置。雨为短促撞击加外扩椭圆；雪为收缩亮点及极淡消融，无强撞击圈。mixed/unknown 不生成混合物理。
+4. 单一 useVisualClock 以 rAF 驱动，最多约25次/秒发布表现帧；隐藏/减少动态不继续视觉循环，恢复不补离屏撞击。没有每粒子 timer、无无限事件池，不暂停任何业务时钟。减少动态保留静态云/雪/雨装与鱼讯。
+5. 渔翁是真正右岸坐姿位图，灰面/衣褶/面侧/手部清楚；人物与钓竿共享坐点和变换顺序，线起点取实时 rodTip、终点取同一 bobberTopAt。雨装换同画布蓑衣角色；雪盖独立附着帽肩，入雪约2.6秒/停雪约10秒过渡，切区按当前目标初始化，不持久化。
+6. 实际截图曾暴露巨大程序几何岸遮盖底图，已删除整组大块灰绿岸填充；仅保留约72×28逻辑像素坐点墨迹。水域 mask 只作裁切/判定，不显示成岸体。该缺陷不再留作“后续优化”。
+
+## 第四次冻结：各景人物落点修正
+
+Leader 在 `test-results/iteration-smoke-kkEhhe/*-640.png` 的十二景生产截图中发现：中游、夔门、金山寺、淮河、岭南仍沿旧共用座位，人物悬在水面；洱海略高。渲染角色已逐张看全12图核对并修正，未重绘资源。
+
+所有偏移集中在 scene.js 的 actorGrounding：淮河75、长江中游50、金山寺80、岭南50、夔门70、洱海15逻辑像素，其余6区0。geometry.actorOffsetY 与 actorPlacementFor 同时供人物、雨装、帽肩雪、坐点、竿、点击区及气泡使用；fisherTipAt 把同一偏移纳入 world tip，钓线末端和世界浮漂保持不动。supportBand 是按实际画面在臀部接触列独立标注的岩/土支撑区间，避免用“非水”掩盖悬空问题。geometry revision统一3，assetRevision及14资源hash不变。
+
+新增测试覆盖12区各101个连续pose，包含0/0.5/1支撑带与非水断言、竿尖连续/竿长不变、点击区和气泡同偏移、全人物不越画面下缘、浮漂世界位置不动。角色测试只证明几何接线与已标注支撑范围；**修正后的实际接地效果仍由Leader重建大图人工复核**。
+
+## 已执行验证与准确边界
+
+`node --test tests/ink-rendering.test.js`：**8 组通过**。覆盖12区与实际REGIONS一一对应、漂落有效水域、明确前景石面/塔里木半岛不接受水接触、雨雪所有强度预算与确定性、到达前/到达帧/跳帧/消亡同点同ID、长期状态有界与切景隔离、全段竿-身-漂几何、14素材尺寸/格式/alpha与包体积。首跑测试把REGIONS数组误当map，已修正测试映射，原7组全部重跑；随后新增12区人物落点回归，8组全过。
+
+`node scripts/audit-ink-art.cjs`：14项发布资产格式/尺寸/来源hash检查通过。两人物透明像素分别约50.59%和46.40%、四角全0，alpha≥230分别718,818/781,147像素。预览红黄细边的对应最大alpha仅5/255与7/255，alpha>30的高饱和彩边均0；Leader已看实际生产合成，无红黄边。记录保留在素材清单。
+
+`node node_modules/eslint/bin/eslint.js src/components/pond scripts/audit-ink-art.cjs tests/ink-rendering.test.js --ext js,jsx,cjs --max-warnings 0`：通过。新模块已展开JS运算/职责段落，避免密集不可读单行状态逻辑。
+
+Leader 已复核三地独立底图的地域差异/淡彩方向，并要求修正东北 v2 和巨大程序岸；这不等于所有场景最终验收。生产UI、雨雪连续帧、两档尺寸、浅深桌面、DPR、性能、普通最终EXE与ZIP由独立验收记录。**本角色未做真实网络请求、未测 p95≤16.7ms、未自行声称发行或全艺术质量通过。** 角色单测、格式审计、mock生产UI和真实EXE证据分开。
+
+## 安全交接与未测项
+
+当前渲染接口与画面在第四次冻结后交由独立验收重建；后续若帽肩雪位置、坐点或小窗可读性出现问题，由本角色定点修并通知重建，禁止以旧截图冒充新asset证据。不会修改真实用户profile，不扩大网络白名单，不引入运行依赖。包体资产均本地，不依赖CDN。
+
+---
+
 # 水墨改版：场景、人物与动效交接
 
 日期：2026-10-23（Asia/Shanghai）。角色：场景与动效模块。基线：1.1.1。

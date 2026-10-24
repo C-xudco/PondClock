@@ -1,0 +1,140 @@
+[
+  {
+    "id": "jiangnan",
+    "prompt": "Use case: stylized-concept. Asset type: production fishing game landscape, very wide 1000:440 composition. Chinese traditional pale color ink wash painting of Nanjing inner Qinhuai river near Wende stone arch bridge, low white plaster walls dark gray tiled roofs along distant left bank and Confucius temple roof silhouettes, a graceful stone arch bridge at left-middle distance, sparse hanging willow on left edge. Small urban canal setting, no giant mountains. Sophisticated hand-painted rice paper wet ink diffusion, expressive dry brush, delicate gray-green water. Horizon and bridge at upper 40%; lower 60% quiet empty navigable water. Subtle rough sitting rock at right edge, reserve x80%,y65% for separately rendered fisherman. Weather neutral diffuse light. Upper sky pale nearly empty. No sun, moon, stars, clouds, golden reflection, bright directional light, rain, snow, person, boat, lantern festival, text, frame or watermark. Beautiful calm classical Chinese landscape with spatial depth, muted colors, legible at 420px. Do not paint people or fishing rod.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-91817836-619a-4230-bcec-bc2533f8b915.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "huaihe",
+    "prompt": "Use case: stylized-concept. Production fishing game landscape, very wide1000:440. Chinese pale-color ink wash of Huai river at the foot of Tushan hill near Bengbu Yuhui village. One broad low rounded hill on far LEFT with tiny Yuwang palace roof silhouette near its shoulder, wide gentle gray-green river, low reed banks, sparse willow and grasses, no tall cliffs or urban canal houses. Refined wet ink diffusion and dry brush on subtle rice paper, atmospheric layered natural Chinese painting. Far bank at40% height, central and lower60% quiet open empty water, tiny rough foreground rock at extreme right to support separately rendered fisherman. Neutral diffuse daylight; pale almost empty sky. No sun/moon/stars/clouds/sunlight streak/goldreflection/rain/snow/ice/person/boat/text/frame/watermark. Distinctive gentle lowland river and hill, subdued colors, clear at420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-72d3b9d6-7840-4a0f-8d9a-3fc77c70bcbe.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "huanghe",
+    "prompt": "Use case: stylized-concept. Production game landscape very wide1000:440. Chinese traditional pale ochre gray ink wash painting of the Yellow River at Huayuankou in Huiji Zhengzhou. Extremely wide warm gray ochre river, flat low horizon, low sandbars extending from left, broad alluvial earth banks, sparse reeds and a few low trees, faint levee in distance, absolutely no mountains/gorge/waterfall. Beautiful rice-paper wet ink diffusion, dry brush sediment banks, layered atmospheric depth, long horizontal water strokes. Horizon at upper40%, lower60% broad quiet open empty water; modest sitting rock on extreme right edge for separate fisherman. Weather-neutral diffuse lighting, empty pale sky. No sun/moon/stars/clouds/sunbeams/gold reflection/rain/snow/people/boats/text/frame/watermark. Elegant muted natural classical Chinese painting, legible at420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-78e2e672-8b18-4d10-907c-c254198cc796.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "changjiang",
+    "prompt": "Use case: stylized-concept. Production game landscape very wide1000:440. Refined Chinese pale-color ink wash of Wuhan Yangtze River as seen from Hanyang riverbank near Qingchuan Pavilion looking toward Wuchang. Broad blue-brown gray Yangtze, distant low city hill on LEFT with tiny distinctive five-tiered Yellow Crane Tower roof silhouette, quiet remote city low shapes, sparse willow and riverbank grasses, no near Chinese arch bridge. Lower60% broad calm open empty river; low horizon40%, right edge foreground rock for separately rendered fisherman. Classical hand-painted wet ink wash on rice paper, restrained bluegreen and warm gray, drybrush layers and atmospheric distance. Neutral diffuse lighting and empty pale sky. No sun/moon/stars/clouds/light beams/gold reflection/rain/snow/people/boats/text/frame/watermark. Do not exaggerate tower close to viewer; serene water dominates, legible420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-45c83dce-a080-45f4-ab37-0699f17ea5dd.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "dongnan",
+    "prompt": "Use case: stylized-concept. Production fishing game background very wide1000:440. Beautiful classical Chinese pale bluegreen ink wash painting of Fuzhou Wulong River Jinshan Temple: a SMALL low island temple resembling a boat floating in the river, modest white walls dark tiled roof and one tiny stone pagoda on its own little rock island in LEFT middle distance, surrounded by open pale jade gray water; rounded distant hills and a few far-bank banyan shapes. This is small Fuzhou Jinshan Temple, NOT huge Zhenjiang hilltop temple. Island in upper45%; lower55% quiet empty water. Tiny rough foreground sitting rock at extreme lower right for separate fisherman. Dry brush and wet ink rice-paper texture with soft distance. Weather neutral diffuse light, nearly empty pale sky. No sun/moon/stars/clouds/lightbeams/gold reflection/rain/snow/people/boats/text/frame/watermark. Serene refined muted colors, clear at420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-efa6863e-ea08-479c-a3ef-adb59611de2c.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "lingnan",
+    "prompt": "Use case: stylized-concept. Asset type: production fishing game background, wide 1000:440. Chinese traditional pale color ink wash painting of Guangzhou Pearl River Baietan by Shamian south waterfront. A wide warm teal gray river, low historical European colonial-era ochre plaster buildings with verandas and arched windows along far-left bank, flat gentle waterfront with a few mature banyan trees, sparse hanging banyan branches at extreme upper right. Distinctly subtropical Guangzhou, not white-wall gray-tile Jiangnan canal town, no Chinese arch bridge. Refined hand-painted rice paper wet ink wash, dry brush bark and architecture, subtle spatial layers. Far bank at upper 40%, lower60% very quiet empty water, small rough rock lower-right reserved for separately rendered fisherman. Weather-neutral diffuse lighting. Upper sky nearly empty pale wash. No sun, moon, stars, clouds, gold reflection or directional light beams, no rain or snow, people or boats, no text, frame or watermark. Muted sophisticated colors, elegant calm scene, clear when reduced to420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-911e8e01-704f-4ed8-b81d-0e2021a4893a.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "xinan",
+    "prompt": "Use case: stylized-concept. Production fishing game landscape very wide1000:440. Classical Chinese pale bluegreen ink wash of Chongqing Fengjie Qutang Gorge Kuimen. Distinct opposing towering limestone cliffs on far LEFT and upper RIGHT middle distance, deeply layered rock strata dry-brush texture with sparse green brushwood on cliff shoulders, narrow distant gorge opening leading to calm deep blue-gray Yangtze river. Lower half broad quiet empty near water for game float, not whitewater rapids; rightmost lower edge small rock for separately rendered fisherman. Refined traditional mountain-water painting on rice paper, atmospheric depth, restrained gray and thin bluegreen washes. Neutral diffuse lighting; pale empty sky gap upper center. No sun/moon/stars/clouds/lightbeams/gold reflection/rain/snow/people/boats/buildings/text/frame/watermark. No currency image composition. Beautiful unique dramatic cliffs, readable at420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-fb9dddc5-24ed-4305-a917-1e610207cabf.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "yungui",
+    "prompt": "Use case: stylized-concept. Production game landscape very wide1000:440. Beautiful classical Chinese pale bluegreen ink wash of Erhai lake from its eastern shore looking west toward Dali Cangshan. Long continuous softly undulating distant mountain ridge across left and middle, subtle layered blue ink mountains, broad clear muted cobalt gray lake with very long flat waterline. Sparse low shore grasses and pale rocks only near lower right; tiny far shore white walls dark roofs barely visible, no large temple or high jagged snowy peak. Horizon40%, lower60% calm open empty lake for fishing game float. Refined rice-paper wet washes and drybrush texture, atmospheric distance, sophisticated subdued palette. Neutral diffuse lighting; empty pale sky. No sun/moon/stars/clouds/lightbeams/goldreflection/rain/snow/people/boats/text/frame/watermark. Right edge sitting rock for separate fisherman, legible420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-9c1cbe3c-1e0e-4153-a92a-806c9402c49f.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "hainan",
+    "prompt": "Use case: stylized-concept. Production fishing game background very wide1000:440. Classical Chinese pale-color ink wash of Hainan Qionghai Boao Wanquan river estuary viewed from calm inner estuary shore. Soft gray-jade green water, curved pale beige sandbar stretching in from LEFT distance toward sea opening, low flat tropical far bank, two sparse graceful coconut palms framing extreme upper RIGHT, low grasses, no high mountains or city skyline. Lower60% quiet empty water, subtle low sitting rock at extreme right for separate fisherman. Beautiful refined Chinese wet ink and drybrush rice-paper texture with very restrained muted tropical color washes, natural atmospheric depth. Neutral diffuse daylight, empty pale sky. No sun/moon/stars/clouds/lightbeams/goldreflection/rain/snow/people/boats/text/frame/watermark. No hotel towers; legible420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-a6424909-e064-4f05-9e9a-2acd15c5f4ab.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "dongbei",
+    "prompt": "Use case: stylized-concept. Asset type: production game background, wide 1000:440 composition. Primary request: Chinese traditional pale blue-green ink wash landscape of Heilongjiang river seen from Beiji Village south bank in Mohe, broad cold gray blue open flowing river, distant low conifer forest and white birch shore, light layered northern hills, no bamboo. Beautiful hand-painted rice-paper wet ink diffusion and expressive dry brush detail, sophisticated classical Chinese landscape painting matching the attached reference in mood, fine texture, atmospheric depth. Low horizon at 40% height; lower 60% quiet open water, rightmost foreground edge subtle rough rocks and sparse reeds; reserve area at x80%,y65% for separately rendered fisherman. Weather-neutral diffuse light. Sky upper 30% nearly empty pale wash for dynamic clouds and sun. No sun, no moon, no stars, no clouds, no sunlight streak or golden reflections, no rain, no snow, no ice, no person, no boat, no text, no frame, no watermark. Landscape only, subdued palette, very clear at 420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-89ca9040-e881-4579-b49d-a966ac86fe8a.png",
+    "referenceRole": "new illustration; user references used as stylistic context only",
+    "active": false
+  },
+  {
+    "id": "xibei",
+    "prompt": "Use case: stylized-concept. Production fishing game landscape very wide1000:440. Classical Chinese pale ochre and gray-green ink wash of Xinjiang Luntai Lunnan Tarim River poplar forest river bend. Flat arid sandy earth riverbanks with one distinctive twisted old Euphrates poplar trunk at extreme RIGHT and two smaller far bank poplars, sparse muted gray-green leaves, a broad curving pale ochre-gray calm inland river, no conifer/bamboo/palms or tall mountains. Far bank at40%, lower60% quiet open empty water; small sitting rock at extreme right lower edge for separate fisherman. Refined rice-paper wet ink diffusion, expressive dry brush gnarled bark and sandbanks, pale subdued colors, atmospheric depth. Weather neutral diffuse lighting, empty pale sky. No sun/moon/stars/clouds/light beams/goldreflection/rain/snow/ice/people/boats/buildings/text/frame/watermark. Avoid permanent autumn yellow foliage. Distinct inland river, legible420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-4cf3dede-76fe-4a73-8d1e-da0ad4b1c79f.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "qingzang",
+    "prompt": "Use case: stylized-concept. Production fishing game landscape very wide1000:440. Beautiful classical Chinese pale bluegray ink wash of Tibet Namtso lake near Tashi peninsula in Damxung. Immense cold deep cyan blue lake, very low open far shore and remote snow-covered Nyenchen Tanglha mountain ridge on LEFT background; snow exists ONLY on distant high peaks as mountain geology, lake and near ground are NOT snow-covered. Sparse low plateau grass and pale weathered stones foreground right, no trees or bamboo or houses. Horizon at40%, lower60% quiet open empty lake with long horizontal brush marks; small sitting rock at extreme lower right reserved for separate fisherman. Refined rice-paper wet ink, expressive dry brush distant snowy ridges and stone, restrained muted palette, atmospheric depth. Weather neutral diffuse lighting, empty pale sky. No sun/moon/stars/clouds/light beams/goldreflection/falling rain/snow/people/boats/text/frame/watermark. Legible420px.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-bbe7076a-4e65-47b8-b5d9-118306bd1cc6.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "fisherman",
+    "prompt": "Use case: stylized-concept. Asset type: isolated production 2D fishing game character sprite, genuine transparent background. Chinese traditional ink wash seated elderly fisherman, strict side view facing LEFT, sitting posture, knees bent and feet resting low to left, cloth robe with expressive flowing folds, neutral gray ink planes with rice-paper flying-white dry-brush texture, broad conical straw hat, readable little profile face under brim, right shoulder and back to right, both hands together extended LEFT at waist height gripping an imaginary separate fishing rod. DO NOT include the rod, fishing line, rock, chair, floor, scenery or shadow: those are separate program layers. NO rain cape for this base version, robe only; weather cape and snow will be separate. Fully visible entire body centered with small transparent margin, clear arm/elbow/knee/hand silhouette, rich ink strokes but not flat solid black silhouette. Beautiful refined classical Chinese painting, warm-gray light cloth against black ink contours, not cute/cartoon/anime, no realistic photo, no text, no frame, no watermark. Transparent cutout, preserve internal robe off-white but outer background transparent.",
+    "transparent_background": true,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-04b50d32-8d21-4a28-9ba3-57b2467f386f.png",
+    "referenceRole": "new illustration; user references used as stylistic context only"
+  },
+  {
+    "id": "fisherman-rain",
+    "prompt": "Use case: precise-object-edit. Edit target is the provided transparent seated fisherman sprite. Keep the exact canvas dimensions, overall occupied bounding box, silhouette position, head/hat/hands/knees/feet positions, face, pose and painting style completely unchanged. Add a traditional Chinese woven straw rain cape (蓑衣) on shoulders and back, draping to waist and back of seated thighs, with expressive ink thin straw fibers and gray planes. Hands and elbows remain clear and exactly aligned, broad straw hat remains. No fishing rod, line, seat rock, ground, shadow, background, text, snow or rain droplets. Preserve real transparent background and internal off-white cloth. This is an aligned alternate sprite for the rainy weather of the same game character.",
+    "transparent_background": true,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-7b7389a0-1d67-4199-8143-bf7b5036684f.png",
+    "referenceRole": "aligned alternate of fisherman-v1.png"
+  },
+  {
+    "id": "dongbei",
+    "assetRevision": 2,
+    "active": true,
+    "prompt": "Use case: lighting-weather. Edit target: the provided wide Chinese ink wash Heilongjiang river painting. Keep exact canvas dimensions, composition, horizon/waterline, broad cold blue-gray river, distant hills, conifers and white-bark birch, right rock placement and open center. This is a WEATHER-NEUTRAL, SNOW-FREE base layer for a game. REMOVE ALL SNOW-like white cover on ground, river banks, forest floor, hillside and foreground rock surfaces: replace those ground white patches with warm gray-brown bare earth, tan dry grasses, muted moss, naturally gray-slate rock and subtle dark dry-brush stone texture. Preserve white birch trunks as birch bark, preserve restrained paper-white dry brush only as thin stone detail, not thick white blankets. River remains open unfrozen water. No fixed snow or ice anywhere. Preserve refined hand painted pale bluegreen ink wash style and atmospheric distance. Do not add sun, moon, stars, clouds, light beams, gold reflections, rain, falling snow, person, fishing rod, boat, text, frame or watermark. No new objects. Make shore unambiguously bare ground in mild season while retaining northern landscape.",
+    "transparent_background": false,
+    "provider": "built-in image_gen",
+    "generatedOn": "2026-10-25",
+    "sourceOutput": "C:/Users/PUBLIC-USER\\.codex\\generated_images\\01a16eed-f245-7e71-b00c-538678c18791\\exec-c2e3694b-04f9-4e66-94bc-f2807a28999f.png",
+    "referenceRole": "snow-free aligned edit of dongbei-v1.jpg"
+  }
+]

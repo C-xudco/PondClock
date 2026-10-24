@@ -24,7 +24,7 @@ function serializeSnapshot(snapshot) {
   return JSON.parse(json);
 }
 
-function createSaveRepository({ directory, validate, fileSystem = fs, supportedSchemaVersion = 1 }) {
+function createSaveRepository({ directory, validate, fileSystem = fs, supportedSchemaVersion = validate?.supportedSchemaVersion ?? 1 }) {
   if (!path.isAbsolute(directory) || typeof validate !== 'function') {
     throw new TypeError('An absolute directory and snapshot validator are required.');
   }
@@ -54,7 +54,8 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
         return { filename, future: true, revision: envelope.revision };
       }
       const snapshot = validate(envelope.snapshot);
-      return { filename, snapshot, digest: checksum(snapshot), revision: snapshot.revision };
+      return { filename, snapshot, digest: checksum(snapshot), revision: snapshot.revision,
+        originalSchemaVersion: envelope.snapshot.schemaVersion };
     } catch (error) {
       if (error.code === 'ENOENT') return { filename, missing: true };
       return { filename, error };
@@ -75,61 +76,49 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
     if (!valid.length && errors.length) {
       throw storageError('SAVE_RECOVERY_REQUIRED', '两个存档槽均无法恢复。请从导出备份导入，原文件已保留。');
     }
+    let migrated = false;
+    if (valid[0] && valid[0].snapshot.schemaVersion > valid[0].originalSchemaVersion) {
+      // Retain exact original bytes in both slots before replacing a legacy slot.
+      // Deterministic filenames make interrupted migration retry safe and bounded.
+      for (const filename of slots) {
+        let original;
+        try {
+          original = await fileSystem.readFile(filename);
+        } catch (error) {
+          if (error.code === 'ENOENT') continue;
+          throw storageError('SAVE_MIGRATION_FAILED', '旧档读取失败，原存档已保留。', error);
+        }
+        try {
+          const digest = createHash('sha256').update(original).digest('hex');
+          const backup = `${filename}.pre-schema${valid[0].snapshot.schemaVersion}-${digest}.bak`;
+          try { await fileSystem.writeFile(backup, original, { flag: 'wx', mode: 0o600 }); }
+          catch (error) {
+            if (error.code !== 'EEXIST' || !Buffer.from(await fileSystem.readFile(backup)).equals(Buffer.from(original))) throw error;
+          }
+        } catch (error) {
+          throw storageError('SAVE_MIGRATION_FAILED', '旧档备份失败，原存档已保留。', error);
+        }
+      }
+      await writeSnapshot(valid[0].snapshot, valid[0].filename);
+      migrated = true;
+    }
     return {
       snapshot: valid[0]?.snapshot ?? null,
       recovery: {
         recovered: Boolean(valid.length && errors.length),
         invalidSlots: errors.map((candidate) => path.basename(candidate.filename)),
         backupAvailable: valid.length > 1,
+        migrated,
       },
     };
   }
 
-  async function commitInternal(input, { imported = false } = {}) {
-    const snapshot = validate(serializeSnapshot(input));
-    if (!Number.isSafeInteger(snapshot.revision) || snapshot.revision < 0) {
-      throw storageError('SAVE_INVALID_REVISION', '存档修订号必须为非负整数。');
-    }
-    let loaded;
-    try {
-      loaded = await loadInternal();
-    } catch (error) {
-      if (!imported || !['SAVE_RECOVERY_REQUIRED', 'SAVE_CONFLICT'].includes(error.code)) throw error;
-      // An explicit import may repair corrupt slots; copy both originals before replacing either.
-      await fileSystem.mkdir(directory, { recursive: true });
-      const recoveryId = randomUUID();
-      for (const filename of slots) {
-        try {
-          const original = await fileSystem.readFile(filename);
-          await fileSystem.writeFile(`${filename}.recovery-${recoveryId}.bak`, original, { flag: 'wx', mode: 0o600 });
-        } catch (backupError) {
-          if (backupError.code !== 'ENOENT') throw backupError;
-        }
-      }
-      loaded = { snapshot: null, recovery: { recovered: true, invalidSlots: slots.map((filename) => path.basename(filename)), backupAvailable: true } };
-    }
-    const current = loaded.snapshot;
-    if (!imported && current && snapshot.revision === current.revision && checksum(snapshot) === checksum(current)) {
-      return { status: 'already-committed', snapshot: current, recovery: loaded.recovery };
-    }
-    if (!imported && ((current && snapshot.revision !== current.revision + 1) ||
-        (!current && ![0, 1].includes(snapshot.revision)))) {
-      throw storageError('SAVE_REVISION_CONFLICT', '存档修订号冲突，请重新读取已提交存档后恢复。');
-    }
-    if (!imported && current && snapshot.lastEffectiveNowMs < current.lastEffectiveNowMs) {
-      throw storageError('SAVE_REVISION_CONFLICT', '存档逻辑时间不能倒退，请重新读取已提交存档后恢复。');
-    }
-    if (imported) snapshot.revision = (current?.revision ?? -1) + 1;
-    const normalized = validate(snapshot);
+  async function writeSnapshot(normalized, target = slots[normalized.revision % 2]) {
     await fileSystem.mkdir(directory, { recursive: true });
-    const target = slots[normalized.revision % 2];
     const temporary = path.join(directory, `.save-${randomUUID()}.tmp`);
     const envelope = {
-      format: FORMAT,
-      envelopeVersion: ENVELOPE_VERSION,
-      revision: normalized.revision,
-      checksum: checksum(normalized),
-      snapshot: normalized,
+      format: FORMAT, envelopeVersion: ENVELOPE_VERSION, revision: normalized.revision,
+      checksum: checksum(normalized), snapshot: normalized,
     };
     let handle;
     try {
@@ -143,7 +132,7 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
       if (!verified.snapshot || verified.digest !== checksum(normalized)) {
         throw storageError('SAVE_COMMIT_UNKNOWN', '写入后的验证未成功，请重新读取存档确认结果。');
       }
-      return { status: 'committed', snapshot: verified.snapshot, recovery: loaded.recovery };
+      return verified.snapshot;
     } catch (error) {
       if (error.code === 'SAVE_COMMIT_UNKNOWN') throw error;
       throw storageError('SAVE_WRITE_FAILED', '存档写入失败，请重新读取存档确认已提交状态。', error);
@@ -151,6 +140,66 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
       if (handle) await handle.close().catch(() => {});
       await fileSystem.unlink(temporary).catch(() => {});
     }
+  }
+
+  async function commitInternal(input, { imported = false } = {}) {
+    const snapshot = validate(serializeSnapshot(input));
+    if (!Number.isSafeInteger(snapshot.revision) || snapshot.revision < 0) {
+      throw storageError('SAVE_INVALID_REVISION', '存档修订号必须为非负整数。');
+    }
+    let loaded;
+    try {
+      loaded = await loadInternal();
+    } catch (error) {
+      if (!imported || !['SAVE_RECOVERY_REQUIRED', 'SAVE_CONFLICT'].includes(error.code)) throw error;
+      // A conflict does not mean there is no existing revision. The imported
+      // snapshot must supersede every valid original slot after a restart.
+      const candidates = await Promise.all(slots.map(readSlot));
+      if (candidates.some((candidate) => candidate.future)) {
+        throw storageError('SAVE_NEWER_VERSION', '发现较新版本的存档。请使用新版应用打开，原文件已保留。');
+      }
+      const highestRevision = Math.max(-1, ...candidates.filter((candidate) => candidate.snapshot).map((candidate) => candidate.revision));
+      // An explicit import may repair corrupt slots; copy both originals before replacing either.
+      await fileSystem.mkdir(directory, { recursive: true });
+      const recoveryId = randomUUID();
+      for (const filename of slots) {
+        let original;
+        try {
+          original = await fileSystem.readFile(filename);
+        } catch (backupError) {
+          if (backupError.code === 'ENOENT') continue;
+          throw storageError('SAVE_RECOVERY_BACKUP_FAILED', '恢复前读取原档失败，原文件已保留。', backupError);
+        }
+        try {
+          await fileSystem.writeFile(`${filename}.recovery-${recoveryId}.bak`, original, { flag: 'wx', mode: 0o600 });
+        } catch (backupError) {
+          throw storageError('SAVE_RECOVERY_BACKUP_FAILED', '恢复前备份失败，原文件已保留。', backupError);
+        }
+      }
+      loaded = { snapshot: null, highestRevision,
+        recovery: { recovered: true, invalidSlots: slots.map((filename) => path.basename(filename)), backupAvailable: true } };
+    }
+    const current = loaded.snapshot;
+    if (!imported && current && snapshot.revision === current.revision && checksum(snapshot) === checksum(current)) {
+      return { status: 'already-committed', snapshot: current, recovery: loaded.recovery };
+    }
+    if (!imported && ((current && snapshot.revision !== current.revision + 1) ||
+        (!current && ![0, 1].includes(snapshot.revision)))) {
+      throw storageError('SAVE_REVISION_CONFLICT', '存档修订号冲突，请重新读取已提交存档后恢复。');
+    }
+    if (!imported && current && snapshot.lastEffectiveNowMs < current.lastEffectiveNowMs) {
+      throw storageError('SAVE_REVISION_CONFLICT', '存档逻辑时间不能倒退，请重新读取已提交存档后恢复。');
+    }
+    if (imported) snapshot.revision = Math.max(current?.revision ?? -1, loaded.highestRevision ?? -1) + 1;
+    const normalized = validate(snapshot);
+    const saved = await writeSnapshot(normalized);
+    if (imported) {
+      const verified = await loadInternal();
+      if (!verified.snapshot || checksum(verified.snapshot) !== checksum(saved)) {
+        throw storageError('SAVE_COMMIT_UNKNOWN', '导入后的完整存档核验未成功，请重新读取存档确认结果。');
+      }
+    }
+    return { status: 'committed', snapshot: saved, recovery: loaded.recovery };
   }
 
   return Object.freeze({

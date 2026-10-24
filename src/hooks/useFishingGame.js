@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { GameSession } from '../application/gameSession.js';
+import { applyCommand } from '../domain/gameState.js';
 import { createRepository } from '../storage/repository.js';
-import { RODS, BITE, JUDGE, BAIT_QUALITY_BONUS } from '../lib/gameConfig.js';
+import { RODS, BITE, JUDGE, FISH, REGIONS } from '../lib/gameConfig.js';
 import { FISHING_CONFIG } from '../config/fishing.js';
-import { rollFish, randInt, qualityById } from '../lib/gameUtils.js';
-import { pickLine } from '../lib/speech.js';
+import { randInt, qualityById } from '../lib/gameUtils.js';
+import { DialogueDirector } from '../lib/dialogueDirector.js';
+import { BiteAudio } from '../services/biteAudio.js';
+import { itemName } from '../domain/loot.js';
 
 const devNumber = (name) => {
   if (!import.meta.env.DEV) return null;
@@ -26,11 +29,14 @@ export function useFishingGame() {
   const [windowLeft, setWindowLeft] = useState(0);
   const [waitLeft, setWaitLeft] = useState(0);
   const [speech, setSpeech] = useState(null);
+  const [audioBlocked, setAudioBlocked] = useState(false);
+  const [director] = useState(() => new DialogueDirector());
+  const audioRef = useRef(null);
+  const lastVisibleAt = useRef(0);
   const stateRef = useRef(state);
   stateRef.current = state;
   const fishing = useRef({ status: 'idle', due: 0, idleSeconds: 0, chatterDue: 0 });
   const speechTimer = useRef(null);
-  const pokeTimes = useRef([]);
   const bootStarted = useRef(false);
   const arrivalPending = useRef(false);
   const arrivalRetryAt = useRef(0);
@@ -39,17 +45,56 @@ export function useFishingGame() {
   useEffect(() => {
     if (bootStarted.current) return;
     bootStarted.current = true;
-    session.load().then((result) => {
+    session.load().then(async (result) => {
       if (result.recovery?.recovered) toast.info(result.recovery.message || '已从备用存档恢复');
+      const loaded = session.snapshot;
+      if (loaded?.arrivalEvent && loaded.arrivalEvent.sequence > loaded.arrivalConsumedSequence) {
+        await session.dispatch({ type: 'CONSUME_ARRIVAL', id: crypto.randomUUID(), sequence: loaded.arrivalEvent.sequence });
+      }
     }).catch((e) => setError(e.message)).finally(() => setBooted(true));
   }, [session]);
 
-  const say = useCallback((pool, tone = pool) => {
+  const showSpeech = useCallback((line) => {
+    if (!line) return;
     if (speechTimer.current) clearTimeout(speechTimer.current);
-    setSpeech({ text: pickLine(pool), tone, id: Date.now() });
+    setSpeech(line);
     speechTimer.current = setTimeout(() => setSpeech(null), FISHING_CONFIG.speechMs);
   }, []);
+  const say = useCallback((pool, tone = pool) => {
+    showSpeech(director.speak(pool, session.now(), { tone }));
+  }, [director, session, showSpeech]);
   useEffect(() => () => clearTimeout(speechTimer.current), []);
+
+  useEffect(() => {
+    const player = new BiteAudio({ onBlocked: () => {
+      setAudioBlocked(true);
+      toast.info('鱼讯声音暂未获系统允许，可点击开启', {
+        id: 'bite-audio-blocked',
+        action: { label: '开启声音', onClick: () => void player.unlock().then((ok) => setAudioBlocked(!ok)) },
+      });
+    } });
+    audioRef.current = player;
+    let unlocked = false;
+    const gesture = () => {
+      if (unlocked) return;
+      void player.unlock().then((ok) => { if (ok) { unlocked = true; setAudioBlocked(false); } });
+    };
+    document.addEventListener('pointerdown', gesture);
+    document.addEventListener('keydown', gesture);
+    return () => {
+      document.removeEventListener('pointerdown', gesture); document.removeEventListener('keydown', gesture);
+      player.dispose(); audioRef.current = null;
+    };
+  }, []);
+  useEffect(() => {
+    if (state?.settings?.biteSoundEnabled === false || state?.settings?.biteSoundVolume === 0) audioRef.current?.invalidate();
+    const visibility = () => {
+      if (document.hidden && stateRef.current?.settings?.backgroundBiteSound === false) audioRef.current?.invalidate();
+      if (!document.hidden) lastVisibleAt.current = session.now();
+    };
+    document.addEventListener('visibilitychange', visibility);
+    return () => document.removeEventListener('visibilitychange', visibility);
+  }, [state?.settings?.biteSoundEnabled, state?.settings?.biteSoundVolume, session]);
 
   const nextWait = useCallback(() => {
     const current = stateRef.current;
@@ -65,24 +110,34 @@ export function useFishingGame() {
     setStatus('idle'); setWindowLeft(0); setWaitLeft(seconds);
   }, [session]);
 
-  useEffect(() => { nextWait(); }, [state?.currentRegion, state?.travel?.id, nextWait]);
+  useEffect(() => {
+    director.reset(); audioRef.current?.invalidate(); nextWait();
+    if (stateRef.current?.travel) { clearTimeout(speechTimer.current); setSpeech(null); }
+  }, [state?.currentRegion, state?.travel?.id, nextWait, director]);
   useEffect(() => {
     const timer = setInterval(() => {
       const now = session.now(); setNowMs(now);
       const current = stateRef.current;
-      if (!current || current.travel) return;
+      if (!current || current.travel || session.blocked) return;
       const f = fishing.current;
       if (f.status === 'saving') return;
       if (!f.due) { nextWait(); return; }
       if (f.status === 'idle') {
         f.idleSeconds += 1;
         if (now >= f.due) {
-          f.status = 'bite'; f.due = now + (JUDGE.windowSeconds + RODS[current.rodLevel].windowBonus) * 1000;
+          const biteAt = f.due;
+          const expiresAt = biteAt + (JUDGE.windowSeconds + RODS[current.rodLevel].windowBonus) * 1000;
+          if (now >= expiresAt) { nextWait(); return; }
+          f.status = 'bite'; f.due = expiresAt;
+          f.biteId = crypto.randomUUID();
+          // If the timer was suspended, restoring the window never announces a
+          // bite whose onset belongs to the previous background interval.
+          if (biteAt >= lastVisibleAt.current) void audioRef.current?.bite({ id: f.biteId, expiresAtMs: f.due }, current.settings);
           setStatus('bite'); setWaitLeft(0);
           setWindowLeft(Math.ceil((f.due - now) / 1000));
         } else {
           setWaitLeft(Math.ceil((f.due - now) / 1000));
-          if (now >= f.chatterDue) { say('idle'); f.chatterDue = now + randInt(FISHING_CONFIG.speechMinSeconds, FISHING_CONFIG.speechMaxSeconds) * 1000; }
+          if (now >= f.chatterDue) { if (!document.hidden) say('idle'); f.chatterDue = now + randInt(FISHING_CONFIG.speechMinSeconds, FISHING_CONFIG.speechMaxSeconds) * 1000; }
         }
       } else if (now >= f.due) { say('miss'); nextWait(); }
       else setWindowLeft(Math.ceil((f.due - now) / 1000));
@@ -93,20 +148,34 @@ export function useFishingGame() {
   const run = useCallback(async (type, fields = {}, message) => {
     setPending((n) => n + 1);
     try {
+      const beforeRegion = session.snapshot?.currentRegion;
       const result = await session.dispatch({ type, id: crypto.randomUUID(), ...fields });
+      if (['ARRIVE', 'REAL_VISIT'].includes(type) && result.currentRegion !== beforeRegion && result.arrivalEvent
+        && result.arrivalEvent.sequence > result.arrivalConsumedSequence) {
+        const event = result.arrivalEvent;
+        const claimId = crypto.randomUUID();
+        const claimed = await session.dispatch({ type: 'CONSUME_ARRIVAL', id: claimId, sequence: event.sequence });
+        // A queued second visit can see the same unconsumed event before the
+        // first claim commits. Only the command that actually advanced the
+        // durable watermark owns this bubble; a successful no-op owns nothing.
+        if (claimed.lastCommittedCommandId === claimId && claimed.arrivalConsumedSequence === event.sequence) {
+          const fishIds = REGIONS.find((region) => region.id === event.regionId)?.fish.map(([id]) => id) || [];
+          showSpeech(director.arrival(event.regionId, session.now(), FISH.filter((fish) => fishIds.includes(fish.id)).map((fish) => fish.name)));
+        }
+      }
       if (message) toast.success(typeof message === 'function' ? message(result) : message);
       return result;
     } catch (e) { toast.error(e.message); if (session.blocked) setError(e.message); return null; }
     finally { setPending((n) => n - 1); }
-  }, [session]);
+  }, [session, director, showSpeech]);
 
   useEffect(() => {
-    if (error || session.blocked || arrivalPending.current || nowMs < arrivalRetryAt.current || !state?.travel || nowMs < state.travel.arriveAtMs) return;
+    if (!booted || error || session.blocked || arrivalPending.current || nowMs < arrivalRetryAt.current || !state?.travel || nowMs < state.travel.arriveAtMs) return;
     arrivalPending.current = true;
     void run('ARRIVE', {}, '已抵达，水塘在等你').then((result) => {
       if (!result) arrivalRetryAt.current = session.now() + 30000;
     }).finally(() => { arrivalPending.current = false; });
-  }, [state?.travel, nowMs, run, error, session]);
+  }, [state?.travel, nowMs, run, error, session, booted]);
 
   const initialize = useCallback(async (regionId) => {
     setPending((n) => n + 1);
@@ -124,26 +193,28 @@ export function useFishingGame() {
     if (!current || current.travel || f.status !== 'bite' || session.now() >= f.due) return;
     f.status = 'saving'; setStatus('idle');
     const rod = RODS[current.rodLevel];
-    const usedBait = current.baitLeft > 0 || current.baitCount > 0;
     const elapsed = JUDGE.windowSeconds + rod.windowBonus - Math.ceil((f.due - session.now()) / 1000);
-    const best = elapsed >= JUDGE.bestClickStart && elapsed <= JUDGE.bestClickEnd ? JUDGE.qualityBonusBest : 0;
-    const fish = rollFish(current.currentRegion, { qualityBonus: rod.qualityBonus + (usedBait ? BAIT_QUALITY_BONUS : 0) + best, pity: current.pityCounter });
-    const result = await run('CATCH', { fish });
+    const bestClick = elapsed >= JUDGE.bestClickStart && elapsed <= JUDGE.bestClickEnd;
+    const result = await run('CATCH', { expectedCatchSequence: current.catchSequence + 1, bestClick });
     if (result) {
-      const high = ['epic', 'legendary'].includes(fish.quality);
-      say(high ? 'high' : fish.quality === 'rare' ? 'rare' : 'success', high ? 'high' : 'success');
-      toast.success(`钓到「${qualityById(fish.quality).name}·${fish.name}」 ${fish.length}cm / ${fish.weight}kg`);
+      const fish = result.bucket.find((entry) => entry.catchSequence === result.catchSequence);
+      if (fish) {
+        const high = ['epic', 'legendary'].includes(fish.quality);
+        say(high ? 'high' : fish.quality === 'rare' ? 'rare' : 'success', high ? 'high' : 'success');
+        toast.success(`钓到「${qualityById(fish.quality).name}·${fish.name}」 ${fish.length}cm / ${fish.weight}kg`);
+      } else {
+        say('item', 'success');
+        const item = result.items.find((entry) => entry.catchSequence === result.catchSequence);
+        toast.success(`钓到「${itemName(item)}」 · 在鱼篓的物品栏查看`);
+      }
     }
     nextWait();
   }, [run, say, session, nextWait]);
 
   const pokeBobber = useCallback(() => {
     if (stateRef.current?.travel || fishing.current.status !== 'idle') return;
-    const now = session.now();
-    pokeTimes.current = [...pokeTimes.current.filter((t) => now - t <= FISHING_CONFIG.pokeWindowMs), now];
-    if (pokeTimes.current.length >= FISHING_CONFIG.pokeCount) { pokeTimes.current = []; say('airForce', 'miss'); }
-    else say('impatient', 'idle');
-  }, [say, session]);
+    showSpeech(director.poke(session.now()));
+  }, [showSpeech, director, session]);
 
   const importSave = useCallback(async () => {
     if (!repository.importSave) return toast.info('请使用 Windows 安装版导入存档');
@@ -151,11 +222,20 @@ export function useFishingGame() {
     try {
       await session.enqueue(async () => {
         const result = await repository.importSave();
-        if (!result?.canceled) { await session.load(); setError(''); session.blocked = false; toast.success('存档已导入'); nextWait(); }
+        if (!result?.canceled) {
+          await session.load(); director.reset(); audioRef.current?.invalidate(); clearTimeout(speechTimer.current); setSpeech(null);
+          const loaded = session.snapshot;
+          if (loaded?.arrivalEvent && loaded.arrivalEvent.sequence > loaded.arrivalConsumedSequence) {
+            const command = { type: 'CONSUME_ARRIVAL', id: crypto.randomUUID(), sequence: loaded.arrivalEvent.sequence };
+            // Already inside the session queue: apply/commit directly to avoid a nested enqueue deadlock.
+            await session.commit(applyCommand(loaded, command, session.now()), command.id);
+          }
+          setError(''); session.blocked = false; toast.success('存档已导入'); nextWait();
+        }
       });
     } catch (e) { toast.error(e.message); }
     finally { setPending((n) => n - 1); }
-  }, [repository, session, nextWait]);
+  }, [repository, session, nextWait, director]);
   const exportSave = useCallback(async () => {
     try { if (session.snapshot) await repository.exportSave(session.snapshot); }
     catch (e) { toast.error(e.message); }
@@ -163,7 +243,11 @@ export function useFishingGame() {
   const visitGeo = useCallback((regionId) => run('GEO_VISIT', { regionId }), [run]);
 
   return { ...(state || {}), state, ready: !!state, booted, error, busy: pending > 0, nowMs, initialize,
-    status, windowLeft, waitLeft, speech, catchFish, pokeBobber, importSave, exportSave, visitGeo,
+    status, windowLeft, waitLeft, speech, catchFish, pokeBobber, importSave, exportSave, visitGeo, audioBlocked,
+    enableAudio: async () => { const ok = await audioRef.current?.unlock(); setAudioBlocked(!ok); return ok; },
+    sellItem: (uid) => run('SELL_ITEM', { uid }, '物品已出售'),
+    repairItem: (uid) => run('REPAIR_ITEM', { uid }, '修理完成，结果已保存'),
+    useItem: (uid) => run('USE_ITEM', { uid }, '秘籍已使用，之后钓获的新鲜鱼前3次出售加价50%'),
     visitRealRegion: () => run('REAL_VISIT', {}, '已来到现实所在地的水域'),
     sellOne: (uid) => run('SELL_ONE', { uid }, '鱼已卖出，图鉴记录已保留'),
     sellAll: () => run('SELL_ALL', {}, '鱼篓已卖出，金币已保存'),

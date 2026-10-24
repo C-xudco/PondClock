@@ -1,0 +1,63 @@
+{
+  "checkedOn": "2026-10-25",
+  "phase": "implementation-unit-check",
+  "approvalBaseline": "a270e84 + 4d43e2c, user: 开始迭代吧",
+  "tests": {
+    "command": "node --test tests/weather-v2.test.js tests/environment.test.js tests/weather-refresh.test.js tests/geo-refresh.test.js tests/network-diagnostics.test.js",
+    "total": 74,
+    "passed": 74,
+    "failed": 0,
+    "skipped": 0,
+    "newV2Groups": 15
+  },
+  "lint": {
+    "scope": [
+      "desktop/environment.cjs",
+      "src/config/services.js",
+      "src/services/environment.js",
+      "src/services/weatherRefresh.js",
+      "src/services/weatherSnapshot.js",
+      "src/services/weatherScheduler.js",
+      "src/services/regionWeatherStore.js",
+      "src/hooks/useClockWeather.js",
+      "src/hooks/useRegionWeather.js",
+      "src/domain/weatherVisualState.js",
+      "src/data/sceneSites.js",
+      "src/config/sceneDefinitions.js",
+      "tests/weather-v2.test.js"
+    ],
+    "exitCode": 0
+  },
+  "realIpProbe": false,
+  "realWeatherProbe": false,
+  "geography": {
+    "scope": "Published reference points or published area bounds; never surveyed fishing positions",
+    "areaReferences": [
+      "huaihe",
+      "dongbei",
+      "xibei"
+    ],
+    "routePointsChanged": false
+  },
+  "notRun": [
+    "production UI three-weather-context screenshots",
+    "native production EXE",
+    "real network quality",
+    "release ZIP verification"
+  ],
+  "files": {
+    "desktop/environment.cjs": "8f6ba663b457dbec69888027703060fd911696917a8f26a08c62bf627ef92875",
+    "src/config/services.js": "205439f1265c6bd5b39ff1417b0a000f6a66aab5bd9bebf1459b09473d216564",
+    "src/services/environment.js": "ea17e7e9c32241ca6d5223b28c50bf2d1ca95d4daf8e45dc3ccd94f9acacc77a",
+    "src/services/weatherRefresh.js": "534da35b2ffe72a54770db6af357a8518752fdbcadc56b5345a0642a70fdb8d7",
+    "src/services/weatherSnapshot.js": "cf6f74077e513333942ec3d58d87d7e4fd512f04432b1bab3304f0a1767ef104",
+    "src/services/weatherScheduler.js": "737ddfad7af9d546e6773a7fa393ae90582500a818786075660f3a9fad14b93d",
+    "src/services/regionWeatherStore.js": "11bc36b269ac4bbdc6b394c8951a0bb16dbbb00da75e06b3591893ff80396b9e",
+    "src/hooks/useClockWeather.js": "350ce26f999de1d120f88da49fcaa107ad07d1b6a98b98282cd3c0bae50b0b05",
+    "src/hooks/useRegionWeather.js": "a291e747d0296fbf35fadba6ea6c3ee212415a9bcab5c5ded01c057d1d6c5828",
+    "src/domain/weatherVisualState.js": "ec7e1e935c0a582433dc63ffc6b393fa46d6cd8b4d6d56c9d64ab3e6d8a047bc",
+    "src/data/sceneSites.js": "95a5578395cf54303321089a4fc2f4b81072011e5ce8c68f1544efb19356c786",
+    "src/config/sceneDefinitions.js": "a7b8b3d1c3148d7bc3062edeac1064944165655d2bb6146d3b0fc7e0e8ac66d7",
+    "tests/weather-v2.test.js": "98dfc27b8adacd1a5c26f5e48d4bfd217335c1fb4c47a438fe5f14e8bcabd62a"
+  }
+}

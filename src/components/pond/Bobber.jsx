@@ -13,10 +13,10 @@ const FLOAT = {
 };
 
 // 立式浮漂：只画水面以上部分（水下被 clip 裁掉），咬钩时整体下沉
-const Bobber = ({ p, biting, sinkT = 0 }) => {
+const Bobber = ({ p, biting, sinkT = 0, uid = "pond" }) => {
   const { x, surfaceY } = BOBBER;
   const sink = BOBBER.sink * sinkT;
-  const clipId = "mcBobberClip";
+  const clipId = `${uid}-bobber-clip`;
 
   return (
     <g>
@@ -24,11 +24,11 @@ const Bobber = ({ p, biting, sinkT = 0 }) => {
         <clipPath id={clipId}>
           <rect x={x - 40} y={surfaceY - 90} width="80" height="90" />
         </clipPath>
-        <radialGradient id="mcFloatWarm" cx="0.5" cy="0.5" r="0.5">
+        <radialGradient id={`${uid}-float-warm`} cx="0.5" cy="0.5" r="0.5">
           <stop offset="0%" stopColor="#e8b184" stopOpacity="0.3" />
           <stop offset="100%" stopColor="#e8b184" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="mcFloatBiteGlow" cx="0.5" cy="0.5" r="0.5">
+        <radialGradient id={`${uid}-float-bite`} cx="0.5" cy="0.5" r="0.5">
           <stop offset="0%" stopColor={p.light} stopOpacity="0.5" />
           <stop offset="100%" stopColor={p.light} stopOpacity="0" />
         </radialGradient>
@@ -40,7 +40,7 @@ const Bobber = ({ p, biting, sinkT = 0 }) => {
         cy={surfaceY - 16}
         rx={12}
         ry={22}
-        fill="url(#mcFloatWarm)"
+        fill={`url(#${uid}-float-warm)`}
         opacity={biting ? 0.85 : 0.7}
       />
 
@@ -59,7 +59,7 @@ const Bobber = ({ p, biting, sinkT = 0 }) => {
         cy={surfaceY + 1}
         rx="32"
         ry="7.5"
-        fill="url(#mcFloatBiteGlow)"
+        fill={`url(#${uid}-float-bite)`}
         opacity={biting ? 0.85 : 0}
       />
 

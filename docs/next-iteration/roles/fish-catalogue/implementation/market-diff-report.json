@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-25",
+  "baselineRevision": "a270e84",
+  "fishCountBefore": 42,
+  "fishCountAfter": 50,
+  "marketCellsBefore": 504,
+  "marketCellsAfter": 600,
+  "oldPriceQualityCells": 2016,
+  "changedOldPriceQualityCells": 72,
+  "affectedOldFishIds": [
+    "jiyu",
+    "liyu",
+    "caoyu",
+    "guiyu",
+    "yongyu",
+    "huangsang",
+    "lingyu",
+    "huzinian",
+    "luofeiyu"
+  ],
+  "oldBasePriceChanges": 0,
+  "largestOldPriceIncrease": 43,
+  "largestOldPriceDecrease": -34,
+  "assumptions": [
+    "实际旧/新quoteFish，中等体重，原品质权重，无鱼竿/鱼饵/保底/秘籍加成",
+    "收益是条件于钓获一条鱼的期望，不含趣味物品掉落、等待时间、机票及往返成本",
+    "区间是游戏生成范围，权重是游戏配置，不是野外种群丰度或最大体型",
+    "旧鱼原ID、basePrice、len/wt、品质权重保留；供应占比变化仍可能改变地区报价"
+  ]
+}

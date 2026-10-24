@@ -1,3 +1,25 @@
+# 1.2.0 水墨垂钓版
+
+2026-10-25（Asia/Shanghai）。已完成本地实现、审查、打包与普通EXE离线启动核验，主交付完整免安装ZIP；未公开上传。完整[验收说明](inkwash/roles/acceptance/2026-10-25-production.md)、[汇总JSON](ITERATION_1.2.0_CHECK.json)。
+
+| 交付 | 结果 |
+| --- | --- |
+| 推荐ZIP | `release/PondClock-1.2.0-x64.zip`，171205233字节（约163.3MiB），可发送整个ZIP |
+| ZIP SHA256 | `865a7026d4006988ebe4bcc1afc6d48957a56cbb4c4583e0441477fa20f8c111` |
+| 已解压程序 | `X:/game/PondClock-1.2.0/PondClock.exe`，76文件含使用说明；完整解压后运行，不依赖Node/pnpm/WebView2 |
+| 普通EXE | 正常沙箱配置，无禁沙箱/调试参数，426ms到WINDOW_READY，实际显示水墨窗口与1.2.0设置，X退出后测试进程消失；独立离线profile，未动原存档 |
+| 功能 | 12景水墨/晴雨渔翁/雨雪接触、双轨天气/全区查看、50鱼、对白/鱼讯声、拾物/修表/秘籍、schema2安全迁移 |
+| 自动与UI | 234项233pass/1安装skip/0fail；lint及两种构建通过；生产UI10组、12区查看补验8组、DPR1/2各2组通过，模拟服务与普通EXE证据分开 |
+| 安装候选 | `release/PondClock-Setup-1.2.0-x64.exe`，125216336字节；SHA256 `881d92ba8956fc21d1a02c6154eaa8dbb4754366cd74e11a70c7ab00a56e51fe`。旧版升级/重装/卸载仍待真实验收，不建议用候选替代已核对ZIP |
+
+先退出正在运行的旧版，再解压/打开新版。默认存档仍在 `%APPDATA%/PondClock/saves`；schema1原件先备份再迁移，不清空旧鱼、图鉴、金币和航程。
+
+本轮定位/天气均采用受控fixture验收；真实IP/天气、第二台干净电脑、人工听感和长期性能没有冒称已测。两类天气只在联网时请求服务，断网时明确显示缓存/离线模拟。
+
+[ZIP核对](ZIP_1.2.0_CHECK.json)、[包内46文件](RELEASE_CHECK.json)、[普通EXE](NATIVE_1.2.0_CHECK.json)、[生产UI](ITERATION_1.2.0_UI_CHECK.json)、[素材/内置imagegen提示词](inkwash/roles/rendering/README.md)、[环境](ENVIRONMENT_1.2.0_CHECK.json)。此前版本与失败记录保留在以下历史部分。
+
+---
+
 # 1.1.1 定位与天气修复
 
 2026-10-21，Asia/Shanghai。主交付完整免安装ZIP，保留无边框挂件与原存档目录；退出旧程序再完整解压新版。新增备用定位、独立代理连接、天气重试/错误说明和可复制脱敏诊断。
@@ -16,7 +38,7 @@
 
 打包先在受管shell遇到makensis无法启动，随后对既有win-unpacked目录从获批shell编译成功，无重装/无全局系统修改。frozen install的供应链元数据/attestation受DNS限制已中止，未修改锁文件或依赖版本；不能声称本轮该命令完整通过。普通EXE首次受管启动未显示，随后批准普通入口成功，两种方法不混淆。
 
-详情：[修复及朋友复验](NETWORK_FIX.md)、[真实网络](NETWORK_1.1.1_CHECK.json)、[UI诊断](NETWORK_UI_CHECK.json)、[普通EXE](NATIVE_1.1.1_CHECK.json)、[ZIP](ZIP_1.1.1_CHECK.json)、[发行资源](RELEASE_CHECK.json)。没有公开上传或改写玩家存档。
+详情：[修复及朋友复验](NETWORK_FIX.md)、[真实网络](NETWORK_1.1.1_CHECK.json)、[UI诊断](NETWORK_UI_CHECK.json)、[普通EXE](NATIVE_1.1.1_CHECK.json)、[ZIP](ZIP_1.1.1_CHECK.json)、[发行资源](RELEASE_1.1.1_CHECK.json)。没有公开上传或改写玩家存档。
 
 ---
 

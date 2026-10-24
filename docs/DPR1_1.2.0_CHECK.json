@@ -1,0 +1,435 @@
+{
+  "startedAt": "2026-10-24T18:25:31.543Z",
+  "passed": true,
+  "version": "1.2.0",
+  "mode": "Production bundle + real desktop/main.cjs in developer Electron, explicit --no-sandbox diagnostic only. All HTTP is blocked/mocked. Audio constructor is a silent event spy, not a listening test.",
+  "checks": [
+    {
+      "id": "I09",
+      "description": "3 production scene IDs have their own loaded local art;6 actual screenshots and exact client layouts at420x350/640x490 under common clear-weather fixture",
+      "passed": true
+    },
+    {
+      "id": "I10",
+      "description": "Actual native HTMLMediaElement decodes and completes the local320ms WAV at volume0; no listening or speaker-output claim",
+      "passed": true
+    }
+  ],
+  "launches": [
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-jiangnan",
+      "pid": 276664,
+      "allClear": true,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-jiangnan",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>",
+        "--force-device-scale-factor=1"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-jiangnan",
+        "noSandbox": true,
+        "isPackaged": false,
+        "sandboxPreference": true
+      }
+    },
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-lingnan",
+      "pid": 291068,
+      "allClear": true,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-lingnan",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>",
+        "--force-device-scale-factor=1"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-lingnan",
+        "noSandbox": true,
+        "isPackaged": false
+      }
+    },
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-dongbei",
+      "pid": 283564,
+      "allClear": true,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-dongbei",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>",
+        "--force-device-scale-factor=1"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\art-dongbei",
+        "noSandbox": true,
+        "isPackaged": false
+      }
+    }
+  ],
+  "screenshots": [
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\jiangnan-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\jiangnan-420-light.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\jiangnan-420-dark.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\jiangnan-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\jiangnan-640-light.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\jiangnan-640-dark.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\lingnan-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\lingnan-420-light.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\lingnan-420-dark.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\lingnan-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\lingnan-640-light.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\lingnan-640-dark.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\dongbei-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\dongbei-420-light.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\dongbei-420-dark.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\dongbei-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\dongbei-640-light.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK\\dongbei-640-dark.png"
+  ],
+  "frames": [],
+  "layouts": [
+    {
+      "name": "jiangnan-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 47.5,
+          "right": 414,
+          "bottom": 86.5
+        },
+        {
+          "x": 6,
+          "y": 92.5,
+          "width": 408,
+          "height": 180.625,
+          "right": 414,
+          "bottom": 273.125
+        },
+        {
+          "x": 6,
+          "y": 274,
+          "width": 408,
+          "height": 43,
+          "right": 414,
+          "bottom": 317
+        },
+        {
+          "x": 6,
+          "y": 323,
+          "width": 408,
+          "height": 21,
+          "right": 414,
+          "bottom": 344
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "jiangnan-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 53,
+          "right": 634,
+          "bottom": 92
+        },
+        {
+          "x": 6,
+          "y": 98,
+          "width": 628,
+          "height": 277.4375,
+          "right": 634,
+          "bottom": 375.4375
+        },
+        {
+          "x": 6,
+          "y": 381.4375,
+          "width": 628,
+          "height": 50,
+          "right": 634,
+          "bottom": 431.4375
+        },
+        {
+          "x": 6,
+          "y": 463,
+          "width": 628,
+          "height": 21,
+          "right": 634,
+          "bottom": 484
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "lingnan-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 47.5,
+          "right": 414,
+          "bottom": 86.5
+        },
+        {
+          "x": 6,
+          "y": 92.5,
+          "width": 408,
+          "height": 180.625,
+          "right": 414,
+          "bottom": 273.125
+        },
+        {
+          "x": 6,
+          "y": 274,
+          "width": 408,
+          "height": 43,
+          "right": 414,
+          "bottom": 317
+        },
+        {
+          "x": 6,
+          "y": 323,
+          "width": 408,
+          "height": 21,
+          "right": 414,
+          "bottom": 344
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "lingnan-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 53,
+          "right": 634,
+          "bottom": 92
+        },
+        {
+          "x": 6,
+          "y": 98,
+          "width": 628,
+          "height": 277.4375,
+          "right": 634,
+          "bottom": 375.4375
+        },
+        {
+          "x": 6,
+          "y": 381.4375,
+          "width": 628,
+          "height": 50,
+          "right": 634,
+          "bottom": 431.4375
+        },
+        {
+          "x": 6,
+          "y": 463,
+          "width": 628,
+          "height": 21,
+          "right": 634,
+          "bottom": 484
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "dongbei-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 47.5,
+          "right": 414,
+          "bottom": 86.5
+        },
+        {
+          "x": 6,
+          "y": 92.5,
+          "width": 408,
+          "height": 180.625,
+          "right": 414,
+          "bottom": 273.125
+        },
+        {
+          "x": 6,
+          "y": 274,
+          "width": 408,
+          "height": 43,
+          "right": 414,
+          "bottom": 317
+        },
+        {
+          "x": 6,
+          "y": 323,
+          "width": 408,
+          "height": 21,
+          "right": 414,
+          "bottom": 344
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "dongbei-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 53,
+          "right": 634,
+          "bottom": 92
+        },
+        {
+          "x": 6,
+          "y": 98,
+          "width": 628,
+          "height": 277.4375,
+          "right": 634,
+          "bottom": 375.4375
+        },
+        {
+          "x": 6,
+          "y": 381.4375,
+          "width": 628,
+          "height": 50,
+          "right": 634,
+          "bottom": 431.4375
+        },
+        {
+          "x": 6,
+          "y": 463,
+          "width": 628,
+          "height": 21,
+          "right": 634,
+          "bottom": 484
+        }
+      ],
+      "paper": "rgb(244, 241, 231)",
+      "background": "rgba(0, 0, 0, 0)"
+    }
+  ],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "pending": [
+    "Ordinary final EXE with normal sandbox",
+    "Actual network/VPN and real weather",
+    "Human listening and visual quality judgment",
+    "Native dragging and taskbar restore",
+    "DPR 1/2 and long-duration performance"
+  ],
+  "directory": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\iteration-smoke-W21mVK",
+  "bundleHashes": {
+    "build-desktop/index.html": "3b3ba3fdc83540ed4d62712bb40077ab9447395956a563a64ccf3b6d76a5858b",
+    "build-desktop/assets/index-U0xDe1rM.js": "4b969bec61881943c373179ea7ec603f33590e335b994d5740845118d5b17087",
+    "build-desktop/assets/index-BMkb6PjA.css": "7e193a0261a027d00bbc117b6dd8f47417e83d87f542b16c55668080883c1832"
+  },
+  "realMedia": {
+    "duration": 0.32,
+    "source": "file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/build-desktop/assets/bite-plop-BqtYkmqO.wav",
+    "ended": true,
+    "mutedByVolume": true
+  },
+  "finishedAt": "2026-10-24T18:25:40.305Z"
+}

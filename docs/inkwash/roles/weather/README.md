@@ -1,5 +1,7 @@
 # 天气模块：双轨天气、十二水域预取与渲染状态交接
 
+> 当前状态（2026-10-25）：1.2.0 已实施，实际 API、来源精度与验证见本文第 8 节及 [IMPLEMENTATION_CHECK.json](IMPLEMENTATION_CHECK.json)。下方 2026-10-23 的“未执行”属于保留的规划历史。
+
 日期：2026-10-23（Asia/Shanghai）。基线：水塘时钟 1.1.1。负责人：天气模块 agent。
 本轮只新增本文；功能代码、数值坐标、真实 IP／天气请求及功能验收均未执行。
 先读[总入口](../../README.md)、[需求 R／A 编号](../requirements/README.md)、[美术地点](../art-direction/README.md)、[架构契约](../architecture/README.md)。
@@ -149,3 +151,67 @@ fisherman 只交雨装／雪承接及消退目标，积雪是表现状态；粒�
 
 交给架构：七组视觉契约、entry／snapshot 地点分离与调度预算；交给 UI：只读订阅、来源／时间／错误；交给渲染：原码、强度质量、日夜及同源倒影门控。
 当前完成：源码与约束只读核对、与架构／渲染角色协调、官方文档语义查证和本交接设计。未执行：坐标核实、代码实现、真实 IP／天气 API、单元／集成／视觉／性能／发行验收；不得标记 A 项通过。
+
+## 8. 2026-10-25 实施记录（主方案已获批准）
+
+本节追加于历史规划之后，不把上文“待执行”改写成过去已经完成。审批输入为用户“开始迭代吧”，Leader记录基线为 `a270e84` 与 `4d43e2c` 的推荐主方案；只在本角色拥有范围内实施。
+
+### 实现与所有权
+
+- `src/services/weatherSnapshot.js`：独立v2请求/快照/缓存。保存原WMO码、云量、isDay、雨/阵雨mm、雪cm与原interval；未知留null，不把雪cm加进雨mm。v1缓存不被生产v2读取或猜回原码。
+- `src/services/weatherScheduler.js`：header与12区共用真实运输并发2、启动间隔1秒、滚动15分钟总26/单点3次预算。请求合并按精确规范化坐标与字段版本；排队支持优先级，同优先级首次早于重试。
+- `src/services/regionWeatherStore.js`：唯一仓库，现实顶部/当前场景/只读查看器为selector。每次IP识别启动、上下文/联网/焦点/30秒poll唤醒同一队列；新鲜15分钟、缓存最多6小时。状态和错误互不冒充当前成功。
+- `src/domain/weatherVisualState.js`：唯一纯转换；阴雪同时隐藏太阳和直射倒影；雨击水、雪消融，mixed/hail/未知保守不实现接触物理。新鲜isDay优先；过陈快照按地点时区6–18点日夜近似，basis明确为location-clock，非天文日出日落。
+- `src/hooks/useClockWeather.js` / `useRegionWeather.js`：前者保留旧顶部字段，后者返回site/sceneDefinition/entry/snapshot/visualState与同名展示字段。viewer只提升天气条目优先级，没有游戏命令入口。
+- `src/data/sceneSites.js` / `src/config/sceneDefinitions.js`：稳定12区独立景点表；未改航线城市、票价、耗时或经济规则。
+- `environment.js`仅增加真实transport观察接口及HTTP200配额防御；desktop使用原单点/字段白名单，只将已有HTTP200配额检查扩到天气origin。未扩大域名、任意URL、batch、代理或隐私权限。
+
+`weatherRefresh.js`与environment旧扁平天气helpers保留作1.1.1兼容测试/旧探测适配；生产hooks已统一改用v2仓库。后续若删除旧适配，应连同历史工具迁移，不能为简化而回到每区一个控制器。
+
+### 接线API
+
+```js
+const top = useClockWeather(realRegionId, geo, online); // 时间仍为电脑当地时钟
+const scene = useRegionWeather(game.currentRegion, online);
+const viewer = useRegionWeather(viewRegionId, online, { priority: 'viewer' });
+// scene.site / scene.sceneDefinition / scene.weatherEntry / scene.visualState
+// scene.weather / temperature / weatherSource / weatherUpdatedAt / refreshWeather
+```
+
+SceneSite的weatherReferenceLabel可供查看器显示“景点参考天气”或“景区范围参考天气”。所有天气来自Open-Meteo坐标模型结果，不宣称景点测站现场实测；顶部缓存/IP标签独立于景观标签。离线无缓存时为安静的未知天气景色，温度null，绝不伪造真实晴天。
+
+### 取消与跨epoch修复
+
+renderer 6秒等待超时后通过`onTransport`保留原桥promise；scheduler直到真实桥settle才释放并发槽。`activeByKey`独立保留旧运输身份，offline→online/禁用→启用后同键的新epoch任务等待旧运输结束，再使用自己的回调启动；旧epoch结果不发布、不写缓存。已无消费者的旧header排队任务会移除，旧header迟到不能写到新顶部。
+
+429 origin冷却与滚动预算写独立调度元数据；重建renderer不会绕过。main仍额外持有同origin闸门。手动、切区、重连、开启联网不跳过Retry-After。同键同地点header登记不emit、不重复预取，hooks只依赖原始lat/lon/detail，避免响应触发React请求循环。
+
+### 核实的坐标来源及精度边界
+
+核实日期2026-10-25。`verification=verified`表示已核对**天气采样点或所属公布范围**，不是实地测绘/精确绘画机位；`coordinateSource.kind/precision`细分原始GPS、地理调查或范围参考。后面三项范围采样点为明确工程选点推断。
+
+| 水域 | 天气采样点（纬度,经度） | 第一手出处与适用边界 |
+| --- | --- | --- |
+| 秦淮文德桥 | 32.021340,118.784115 | [摄影者原始发布位置](https://commons.wikimedia.org/wiki/File:%E5%8D%97%E4%BA%AC%E5%A4%AB%E5%AD%90%E5%BA%99%E6%96%87%E5%BE%B7%E6%A1%A5_-_panoramio.jpg)，位置元数据作附近天气点；未下载/复制照片到产品 |
+| 淮河涂山 | 32.94,117.20 | [怀远县公布景区规划](https://www.ahhy.gov.cn/group6/M00/1B/4E/wKgQBWdrvT-ANF38AQogV6ozCwo740.pdf)，北纬32°49′23″–32°58′9″/东经117°10′17″–117°16′45″；点位是范围内近似天气参考，非原文给定精确机位 |
+| 黄河花园口 | 34.905833333333334,113.69194444444445 | [生态环境部原始水域调查表4.3-7](https://www.mee.gov.cn/ywdt/gs/wqgs_1/201906/W020190614338988978485.pdf)，原公布E113°41′31″/N34°54′21″中心点，仅用作水域天气采样 |
+| 晴川江岸 | 30.558542,114.279519 | [摄影者原始发布位置](https://commons.wikimedia.org/wiki/File:Qingchuan_Pavilion,_Hubei,_China.jpg)，附近江岸参考 |
+| 乌龙江金山寺 | 26.075611,119.226289 | [Commons地理标记](https://commons.wikimedia.org/wiki/Category:Jinshan_Temple,_Fuzhou)，26°04′32.2″/119°13′34.64″；与福州官方乌龙江寺址描述交叉确认，不取镇江同名寺 |
+| 珠江沙面 | 23.109233,113.235039 | [摄影者Own work位置](https://commons.wikimedia.org/wiki/File:Consulate_General_of_the_United_States_Shameen_Canton.JPG)，沙面附近参考，非精确水边测站 |
+| 瞿塘峡夔门 | 31.029919,109.601408 | [摄影者原始发布位置](https://commons.wikimedia.org/wiki/File:%E9%95%BF%E6%B1%9F%E4%B8%89%E5%B3%A1_%E5%A4%94%E9%97%A8_-_panoramio.jpg)，峡口水域参考；不误取夔门大桥 |
+| 洱海东岸 | 25.810038,100.222901 | [摄影者Own work/CC0位置与场景说明](https://commons.wikimedia.org/wiki/File:%E5%B0%8F%E6%99%AE%E9%99%80_1.jpg)，将未定东岸收敛到挖色小普陀附近 |
+| 博鳌河口 | 19.148348,110.585184 | [摄影者原始东屿岛玉带滩位置](https://commons.wikimedia.org/wiki/File:%E5%8D%9A%E9%B3%8C_%E4%B8%9C%E5%B1%BF%E5%B2%9B_%E7%8E%89%E5%B8%A6%E6%BB%A9_2014%E6%98%A5%E8%8A%82_liuzusai_-_panoramio_%2823%29.jpg)，河口附近天气点；不采用搜索百科中与当地相差约19km的河口纬度 |
+| 黑龙江北极村 | 53.48,122.355 | [漠河市文旅局公布范围](https://mohe.gov.cn/mohe/c101210/202309/c13_258538.shtml)，东经122°21′05″–30″/北纬53°27′00″–53°33′30″；范围内近似参考，不取哈尔滨 |
+| 轮南塔里木河 | 41.20,84.30 | [国家林草局自然保护区研究中心公布范围](https://www.fnrrc.com/ziranbaohuqujianjie/10369.html)，塔里木河英巴扎—喀尔曲尕段东经84°15′–85°30′/北纬40°55′–41°15′；西部范围内近似参考，非精确轮南河岸测绘 |
+| 纳木错扎西半岛 | 30.776327,90.871296 | [原始相机Exif与位置](https://commons.wikimedia.org/wiki/File:%E7%BA%B3%E6%9C%A8%E9%94%99_-_panoramio_%281%29.jpg)，湖岸附近天气点，不取拉萨城区 |
+
+所有摄影坐标均是发布者元数据，不具有测绘精度担保；实际接口会选邻近气象模型网格。只引用坐标事实，未把第三方照片转成游戏美术素材。字段与WMO语义重新核对[Open-Meteo官方文档](https://open-meteo.com/en/docs)，其中97=Heavy thunderstorm，interval为向后累计秒数，雪单位cm；这里的动画强度阈值是游戏视觉参数。
+
+### 验证证据与未测
+
+- `node --test tests/weather-v2.test.js`：15组通过（2026-10-25），覆盖12点/精确键/单位与未知、坏缓存/回拨/过期、雪雨晴雾混合/97/未知、双槽位1秒间隔、6秒等待后真实持槽、总26/点3及重建、429长冷却、header/scene/viewer独立、旧header晚到、offline-online同键新epoch，以及main单点白名单/HTTP200天气配额。
+- 同时运行weather-v2+environment+weather-refresh+geo-refresh+network-diagnostics：当时73组通过；后补2组仅重跑v2，不能把该数字误写成全项目当前通过总数。
+- 本角色变更文件目标ESLint通过；未请求真实用户IP、未发真实天气探测。网页查证仅公开资料。
+- **仍未测**：生产UI真实天气三上下文截图、连续雨雪画面、真实网络质量、普通打包EXE和发行ZIP。这些由Leader与独立验收另留新证据，不能由本节单元测试代替。
+
+最终补验：上述5个天气/网络测试文件在最后代码修订后整体重跑，**74/74通过、0跳过**；目标ESLint退出码0。详见同目录`IMPLEMENTATION_CHECK.json`，包含本角色文件SHA256与未测范围。此数字是天气相关子集，非整个应用测试总数。

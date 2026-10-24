@@ -1,5 +1,7 @@
 import { FISH, REGIONS, QUALITIES, RODS, BAIT_CATCHES } from '../lib/gameConfig.js';
-import { GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
+import { DEFAULT_SETTINGS, GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
+import { LOOT_CONFIG, ITEM_DEFINITIONS } from '../config/lootConfig.js';
+import { stableSeed, watchRepairOutcome } from './loot.js';
 
 const regionIds = new Set(REGIONS.map((r) => r.id));
 const fishIds = new Set(FISH.map((f) => f.id));
@@ -17,7 +19,8 @@ const quality = (v) => { if (!qualityIds.has(v)) fail('未知品质'); return v;
 // Shared by renderer and main process; no React, browser storage, aliases, or platform imports.
 export function validateSave(input) {
   const s = object(input, '根对象');
-  if (s.schemaVersion !== STORAGE_CONFIG.schemaVersion) fail('不支持的版本，请使用对应版本应用，原存档会保留');
+  const legacy = s.schemaVersion === 1;
+  if (!legacy && s.schemaVersion !== STORAGE_CONFIG.schemaVersion) fail('不支持的版本，请使用对应版本应用，原存档会保留');
   const now = num(s.lastEffectiveNowMs, '逻辑时间');
   const createdAtMs = num(s.createdAtMs, '创建时间');
   if (createdAtMs > now) fail('创建时间晚于逻辑时间');
@@ -33,7 +36,21 @@ export function validateSave(input) {
   const baitLeft = num(s.baitLeft, '鱼饵余次', 0, true);
   if (baitLeft >= BAIT_CATCHES) fail('鱼饵余次越界');
   if (!Array.isArray(s.bucket) || s.bucket.length > 100000) fail('鱼篓');
+  // Migration is deterministic and does not mint any asset or reset capture time.
+  const legacyOrder = legacy ? [...s.bucket].sort((a, b) => a.caughtAtMs - b.caughtAtMs || (String(a.uid) < String(b.uid) ? -1 : String(a.uid) > String(b.uid) ? 1 : 0)) : [];
+  const legacySequences = new Map(legacyOrder.map((fish, index) => [fish.uid, index + 1]));
+  const legacyTotal = legacy ? Object.values(object(s.codex, '图鉴')).reduce((sum, entry) => sum + num(entry.catchCount, '捕获次数', 1, true), 0) : 0;
+  const catchSequence = num(legacy ? Math.max(s.bucket.length, legacyTotal) : s.catchSequence, '捕获序号', 0, true);
+  const randomSeed = num(legacy ? stableSeed(`v1:${createdAtMs}:${homeRegion}`) : s.randomSeed, '随机种子', 0, true);
+  if (randomSeed > 0xffffffff) fail('随机种子越界');
   const ids = new Set();
+  const sequences = new Set();
+  const captureSequence = (value) => {
+    const sequence = num(value, '鱼获序号', 1, true);
+    if (sequence > catchSequence || sequences.has(sequence)) fail('鱼获序号关系');
+    sequences.add(sequence);
+    return sequence;
+  };
   const bucket = s.bucket.map((value) => {
     const f = object(value, '鱼获');
     const uid = text(f.uid, '鱼获编号');
@@ -44,8 +61,58 @@ export function validateSave(input) {
     if (caughtAtMs > now) fail('捕获时间晚于存档逻辑时间');
     return { uid, speciesId: f.speciesId, name: FISH.find((sp) => sp.id === f.speciesId).name,
       quality: quality(f.quality), length: num(f.length, '体长'), weight: num(f.weight, '重量'),
-      caughtAtMs, regionId: region(f.originRegionId || f.regionId), originRegionId: region(f.originRegionId || f.regionId) };
+      caughtAtMs, regionId: region(f.originRegionId || f.regionId), originRegionId: region(f.originRegionId || f.regionId),
+      catchSequence: captureSequence(legacy ? legacySequences.get(uid) : f.catchSequence) };
   });
+  const rawItems = legacy ? [] : s.items;
+  if (!Array.isArray(rawItems) || rawItems.length > 100000) fail('物品库存');
+  const items = rawItems.map((value) => {
+    const item = object(value, '物品');
+    const uid = text(item.uid, '物品编号');
+    if (ids.has(uid)) fail('重复物品编号');
+    ids.add(uid);
+    if (!Object.hasOwn(ITEM_DEFINITIONS, item.type)) fail('未知物品');
+    const caughtAtMs = num(item.caughtAtMs, '物品捕获时间');
+    if (caughtAtMs > now) fail('物品捕获时间晚于逻辑时间');
+    const base = { uid, type: item.type, caughtAtMs, originRegionId: region(item.originRegionId),
+      catchSequence: captureSequence(item.catchSequence), status: item.status, repairSeed: null,
+      repairAttempted: false, repairOutcome: null, salePrice: null, repairedAtMs: null, repairCommandId: null };
+    if (item.type === 'waterlogged_watch') {
+      base.repairSeed = num(item.repairSeed, '修表种子', 0, true);
+      if (base.repairSeed > 0xffffffff) fail('修表种子越界');
+      if (item.status === 'repaired') {
+        const expected = watchRepairOutcome({ ...base, status: 'found' });
+        if (item.repairAttempted !== true || item.repairOutcome !== expected.kind || item.salePrice !== expected.salePrice) fail('修表结果关系');
+        base.repairAttempted = true;
+        base.repairOutcome = expected.kind;
+        base.salePrice = expected.salePrice;
+        base.repairedAtMs = num(item.repairedAtMs, '修理时间');
+        if (base.repairedAtMs < caughtAtMs || base.repairedAtMs > now) fail('修理时间关系');
+        base.repairCommandId = text(item.repairCommandId, '修理凭据');
+      } else if (item.status !== 'found') fail('物品状态');
+    } else if (item.status !== 'found' || item.repairSeed !== null) fail('物品状态');
+    if (base.status === 'found' && (item.repairAttempted !== false || item.repairOutcome !== null || item.salePrice !== null || item.repairedAtMs !== null || item.repairCommandId !== null)) fail('未修理物品字段');
+    return base;
+  });
+  let saleBuff = null;
+  if (!legacy && s.saleBuff != null) {
+    const buff = object(s.saleBuff, '秘籍状态');
+    const activationCatchSequence = num(buff.activationCatchSequence, '秘籍使用边界', 0, true);
+    const remaining = num(buff.remaining, '秘籍剩余次数', 0, true);
+    const sourceItemUid = text(buff.sourceItemUid, '秘籍凭据');
+    if (activationCatchSequence > catchSequence || remaining > LOOT_CONFIG.buffCharges || ids.has(sourceItemUid) || buff.version !== LOOT_CONFIG.version) fail('秘籍状态关系');
+    saleBuff = { version: LOOT_CONFIG.version, activationCatchSequence, remaining, sourceItemUid };
+  }
+  const arrivalSequence = num(legacy ? 0 : s.arrivalSequence, '到达事件序号', 0, true);
+  const arrivalConsumedSequence = num(legacy ? 0 : s.arrivalConsumedSequence, '到达消费水位', 0, true);
+  let arrivalEvent = null;
+  if (!legacy && s.arrivalEvent != null) {
+    const event = object(s.arrivalEvent, '到达事件');
+    const sequence = num(event.sequence, '到达序号', 1, true);
+    if (sequence !== arrivalSequence) fail('到达序号关系');
+    arrivalEvent = { id: text(event.id, '到达凭据'), sequence, regionId: region(event.regionId) };
+  }
+  if (arrivalConsumedSequence > arrivalSequence || (arrivalSequence > 0 && !arrivalEvent)) fail('到达消费水位关系');
   const codex = {};
   for (const [id, value] of Object.entries(object(s.codex, '图鉴'))) {
     if (!fishIds.has(id)) fail('未知图鉴鱼种');
@@ -69,14 +136,22 @@ export function validateSave(input) {
   history.forEach((id) => text(id, '命令编号'));
   const lastCommittedCommandId = s.lastCommittedCommandId == null ? null : text(s.lastCommittedCommandId, '最后命令');
   if ((history.at(-1) || null) !== lastCommittedCommandId) fail('最后命令与记录不一致');
-  const settings = object(s.settings, '设置');
+  const settings = { ...(legacy ? DEFAULT_SETTINGS : {}), ...object(s.settings, '设置') };
   if (typeof settings.onlineEnhancements !== 'boolean' || typeof settings.alwaysOnTop !== 'boolean') fail('设置字段');
+  if (typeof settings.biteSoundEnabled !== 'boolean' || typeof settings.backgroundBiteSound !== 'boolean') fail('音频设置');
+  const biteSoundVolume = num(settings.biteSoundVolume, '音量', 0, true);
+  if (biteSoundVolume > 100) fail('音量越界');
   return {
-    schemaVersion: s.schemaVersion, gameVersion: GAME_VERSION, revision: num(s.revision, '修订号', 0, true),
+    schemaVersion: STORAGE_CONFIG.schemaVersion, gameVersion: GAME_VERSION, revision: num(s.revision, '修订号', 0, true),
     createdAtMs, lastEffectiveNowMs: now, homeRegion, currentRegion, realRegion, unlockedRegions: [...unlockedRegions],
     coins: num(s.coins, '金币', 0, true), rodLevel, baitCount: num(s.baitCount, '鱼饵份数', 0, true), baitLeft,
-    pityCounter: num(s.pityCounter, '保底次数', 0, true), bucket, codex, travel,
-    settings: { onlineEnhancements: settings.onlineEnhancements, alwaysOnTop: settings.alwaysOnTop },
+    pityCounter: num(s.pityCounter, '保底次数', 0, true), bucket, codex, travel, items, catchSequence, randomSeed, saleBuff,
+    arrivalSequence, arrivalConsumedSequence, arrivalEvent,
+    settings: { onlineEnhancements: settings.onlineEnhancements, alwaysOnTop: settings.alwaysOnTop,
+      biteSoundEnabled: settings.biteSoundEnabled, biteSoundVolume, backgroundBiteSound: settings.backgroundBiteSound },
     lastCommittedCommandId, recentCommittedCommandIds: [...history],
   };
 }
+
+// Generic CJS repository callers can discover the shared validator's schema.
+validateSave.supportedSchemaVersion = STORAGE_CONFIG.schemaVersion;

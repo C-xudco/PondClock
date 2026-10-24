@@ -1,5 +1,17 @@
 # 水墨改版：全局 UI 模块交接
 
+## 2026-10-25 实施接手：Leader
+
+批准基线 a270e84，用户“开始迭代吧”。Leader 本轮接手 header/layout/panels 与 index.css；pond 仍由 rendering_implementation 独占。
+
+- 输出：纸色与灰绿墨色 UI token；时钟固定现实地标签、来源与时间；操作坞/窗口栏/五面板/航线图改水墨配色；鱼篓增加独立拾物、一次修表与秘籍操作；设置增加音量/后台提醒及只读 WaterWeatherViewer。
+- 依赖：quoteSaleFish/quoteBucketSale/itemName/itemSalePrice 为唯一业务报价；UI 不抽奖、不改 buff 次数；useRegionWeather 的 viewer 只订阅共享天气。
+- 共享接线：Index.jsx/useFishingGame.js 由 Leader 独占，顶部 useClockWeather 与 Pond useRegionWeather 分开。
+- 已测：第一轮生产 bundle 宿主诊断中，两档尺寸、所有五面板、置顶/最小化/IP 资产隔离共前 10 组通过；其后脚本天气步骤超时（设置面板变为鱼篓），保留失败记录待复查，未冒称完整通过。
+- 尚待：最终水墨背景/人物接入后的生产界面、声音听感、连续帧与普通发行 EXE。下面原规划及待验矩阵保留为历史。
+
+---
+
 日期：2026-10-23（Asia/Shanghai）。角色：全局 UI agent。基线：水塘时钟 1.1.1／`6685447`。
 本轮仅完成静态盘点、视觉规范和接口交接；未改产品代码、制作素材、调用真实 IP／天气或执行新功能验收。下文方案与数值均为**待实施、待评审、待验证**。
 

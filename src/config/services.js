@@ -26,5 +26,13 @@ export const SERVICES_CONFIG = Object.freeze({
     maxFailureRetryMs: 15 * 60 * 1000,
     manualThrottleMs: 2 * 1000,
     pollMs: 30 * 1000,
+    snapshotCacheKey: "pondclock.weather.v2",
+    cooldownKey: "pondclock.weather.cooldown.v2",
+    maxConcurrent: 2,
+    startIntervalMs: 1000,
+    budgetWindowMs: 15 * 60 * 1000,
+    maxAttemptsPerWindow: 26,
+    maxPointAttemptsPerWindow: 3,
+    transportTimeoutMs: 8000,
   }),
 });

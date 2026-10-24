@@ -1,5 +1,6 @@
 import { FISH, REGIONS, QUALITIES, DEFAULT_REGION } from "../lib/gameConfig.js";
 import { ECONOMY_CONFIG } from "../config/economy.js";
+import { LOOT_CONFIG } from "../config/lootConfig.js";
 
 const speciesLookup = new Map(FISH.map((species) => [species.id, species]));
 const qualityLookup = new Map(QUALITIES.map((quality) => [quality.id, quality]));
@@ -89,3 +90,27 @@ export function quoteFish(fish, regionId = fish?.originRegionId || fish?.regionI
 }
 
 export const calcMarketPrice = (fish, regionId, nowMs) => quoteFish(fish, regionId, nowMs).price;
+
+// One pricing path for preview and settlement. Reading never spends a charge.
+export function quoteSaleFish(fish, state, nowMs = Date.now(), buff = state.saleBuff) {
+  const quote = quoteFish(fish, state.currentRegion, Math.max(nowMs, state.lastEffectiveNowMs));
+  const buffEligible = !quote.expired && Number.isSafeInteger(fish.catchSequence)
+    && Boolean(buff && fish.catchSequence > buff.activationCatchSequence);
+  const buffApplied = buffEligible && buff.remaining > 0;
+  return { ...quote, marketPrice: quote.price, buffEligible, buffApplied,
+    price: buffApplied ? Math.round(quote.price * LOOT_CONFIG.buffMultiplier) : quote.price };
+}
+
+export const compareCatchOrder = (a, b) => a.catchSequence - b.catchSequence || (a.uid < b.uid ? -1 : a.uid > b.uid ? 1 : 0);
+
+export function quoteBucketSale(state, nowMs = Date.now()) {
+  let buff = state.saleBuff ? { ...state.saleBuff } : null;
+  let price = 0, buffUsed = 0;
+  const quotes = [...state.bucket].sort(compareCatchOrder).map((fish) => {
+    const quote = quoteSaleFish(fish, state, nowMs, buff);
+    price += quote.price;
+    if (quote.buffApplied) { buff.remaining -= 1; buffUsed += 1; }
+    return { uid: fish.uid, ...quote };
+  });
+  return { price, quotes, buffUsed, buffRemaining: buff?.remaining ?? 0 };
+}

@@ -269,7 +269,8 @@ if (!app.requestSingleInstanceLock()) {
     ({ validateSave } = await import(pathToFileURL(path.join(__dirname, '..', 'src', 'domain', 'saveSchema.js')).href));
     const storageConfig = await import(pathToFileURL(path.join(__dirname, '..', 'src', 'config', 'storage.js')).href);
     defaultAlwaysOnTop = storageConfig.DEFAULT_SETTINGS?.alwaysOnTop === true;
-    repository = createSaveRepository({ directory: path.join(app.getPath('userData'), 'saves'), validate: validateSave });
+    repository = createSaveRepository({ directory: path.join(app.getPath('userData'), 'saves'), validate: validateSave,
+      supportedSchemaVersion: storageConfig.STORAGE_CONFIG.schemaVersion });
     windowStateRepository = createWindowStateRepository({ directory: app.getPath('userData'),
       onError: (error) => writeStartupLog('WINDOW_STATE_SAVE_FAILED', error) });
     for (const event of ['display-added', 'display-removed', 'display-metrics-changed']) {
