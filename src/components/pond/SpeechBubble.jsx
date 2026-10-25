@@ -29,9 +29,10 @@ const TONES = {
 };
 
 // 对话气泡：锚在斗笠上方，尾巴指向人物；长文本自动换行，最高不越过水塘顶部
-const SpeechBubble = ({ speech, placement }) => {
+const SpeechBubble = ({ speech, placement, sceneStyle = 'inkwash' }) => {
   if (!speech || !speech.text) return null;
-  const tone = TONES[speech.tone] || TONES.idle;
+  const inkTone = TONES[speech.tone] || TONES.idle;
+  const tone = sceneStyle === 'minimal' ? { ...inkTone, bg: 'rgba(20,35,46,.93)', border: 'rgba(167,200,202,.38)', text: '#dce8e6', dot: speech.tone === 'high' ? '#d9ba8a' : '#9bbebb' } : inkTone;
   const b = placement?.bubble || FISHER.bubble;
   // 同一句连续出现时也要重新播放弹出动画：优先用外部给的 id
   const animKey = speech.id != null ? `s-${speech.id}` : `${speech.tone}-${speech.text}`;

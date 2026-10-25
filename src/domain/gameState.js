@@ -6,6 +6,7 @@ import { quoteSaleFish, quoteBucketSale } from './market.js';
 import { validateSave } from './saveSchema.js';
 import { LOOT_CONFIG } from '../config/lootConfig.js';
 import { catchOutcome, watchRepairOutcome, itemSalePrice } from './loot.js';
+import { DEFAULT_APPEARANCE, appearanceProduct, ownsAppearanceStyle } from '../config/appearance.js';
 
 const requireRegion = (id) => { if (!REGIONS.some((r) => r.id === id)) throw new Error('未知水域'); return id; };
 const rank = (id) => QUALITIES.find((q) => q.id === id)?.rank ?? -1;
@@ -18,6 +19,7 @@ export function createNewGame(regionId = DEFAULT_REGION, nowMs = Date.now(), opt
     unlockedRegions: [regionId], coins: FISHING_CONFIG.startCoins, rodLevel: 0,
     baitCount: FISHING_CONFIG.startBait, baitLeft: 0, bucket: [], codex: {}, pityCounter: 0, travel: null,
     items: [], catchSequence: 0, randomSeed, saleBuff: null, arrivalSequence: 0, arrivalConsumedSequence: 0, arrivalEvent: null,
+    appearance: { ownedProducts: [], equipped: { ...DEFAULT_APPEARANCE.equipped } },
     settings: { ...DEFAULT_SETTINGS }, lastCommittedCommandId: null, recentCommittedCommandIds: [] });
 }
 
@@ -41,6 +43,7 @@ export function applyCommand(state, command, nowMs) {
       if (!state.realRegion) throw new Error('本次尚未取得有效 IP 地区');
       if (state.currentRegion === state.realRegion) return state;
       next.currentRegion = state.realRegion;
+      next.settings = { ...state.settings, sceneWeatherMode: 'fishing' };
       next.arrivalSequence = state.arrivalSequence + 1;
       next.arrivalEvent = { id: command.id, regionId: next.currentRegion, sequence: next.arrivalSequence };
       break;
@@ -57,6 +60,7 @@ export function applyCommand(state, command, nowMs) {
     case 'ARRIVE':
       if (!state.travel || now < state.travel.arriveAtMs) return state;
       next.currentRegion = state.travel.toId;
+      next.settings = { ...state.settings, sceneWeatherMode: 'fishing' };
       next.unlockedRegions = [...new Set([...state.unlockedRegions, next.currentRegion])];
       next.arrivalSequence = state.arrivalSequence + 1;
       next.arrivalEvent = { id: state.travel.id, regionId: next.currentRegion, sequence: next.arrivalSequence };
@@ -152,6 +156,24 @@ export function applyCommand(state, command, nowMs) {
       if (state.coins < rod.cost) throw new Error('金币不足');
       next.coins -= rod.cost;
       next.rodLevel += 1;
+      break;
+    }
+    case 'BUY_APPEARANCE': {
+      onGround();
+      const product = appearanceProduct(command.productId);
+      if (!product) throw new Error('未知美术商品');
+      // Ownership, not the bounded command history, prevents repeated charges.
+      if (state.appearance.ownedProducts.includes(product.id)) return state;
+      if (state.coins < product.price) throw new Error('金币不足');
+      next.coins -= product.price;
+      next.appearance = { ...state.appearance, ownedProducts: [...state.appearance.ownedProducts, product.id] };
+      break;
+    }
+    case 'EQUIP_APPEARANCE': {
+      onGround();
+      if (!ownsAppearanceStyle(state.appearance, command.slot, command.styleId)) throw new Error('请先拥有对应美术外观');
+      if (state.appearance.equipped[command.slot] === command.styleId) return state;
+      next.appearance = { ...state.appearance, equipped: { ...state.appearance.equipped, [command.slot]: command.styleId } };
       break;
     }
     case 'SETTINGS': {

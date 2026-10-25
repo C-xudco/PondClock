@@ -1,0 +1,70 @@
+/* Ink-wash UI tokens. Scenes own their bitmap/sky/precipitation colors. */
+.theme-inkwash {
+  --ink: #283e39; --ink-soft: #596e65; --paper: #f4f1e7; --paper-deep: #eae7db;
+  --ink-border: rgba(77, 97, 82, .23); --seal: #9f5141;
+  color: var(--ink); font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+}
+.app-backdrop { position: fixed; inset: 0; background: radial-gradient(ellipse at 15% 20%, #c1d0c7 0, transparent 58%), radial-gradient(ellipse at 85% 80%, #b2c7c3 0, transparent 55%), #e9e7db; }
+.theme-inkwash .ink-loading { background: var(--paper); border-color: var(--ink-border); color: var(--ink); }
+.theme-inkwash .ink-loading [class*='text-slate-'] { color: var(--ink-soft); }
+.theme-inkwash .widget-toolbar, .theme-inkwash .widget-footer, .theme-inkwash .action-dock, .theme-inkwash .clock-panel, .theme-inkwash #fishing-panel {
+  background-color: var(--paper); background-image: radial-gradient(ellipse at 2% 0, #fff8 0, transparent 75%);
+  border: 1px solid var(--ink-border); color: var(--ink); box-shadow: 0 3px 14px #1f392620;
+}
+.theme-inkwash .widget-toolbar { border-radius: 8px; height: 27px; }
+.theme-inkwash .widget-toolbar [class*='text-'] { color: var(--ink-soft); }
+.theme-inkwash .widget-toolbar button, .theme-inkwash .widget-window-button { color: var(--ink-soft); }
+.theme-inkwash .widget-window-button:hover { color: var(--ink); background: #526b5819; }
+.theme-inkwash .widget-exit:hover { color: #9f4537; background: #9f514120; }
+.theme-inkwash .widget-footer { font-size: 10px; line-height: 15px; border-radius: 6px; padding: 2px 7px; }
+.theme-inkwash .clock-panel { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-shrink: 0; padding: 8px 13px; border-radius: 10px; }
+.theme-inkwash .clock-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.theme-inkwash .clock-time { font-size: 32px; line-height: 1; font-weight: 500; letter-spacing: .025em; font-variant-numeric: tabular-nums; color: #203e38; font-family: Georgia, 'Times New Roman', serif; }
+.theme-inkwash .clock-date { font-size: 10px; line-height: 1.6; color: var(--ink-soft); white-space: nowrap; }
+.theme-inkwash .clock-date > span { display: block; }
+.theme-inkwash .weather-display { min-width: 0; max-width: 47%; text-align: right; font-size: 12px; color: var(--ink); }
+.theme-inkwash .weather-current { display: flex; justify-content: flex-end; align-items: center; gap: 5px; }
+.theme-inkwash .weather-detail { display: flex; align-items: center; justify-content: flex-end; gap: 2px; margin-top: 3px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; line-height: 1.4; color: var(--ink-soft); }
+.theme-inkwash .action-dock { border-radius: 10px; }
+.theme-inkwash .dock-coins { background: #8b754512; color: #7d5f31; border-radius: 7px; }
+.theme-inkwash .dock-button { color: var(--ink-soft); border-radius: 7px; }
+.theme-inkwash .dock-button:hover { background: #42645813; color: var(--ink); }
+.theme-inkwash .dock-button[aria-pressed='true'] { background: #416c5c19; border-color: #416c5c50; color: #234d40; }
+.theme-inkwash #fishing-panel { border-radius: 12px; background-color: #f6f3e9; }
+.theme-inkwash #fishing-panel > div:first-child { border-color: var(--ink-border); background: #dce2d334; }
+.theme-inkwash #fishing-panel [class*='border-white'] { border-color: var(--ink-border); }
+.theme-inkwash #fishing-panel [class*='text-slate-'], .theme-inkwash #fishing-panel [class*='text-white'] { color: var(--ink-soft); }
+.theme-inkwash #fishing-panel [class*='text-sky-'], .theme-inkwash #fishing-panel [class*='text-cyan-'], .theme-inkwash #fishing-panel [class*='text-emerald-'] { color: #356657; }
+.theme-inkwash #fishing-panel [class*='text-amber-'] { color: #8b622b; }
+.theme-inkwash #fishing-panel [class*='text-purple-'] { color: #79557b; }
+.theme-inkwash #fishing-panel [class*='bg-slate-'], .theme-inkwash #fishing-panel [class*='bg-black/'], .theme-inkwash #fishing-panel [class*='bg-white/'] { background-color: #7f957d0b; }
+.theme-inkwash #fishing-panel button { border-color: var(--ink-border); }
+.theme-inkwash #fishing-panel button[class*='bg-primary'] { background: #375f51; color: #f7f2e7; }
+.theme-inkwash #fishing-panel button[class*='bg-background'] { background: #fffaf2; color: #354f44; }
+.theme-inkwash #fishing-panel button:hover { background-color: #56745c1b; color: #234d40; }
+.theme-inkwash #fishing-panel button:disabled { opacity: .5; }
+.theme-inkwash #fishing-panel input { accent-color: #426a58; }
+.theme-inkwash #fishing-panel textarea { background: #e9ece2; color: #344b40; }
+.theme-inkwash .ink-note { border-left: 2px solid #9d8d6659; background: #9d8d660c; padding: 8px 10px; color: #796548; font-size: 12px; line-height: 1.65; border-radius: 0 6px 6px 0; }
+.theme-inkwash .ink-buff { color: #356657; border-color: #35665766; background: #35665709; }
+.theme-inkwash .ink-section-title { display: flex; gap: 7px; align-items: baseline; padding-top: 7px; color: #304e42; font-weight: 600; font-size: 13px; letter-spacing: .06em; }
+.theme-inkwash .ink-section-title span { font-size: 11px; color: #788477; font-weight: normal; }
+.theme-inkwash .ink-list-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px; border: 1px solid var(--ink-border); background: #fff9; border-radius: 8px; }
+.theme-inkwash .ink-select { padding: 8px 9px; background: #fffaf1; color: #304e42; border: 1px solid var(--ink-border); border-radius: 7px; }
+.theme-inkwash .ink-travel-overlay { background: #e5e9df70; }
+.theme-inkwash .ink-travel-overlay > div { background: #f4f1e7ef; border-color: var(--ink-border); color: var(--ink); }
+.theme-inkwash .ink-travel-overlay [class*='text-'] { color: var(--ink-soft); }
+.theme-inkwash :focus-visible { outline: 2px solid #52755e; outline-offset: 2px; }
+@media (max-width: 520px) {
+  .theme-inkwash .clock-panel { padding: 6px 9px; gap: 5px; }
+  .theme-inkwash .clock-time { font-size: 26px; }
+  .theme-inkwash .clock-left { gap: 8px; }
+  .theme-inkwash .clock-date { font-size: 10px; }
+  .theme-inkwash .weather-display { font-size: 11px; max-width: 43%; }
+  .theme-inkwash .weather-detail { max-width: 148px; font-size: 10px; }
+  .theme-inkwash .action-dock { padding: 5px 7px; }
+  .theme-inkwash .widget-footer { font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-inkwash *, .theme-inkwash *::before, .theme-inkwash *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}

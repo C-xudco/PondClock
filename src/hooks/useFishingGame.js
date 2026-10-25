@@ -145,7 +145,7 @@ export function useFishingGame() {
     return () => clearInterval(timer);
   }, [session, nextWait, say]);
 
-  const run = useCallback(async (type, fields = {}, message) => {
+  const run = useCallback(async (type, fields = {}, message, messageId) => {
     setPending((n) => n + 1);
     try {
       const beforeRegion = session.snapshot?.currentRegion;
@@ -163,7 +163,8 @@ export function useFishingGame() {
           showSpeech(director.arrival(event.regionId, session.now(), FISH.filter((fish) => fishIds.includes(fish.id)).map((fish) => fish.name)));
         }
       }
-      if (message) toast.success(typeof message === 'function' ? message(result) : message);
+      if (message) toast.success(typeof message === 'function' ? message(result) : message,
+        messageId ? { id: messageId, duration: 1800 } : undefined);
       return result;
     } catch (e) { toast.error(e.message); if (session.blocked) setError(e.message); return null; }
     finally { setPending((n) => n - 1); }
@@ -253,6 +254,8 @@ export function useFishingGame() {
     sellAll: () => run('SELL_ALL', {}, '鱼篓已卖出，金币已保存'),
     buyBait: () => run('BUY_BAIT', {}, '高级鱼饵已放入背包'),
     buyRod: () => run('BUY_ROD', {}, '鱼竿已升级'),
+    buyAppearance: (productId) => run('BUY_APPEARANCE', { productId }, '已收藏，外观权益已保存', 'appearance-purchase'),
+    equipAppearance: (slot, styleId) => run('EQUIP_APPEARANCE', { slot, styleId }),
     travelTo: (toId) => run('START_TRAVEL', { toId }, '机票已购买，正在飞往目的地'),
     updateSettings: (patch) => run('SETTINGS', { patch }),
   };

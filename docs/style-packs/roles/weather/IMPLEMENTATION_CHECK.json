@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-25",
+  "timeZone": "Asia/Shanghai",
+  "role": "weather_modes",
+  "scope": "Pure weather-presentation selection and hook, no transport or persistence mutations",
+  "unitCommand": "node --test tests/weather-presentation.test.js",
+  "unitTests": { "total": 10, "passed": 10, "failed": 0, "skipped": 0 },
+  "lintCommand": "node node_modules/eslint/bin/eslint.js src/config/weatherPresentation.js src/domain/weatherPresentation.js src/hooks/useSceneWeather.js tests/weather-presentation.test.js --max-warnings 0",
+  "lintPassed": true,
+  "networkRequests": 0,
+  "settingsContract": {
+    "sceneWeatherMode": ["fishing", "local", "manual"],
+    "manualWeather": ["clear", "cloudy", "rain", "snow"],
+    "defaults": { "sceneWeatherMode": "fishing", "manualWeather": "clear" }
+  },
+  "notExecuted": ["Production UI", "Packaged EXE", "Real IP/weather services", "Native network switching"],
+  "handoff": {
+    "leader": "Index/settings controls, final runtime verification",
+    "appearance_art": "Pond presentation.originLabel/sourceLabel/detail",
+    "appearance_domain": "Schema validation/defaults and atomic committed ARRIVE/REAL_VISIT mode reset"
+  }
+}

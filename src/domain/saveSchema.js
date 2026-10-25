@@ -2,6 +2,8 @@ import { FISH, REGIONS, QUALITIES, RODS, BAIT_CATCHES } from '../lib/gameConfig.
 import { DEFAULT_SETTINGS, GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
 import { LOOT_CONFIG, ITEM_DEFINITIONS } from '../config/lootConfig.js';
 import { stableSeed, watchRepairOutcome } from './loot.js';
+import { APPEARANCE_OPTIONS, APPEARANCE_PRODUCTS, DEFAULT_APPEARANCE, ownsAppearanceStyle } from '../config/appearance.js';
+import { SCENE_WEATHER_MODES, MANUAL_WEATHER_OPTIONS } from '../config/weatherPresentation.js';
 
 const regionIds = new Set(REGIONS.map((r) => r.id));
 const fishIds = new Set(FISH.map((f) => f.id));
@@ -20,7 +22,8 @@ const quality = (v) => { if (!qualityIds.has(v)) fail('未知品质'); return v;
 export function validateSave(input) {
   const s = object(input, '根对象');
   const legacy = s.schemaVersion === 1;
-  if (!legacy && s.schemaVersion !== STORAGE_CONFIG.schemaVersion) fail('不支持的版本，请使用对应版本应用，原存档会保留');
+  const legacyAppearance = legacy || s.schemaVersion === 2;
+  if (!legacyAppearance && s.schemaVersion !== STORAGE_CONFIG.schemaVersion) fail('不支持的版本，请使用对应版本应用，原存档会保留');
   const now = num(s.lastEffectiveNowMs, '逻辑时间');
   const createdAtMs = num(s.createdAtMs, '创建时间');
   if (createdAtMs > now) fail('创建时间晚于逻辑时间');
@@ -136,19 +139,37 @@ export function validateSave(input) {
   history.forEach((id) => text(id, '命令编号'));
   const lastCommittedCommandId = s.lastCommittedCommandId == null ? null : text(s.lastCommittedCommandId, '最后命令');
   if ((history.at(-1) || null) !== lastCommittedCommandId) fail('最后命令与记录不一致');
-  const settings = { ...(legacy ? DEFAULT_SETTINGS : {}), ...object(s.settings, '设置') };
+  const rawSettings = object(s.settings, '设置');
+  const settings = { ...(legacy ? DEFAULT_SETTINGS : {}), ...rawSettings };
+  if (legacyAppearance) {
+    // Old schemas never owned these fields; ignore lookalike injected values.
+    settings.sceneWeatherMode = DEFAULT_SETTINGS.sceneWeatherMode;
+    settings.manualWeather = DEFAULT_SETTINGS.manualWeather;
+  }
   if (typeof settings.onlineEnhancements !== 'boolean' || typeof settings.alwaysOnTop !== 'boolean') fail('设置字段');
   if (typeof settings.biteSoundEnabled !== 'boolean' || typeof settings.backgroundBiteSound !== 'boolean') fail('音频设置');
   const biteSoundVolume = num(settings.biteSoundVolume, '音量', 0, true);
   if (biteSoundVolume > 100) fail('音量越界');
+  if (!SCENE_WEATHER_MODES.some((entry) => entry.id === settings.sceneWeatherMode) || !MANUAL_WEATHER_OPTIONS.some((entry) => entry.id === settings.manualWeather)) fail('场景天气设置');
+  const appearance = legacyAppearance ? { ownedProducts: [], equipped: { ...DEFAULT_APPEARANCE.equipped } } : object(s.appearance, '美术外观');
+  if (!Array.isArray(appearance.ownedProducts) || appearance.ownedProducts.length > APPEARANCE_PRODUCTS.length ||
+      new Set(appearance.ownedProducts).size !== appearance.ownedProducts.length ||
+      appearance.ownedProducts.some((id) => !APPEARANCE_PRODUCTS.some((entry) => entry.id === id))) fail('美术商品所有权');
+  object(appearance.equipped, '已装配外观');
+  if (Object.keys(appearance.equipped).some((slot) => !Object.hasOwn(APPEARANCE_OPTIONS, slot))) fail('外观分类');
+  for (const slot of Object.keys(APPEARANCE_OPTIONS)) {
+    if (!ownsAppearanceStyle(appearance, slot, appearance.equipped[slot])) fail('外观尚未拥有或分类错误');
+  }
   return {
     schemaVersion: STORAGE_CONFIG.schemaVersion, gameVersion: GAME_VERSION, revision: num(s.revision, '修订号', 0, true),
     createdAtMs, lastEffectiveNowMs: now, homeRegion, currentRegion, realRegion, unlockedRegions: [...unlockedRegions],
     coins: num(s.coins, '金币', 0, true), rodLevel, baitCount: num(s.baitCount, '鱼饵份数', 0, true), baitLeft,
     pityCounter: num(s.pityCounter, '保底次数', 0, true), bucket, codex, travel, items, catchSequence, randomSeed, saleBuff,
     arrivalSequence, arrivalConsumedSequence, arrivalEvent,
+    appearance: { ownedProducts: [...appearance.ownedProducts], equipped: { ...appearance.equipped } },
     settings: { onlineEnhancements: settings.onlineEnhancements, alwaysOnTop: settings.alwaysOnTop,
-      biteSoundEnabled: settings.biteSoundEnabled, biteSoundVolume, backgroundBiteSound: settings.backgroundBiteSound },
+      biteSoundEnabled: settings.biteSoundEnabled, biteSoundVolume, backgroundBiteSound: settings.backgroundBiteSound,
+      sceneWeatherMode: settings.sceneWeatherMode, manualWeather: settings.manualWeather },
     lastCommittedCommandId, recentCommittedCommandIds: [...history],
   };
 }

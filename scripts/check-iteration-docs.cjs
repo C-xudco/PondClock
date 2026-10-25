@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const files = ['README.md', 'docs/HISTORY_1.1.1.md'];
+const files = ['README.md', 'docs/HISTORY_1.1.1.md', 'docs/HISTORY_1.2.0.md'];
 function walk(relative) {
   for (const entry of fs.readdirSync(path.join(root, relative), { withFileTypes: true })) {
     const name = `${relative}/${entry.name}`;
@@ -9,7 +9,7 @@ function walk(relative) {
     else if (name.endsWith('.md')) files.push(name);
   }
 }
-for (const directory of ['docs/team', 'docs/next-iteration', 'docs/inkwash']) walk(directory);
+for (const directory of ['docs/team', 'docs/next-iteration', 'docs/inkwash', 'docs/style-packs']) walk(directory);
 const broken = [];
 let checked = 0;
 for (const file of files) {

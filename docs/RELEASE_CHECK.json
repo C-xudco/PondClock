@@ -1,13 +1,13 @@
 {
-  "checkedAt": "2026-10-24T18:43:02.553Z",
-  "version": "1.2.0",
-  "installer": "PondClock-Setup-1.2.0-x64.exe",
-  "bytes": 125216336,
-  "sha256": "881d92ba8956fc21d1a02c6154eaa8dbb4754366cd74e11a70c7ab00a56e51fe",
+  "checkedAt": "2026-10-25T08:00:03.205Z",
+  "version": "1.3.0",
+  "installer": "PondClock-Setup-1.3.0-x64.exe",
+  "bytes": 125229136,
+  "sha256": "984bb07849bd648aeb9dc70b4b7b16328cdebd427788965bf88814e449a901d9",
   "portable": {
-    "file": "PondClock-1.2.0-x64.zip",
-    "bytes": 171205233,
-    "sha256": "865a7026d4006988ebe4bcc1afc6d48957a56cbb4c4583e0441477fa20f8c111"
+    "file": "PondClock-1.3.0-x64.zip",
+    "bytes": 171221637,
+    "sha256": "6c757cccc0e93d7f35205008a89d2d7f213b1146e3d19a3e8a85f23aeb0ed8bc"
   },
   "installerExtensionSha256": "538322bda5c4eb9edc26c027eb4535dfbd6d61e2057c17d68da244a0121399af",
   "packedRuntimeFilesMatch": [
@@ -23,7 +23,9 @@
     "src/domain/market.js",
     "src/domain/routes.js",
     "src/domain/saveSchema.js",
+    "src/domain/weatherPresentation.js",
     "src/domain/weatherVisualState.js",
+    "src/config/appearance.js",
     "src/config/dialogue.js",
     "src/config/economy.js",
     "src/config/environmentEndpoints.cjs",
@@ -33,6 +35,8 @@
     "src/config/services.js",
     "src/config/storage.js",
     "src/config/travel.js",
+    "src/config/weatherPresentation.js",
+    "src/data/appearanceVisuals.js",
     "src/data/dialogueCatalog.js",
     "src/data/fishSources.js",
     "src/data/regionLocations.js",
@@ -52,8 +56,8 @@
     "build-desktop/art/inkwash/xinan-v1.jpg",
     "build-desktop/art/inkwash/yungui-v1.jpg",
     "build-desktop/assets/bite-plop-BqtYkmqO.wav",
-    "build-desktop/assets/index-BMkb6PjA.css",
-    "build-desktop/assets/index-U0xDe1rM.js",
+    "build-desktop/assets/index-D3-7Q35x.js",
+    "build-desktop/assets/index-U5ravQ2H.css",
     "build-desktop/icon.svg",
     "build-desktop/index.html",
     "src/lib/gameConfig.js"

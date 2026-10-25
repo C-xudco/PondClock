@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { createNewGame } from '../src/domain/gameState.js';
 import { validateSave } from '../src/domain/saveSchema.js';
+import { STORAGE_CONFIG } from '../src/config/storage.js';
 import { FISH } from '../src/lib/gameConfig.js';
 import { createWeatherScheduler } from '../src/services/weatherScheduler.js';
 import { SERVICES_CONFIG } from '../src/config/services.js';
@@ -33,7 +34,7 @@ test('review followup: a preexisting corrupted migration backup prevents replace
   const old = { ...state(), schemaVersion: 1, settings: { onlineEnhancements: true, alwaysOnTop: true } };
   const original = envelope(old), filename = path.join(directory, 'save-a.json');
   const digest = createHash('sha256').update(original).digest('hex');
-  const backup = `${filename}.pre-schema2-${digest}.bak`;
+  const backup = `${filename}.pre-schema${STORAGE_CONFIG.schemaVersion}-${digest}.bak`;
   await fs.writeFile(filename, original);
   await fs.writeFile(backup, 'wrong bytes in a preexisting backup');
   await assert.rejects(repo.load(), { code: 'SAVE_MIGRATION_FAILED' });

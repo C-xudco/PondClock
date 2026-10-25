@@ -3,6 +3,7 @@ import { Plane, RefreshCw } from 'lucide-react';
 import { useFishingGame } from '@/hooks/useFishingGame';
 import { useClockWeather } from '@/hooks/useClockWeather';
 import { useRegionWeather } from '@/hooks/useRegionWeather';
+import { useSceneWeather } from '@/hooks/useSceneWeather';
 import { useGeoRegion } from '@/hooks/useGeoRegion';
 import { useDesktopWindow } from '@/hooks/useDesktopWindow';
 import { regionById } from '@/lib/gameUtils';
@@ -21,7 +22,7 @@ import TravelPanel from '@/components/panels/TravelPanel';
 import SettingsPanel from '@/components/panels/SettingsPanel';
 import { Button } from '@/components/ui/button';
 
-const PANEL_TITLES = { bucket: '鱼篓', codex: '图鉴', shop: '渔具店', travel: '漫游', settings: '设置与存档' };
+const PANEL_TITLES = { bucket: '鱼篓', codex: '图鉴', shop: '渔具与外观', travel: '漫游', settings: '设置与存档' };
 const devParam = (key) => import.meta.env.DEV ? new URLSearchParams(window.location.search).get(key) : null;
 const DEMO_SPEECH = { idle: { text: SPEECH.idle[0], tone: 'idle' }, success: { text: SPEECH.success[0], tone: 'success' }, high: { text: SPEECH.high[0], tone: 'high' }, miss: { text: SPEECH.miss[0], tone: 'miss' } };
 
@@ -32,6 +33,7 @@ export default function Index() {
   const geo = useGeoRegion(online);
   const env = useClockWeather(game.realRegion || game.homeRegion, geo, online);
   const scene = useRegionWeather(game.currentRegion || game.homeRegion || 'jiangnan', online);
+  const displayedScene = useSceneWeather(game.settings, env, scene);
   useEffect(() => {
     const weatherStore = getRegionWeatherStore();
     weatherStore.setDestinationRegion(game.travel?.toId || null);
@@ -89,9 +91,9 @@ export default function Index() {
     switch (activePanel) {
       case 'bucket': return <BucketPanel game={game} disabled={disabled} />;
       case 'codex': return <CodexPanel codex={game.codex} pityCounter={game.pityCounter} currentRegion={game.currentRegion} />;
-      case 'shop': return <ShopPanel coins={game.coins} rodLevel={game.rodLevel} baitCount={game.baitCount} baitLeft={game.baitLeft} onBuyRod={game.buyRod} onBuyBait={game.buyBait} disabled={disabled} />;
+      case 'shop': return <ShopPanel game={game} coins={game.coins} rodLevel={game.rodLevel} baitCount={game.baitCount} baitLeft={game.baitLeft} onBuyRod={game.buyRod} onBuyBait={game.buyBait} disabled={disabled} />;
       case 'travel': return <TravelPanel coins={game.coins} currentRegion={game.currentRegion} unlockedRegions={game.unlockedRegions} realRegion={game.realRegion} geoSource={geo.source} onTravel={game.travelTo} onVisitReal={game.visitRealRegion} travel={game.travel} busy={game.busy || !!game.error} />;
-      case 'settings': return <SettingsPanel game={game} geo={geo} weather={env} desktop={desktop} onChangeTop={changeTop} onRefreshGeo={geo.refresh} />;
+      case 'settings': return <SettingsPanel game={game} geo={geo} weather={env} presentation={displayedScene.presentation} desktop={desktop} onChangeTop={changeTop} onRefreshGeo={geo.refresh} />;
       default: return null;
     }
   };
@@ -100,8 +102,9 @@ export default function Index() {
     : geo.source === 'ip-cached' ? '地区缓存 · 点击刷新' : geo.source === 'oversea' ? '境外网络 · 暂无对应水域'
       : geo.source === 'disabled' ? '离线垂钓' : '地区待识别 · 点击刷新';
 
-  return <div className={desktop.enabled ? 'ink-app widget-surface' : 'ink-app relative min-h-screen w-full'}>
-    {!desktop.enabled && <div className="ink-backdrop" />}
+  const theme = game.appearance?.equipped?.scene === 'inkwash' ? 'theme-inkwash' : 'theme-minimal';
+  return <div className={`app-shell ${theme} ${desktop.enabled ? 'widget-surface' : 'relative min-h-screen w-full'}`}>
+    {!desktop.enabled && <div className="app-backdrop" />}
     <main className={desktop.enabled ? 'widget-main' : 'relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col justify-center px-3 py-6'}>
       {desktop.enabled && <WidgetToolbar desktop={desktop} busy={!game.ready || game.busy} onToggleTop={() => void changeTop(!desktop.info?.alwaysOnTop)} />}
       {desktop.error && <p role="alert" className="rounded-lg bg-red-950/90 px-3 py-1 text-xs text-red-200">{desktop.error}</p>}
@@ -113,7 +116,7 @@ export default function Index() {
         {game.error && <div role="alert" className="mb-3 rounded-xl bg-red-950/80 p-3 text-sm text-red-200">{game.error}<Button size="sm" variant="outline" className="ml-2" onClick={game.importSave}>导入备份</Button></div>}
         <ClockPanel {...env} regionName={regionById(geo.regionId || game.realRegion || game.homeRegion)?.name || '所在地待识别'} />
         <div className="pond-container relative mt-3">
-          <Pond regionId={game.currentRegion} sceneDefinition={scene.sceneDefinition} sceneSite={scene.site} visualState={scene.visualState} weatherEntry={scene.entry} status={game.travel ? 'idle' : demo === 'bite' ? 'bite' : game.status} windowLeft={demo === 'bite' ? 17 : game.windowLeft} weather={scene.weather} speech={demo ? DEMO_SPEECH[demo] || null : game.speech} onCatch={disabled ? undefined : game.catchFish} onPoke={disabled ? null : game.pokeBobber} />
+          <Pond regionId={game.currentRegion} appearance={game.appearance} sceneDefinition={scene.sceneDefinition} sceneSite={scene.site} visualState={displayedScene.visualState} weatherEntry={displayedScene.entry} weatherPresentation={displayedScene.presentation} status={game.travel ? 'idle' : demo === 'bite' ? 'bite' : game.status} windowLeft={demo === 'bite' ? 17 : game.windowLeft} weather={displayedScene.weather} speech={demo ? DEMO_SPEECH[demo] || null : game.speech} onCatch={disabled ? undefined : game.catchFish} onPoke={disabled ? null : game.pokeBobber} />
           {game.travel && <div className="ink-travel-overlay absolute inset-0 z-40 flex items-center justify-center rounded-2xl bg-slate-950/55 backdrop-blur-sm"><div className="w-4/5 max-w-sm rounded-2xl border border-white/10 bg-slate-900/80 p-6 text-center shadow-xl"><Plane size={28} className="mx-auto text-sky-300" /><p className="mt-3 text-sm">{regionById(game.travel.fromId)?.name} → {regionById(game.travel.toId)?.name}</p><p className="mt-2 text-2xl font-semibold tabular-nums text-sky-100">{Math.floor(travelLeft / 60)}:{String(travelLeft % 60).padStart(2, '0')}</p><div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-sky-300 transition-all" style={{ width: `${travelProgress}%` }} /></div><p className="mt-3 text-xs text-slate-400">鱼篓随身携带，关闭窗口后航程仍继续。</p></div></div>}
         </div>
         <ActionDock coins={game.coins} activePanel={activePanel} onToggle={togglePanel} />

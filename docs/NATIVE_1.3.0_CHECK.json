@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-25T08:02:25.6512496Z",
+  "version": "1.3.0",
+  "passed": true,
+  "exe": "X:\\game\\PondClock-1.3.0\\PondClock.exe",
+  "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\native-1.3.0-3yrWMf\\profile",
+  "mainPid": 280904,
+  "windowId": 10751430,
+  "startup": [
+    {
+      "at": "2026-10-25T08:01:10.969Z",
+      "event": "STARTUP_BEGIN"
+    },
+    {
+      "at": "2026-10-25T08:01:11.409Z",
+      "event": "WINDOW_READY"
+    }
+  ],
+  "readyMs": 440,
+  "nativeObserved": [
+    "Normal final ZIP EXE displayed original minimal frameless floating scene",
+    "Settings opened via observed native accessibility index; scene modes and version 1.3.0 visible",
+    "Native X clicked; refreshed own window list empty and own process count zero",
+    "Separate offline profile; no original user saves or security/privacy settings changed"
+  ],
+  "productionDefaults": {
+    "contextIsolation": true,
+    "nodeIntegration": false,
+    "sandbox": true
+  },
+  "noSandboxArgument": false,
+  "debuggerArgument": false,
+  "exitCodeCaptured": false,
+  "remainingOwnProcesses": 0,
+  "layoutSaved": true,
+  "exeSha256": "a45cb91627e090fe1a961a9090c4ae0b145bc51de38c3b1f8289247700b39335",
+  "limitations": [
+    "Same Windows host, not a clean second PC",
+    "Deliberately offline; live network and VPN not tested",
+    "Installer upgrade/uninstall not tested",
+    "No human audio listening or long-duration performance measurement"
+  ]
+}

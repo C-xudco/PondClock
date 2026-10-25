@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { createNewGame, applyCommand } from '../src/domain/gameState.js';
 import { validateSave } from '../src/domain/saveSchema.js';
+import { STORAGE_CONFIG } from '../src/config/storage.js';
 import { GameSession } from '../src/application/gameSession.js';
 import { catchOutcome, watchRepairOutcome, lootKindForSlot, repairKindForSlot } from '../src/domain/loot.js';
 import { quoteBucketSale, quoteSaleFish, compareCatchOrder } from '../src/domain/market.js';
@@ -44,7 +45,7 @@ test('review: explicit conflict recovery import remains authoritative after rest
 
 test('review: ENOENT during backup write is not mistaken for a missing original', async (t) => {
   const fileSystem = { ...fs, writeFile: async (filename, ...args) => {
-    if (String(filename).includes('.pre-schema2-')) throw Object.assign(new Error('backup directory unavailable'), { code: 'ENOENT' });
+    if (String(filename).includes(`.pre-schema${STORAGE_CONFIG.schemaVersion}-`)) throw Object.assign(new Error('backup directory unavailable'), { code: 'ENOENT' });
     return fs.writeFile(filename, ...args);
   } };
   const { directory, repo } = await disk(t, fileSystem);

@@ -1,14 +1,22 @@
 import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import AppearanceShop from './AppearanceShop';
 import { Anvil, Bug } from "lucide-react";
 import { RODS, BAIT_COST, BAIT_CATCHES, BAIT_QUALITY_BONUS, BITE } from "@/lib/gameConfig";
 
-// 渔具店：克制经济，只卖鱼竿升级与高级鱼饵
-const ShopPanel = ({ coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait, disabled }) => {
+// 外观和渔具分区，外观不会影响已有鱼竿等级或钓鱼数值。
+const ShopPanel = ({ game, coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait, disabled }) => {
+  const [section, setSection] = useState('appearance');
   const rod = RODS[rodLevel];
   const next = RODS[rodLevel + 1];
   const rodWait = Math.round(((BITE.minSeconds + BITE.maxSeconds) / 2) * rod.intervalMult);
   return (
-    <div className="grid gap-3 md:grid-cols-2">
+    <div>
+      <div className="shop-sections" role="group" aria-label="商店分区">
+        <button type="button" aria-pressed={section === 'appearance'} onClick={() => setSection('appearance')}>美术与外观</button>
+        <button type="button" aria-pressed={section === 'gear'} onClick={() => setSection('gear')}>渔具与鱼饵</button>
+      </div>
+      {section === 'appearance' ? <AppearanceShop game={game} disabled={disabled}/> : <div className="mt-3 grid gap-3 md:grid-cols-2">
       <div className="space-y-2 rounded-lg bg-white/5 p-4">
         <h3 className="flex items-center gap-2 font-semibold">
           <Anvil size={16} className="text-slate-300" />
@@ -53,6 +61,7 @@ const ShopPanel = ({ coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait, 
           购买鱼饵 ¥{BAIT_COST}
         </Button>
       </div>
+    </div>}
     </div>
   );
 };

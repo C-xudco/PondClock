@@ -1,0 +1,2063 @@
+{
+  "version": "1.3.0",
+  "startedAt": "2026-10-25T08:02:30.105Z",
+  "passed": true,
+  "mode": "Actual production bundle and desktop/main.cjs in developer Electron; explicit no-sandbox diagnostic. HTTP blocked/replaced by fixture. Isolated saves, not user data.",
+  "checks": [
+    {
+      "id": "S01",
+      "description": "Default free minimal style uses SVG; real Dongguan rain22 and Guangzhou scene clear25 remain distinct",
+      "passed": true
+    },
+    {
+      "id": "S02",
+      "description": "Unowned options disabled; pack purchase deducts exactly1800 once, no auto-equip; three equipped slots load real local background and figure",
+      "passed": true
+    },
+    {
+      "id": "S03",
+      "description": "All five products persist ownership; original alternate skins and rods render across independent scene/character/rod slots",
+      "passed": true
+    },
+    {
+      "id": "S04",
+      "description": "Guangzhou scene can use Dongguan real weather; four manual presets are explicitly manual and never change real header",
+      "passed": true
+    },
+    {
+      "id": "S05",
+      "description": "Normal X and restart retain earned ownership, mixed equipment, coins and manual snow",
+      "passed": true
+    },
+    {
+      "id": "S06",
+      "description": "Actual paid flight preserves departure scene/mode until arrival, then atomically selects destination weather while real header remains Dongguan",
+      "passed": true
+    },
+    {
+      "id": "S07",
+      "description": "Both styles fit exact420x350/640x490 client sizes and all five panels with transparent document and internal scrolling",
+      "passed": true
+    },
+    {
+      "id": "S08",
+      "description": "All12 real paid travel destinations render both styles; all12 actual ink bitmaps decode locally, minimal uses no bitmap",
+      "passed": true
+    },
+    {
+      "id": "S09",
+      "description": "All three slots return freely to default without removing ownership or spending",
+      "passed": true
+    },
+    {
+      "id": "S10",
+      "description": "Insufficient-funds profile cannot purchase any paid cosmetic; coins and free ownership remain unchanged",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\default-minimal-guangzhou.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\purchased-inkwash-guangzhou.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\mixed-ink-cloudwalker-jade.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\mixed-minimal-ember-dawn.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\guangzhou-background-dongguan-rain.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\manual-clear.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\manual-cloudy.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\manual-rain.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\manual-snow.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\arrival-northeast-auto-weather.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-鱼篓-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-图鉴-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-渔具店-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-漫游-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-设置-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-鱼篓-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-图鉴-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-渔具店-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-漫游-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\minimal-panel-设置-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-鱼篓-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-图鉴-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-渔具店-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-漫游-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-设置-420.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-鱼篓-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-图鉴-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-渔具店-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-漫游-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\inkwash-panel-设置-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\jiangnan-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\jiangnan-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\huaihe-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\huaihe-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\huanghe-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\huanghe-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\changjiang-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\changjiang-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\dongnan-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\dongnan-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\lingnan-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\lingnan-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\xinan-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\xinan-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\yungui-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\yungui-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\hainan-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\hainan-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\dongbei-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\dongbei-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\xibei-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\xibei-inkwash-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\qingzang-minimal-640.png",
+    "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\qingzang-inkwash-640.png"
+  ],
+  "layouts": [
+    {
+      "name": "minimal-main-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-鱼篓-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-图鉴-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-渔具店-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-漫游-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-设置-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-main-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 54.333335876464844,
+          "right": 634,
+          "bottom": 93.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 99.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 376.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 382.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 431.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-鱼篓-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 54.333335876464844,
+          "right": 634,
+          "bottom": 93.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 99.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 376.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 382.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 431.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-图鉴-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 54.333335876464844,
+          "right": 634,
+          "bottom": 93.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 99.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 376.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 382.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 431.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-渔具店-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 54.333335876464844,
+          "right": 634,
+          "bottom": 93.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 99.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 376.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 382.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 431.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-漫游-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 54.333335876464844,
+          "right": 634,
+          "bottom": 93.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 99.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 376.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 382.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 431.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "minimal-设置-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 54.333335876464844,
+          "right": 634,
+          "bottom": 93.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 99.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 376.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 382.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 431.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-main-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-鱼篓-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-图鉴-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-渔具店-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-漫游-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-设置-420",
+      "width": 420,
+      "height": 350,
+      "dpr": 1.5,
+      "scrollWidth": 420,
+      "scrollHeight": 350,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 408,
+          "height": 27,
+          "right": 414,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 408,
+          "height": 46.833335876464844,
+          "right": 414,
+          "bottom": 85.83333587646484
+        },
+        {
+          "x": 6,
+          "y": 91.83333587646484,
+          "width": 408,
+          "height": 180.2604217529297,
+          "right": 414,
+          "bottom": 272.09375762939453
+        },
+        {
+          "x": 6,
+          "y": 276,
+          "width": 408,
+          "height": 41.66666793823242,
+          "right": 414,
+          "bottom": 317.6666679382324
+        },
+        {
+          "x": 6,
+          "y": 323.66668701171875,
+          "width": 408,
+          "height": 20.33333396911621,
+          "right": 414,
+          "bottom": 344.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 408,
+          "height": 304,
+          "right": 414,
+          "bottom": 344
+        },
+        {
+          "x": 369.3333435058594,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 397.3333435058594,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-main-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-鱼篓-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-图鉴-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-渔具店-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-漫游-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    },
+    {
+      "name": "inkwash-设置-640",
+      "width": 640,
+      "height": 490,
+      "dpr": 1.5,
+      "scrollWidth": 640,
+      "scrollHeight": 490,
+      "boxes": [
+        {
+          "x": 6,
+          "y": 6,
+          "width": 628,
+          "height": 27,
+          "right": 634,
+          "bottom": 33
+        },
+        {
+          "x": 6,
+          "y": 39,
+          "width": 628,
+          "height": 52.333335876464844,
+          "right": 634,
+          "bottom": 91.33333587646484
+        },
+        {
+          "x": 6,
+          "y": 97.33333587646484,
+          "width": 628,
+          "height": 277.0625,
+          "right": 634,
+          "bottom": 374.39583587646484
+        },
+        {
+          "x": 6,
+          "y": 380.3958435058594,
+          "width": 628,
+          "height": 49.333335876464844,
+          "right": 634,
+          "bottom": 429.7291793823242
+        },
+        {
+          "x": 6,
+          "y": 463.66668701171875,
+          "width": 628,
+          "height": 20.33333396911621,
+          "right": 634,
+          "bottom": 484.00002098083496
+        },
+        {
+          "x": 6,
+          "y": 40,
+          "width": 628,
+          "height": 444,
+          "right": 634,
+          "bottom": 484
+        },
+        {
+          "x": 589.3333740234375,
+          "y": 50.66666793823242,
+          "width": 28,
+          "height": 28,
+          "right": 617.3333740234375,
+          "bottom": 78.66666793823242
+        }
+      ],
+      "background": "rgba(0, 0, 0, 0)"
+    }
+  ],
+  "launches": [
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\gameplay",
+      "pid": 268944,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\gameplay",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\gameplay",
+        "noSandbox": true,
+        "sandboxPreference": true
+      }
+    },
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\gameplay",
+      "pid": 277060,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\gameplay",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\gameplay",
+        "noSandbox": true
+      }
+    },
+    {
+      "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\insufficient-funds",
+      "pid": 282928,
+      "args": [
+        "--no-sandbox",
+        "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\desktop\\main.cjs",
+        "--user-data-dir=X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\insufficient-funds",
+        "--proxy-server=http://127.0.0.1:1",
+        "--proxy-bypass-list=<-loopback>"
+      ],
+      "runtime": {
+        "version": "44.9.1",
+        "userData": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw\\insufficient-funds",
+        "noSandbox": true
+      }
+    }
+  ],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "pending": [
+    "Normal packaged EXE and sandbox",
+    "Live IP/VPN/weather",
+    "Installer upgrade/uninstall",
+    "Human sound/long-duration performance"
+  ],
+  "directory": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\style-packs-smoke-Brmclw",
+  "bundleHashes": {
+    "build-desktop/index.html": "d2c6707608984448cef388097047d7beb13257e74f83d81dfff180d6df047300",
+    "build-desktop/assets/index-D3-7Q35x.js": "920d77567a34dab383fd18a8d111965a4ddc959e71f068f529f8ec078f6c165d",
+    "build-desktop/assets/index-U5ravQ2H.css": "647a47b559b8b3b89dd9b59482fd0b5577bf4d855460eb212dac882af259e0dc"
+  },
+  "unownedOptions": [
+    {
+      "label": "场景插画",
+      "disabled": true,
+      "html": "<option value=\"inkwash\" disabled=\"\">山水入墨 · 未收藏</option>",
+      "selectDisabled": false,
+      "playwrightIsDisabled": false
+    },
+    {
+      "label": "人物皮肤",
+      "disabled": true,
+      "html": "<option value=\"inkwash\" disabled=\"\">水墨渔翁 · 未收藏</option>",
+      "selectDisabled": false,
+      "playwrightIsDisabled": false
+    },
+    {
+      "label": "鱼竿外观",
+      "disabled": true,
+      "html": "<option value=\"inkwash\" disabled=\"\">墨竹鱼竿 · 未收藏</option>",
+      "selectDisabled": false,
+      "playwrightIsDisabled": false
+    }
+  ],
+  "notificationSettles": 3,
+  "arrivals": [
+    {
+      "fromId": "lingnan",
+      "toId": "dongbei",
+      "revision": 20,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792915525212,
+      "logicalNowMs": 1792915525182
+    },
+    {
+      "fromId": "dongbei",
+      "toId": "jiangnan",
+      "revision": 25,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792915649219,
+      "logicalNowMs": 1792915649183
+    },
+    {
+      "fromId": "jiangnan",
+      "toId": "huaihe",
+      "revision": 30,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792915727197,
+      "logicalNowMs": 1792915727166
+    },
+    {
+      "fromId": "huaihe",
+      "toId": "huanghe",
+      "revision": 34,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792915813375,
+      "logicalNowMs": 1792915813350
+    },
+    {
+      "fromId": "huanghe",
+      "toId": "changjiang",
+      "revision": 40,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792915902082,
+      "logicalNowMs": 1792915902059
+    },
+    {
+      "fromId": "changjiang",
+      "toId": "dongnan",
+      "revision": 45,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792915999108,
+      "logicalNowMs": 1792915999090
+    },
+    {
+      "fromId": "dongnan",
+      "toId": "lingnan",
+      "revision": 50,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792916095785,
+      "logicalNowMs": 1792916095763
+    },
+    {
+      "fromId": "lingnan",
+      "toId": "xinan",
+      "revision": 55,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792916202507,
+      "logicalNowMs": 1792916202483
+    },
+    {
+      "fromId": "xinan",
+      "toId": "yungui",
+      "revision": 59,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792916296888,
+      "logicalNowMs": 1792916296861
+    },
+    {
+      "fromId": "yungui",
+      "toId": "hainan",
+      "revision": 64,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792916402982,
+      "logicalNowMs": 1792916402958
+    },
+    {
+      "fromId": "hainan",
+      "toId": "dongbei",
+      "revision": 70,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792916589070,
+      "logicalNowMs": 1792916589040
+    },
+    {
+      "fromId": "dongbei",
+      "toId": "xibei",
+      "revision": 75,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792916769298,
+      "logicalNowMs": 1792916769275
+    },
+    {
+      "fromId": "xibei",
+      "toId": "qingzang",
+      "revision": 79,
+      "mode": "fishing",
+      "travel": null,
+      "rendererNowMs": 1792916898099,
+      "logicalNowMs": 1792916898075
+    }
+  ],
+  "regionImages": [
+    {
+      "region": "jiangnan",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "jiangnan",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/jiangnan-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "huaihe",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "huaihe",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/huaihe-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "huanghe",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "huanghe",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/huanghe-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "changjiang",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "changjiang",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/changjiang-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "dongnan",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "dongnan",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/dongnan-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "lingnan",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "lingnan",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/lingnan-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "xinan",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "xinan",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/xinan-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "yungui",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "yungui",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/yungui-v1.jpg",
+          "width": 1890,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "hainan",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "hainan",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/hainan-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "dongbei",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "dongbei",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/dongbei-v2.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "xibei",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "xibei",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/xibei-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    },
+    {
+      "region": "qingzang",
+      "style": "minimal",
+      "images": []
+    },
+    {
+      "region": "qingzang",
+      "style": "inkwash",
+      "images": [
+        {
+          "source": "./art/inkwash/qingzang-v1.jpg",
+          "width": 1891,
+          "height": 832
+        }
+      ]
+    }
+  ],
+  "finishedAt": "2026-10-25T08:04:03.392Z"
+}

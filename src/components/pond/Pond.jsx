@@ -3,16 +3,19 @@ import { JUDGE } from "@/lib/gameConfig";
 import { toWeatherVisualState } from "@/domain/weatherVisualState";
 import SkyLayer from "./SkyLayer";
 import WaterLayer from "./WaterLayer";
+import MinimalSky from "./MinimalSky";
+import MinimalWater from "./MinimalWater";
 import Fisherman from "./Fisherman";
 import Bobber from "./Bobber";
 import WeatherLayer from "./WeatherLayer";
 import SpeechBubble from "./SpeechBubble";
-import { getPalette } from "./palette";
-import { VIEW, BOBBER, geometryForRegion, actorPlacementFor } from "./scene";
+import { getPalette, sunMoonOf } from "./palette";
+import { VIEW, BOBBER, geometryForAppearance, actorPlacementFor } from "./scene";
+import { resolveAppearanceVisuals } from "../../data/appearanceVisuals";
 import { useTween } from "./useTween";
 import { useVisualClock } from "./useVisualClock";
 
-const SOURCE_LABEL = { online: "实时天气", cached: "缓存天气", simulated: "离线模拟" };
+const SOURCE_LABEL = { online: "实时天气", cached: "缓存天气", simulated: "离线模拟", manual: "手动设置" };
 const LEGACY_CODE = { 晴: 0, 多云: 2, 阴: 3, 小雨: 61, 雨: 63, 雪: 71, 小雪: 71 };
 const POND_STYLES = `
 @keyframes mc-ring{0%{transform:scale(.55);opacity:.26}100%{transform:scale(1.75);opacity:0}}
@@ -24,23 +27,32 @@ const POND_STYLES = `
 .mc-ring-slow{animation:mc-ring-slow 2.6s ease-out infinite}
 .mc-bubble{animation:mc-bubble-in .24s ease-out both}
 .ink-pond .pond-label{background:rgba(243,240,226,.87);border:1px solid rgba(80,92,78,.2);color:#344c44;box-shadow:0 2px 6px #263d3315}
+.minimal-pond .pond-label{background:rgba(14,26,36,.46);border:1px solid rgba(224,239,238,.12);color:#e2eae8;backdrop-filter:blur(3px)}
 .ink-pond button:focus-visible{outline:2px solid #9e5745;outline-offset:-3px}
-@media(prefers-reduced-motion:reduce){.ink-pond *, .ink-pond *::before, .ink-pond *::after{animation:none!important;transition:none!important}}
+.minimal-pond button:focus-visible{outline:2px solid #b0d6d5;outline-offset:-3px}
+@keyframes mc-twinkle{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes mc-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-400}}
+.mc-twinkle{animation:mc-twinkle 6.5s ease-in-out infinite}
+.mc-flow{animation:mc-flow 30s linear infinite}
+@media(prefers-reduced-motion:reduce){.pond-scene *, .pond-scene *::before, .pond-scene *::after{animation:none!important;transition:none!important}}
 `;
 
 /**
  * Display only: the caller selects the committed region/site and its weather.
- * Header IP weather and viewer selections never enter this scene selector.
+ * Weather is selected by the caller; choosing another source never changes the landscape site.
  */
 const Pond = ({
   status, windowLeft = 0, weather, hour = 12, speech = null,
   onCatch, onPoke = null, regionId = "jiangnan",
   sceneDefinition, sceneSite, visualState, weatherEntry, entry,
+  appearance, weatherPresentation,
 }) => {
   const rawId = useId();
   const uid = `ink-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const actualRegion = sceneDefinition?.regionId || sceneSite?.regionId || regionId;
-  const geometry = geometryForRegion(sceneDefinition?.geometryId || actualRegion);
+  const equipped = resolveAppearanceVisuals(appearance);
+  const ink = equipped.scene === 'inkwash';
+  const geometry = geometryForAppearance(sceneDefinition?.geometryId || actualRegion, equipped.scene);
   const actorPlacement = actorPlacementFor(geometry);
   const snapshot = (weatherEntry || entry)?.snapshot;
   // Compatibility with old callers is explicit and isolated. Production supplies visualState.
@@ -58,9 +70,12 @@ const Pond = ({
   const biting = status === "bite";
   const pose = useTween(biting, 380);
   const palette = useMemo(
-    () => getPalette(visual.daylight.isDay === false ? "night" : "day", "多云"),
-    [visual.daylight.isDay],
+    () => getPalette(visual.daylight.isDay === false ? "night" : "day",
+      visual.precipitation.kind === 'rain' ? '小雨' : visual.precipitation.kind === 'snow' ? '雪'
+        : visual.sky.coverage === 'clear' ? '晴' : '多云'),
+    [visual.daylight.isDay, visual.precipitation.kind, visual.sky.coverage],
   );
+  const sun = useMemo(() => sunMoonOf(visual.daylight.isDay === false ? 23 : 12, palette.phase), [visual.daylight.isDay, palette.phase]);
   const precipitation = visual.precipitation.kind;
   const { timeMs, reducedMotion } = useVisualClock(
     precipitation === "rain" || precipitation === "snow",
@@ -73,12 +88,14 @@ const Pond = ({
   const temperature = Number.isFinite(snapshot?.temperatureC) ? `${Math.round(snapshot.temperatureC)}°` : "";
   const place = sceneSite?.place || "秦淮河 · 文德桥";
   const weatherText = weather || "天气未知";
-  const labelTitle = [sceneSite?.address, sceneSite?.weatherReferenceLabel,
+  const labelTitle = [sceneSite?.address, weatherPresentation?.detail || sceneSite?.weatherReferenceLabel,
     snapshot?.observedAtMs ? new Date(snapshot.observedAtMs).toLocaleString("zh-CN") : ""].filter(Boolean).join(" · ");
 
   return (
-    <div className="ink-pond relative select-none overflow-hidden rounded-2xl border shadow-lg"
-      style={{ borderColor: "#788b6b55", background: "#e6e9de", fontFamily: '"KaiTi","STKaiti","FangSong",serif' }}
+    <div className={`pond-scene ${ink ? 'ink-pond' : 'minimal-pond'} relative select-none overflow-hidden rounded-2xl border shadow-lg`}
+      style={ink ? { borderColor: "#788b6b55", background: "#e6e9de", fontFamily: '"KaiTi","STKaiti","FangSong",serif' }
+        : { borderColor: '#c0d4dc26', background: 'transparent' }}
+      data-scene-style={equipped.scene} data-character-style={equipped.character} data-rod-style={equipped.rod}
       data-scene-region={actualRegion} data-scene-site={sceneSite?.siteId || ""}
       data-sky={visual.sky.coverage} data-precipitation={precipitation}
       data-water-response={visual.waterResponse} data-weather-source={source}
@@ -89,12 +106,16 @@ const Pond = ({
         <defs>
           <clipPath id={`${uid}-water`}><path d={geometry.waterPath}/></clipPath>
         </defs>
-        <image href={`${import.meta.env.BASE_URL}${geometry.asset}`} width={VIEW.w} height={VIEW.h} preserveAspectRatio="none"
-          data-scene-art={geometry.id}/>
-        <SkyLayer visualState={visual} geometry={geometry} uid={uid}/>
-        <WaterLayer visualState={visual} geometry={geometry} uid={uid}/>
+        {ink ? <>
+          <image href={`${import.meta.env.BASE_URL}${geometry.asset}`} width={VIEW.w} height={VIEW.h} preserveAspectRatio="none" data-scene-art={actualRegion}/>
+          <SkyLayer visualState={visual} geometry={geometry} uid={uid}/>
+          <WaterLayer visualState={visual} geometry={geometry} uid={uid}/>
+        </> : <g data-scene-art={`minimal-${actualRegion}`}>
+          <MinimalSky p={palette} sun={sun} visualState={visual} uid={uid}/>
+          <MinimalWater p={palette} sun={sun} visualState={visual} uid={uid}/>
+        </g>}
         <WeatherLayer key={geometry.id} visualState={visual} geometry={geometry} uid={uid} timeMs={timeMs} reducedMotion={reducedMotion}/>
-        <Fisherman key={geometry.id} p={palette} pose={pose} visualState={visual} geometry={geometry}/>
+        <Fisherman key={`${geometry.id}:${equipped.character}`} p={palette} pose={pose} visualState={visual} geometry={geometry} character={equipped.character} rod={equipped.rod}/>
         <Bobber p={palette} biting={biting} sinkT={pose} uid={uid}/>
       </svg>
 
@@ -104,10 +125,11 @@ const Pond = ({
         {sceneSite?.address && <div className="mt-0.5 truncate text-[10px] leading-[1.35]" title={sceneSite.address}>{sceneSite.address}</div>}
         <div className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-[10px] leading-[1.35]">
           <span>{weatherText}{temperature ? ` · ${temperature}` : ""}</span>
-          <span style={{ color: source === "simulated" ? "#986b46" : "#5e7361" }}>{SOURCE_LABEL[source] || "天气未知"}</span>
+          <span style={{ color: ink ? (source === "simulated" ? "#986b46" : "#5e7361") : '#b1c9ca' }}>{weatherPresentation?.originLabel}</span>
+          <span style={{ color: ink ? (source === "simulated" ? "#986b46" : "#5e7361") : '#b1c9ca' }}>{weatherPresentation?.sourceLabel || SOURCE_LABEL[source] || "天气未知"}</span>
         </div>
       </div>
-      {speech ? <SpeechBubble speech={speech} placement={actorPlacement}/> : null}
+      {speech ? <SpeechBubble speech={speech} placement={actorPlacement} sceneStyle={equipped.scene}/> : null}
       {!biting && <div className="pond-label pointer-events-none absolute left-[2.5%] top-[4%] rounded-full px-2 py-1 text-[10px] tracking-widest">静候鱼汛</div>}
 
       {!biting && onPoke ? <>
@@ -121,7 +143,8 @@ const Pond = ({
       {biting ? <>
         <div className="pointer-events-none absolute z-20 -translate-x-1/2" style={{ left: "52.8%", bottom: "36%" }}>
           <div className="relative flex h-10 w-10 items-center justify-center rounded-full border shadow-md"
-            style={{ background: "#f5f0dfe8", color: "#984c3d", borderColor: "#af7868" }}>
+            style={ink ? { background: "#f5f0dfe8", color: "#984c3d", borderColor: "#af7868" }
+              : { background: '#1b2d3be6', color: '#e5eeec', borderColor: '#a0bec280' }}>
             <svg viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
               <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a8774c33" strokeWidth="1.8"/>
               <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a55340" strokeWidth="1.8" strokeLinecap="round"

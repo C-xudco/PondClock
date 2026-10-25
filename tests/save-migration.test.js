@@ -67,27 +67,27 @@ test('v1 migration preserves every existing asset, identity and paid deadline wi
     'lastEffectiveNowMs', 'createdAtMs', 'homeRegion', 'currentRegion', 'realRegion', 'unlockedRegions', 'recentCommittedCommandIds', 'lastCommittedCommandId']) {
     assert.deepEqual(first[key], old[key], key);
   }
-  assert.equal(first.schemaVersion, 2); assert.equal(first.catchSequence, 9);
+  assert.equal(first.schemaVersion, STORAGE_CONFIG.schemaVersion); assert.equal(first.catchSequence, 9);
   assert.deepEqual(first.bucket.map((fish) => [fish.uid, fish.caughtAtMs, fish.catchSequence]),
     [['newer', NOW, 3], ['older-b', NOW - 168 * 3600000, 2], ['older-a', NOW - 168 * 3600000, 1]]);
   assert.deepEqual(first.items, []); assert.equal(first.saleBuff, null); assert.equal(first.arrivalEvent, null);
   assert.deepEqual(first.settings, { ...DEFAULT_SETTINGS, onlineEnhancements: false, alwaysOnTop: false });
 });
 
-test('desktop startup retains exact old slots before atomically persisting schema2 and can restart', async (t) => {
+test('desktop startup retains exact old slots before atomically persisting the current schema and can restart', async (t) => {
   const { directory, repo } = await diskSetup(t);
   const old = legacyFixture(), rawA = envelope({ ...old, revision: 1, coins: 17 }), rawB = envelope(old);
   await fs.writeFile(path.join(directory, 'save-a.json'), rawA);
   await fs.writeFile(path.join(directory, 'save-b.json'), rawB);
   const loaded = await repo.load(); assert.equal(loaded.recovery.migrated, true);
   assert.deepEqual(loaded.snapshot, validateSave(old));
-  const backups = (await fs.readdir(directory)).filter((name) => name.includes('.pre-schema2-'));
+  const backups = (await fs.readdir(directory)).filter((name) => name.includes(`.pre-schema${STORAGE_CONFIG.schemaVersion}-`));
   assert.equal(backups.length, 2);
   assert.deepEqual(new Set(await Promise.all(backups.map((name) => fs.readFile(path.join(directory, name), 'utf8')))), new Set([rawA, rawB]));
-  assert.equal(JSON.parse(await fs.readFile(path.join(directory, 'save-b.json'), 'utf8')).snapshot.schemaVersion, 2);
+  assert.equal(JSON.parse(await fs.readFile(path.join(directory, 'save-b.json'), 'utf8')).snapshot.schemaVersion, STORAGE_CONFIG.schemaVersion);
   const restarted = createSaveRepository({ directory, validate: validateSave });
   assert.deepEqual((await restarted.load()).snapshot, loaded.snapshot);
-  assert.equal((await fs.readdir(directory)).filter((name) => name.includes('.pre-schema2-')).length, 2);
+  assert.equal((await fs.readdir(directory)).filter((name) => name.includes(`.pre-schema${STORAGE_CONFIG.schemaVersion}-`)).length, 2);
 });
 
 test('corrupt primary can migrate a valid v1 backup without losing either original', async (t) => {
@@ -104,7 +104,7 @@ test('corrupt primary can migrate a valid v1 backup without losing either origin
 test('migration backup failure and interrupted rename preserve original bytes and allow a safe retry', async (t) => {
   let failBackup = true, failRename = false;
   const fileSystem = { ...fs, writeFile: async (filename, ...args) => {
-    if (failBackup && String(filename).includes('.pre-schema2-')) throw Object.assign(new Error('read-only backup'), { code: 'EACCES' });
+    if (failBackup && String(filename).includes(`.pre-schema${STORAGE_CONFIG.schemaVersion}-`)) throw Object.assign(new Error('read-only backup'), { code: 'EACCES' });
     return fs.writeFile(filename, ...args);
   }, rename: async (...args) => { if (failRename) throw new Error('interrupted migration rename'); return fs.rename(...args); } };
   const { directory, repo } = await diskSetup(t, fileSystem);
@@ -120,7 +120,7 @@ test('migration backup failure and interrupted rename preserve original bytes an
 
 test('future desktop schema blocks v1 migration and leaves all bytes unchanged', async (t) => {
   const { directory, repo } = await diskSetup(t);
-  const oldRaw = envelope(legacyFixture()), futureRaw = envelope({ ...legacyFixture(), revision: 3, schemaVersion: 3 });
+  const oldRaw = envelope(legacyFixture()), futureRaw = envelope({ ...legacyFixture(), revision: 3, schemaVersion: STORAGE_CONFIG.schemaVersion + 1 });
   await fs.writeFile(path.join(directory, 'save-a.json'), oldRaw); await fs.writeFile(path.join(directory, 'save-b.json'), futureRaw);
   await assert.rejects(repo.load(), { code: 'SAVE_NEWER_VERSION' });
   assert.deepEqual((await fs.readdir(directory)).sort(), ['save-a.json', 'save-b.json']);
@@ -128,12 +128,12 @@ test('future desktop schema blocks v1 migration and leaves all bytes unchanged',
   assert.equal(await fs.readFile(path.join(directory, 'save-b.json'), 'utf8'), futureRaw);
 });
 
-test('explicit v1 import uses the same migration while retaining the previous valid v2 slot', async (t) => {
+test('explicit v1 import uses the same migration while retaining the previous valid current slot', async (t) => {
   const { directory, repo } = await diskSetup(t);
   const current = createNewGame('hainan', NOW, { randomSeed: 5 });
   await repo.save(current);
   const old = legacyFixture(), input = clone(old), imported = await repo.importSnapshot(old);
-  assert.deepEqual(old, input); assert.equal(imported.snapshot.schemaVersion, 2);
+  assert.deepEqual(old, input); assert.equal(imported.snapshot.schemaVersion, STORAGE_CONFIG.schemaVersion);
   assert.equal(imported.snapshot.revision, 1); assert.deepEqual(imported.snapshot.travel, old.travel);
   assert.deepEqual(JSON.parse(await fs.readFile(path.join(directory, 'save-a.json'), 'utf8')).snapshot, current);
 });
@@ -143,9 +143,9 @@ test('Web migration retains all original slots and persists the identical normal
   const { memory, repo } = webSetup(t, [[KEY, rawA], [BACKUP, rawB]]);
   const loaded = await repo.loadSave(); assert.equal(loaded.recovery.migrated, true);
   assert.deepEqual(loaded.snapshot, validateSave(old));
-  const retained = [...memory].filter(([key]) => key.includes('.pre-schema2.')).map(([, value]) => value);
+  const retained = [...memory].filter(([key]) => key.includes(`.pre-schema${STORAGE_CONFIG.schemaVersion}.`)).map(([, value]) => value);
   assert.deepEqual(new Set(retained), new Set([rawA, rawB]));
-  assert.equal(JSON.parse(memory.get(BACKUP)).schemaVersion, 2);
+  assert.equal(JSON.parse(memory.get(BACKUP)).schemaVersion, STORAGE_CONFIG.schemaVersion);
   assert.deepEqual((await repo.loadSave()).snapshot, loaded.snapshot);
 });
 
@@ -163,13 +163,13 @@ test('Web migration interrupted after backups keeps the original loadable for re
   const originalSetItem = storage.setItem;
   storage.setItem = (key, value) => { if (key === KEY) throw new Error('write interrupted'); originalSetItem(key, value); };
   await assert.rejects(repo.loadSave(), /interrupted/); assert.equal(memory.get(KEY), raw);
-  assert.ok([...memory.keys()].some((key) => key.includes('.pre-schema2.')));
+  assert.ok([...memory.keys()].some((key) => key.includes(`.pre-schema${STORAGE_CONFIG.schemaVersion}.`)));
   storage.setItem = originalSetItem;
   assert.deepEqual((await repo.loadSave()).snapshot, validateSave(legacyFixture()));
 });
 
 test('future Web schema blocks legacy migration without even creating backup keys', async (t) => {
-  const entries = [[KEY, JSON.stringify(legacyFixture())], [BACKUP, JSON.stringify({ ...legacyFixture(), schemaVersion: 3 })]];
+  const entries = [[KEY, JSON.stringify(legacyFixture())], [BACKUP, JSON.stringify({ ...legacyFixture(), schemaVersion: STORAGE_CONFIG.schemaVersion + 1 })]];
   const { memory, writes, repo } = webSetup(t, entries);
   await assert.rejects(repo.loadSave(), /较新版本/); assert.deepEqual([...memory], entries); assert.equal(writes.length, 0);
 });
@@ -229,7 +229,7 @@ test('lost conflict-import verification receipt leaves the imported revision rec
 test('explicit import cannot bypass a future schema when valid old slots would otherwise permit recovery', async (t) => {
   const { directory, repo } = await diskSetup(t);
   const { base, originals } = await seedConflict(directory);
-  const future = envelope({ ...base, revision: 9, coins: 999, schemaVersion: 3 });
+  const future = envelope({ ...base, revision: 9, coins: 999, schemaVersion: STORAGE_CONFIG.schemaVersion + 1 });
   await fs.writeFile(path.join(directory, 'save-b.json'), future);
   await assert.rejects(repo.importSnapshot({ ...base, coins: 777 }), { code: 'SAVE_NEWER_VERSION' });
   assert.deepEqual((await fs.readdir(directory)).sort(), ['save-a.json', 'save-b.json']);

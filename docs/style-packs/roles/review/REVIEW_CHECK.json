@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-10-25T08:05:26.507Z",
+  "role": "style_supervisor",
+  "basis": "Independent rule tests, source reading, exact finished Leader-run UI report validation, and five screenshot inspections",
+  "blockingFindings": [],
+  "independentRules": {
+    "tests": 4,
+    "passed": 4,
+    "evidence": "RULE_CHECK.tap"
+  },
+  "productionUI": {
+    "executedBy": "Leader (/root)",
+    "scriptAuthoredBy": "style_supervisor",
+    "report": "test-results/style-packs-smoke-Brmclw/style-packs-smoke.json",
+    "checks": 10,
+    "screenshots": 54,
+    "layouts": 24,
+    "regionStyleRows": 24,
+    "paidArrivals": 13,
+    "pageErrors": 0,
+    "resourceFailures": 0,
+    "bundleHashes": {
+      "build-desktop/index.html": "d2c6707608984448cef388097047d7beb13257e74f83d81dfff180d6df047300",
+      "build-desktop/assets/index-D3-7Q35x.js": "920d77567a34dab383fd18a8d111965a4ddc959e71f068f529f8ec078f6c165d",
+      "build-desktop/assets/index-U5ravQ2H.css": "647a47b559b8b3b89dd9b59482fd0b5577bf4d855460eb212dac882af259e0dc"
+    },
+    "allCurrentBundleHashesMatch": true
+  },
+  "screenshotsReviewed": [
+    "style-packs-smoke-3erMP2/default-minimal-guangzhou.png",
+    "style-packs-smoke-3erMP2/mixed-ink-cloudwalker-jade.png",
+    "style-packs-smoke-Brmclw/guangzhou-background-dongguan-rain.png",
+    "style-packs-smoke-Brmclw/inkwash-panel-渔具店-420.png",
+    "style-packs-smoke-Brmclw/dongbei-inkwash-640.png"
+  ],
+  "notIndependentlyExecuted": [
+    "Normal packaged EXE (Leader evidence)",
+    "Installer upgrade/uninstall",
+    "Live IP/VPN/weather",
+    "Human listening",
+    "Long-duration performance",
+    "All12 scenes human aesthetic review"
+  ]
+}

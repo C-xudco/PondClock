@@ -1,0 +1,63 @@
+/* Theme-independent layout, then the original quiet glass presentation. */
+.app-shell { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+.app-shell .clock-panel { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 14px; border-radius: 12px; }
+.app-shell .clock-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.app-shell .clock-time { font-size: 32px; line-height: 1; font-weight: 300; letter-spacing: .025em; font-variant-numeric: tabular-nums; }
+.app-shell .clock-date { font-size: 10px; line-height: 1.6; white-space: nowrap; }
+.app-shell .clock-date > span { display: block; }
+.app-shell .weather-display { min-width: 0; max-width: 47%; text-align: right; font-size: 12px; }
+.app-shell .weather-current { display: flex; justify-content: flex-end; align-items: center; gap: 5px; }
+.app-shell .weather-detail { display: flex; align-items: center; justify-content: flex-end; gap: 2px; margin-top: 3px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 10px; line-height: 1.4; }
+.theme-minimal { color: #d9e6ef; --appearance-border: #b4d7e51c; --appearance-wash: #b4d7e50b; --appearance-muted: #9baec0; }
+.theme-minimal .app-backdrop { position: fixed; inset: 0; background: radial-gradient(ellipse at 20% 10%, #294557 0, transparent 65%), radial-gradient(ellipse at 80% 90%, #1c3740 0, transparent 60%), #101d2c; }
+.theme-minimal .ink-loading { background: #132432eF; border-color: var(--appearance-border); }
+.theme-minimal .clock-panel, .theme-minimal .widget-toolbar, .theme-minimal .widget-footer, .theme-minimal .action-dock { background: rgba(12, 25, 39, .89); border: 1px solid var(--appearance-border); box-shadow: 0 3px 12px #07121b25; }
+.theme-minimal .clock-time { color: #eef5fa; }
+.theme-minimal .clock-date, .theme-minimal .weather-detail { color: var(--appearance-muted); }
+.theme-minimal .clock-panel { flex-shrink: 0; }
+.theme-minimal .weather-display { color: #d0e3ed; }
+.theme-minimal .widget-footer { font-size: 10px; }
+.theme-minimal #fishing-panel { background: #102130f7; }
+.theme-minimal .ink-section-title { display: flex; gap: 7px; align-items: baseline; padding-top: 7px; color: #c1dce9; font-size: 13px; }
+.theme-minimal .ink-section-title span { font-size: 11px; color: #93a9b8; }
+.theme-minimal .ink-list-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px; border: 1px solid #b4d7e51c; background: #ffffff03; border-radius: 8px; }
+.theme-minimal .ink-select { background: #172c3d; color: #d6e8f1; border: 1px solid #b4d7e52b; padding: 8px 9px; border-radius: 7px; }
+.theme-minimal .ink-note { border-left: 2px solid #a8c4d444; background: #a8c4d408; padding: 8px 10px; color: #adc1d0; font-size: 12px; line-height: 1.65; }
+.theme-minimal #fishing-panel button[class*='bg-primary'] { background: #bed8e5; color: #182e3b; }
+.theme-minimal #fishing-panel button[class*='bg-background'] { background: #182c3c; color: #cfdfeb; }
+.theme-minimal #fishing-panel button:disabled { opacity: .45; }
+.theme-minimal :focus-visible { outline: 2px solid #a9cedf; outline-offset: 2px; }
+.theme-inkwash { --appearance-border: rgba(77,97,82,.23); --appearance-wash: #526b5808; --appearance-muted: #596e65; }
+.shop-sections { display: flex; gap: 5px; padding: 3px; border: 1px solid var(--appearance-border); background: var(--appearance-wash); border-radius: 9px; margin-bottom: 15px; }
+.shop-sections button { flex: 1; padding: 8px 5px; border-radius: 6px; font-size: 12px; color: var(--appearance-muted); }
+.shop-sections button[aria-pressed='true'] { background: #9dbac526; color: inherit; }
+.shop-eyebrow { font-size: 10px; letter-spacing: .16em; color: var(--appearance-muted); margin-bottom: 5px; }
+.appearance-product { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--appearance-wash); border: 1px solid var(--appearance-border); border-radius: 12px; }
+.appearance-featured { align-items: stretch; }
+.appearance-preview { flex-shrink: 0; width: 62px; min-height: 76px; overflow: hidden; position: relative; border-radius: 7px; background: #c8d8da15; color: #b8d5de; }
+.appearance-featured .appearance-preview { width: 82px; background-color: #e2e8e0; background-position: center; background-size: auto 100%; }
+.preview-seal { position: absolute; right: 6px; top: 6px; border: 1px solid #9f5141; padding: 1px 3px; color: #9f5141; font: 12px KaiTi,serif; background: #faf3e9aa; }
+.preview-symbol { position: absolute; inset: 0; display: grid; place-items: center; }
+.preview-cloudwalker_skin { color: #e1eef3; background: linear-gradient(150deg,#8aabb850,#8aabb810); }
+.preview-ember_skin { color: #e3b4a0; background: linear-gradient(150deg,#bf795250,#bf795210); }
+.preview-jade_rod { color: #85c7b4; background: linear-gradient(150deg,#487c6c50,#487c6c10); }
+.preview-dawn_rod { color: #ead29e; background: linear-gradient(150deg,#b99a5950,#b99a5910); }
+.appearance-owned { display: inline-flex; gap: 3px; align-items: center; font-size: 10px; color: var(--appearance-muted); }
+.appearance-wardrobe { border-top: 1px solid var(--appearance-border); padding-top: 14px; }
+.appearance-select { border: 1px solid var(--appearance-border); border-radius: 7px; padding: 7px 8px; background: #172c3d; color: #d6e8f1; }
+.theme-inkwash .appearance-select { background: #fffaf1; color: #304e42; }
+.weather-mode-option { display: flex; align-items: flex-start; gap: 9px; border: 1px solid var(--appearance-border); border-radius: 8px; padding: 9px; cursor: pointer; }
+.weather-mode-option input { margin-top: 2px; accent-color: #8fb5c9; }
+.weather-mode-option.is-selected { background: #95b8c51a; border-color: #95b8c55c; }
+@media (max-width: 520px) {
+  .app-shell .clock-panel { padding: 6px 9px; gap: 5px; }
+  .app-shell .clock-time { font-size: 26px; }
+  .app-shell .clock-left { gap: 8px; }
+  .app-shell .weather-display { font-size: 11px; max-width: 43%; }
+  .app-shell .weather-detail { max-width: 148px; }
+  .appearance-product { padding: 10px; gap: 10px; }
+  .appearance-featured .appearance-preview { width: 62px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell *, .app-shell *::before, .app-shell *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}

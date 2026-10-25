@@ -2,14 +2,16 @@ import { Button } from '@/components/ui/button';
 import { GAME_VERSION } from '@/config/storage.js';
 import { networkDiagnostics } from '@/services/networkDiagnostics.js';
 import WaterWeatherViewer from './WaterWeatherViewer';
+import SceneWeatherSettings from './SceneWeatherSettings';
 
-export default function SettingsPanel({ game, geo, weather, desktop, onChangeTop, onRefreshGeo }) {
+export default function SettingsPanel({ game, geo, weather, presentation, desktop, onChangeTop, onRefreshGeo }) {
   const lastGeo = geo?.fetchedAtMs ? new Date(geo.fetchedAtMs).toLocaleString('zh-CN') : null;
   const nextRetry = geo?.retryAtMs > Date.now() ? new Date(geo.retryAtMs).toLocaleTimeString('zh-CN') : null;
   const weatherRetry = weather?.weatherRetryAtMs > Date.now() ? new Date(weather.weatherRetryAtMs).toLocaleTimeString('zh-CN') : null;
   const geoSource = ({ ip: '本次IP识别成功', 'ip-cached': '使用历史位置缓存', oversea: '已识别境外出口，无对应水域', default: '省份尚未匹配', fallback: '尚未获取所在地', disabled: '联网已关闭' })[geo?.source] || '等待识别';
   const providerName = ({ ipapi: 'ipapi', ipwhois: 'IPWhois' })[geo?.provider];
   return <div className="space-y-3 text-sm">
+    <SceneWeatherSettings game={game} presentation={presentation}/>
     <div className="rounded-xl bg-white/5 p-3" aria-label="鱼讯声音设置">
       <h3 className="font-medium text-sky-200">浮漂有声</h3>
       <label className="mt-3 flex items-center justify-between gap-3"><span>咬钩时播放咕咚声</span><input type="checkbox" aria-label="咬钩提示音" checked={game.settings.biteSoundEnabled} disabled={game.busy} onChange={(event) => game.updateSettings({ biteSoundEnabled: event.target.checked })} /></label>

@@ -60,7 +60,7 @@ export const actorPlacementFor = (geometry) => {
     offsetY,
     transform: `translate(0 ${offsetY})`,
     image: { ...FISHER.image, y: FISHER.image.y + offsetY },
-    bubble: { ...FISHER.bubble, bottom: FISHER.bubble.bottom - offsetY / VIEW.h * 100 },
+    bubble: { ...FISHER.bubble, bottom: FISHER.bubble.bottom - offsetY / VIEW.h * 100, ...geometry?.bubble },
   };
 };
 export const bobberTopAt = sinkT => ({
@@ -131,6 +131,42 @@ export const SCENE_GEOMETRIES = Object.freeze(Object.fromEntries(Object.entries(
   })];
 })));
 export const geometryForRegion = id => SCENE_GEOMETRIES[id] || SCENE_GEOMETRIES.jiangnan;
+
+// Original SVG shoreline sampled from the same cubic curves painted in MinimalWater.
+// This mask is shared by rain/snow landing queries and their SVG clipping.
+const minimalShore = (() => {
+  const points = [[1000, 176]];
+  const curves = [
+    [[1000, 176], [940, 198], [890, 210], [856, 231]],
+    [[856, 231], [812, 244], [780, 259], [764, 282]],
+    [[764, 282], [750, 304], [756, 328], [746, 354]],
+    [[746, 354], [734, 384], [712, 414], [698, 452]],
+  ];
+  for (const curve of curves) for (let i = 1; i <= 40; i++) {
+    const t = i / 40, u = 1 - t;
+    const p = [0, 1].map(axis => u ** 3 * curve[0][axis] + 3 * u ** 2 * t * curve[1][axis] + 3 * u * t ** 2 * curve[2][axis] + t ** 3 * curve[3][axis]);
+    if (p[1] > VIEW.h) {
+      const previous = points.at(-1), ratio = (VIEW.h - previous[1]) / (p[1] - previous[1]);
+      points.push([previous[0] + (p[0] - previous[0]) * ratio, VIEW.h]);
+      return points;
+    }
+    points.push(p);
+  }
+  return points;
+})();
+const minimalWater = [[0, 177], ...minimalShore, [120, 440], [108, 432], [83, 428], [60, 412], [25, 398], [0, 398]];
+export const MINIMAL_GEOMETRIES = Object.freeze(Object.fromEntries(Object.keys(SCENE_GEOMETRIES).map(regionId => [regionId, Object.freeze({
+  id: `minimal-${regionId}`,
+  regionId, revision: 1, horizonY: 170, asset: null,
+  waterPolygon: minimalWater, waterPath: asPath(minimalWater),
+  bobber: BOBBER, fisher: FISHER, actorOffsetY: -80,
+  actorSupportBand: [235, 270],
+  // Keep a two-line bubble within the shorter sky of the original composition.
+  bubble: { bottom: 78, maxHeight: 21 },
+  celestial: { x: 590, y: 52 },
+})])));
+export const geometryForAppearance = (regionId, style = 'minimal') => style === 'inkwash'
+  ? geometryForRegion(regionId) : MINIMAL_GEOMETRIES[regionId] || MINIMAL_GEOMETRIES.jiangnan;
 export function isWaterPoint(geometry, x, y) {
   const points = geometry.waterPolygon;
   let inside = false;

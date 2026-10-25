@@ -1,3 +1,23 @@
+# 1.3.0 自选风格与天气
+
+2026-10-25（Asia/Shanghai）。恢复免费简洁默认；十二地水墨改为游戏金币资源包，新增人物/鱼竿外观独立混搭；天气可选现实所在地、钓点或手动晴阴雨雪。漫游实际到达后自动跟随目的地，上方始终现实所在地。
+
+| 交付 | 结果 |
+| --- | --- |
+| 推荐完整ZIP | `release/PondClock-1.3.0-x64.zip`，171221637字节（约163.3MiB） |
+| ZIP SHA256 | `6c757cccc0e93d7f35205008a89d2d7f213b1146e3d19a3e8a85f23aeb0ed8bc` |
+| 已解压程序 | `X:/game/PondClock-1.3.0/PondClock.exe`，76文件逐个匹配构建 |
+| 正常EXE | 普通沙箱配置，440ms显示窗口；实际新天气设置/版本1.3.0可读，X退出后窗口与进程消失；独立离线档 |
+| 自动与UI | 272项271通过/1安装跳过/0失败；独立生产UI10组通过，54截图、24布局、13次到达回读，全部12区两风格本地解码 |
+| 旧存档 | schema1/2原件备份后迁移schema3，默认简洁；旧金币/鱼/物品/秘籍/航程保留，不免费发商品或自动扣款 |
+| 安装候选 | `PondClock-Setup-1.3.0-x64.exe`，125229136字节；SHA256 `984bb07849bd648aeb9dc70b4b7b16328cdebd427788965bf88814e449a901d9`；升级/卸载仍未实测，主交付ZIP |
+
+先退出旧版，再完整解压新版。没有人民币支付、公开上传或修改真实用户档。真实IP/VPN/天气、第二台干净电脑、长期性能/真人听感、额外DPR整轮未测；mock UI和普通最终EXE证据分开。
+
+[实际验收](style-packs/ACCEPTANCE.md)、[本轮需求/分工](style-packs/README.md)、[开发规范](style-packs/DEVELOPMENT_STANDARD.md)、[ASAR50文件](RELEASE_CHECK.json)、[ZIP76文件](ZIP_1.3.0_CHECK.json)、[普通EXE](NATIVE_1.3.0_CHECK.json)、[生产UI](STYLE_PACKS_1.3.0_UI_CHECK.json)。以下为历史版本。
+
+---
+
 # 1.2.0 水墨垂钓版
 
 2026-10-25（Asia/Shanghai）。已完成本地实现、审查、打包与普通EXE离线启动核验，主交付完整免安装ZIP；未公开上传。完整[验收说明](inkwash/roles/acceptance/2026-10-25-production.md)、[汇总JSON](ITERATION_1.2.0_CHECK.json)。
@@ -16,7 +36,7 @@
 
 本轮定位/天气均采用受控fixture验收；真实IP/天气、第二台干净电脑、人工听感和长期性能没有冒称已测。两类天气只在联网时请求服务，断网时明确显示缓存/离线模拟。
 
-[ZIP核对](ZIP_1.2.0_CHECK.json)、[包内46文件](RELEASE_CHECK.json)、[普通EXE](NATIVE_1.2.0_CHECK.json)、[生产UI](ITERATION_1.2.0_UI_CHECK.json)、[素材/内置imagegen提示词](inkwash/roles/rendering/README.md)、[环境](ENVIRONMENT_1.2.0_CHECK.json)。此前版本与失败记录保留在以下历史部分。
+[ZIP核对](ZIP_1.2.0_CHECK.json)、[包内46文件](RELEASE_1.2.0_CHECK.json)、[普通EXE](NATIVE_1.2.0_CHECK.json)、[生产UI](ITERATION_1.2.0_UI_CHECK.json)、[素材/内置imagegen提示词](inkwash/roles/rendering/README.md)、[环境](ENVIRONMENT_1.2.0_CHECK.json)。此前版本与失败记录保留在以下历史部分。
 
 ---
 
