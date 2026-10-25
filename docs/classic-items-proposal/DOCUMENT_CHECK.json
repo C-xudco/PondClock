@@ -1,0 +1,13 @@
+{
+  "proposalDate": "2026-10-26",
+  "checkedAtUtc": "2026-10-25T17:05:07.123Z",
+  "status": "DRAFT_AWAITING_USER_APPROVAL",
+  "passed": true,
+  "documentFiles": 10,
+  "localLinks": 60,
+  "broken": [],
+  "probabilityPassed": true,
+  "proposedTotal": 10000,
+  "productFilesUnchanged": 201,
+  "scope": "Proposal arithmetic, local document/artifact links and unchanged product hashes only. No new feature implementation or runtime acceptance claimed."
+}

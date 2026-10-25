@@ -1,0 +1,168 @@
+{
+  "proposalDate": "2026-10-26",
+  "role": "proposal_supervisor",
+  "status": "PROPOSAL_REVIEWED_AWAITING_USER_APPROVAL",
+  "passed": true,
+  "scope": "Independent source inspection and exact proposal arithmetic only; no product implementation, gameplay/GUI tests, save migration, network or release validation performed.",
+  "sourceBaseline": "96fd232 delivered 1.3.0 plus frozen uncommitted 1.3.1 character candidate",
+  "sourceFingerprints": {
+    "src/config/lootConfig.js": "cf64f68fbe837930d1da31fe4ae0512b4b4d081ef6cb09a8088a80e9187f33da",
+    "src/domain/loot.js": "daa6fba12b0f1d34c0f9fe0998edfd045036afa51aeb67a42867609004966ebe",
+    "src/domain/gameState.js": "7caf97f27645810440aaf7c814ca4e7d2e33c4a16a90bc651de4d44eeea4e4cc",
+    "src/domain/saveSchema.js": "418de7e896dce128b0f50bb06a3438c967bcb44309b4a4b73749af8acf2786a1",
+    "src/config/appearance.js": "7466f9e578549badca11c56397bb9e1993129212cb98d8221cc75384c9b8fd8f",
+    "src/config/storage.js": "712317d176aa54789b7de3464abdd0eebfcda434e4a876f17348c5ccc8bd8799",
+    "src/components/panels/BucketPanel.jsx": "72c62ec8240aaedc0adff0642b79ed85635ea6dc190e73b6054a8c4523331596",
+    "src/hooks/useFishingGame.js": "5ed2cae405ec2bda0ea3d94fa340ed1520fd8644cb9830dca04b340f6a5643d9"
+  },
+  "arithmetic": {
+    "denominator": 10000,
+    "proposedSlotSum": 10000,
+    "existingItemSlots": 180,
+    "newItemSlots": 400,
+    "totalItemSlots": 580,
+    "fishSlots": 9420,
+    "anyNewProbability": 0.04,
+    "anyItemProbability": 0.058,
+    "oldAbsoluteItemProbabilitiesPreserved": true,
+    "fishRelativeDropPercent": 4.0733197556008145,
+    "directNewCashPerSuccessfulCatch": 0.648,
+    "baitStockEquivalentPerSuccessfulCatch": 1.548,
+    "stockEquivalentIsNotCash": true,
+    "cashDeltaFormula": "0.648 - 0.04 * F",
+    "conditionalFishCashBreakEven": 16.2,
+    "examplePacing": {
+      "roundsPerHour": 40,
+      "meanAnyNewRounds": 25,
+      "meanAnyNewMinutes": 37.5,
+      "chanceAnyNewIn20Successes": 0.5579975661205926,
+      "chanceAnyNewIn40Successes": 0.8046338484446801,
+      "disclaimer": "Illustrative basic-rod 90s successful cycles, not measurement or guarantee."
+    },
+    "twelveRegionCommonMidweightChecks": [
+      {
+        "regionId": "jiangnan",
+        "commonMidweight": 11.686440677966099,
+        "liquidCoinDelta": 0.18054237288135605,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "huaihe",
+        "commonMidweight": 11.080000000000002,
+        "liquidCoinDelta": 0.20479999999999993,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "huanghe",
+        "commonMidweight": 14.46,
+        "liquidCoinDelta": 0.0696,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "changjiang",
+        "commonMidweight": 19.39682539682539,
+        "liquidCoinDelta": -0.12787301587301558,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "dongnan",
+        "commonMidweight": 17.269230769230766,
+        "liquidCoinDelta": -0.04276923076923067,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "lingnan",
+        "commonMidweight": 17.849056603773583,
+        "liquidCoinDelta": -0.0659622641509433,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "xinan",
+        "commonMidweight": 18.6,
+        "liquidCoinDelta": -0.09600000000000009,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "yungui",
+        "commonMidweight": 20,
+        "liquidCoinDelta": -0.15200000000000002,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "hainan",
+        "commonMidweight": 19.52,
+        "liquidCoinDelta": -0.13280000000000003,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "dongbei",
+        "commonMidweight": 21.220000000000002,
+        "liquidCoinDelta": -0.2008000000000001,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "xibei",
+        "commonMidweight": 24.12,
+        "liquidCoinDelta": -0.3168000000000001,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      },
+      {
+        "regionId": "qingzang",
+        "commonMidweight": 22.099999999999998,
+        "liquidCoinDelta": -0.23599999999999988,
+        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+      }
+    ]
+  },
+  "implementationRequirements": [
+    "Bump serialized schema to4 for new item/appearance identities; preserve raw legacy slots before migration",
+    "Separate new drop-table rule version from existing buff/repair version1",
+    "Explicit item-price and capability dispatch; no watch50 fallback for new types",
+    "Bait conversion removes one UID and adds exactly1 baitCount atomically; never resets baitLeft",
+    "Minimal restores true historical classic; whitecape is an independent optional identity",
+    "PolicyB old-save gift requires explicit approval and records migration-gift rather than false paid provenance",
+    "Read-only bottle/compass never grant assets or bypass flight/freshness/route rules"
+  ],
+  "pendingUserDecisions": [
+    "Classic default and optional whitecape pack",
+    "A paid-for-all vs B one-time gift for valid schema<=3 migrations; proposed650 coin price",
+    "Six items and5.8% total item rate; fish94.2%"
+  ],
+  "featureAcceptancePassed": false,
+  "productFilesWrittenByThisRole": false,
+  "documentationBoundaryCheck": {
+    "checkedFiles": 8,
+    "allMatchProductBefore": true,
+    "scope": "Only the eight relevant files in this review; Leader separately checks the complete product snapshot."
+  },
+  "crossRoleConsistency": {
+    "classicArt": "True original1.1.1 recovered; minimal stays free; independent whitecape identity; character-specific geometry, not global FISHER rollback",
+    "creative": "All six IDs/prices/weights agree; only bait box consumes, bottle and compass read-only; all active item buttons disabled while flying; exact noteId/noteVersion persisted; routes sorted price/duration/id",
+    "reviewed": true
+  },
+  "mainApprovalSpec": {
+    "path": "docs/classic-items-proposal/SPEC.md",
+    "sha256": "df635146df880d8f15d2803baaed1de94e13c186aeb97508150e2155be23333d",
+    "reviewedInFull": true,
+    "materialContradictions": [],
+    "status": "CONSISTENT_AND_READY_FOR_USER_APPROVAL",
+    "checks": [
+      "B recommendation is conditional on explicit user approval;650 game coins for new schema4 saves",
+      "Only minimal returns to historical classic; all other owned equipment retained",
+      "Six new items400 slots; fish9420; old three absolute rates unchanged",
+      "Schema4 and separate loot/buff versions required",
+      "All active item buttons disabled while flying",
+      "Approval gate and deferred features explicit; three separate approval choices"
+    ],
+    "featureAcceptancePassed": false
+  },
+  "leaderBoundaryEvidence": {
+    "path": "docs/classic-items-proposal/DOCUMENT_SCOPE_CHECK.json",
+    "passed": true,
+    "beforeFiles": 201,
+    "afterFiles": 201,
+    "changed": 0,
+    "added": 0,
+    "attribution": "Produced by Leader, read by this reviewer; reviewer independently compared eight relevant source hashes earlier, not a second full201-file run."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "recordedOn": "2026-10-26",
+  "passed": true,
+  "localLinks": 9,
+  "broken": [],
+  "oldPreviewContainsRaster": false,
+  "candidatePreviewEmbedsCharacter": true,
+  "scope": "Documentation paths and static source-render artifacts only; not product implementation/runtime acceptance."
+}

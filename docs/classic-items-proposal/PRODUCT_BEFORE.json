@@ -1,0 +1,813 @@
+{
+  "proposalDate": "2026-10-26",
+  "capturedAtUtc": "2026-10-25T16:56:36.4809165Z",
+  "baselineCommit": "96fd23205308890c1d648c633eac503c50df5a34",
+  "candidateVersion": "1.3.1",
+  "scope": "Source, tests, scripts, desktop, public and lock files before this documentation-only proposal; existing 1.3.1 candidate changes preserved",
+  "files": [
+    {
+      "path": "desktop/使用说明.txt",
+      "sha256": "ef23766e3b9861357f3b7d1dad505b416bd87d3b164bbb44e08a07a0a3194eae"
+    },
+    {
+      "path": "desktop/assets/icon.ico",
+      "sha256": "0cbeadd579fa70fb72833f618fcb7f797fbeb838ec4c2520cbd5bc0184426f78"
+    },
+    {
+      "path": "desktop/environment.cjs",
+      "sha256": "8f6ba663b457dbec69888027703060fd911696917a8f26a08c62bf627ef92875"
+    },
+    {
+      "path": "desktop/environmentNetwork.cjs",
+      "sha256": "87f291bd27a70b5b3d5299b603c67d800a22abd439fef29b7b62cde36ec1154e"
+    },
+    {
+      "path": "desktop/installer.nsh",
+      "sha256": "538322bda5c4eb9edc26c027eb4535dfbd6d61e2057c17d68da244a0121399af"
+    },
+    {
+      "path": "desktop/lifecycle.cjs",
+      "sha256": "d72cecd1c2fcabea38614a8f72ce94ccecc8c57eb1b7b995dabcb5344fd09e18"
+    },
+    {
+      "path": "desktop/main.cjs",
+      "sha256": "76c067f508ea06c5c8e2ea580d68c5e5dd646e0187df07f597fab11f97926798"
+    },
+    {
+      "path": "desktop/preload.cjs",
+      "sha256": "1a291d149a4e83b975a18a622915e909efc9054a389c9cafb435ddebaf39f085"
+    },
+    {
+      "path": "desktop/README.md",
+      "sha256": "226524d749bf400fc1a9440e264a0a8cce34d5ad7f5ed2e9c9710b0f1a8fa240"
+    },
+    {
+      "path": "desktop/saveRepository.cjs",
+      "sha256": "4661648406aa7cb65a083bbff440058b38ffb0665a1d782c99f24f4be2e06fe1"
+    },
+    {
+      "path": "desktop/windowState.cjs",
+      "sha256": "569df5f0454cc07eff5a83f769080464655956433f19d45be3f93395f9a62f2a"
+    },
+    {
+      "path": "package.json",
+      "sha256": "6389b9e7539a796ff9194ced15c11f346c64a23f7b5dff582fd1e3a797e91ebe"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "28d6d83873b1343b5f0c1494d129b35bb7dc03dfd0f193901f8d6a9a1284e44f"
+    },
+    {
+      "path": "public/art/characters/default-clear-v1.png",
+      "sha256": "fe906817e078ec70793a38fc50af796a9a078b7edbd1c1c52e24eb6ec3f41941"
+    },
+    {
+      "path": "public/art/characters/default-rain-v1.png",
+      "sha256": "9d06cfb697ff8e1e728c2af03fcd317e58e9f049d20ba4f21aa140be4992716a"
+    },
+    {
+      "path": "public/art/inkwash/changjiang-v1.jpg",
+      "sha256": "c2e484fc7b616848044b8acb225ddd2e47113826d7886a4c49c37a622f7fa617"
+    },
+    {
+      "path": "public/art/inkwash/dongbei-v2.jpg",
+      "sha256": "6f630ec0a3e8177af4f107c1a4b64f9cd6c7cfa92f6ef19971a3f56142d7d8c9"
+    },
+    {
+      "path": "public/art/inkwash/dongnan-v1.jpg",
+      "sha256": "0240829cca7a961fe3d5f54dc336c6bb1f18db2aa73618ea19a9f0ec9ffa6a12"
+    },
+    {
+      "path": "public/art/inkwash/fisherman-rain-v1.png",
+      "sha256": "0b7ae3e9b19c8dfdb73d6bc78d44d908cb72037ad6c32303952909408a5847d0"
+    },
+    {
+      "path": "public/art/inkwash/fisherman-v1.png",
+      "sha256": "fb43e2181daee291350d8e301d3c5d3c7e563f81a96a82553eebfc9ce1260e0a"
+    },
+    {
+      "path": "public/art/inkwash/hainan-v1.jpg",
+      "sha256": "67eea09cc956e3a9a6c655123719df9732baf4eb5cd4f0578af80df945134df7"
+    },
+    {
+      "path": "public/art/inkwash/huaihe-v1.jpg",
+      "sha256": "8f0697e97d4b842d5130f84c16ccfb219ac5dfb500972331ff305ab871dceff0"
+    },
+    {
+      "path": "public/art/inkwash/huanghe-v1.jpg",
+      "sha256": "55fd617410c3b786340d3cf2600d4145ed0e14c0fb2039cc8861416a60be71a1"
+    },
+    {
+      "path": "public/art/inkwash/jiangnan-v1.jpg",
+      "sha256": "1dfd6b3f973ad2a6a4f682c855c03965976ebd832e3ad67a5f2ae10cb894ac46"
+    },
+    {
+      "path": "public/art/inkwash/lingnan-v1.jpg",
+      "sha256": "af177026748999d63701aae8d7e3138b678a788456153b716c7d15de366bad71"
+    },
+    {
+      "path": "public/art/inkwash/qingzang-v1.jpg",
+      "sha256": "57d017d1afa24a874b6033c5bb0587ad22397aa95c5fecb2b23fc3f57a013451"
+    },
+    {
+      "path": "public/art/inkwash/xibei-v1.jpg",
+      "sha256": "6fada109d601ccfa0e4598085db38aa9d82c7886600c8d24f12f10fa3630a0cf"
+    },
+    {
+      "path": "public/art/inkwash/xinan-v1.jpg",
+      "sha256": "1e0b1e0c4f5b3f75de07ca81de68720efcdd18084ddf3425118e46c782297491"
+    },
+    {
+      "path": "public/art/inkwash/yungui-v1.jpg",
+      "sha256": "e933530e03d031e0c7fca37884059502993e21c514732cc392bbd13c65c62af0"
+    },
+    {
+      "path": "public/icon.svg",
+      "sha256": "d1efa05e727122b15c7ff661f0f3b304743ac00e567bd7e333fd2e26fd38027f"
+    },
+    {
+      "path": "scripts/audit-default-character.cjs",
+      "sha256": "a4439173ec56e5eb9fe4f6b4b022b7b0d43a38d2d3ab2d0add0d67fa95ff3c45"
+    },
+    {
+      "path": "scripts/audit-ink-art.cjs",
+      "sha256": "43c08b63ed4f43bc508d58f5c80e0fb9bb3801e7ee5c54d022921a9bf1f9b8e4"
+    },
+    {
+      "path": "scripts/check-installer.ps1",
+      "sha256": "0b852eff79ef9c241daabc0fa14c41a3af332d541278ea792c8f0536e64495f9"
+    },
+    {
+      "path": "scripts/check-iteration-docs.cjs",
+      "sha256": "24b3b6dc5aad062245a6e1905be2d9606d3ce5a831a104ac0b7d115519a1db00"
+    },
+    {
+      "path": "scripts/export-balance.mjs",
+      "sha256": "535779bb9fbef4b8c17c52b1d274eb471ab692030ddaf601bb42c4a16d69a1da"
+    },
+    {
+      "path": "scripts/generate-bite-audio.cjs",
+      "sha256": "bab266f96d95d2a51870924dddfe912bf1dce243944fe2e005863f5bc4646bc8"
+    },
+    {
+      "path": "scripts/package-win.cjs",
+      "sha256": "201c693ae43badb6e1053f004df5c1738d885de327f4325a072e6deab5522248"
+    },
+    {
+      "path": "scripts/prepare-native-probe.cjs",
+      "sha256": "6959de3453200cfe23d1ec957a6a4c9d33823686ceb1ba2f7077a2901ca47c37"
+    },
+    {
+      "path": "scripts/probe-network.cjs",
+      "sha256": "7781d2523927f1412bf9cfa16f91d64846f3c850da6aeefe749e23830669f0de"
+    },
+    {
+      "path": "scripts/smoke-default-character.cjs",
+      "sha256": "cd6d1ab0a1148f9ccbe8f6fc30e3e90f2053defca85e4afe65f9d0221591be4f"
+    },
+    {
+      "path": "scripts/smoke-electron.cjs",
+      "sha256": "32a3bf809539fe4e55e395f80a4af2d65e7a25e649f6a5e5c2ff618043063247"
+    },
+    {
+      "path": "scripts/smoke-installed.cjs",
+      "sha256": "5a052ec3c0ca8c030d8ed035a3a1da3f6b2a7e3a11f5fa7e750464bee950eabd"
+    },
+    {
+      "path": "scripts/smoke-iteration.cjs",
+      "sha256": "db006bd95a670174b7eb01a97983b47b9b93ea4fb56e687a545845cd9480aa98"
+    },
+    {
+      "path": "scripts/smoke-packaged.cjs",
+      "sha256": "93df44e9bce48492e60a3059a9b8fc0df5ec4ff5941806fb0d542f69248281e7"
+    },
+    {
+      "path": "scripts/smoke-style-packs.cjs",
+      "sha256": "dca07f8544c18a7727ca9223bccfdaee14063de2a2ca21214cec364c45c8efd0"
+    },
+    {
+      "path": "scripts/smoke-widget.cjs",
+      "sha256": "66e6d71859499f1b62395f3673964e09f37b30fdf487552d3cdc9bc5096a2033"
+    },
+    {
+      "path": "scripts/verify-release.cjs",
+      "sha256": "b7dc9a8f57428154620e9f9f3d32adcd56004e2adc9145167d627412bcaef960"
+    },
+    {
+      "path": "src/App.jsx",
+      "sha256": "a0d97989a3dee911b5adbe23ed49eb20b4ee7ee332ab37c51a0fb98dbfa3fafa"
+    },
+    {
+      "path": "src/application/gameSession.js",
+      "sha256": "0c1d00fe71fecf2aee18d7a868eef3d1e08b38fa4d37e6c508670fb7db5aae7f"
+    },
+    {
+      "path": "src/assets/audio/bite-plop.wav",
+      "sha256": "bd217197b1921b5a8ca1d37f32c23d2dfd84567ffec4dac792437e17b44aa8e9"
+    },
+    {
+      "path": "src/components/header/ClockPanel.jsx",
+      "sha256": "257bc0e376ded0879ad7a72de1122f0a1603c441f54725b625d9f9c711fb40cb"
+    },
+    {
+      "path": "src/components/layout/ActionDock.jsx",
+      "sha256": "361849a4443e5be53185df2e006c958adb77c9b285b41d618b684af102216ffe"
+    },
+    {
+      "path": "src/components/layout/DesktopBackdrop.jsx",
+      "sha256": "2b45585b1a53d758171fa7ee9d7d3c422ad872cded7af05ff5cc73adc8a0739a"
+    },
+    {
+      "path": "src/components/layout/PanelWindow.jsx",
+      "sha256": "15d9f7d5e0f7d3fcb4905cee3932e4fcb54179365122a0b100a914e3f263795d"
+    },
+    {
+      "path": "src/components/layout/WidgetToolbar.jsx",
+      "sha256": "227bc509e2b84021ad0da8c08b834f89aecafb3991fd19123fdf6e13b450b7e5"
+    },
+    {
+      "path": "src/components/panels/AppearanceShop.jsx",
+      "sha256": "4d03f7a08c0e6fb4386966197c89d8ac5c64339cb374ea78378ff984e2d0e16b"
+    },
+    {
+      "path": "src/components/panels/BucketPanel.jsx",
+      "sha256": "72c62ec8240aaedc0adff0642b79ed85635ea6dc190e73b6054a8c4523331596"
+    },
+    {
+      "path": "src/components/panels/CodexPanel.jsx",
+      "sha256": "79f398cc590b1d66e0262b0290b9c2d862305b0ff09f58fbbbf0776fad4bd928"
+    },
+    {
+      "path": "src/components/panels/SceneWeatherSettings.jsx",
+      "sha256": "e6f2ad4fcd93cfd4349f8991369661354dea227fa30e0b617dade8a7715bc4b2"
+    },
+    {
+      "path": "src/components/panels/SettingsPanel.jsx",
+      "sha256": "8d8c11fb7f1e28e9b9f8b8f66b47fc0bd906924972ca7d8ca97d5981692f1623"
+    },
+    {
+      "path": "src/components/panels/ShopPanel.jsx",
+      "sha256": "bf3f3bc200b86df76670baf7b10b6c8f73e3b9398f8adb95ee4009968a586666"
+    },
+    {
+      "path": "src/components/panels/TravelPanel.jsx",
+      "sha256": "12b50c82ed226a8a4d8b652cfd471999dcf82ea15970359148b626d751925f2b"
+    },
+    {
+      "path": "src/components/panels/WaterWeatherViewer.jsx",
+      "sha256": "d748d2691a0839dd31e359950992dfa324281b427b05e08c514fad5df9d89cbd"
+    },
+    {
+      "path": "src/components/pond/Bobber.jsx",
+      "sha256": "aac4b9704fcbcd0a8b3eb3a3741e24edc202a953264598e0784eba5bf4beb85e"
+    },
+    {
+      "path": "src/components/pond/Fisherman.jsx",
+      "sha256": "50f06af33a21b8abef974387a6b46bc11903b1cd391053b5ef849f45e750582a"
+    },
+    {
+      "path": "src/components/pond/minimalScene.js",
+      "sha256": "4fb0b67cef5c86ac0ba814a9f86c526538737aa633a8d1d70607301d5b918528"
+    },
+    {
+      "path": "src/components/pond/MinimalSky.jsx",
+      "sha256": "70009af9a7255a3efe5c6b6b0f4aa1fcff4414892875108a286bd1468c92a601"
+    },
+    {
+      "path": "src/components/pond/MinimalWater.jsx",
+      "sha256": "56741b10710fe716ee1bb4366be831b3d9c31dd75fc9cc3292f9600d38d409cc"
+    },
+    {
+      "path": "src/components/pond/palette.js",
+      "sha256": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd"
+    },
+    {
+      "path": "src/components/pond/Pond.jsx",
+      "sha256": "2c66e5e51c39f33671c3dcaa2f82a4183b50be84e76648282a548eacf1033434"
+    },
+    {
+      "path": "src/components/pond/precipitation.js",
+      "sha256": "a6a42983c40bcbb2731045c629363d7bb8244f47931a8d2844523a80a39e52e3"
+    },
+    {
+      "path": "src/components/pond/scene.js",
+      "sha256": "c2e7356016d6eab975efd4c9a2180fa47cbb06d243541b178398c6e7f5847d7e"
+    },
+    {
+      "path": "src/components/pond/SkyLayer.jsx",
+      "sha256": "fddb63765351702505bef63ab2a3ca9f2d9acd0d600aa1587c3db64704587be3"
+    },
+    {
+      "path": "src/components/pond/SpeechBubble.jsx",
+      "sha256": "2d2e792c6f1d4b27f8ec2c9ab78cdffd62c742215d82fd1e402ffe0dffb7597c"
+    },
+    {
+      "path": "src/components/pond/useTween.js",
+      "sha256": "76a8d5819858fd9b5d6c0ef39d44bb04ce85351828be93b98e11f3e417c4bc74"
+    },
+    {
+      "path": "src/components/pond/useVisualClock.js",
+      "sha256": "2a353c70b59ad16acfcddf2ad4804586d43ff308b8a5e69f98854bf59652833a"
+    },
+    {
+      "path": "src/components/pond/WaterLayer.jsx",
+      "sha256": "666ad34f9d2f1a55eed24d87f7784c28f4a3642b6b399c4c8b8a7b1038b78cf5"
+    },
+    {
+      "path": "src/components/pond/WeatherLayer.jsx",
+      "sha256": "f4d95c24e88ec2e3e0788b8292ec16751e5bf659aa1477f5bed5efcf6a79c8b6"
+    },
+    {
+      "path": "src/components/ui/accordion.jsx",
+      "sha256": "29f62b31b252e36a6256020bf9d99bb4981b9b188c3e73b07239988d7eecef0a"
+    },
+    {
+      "path": "src/components/ui/alert-dialog.jsx",
+      "sha256": "e734978fcd84bd74f0a377cfc4713400f176b68245587dfae74ff03fe696dcad"
+    },
+    {
+      "path": "src/components/ui/alert.jsx",
+      "sha256": "0015beff36a8e8d05e0e114b970027491a6670c27c6209c8213552fe0fe717e7"
+    },
+    {
+      "path": "src/components/ui/aspect-ratio.jsx",
+      "sha256": "08b0aa0b05efc573c7d63363c03e83d4b101bfeb54140764e96ddea30659cfcc"
+    },
+    {
+      "path": "src/components/ui/avatar.jsx",
+      "sha256": "dc91f6b15da007904343e580ceeccc58fba37f8c207e12b1edd3057820805475"
+    },
+    {
+      "path": "src/components/ui/badge.jsx",
+      "sha256": "ce556e49f49d275828e2f2d8159beeb4f8d9e71772acb686f9b1524c0ad5c22a"
+    },
+    {
+      "path": "src/components/ui/breadcrumb.jsx",
+      "sha256": "d54041bc330d958d966e59d9aedd57ffd0fe627029f3f9ed2d58c16921686828"
+    },
+    {
+      "path": "src/components/ui/button.jsx",
+      "sha256": "ff1ebc33ff1fb93787305ba8bcdfdde37e8b0e82657eac9b2f264cb5d3875208"
+    },
+    {
+      "path": "src/components/ui/calendar.jsx",
+      "sha256": "f9b316c8591e0289879ed8f370575043033f55fab35a524794013d041773fa75"
+    },
+    {
+      "path": "src/components/ui/card.jsx",
+      "sha256": "dd497c41ed9ae734c45b42a351b41368732103f817d95142d5b508e27e470bb1"
+    },
+    {
+      "path": "src/components/ui/carousel.jsx",
+      "sha256": "55eb9456609f96f5c28c1fa35fe79554fc0ffab12883e3aceb041ff10e347e83"
+    },
+    {
+      "path": "src/components/ui/checkbox.jsx",
+      "sha256": "a4adb0ad530c70e56ecda09cce154db25d20f29a8e685df9423ae4153203cf65"
+    },
+    {
+      "path": "src/components/ui/collapsible.jsx",
+      "sha256": "6f5be8ba164c177759bf63cc25ad4d49391f162f6784ba624d72e5d5c0c0dde2"
+    },
+    {
+      "path": "src/components/ui/command.jsx",
+      "sha256": "b028c2243eace5f4e65d9ee99d73e078da596d6523428ea2bd6abc8c6123ea55"
+    },
+    {
+      "path": "src/components/ui/context-menu.jsx",
+      "sha256": "f7aa4b441d1576d4485b79323075f8cdc25b6c599c212d6a92b316640692a377"
+    },
+    {
+      "path": "src/components/ui/date-picker.jsx",
+      "sha256": "cdf57508d5f296a35ff154b2774c0e850d1b17ffaae06eeddae0a0952c7f2b5c"
+    },
+    {
+      "path": "src/components/ui/dialog.jsx",
+      "sha256": "66927d56a0a7edee548570365db57e03fa27c146be344546c6a5ff586774b545"
+    },
+    {
+      "path": "src/components/ui/drawer.jsx",
+      "sha256": "ad946a1e3d6976f5da19f6fbdaa8a65dc96c6cbce926d1a60889ef5ec449e44c"
+    },
+    {
+      "path": "src/components/ui/dropdown-menu.jsx",
+      "sha256": "756c45ef281cb7c0a86c65ceb1608ffd7269b56a1efbfa6e1cf4294b6d0df3b3"
+    },
+    {
+      "path": "src/components/ui/form.jsx",
+      "sha256": "2d411bfb344ff0937a05dce4288f018c27caa7c01c4de84dcd58e1ea30d95035"
+    },
+    {
+      "path": "src/components/ui/hover-card.jsx",
+      "sha256": "841e40ca2359ece4f5c25bfc9ea08f0a5beeb0c966b98c38a13bf94fcc2ff698"
+    },
+    {
+      "path": "src/components/ui/input-otp.jsx",
+      "sha256": "d2b3ab32f85d400dc7eed3d70eb7fa43d9ee05034ba8cc542514e5ed03d6fa01"
+    },
+    {
+      "path": "src/components/ui/input.jsx",
+      "sha256": "bb0be8086ddab8007857f344accfdc984eb6bad539a39dd481121fabe0a2913f"
+    },
+    {
+      "path": "src/components/ui/label.jsx",
+      "sha256": "37c6425d2a5c798ade4e60f89f86054d703433a8977e12d796de2b5bb4e3d0b7"
+    },
+    {
+      "path": "src/components/ui/menubar.jsx",
+      "sha256": "ad58f7811c2941a8f3823dd2b20e9cd052d88fb46036d04f35ae83fdd4feff4d"
+    },
+    {
+      "path": "src/components/ui/navigation-menu.jsx",
+      "sha256": "cbde11c8be74f13aeaec8a4bd6a60d7725f24db68b16a7be2efe853839ed7509"
+    },
+    {
+      "path": "src/components/ui/pagination.jsx",
+      "sha256": "d0d63cdbc584870777b52f5211ecc2415e89085576ab683179f4730c481d041a"
+    },
+    {
+      "path": "src/components/ui/popover.jsx",
+      "sha256": "3b671cef61a18e39026c70d7d91602596da9225fb0abec887f0b503fa4ff3911"
+    },
+    {
+      "path": "src/components/ui/progress.jsx",
+      "sha256": "76e4154ce4cfb22e1413620b7846cbb1d31d67045ff0c9e79fa327d67339bac6"
+    },
+    {
+      "path": "src/components/ui/radio-group.jsx",
+      "sha256": "125ee61508b4c63a48464ff5a4f92eb525e4646ca1c5e44e556fa44fbc814511"
+    },
+    {
+      "path": "src/components/ui/resizable.jsx",
+      "sha256": "eec5a9ea2861a3946063586f101d4b3d6615cd8e0a00f2834f80aed3bf0cb2c5"
+    },
+    {
+      "path": "src/components/ui/scroll-area.jsx",
+      "sha256": "3de4bed34be51a940243b0fbf8c6d9324ecb416a91a919d65ca18d15a7ba32a1"
+    },
+    {
+      "path": "src/components/ui/select.jsx",
+      "sha256": "aa3e9ba3b9cedebb643dbe3b9eb442a11c7b6f32c9b46ea1a2a30b9379a46e61"
+    },
+    {
+      "path": "src/components/ui/separator.jsx",
+      "sha256": "2c82247abd573d0f4a93eb259166e3b778365b58c0d18921b4739d5ba4b29e7e"
+    },
+    {
+      "path": "src/components/ui/sheet.jsx",
+      "sha256": "0ecbc494f3b5945cd1bac9499ee109cb1ee5a1a7b0dbf2bc7ccc399d49626775"
+    },
+    {
+      "path": "src/components/ui/skeleton.jsx",
+      "sha256": "b69916582f369dfbbd6a7556fdd788c52ec1c19016718d04c3c9d794607acd7c"
+    },
+    {
+      "path": "src/components/ui/slider.jsx",
+      "sha256": "e9a8a8c97534d5d4807ad1413a417d128abfc42c5a5f64c5477f1271667fe0f2"
+    },
+    {
+      "path": "src/components/ui/sonner.jsx",
+      "sha256": "488c4e46137dad5de07c646ac4b953e058ee771a6a908b2c2560a1f106bafd94"
+    },
+    {
+      "path": "src/components/ui/switch.jsx",
+      "sha256": "f316bb2082b9aba9f9fb7a6ec6cf3fc556b609b307897aabeb08522eb1ed5f29"
+    },
+    {
+      "path": "src/components/ui/table.jsx",
+      "sha256": "04e192c232e288fd1e706441b20edd7eac555c8c075ae84114daba694885988c"
+    },
+    {
+      "path": "src/components/ui/tabs.jsx",
+      "sha256": "37e793143f2788712fb86ea49a9b3915a664dd100cd007fc72a68eea27ef1fe2"
+    },
+    {
+      "path": "src/components/ui/textarea.jsx",
+      "sha256": "920b58f3a199d6c0c714a6f88665dcf3a5cd75ac7b5ad54f4bde813a1ec35456"
+    },
+    {
+      "path": "src/components/ui/toast.jsx",
+      "sha256": "478cc5a04f09234220c733fc153484e65092ab56dfe42bdc3002a6101201db7b"
+    },
+    {
+      "path": "src/components/ui/toaster.jsx",
+      "sha256": "c128f193363f8f76dfa627592c4a5b08f54e2f9abf99cafe53609d829cca855a"
+    },
+    {
+      "path": "src/components/ui/toggle-group.jsx",
+      "sha256": "7b263fa6b77e170a75a9660d7d767b0dd778484686ab63384999731233ee5a86"
+    },
+    {
+      "path": "src/components/ui/toggle.jsx",
+      "sha256": "40ead0f5d5e82b3dbf0a0f44813b4b040152e056e5f24a00d6565c8a452c55f4"
+    },
+    {
+      "path": "src/components/ui/tooltip.jsx",
+      "sha256": "ca40c2b20d08f66f118eaeb5433d56ec2c8895cd43c0e229ad097bd070c3eb49"
+    },
+    {
+      "path": "src/components/ui/use-toast.js",
+      "sha256": "79193a5f2ad6de12f964fe730db4e056a972e99c3317a3ad54d510a2930e3e20"
+    },
+    {
+      "path": "src/config/appearance.js",
+      "sha256": "7466f9e578549badca11c56397bb9e1993129212cb98d8221cc75384c9b8fd8f"
+    },
+    {
+      "path": "src/config/defaultCharacter.js",
+      "sha256": "ba57cfe5f49294d20bcbc203ace03babf5928dce0c04780d238c50223527e840"
+    },
+    {
+      "path": "src/config/dialogue.js",
+      "sha256": "9fd53868376507d947061125c8533b8727b7510777319e8949aafff559496d36"
+    },
+    {
+      "path": "src/config/economy.js",
+      "sha256": "c12bb51f071fe301ced07a8594b8502361f40ef722ebace9d1fdfa44868ea7e0"
+    },
+    {
+      "path": "src/config/environmentEndpoints.cjs",
+      "sha256": "9639ce5bbb6b4996dbd2a6eeda936a52a774c791192b991bcbd89dad629bd092"
+    },
+    {
+      "path": "src/config/fishing.js",
+      "sha256": "2333ee5998115fd4f6456b863b28a7e83465e13230d989c72a8d41c85cab4250"
+    },
+    {
+      "path": "src/config/lootConfig.js",
+      "sha256": "cf64f68fbe837930d1da31fe4ae0512b4b4d081ef6cb09a8088a80e9187f33da"
+    },
+    {
+      "path": "src/config/sceneDefinitions.js",
+      "sha256": "a7b8b3d1c3148d7bc3062edeac1064944165655d2bb6146d3b0fc7e0e8ac66d7"
+    },
+    {
+      "path": "src/config/services.js",
+      "sha256": "205439f1265c6bd5b39ff1417b0a000f6a66aab5bd9bebf1459b09473d216564"
+    },
+    {
+      "path": "src/config/storage.js",
+      "sha256": "712317d176aa54789b7de3464abdd0eebfcda434e4a876f17348c5ccc8bd8799"
+    },
+    {
+      "path": "src/config/travel.js",
+      "sha256": "ade7dfe0d62c5fb8000d44f475fa659a04a82ece0882e6c154395ad94eb905b9"
+    },
+    {
+      "path": "src/config/weatherPresentation.js",
+      "sha256": "daddd5a2bfacbf8ebace0bf31eeb49e4e84e5175d48092d56839faa64388c852"
+    },
+    {
+      "path": "src/data/appearanceVisuals.js",
+      "sha256": "2d356b9c4f1a3114906296920112f40b0c2c2d345bad085273b7725876101708"
+    },
+    {
+      "path": "src/data/dialogueCatalog.js",
+      "sha256": "4c05d4b6b93dee0538bc70a465e94ef5273eab5c925458bf5587e77d1c65ca0e"
+    },
+    {
+      "path": "src/data/fishSources.js",
+      "sha256": "5c8868704fc534d67495ed59283141c7800fab65009080d13bf3bfea51df8790"
+    },
+    {
+      "path": "src/data/regionLocations.js",
+      "sha256": "ea53dd0b4947cb8d21c1b3ce2450b0491695f7a3119e0d2c551ce6fcba1345b6"
+    },
+    {
+      "path": "src/data/sceneSites.js",
+      "sha256": "95a5578395cf54303321089a4fc2f4b81072011e5ce8c68f1544efb19356c786"
+    },
+    {
+      "path": "src/domain/gameState.js",
+      "sha256": "7caf97f27645810440aaf7c814ca4e7d2e33c4a16a90bc651de4d44eeea4e4cc"
+    },
+    {
+      "path": "src/domain/loot.js",
+      "sha256": "daa6fba12b0f1d34c0f9fe0998edfd045036afa51aeb67a42867609004966ebe"
+    },
+    {
+      "path": "src/domain/market.js",
+      "sha256": "33c1b60adb571807482baddd12c1e113e240769f40a5d28e9854d64b6d084f38"
+    },
+    {
+      "path": "src/domain/routes.js",
+      "sha256": "3b19646bc2d6b8aec6fea9d5e67583411bf370ba4bdbbed5791a38f95b4b5c52"
+    },
+    {
+      "path": "src/domain/saveSchema.js",
+      "sha256": "418de7e896dce128b0f50bb06a3438c967bcb44309b4a4b73749af8acf2786a1"
+    },
+    {
+      "path": "src/domain/weatherPresentation.js",
+      "sha256": "6d63efc8727e8c067cb52a7df2363f6328aef1bd0405d07698ef7379f68aa0f3"
+    },
+    {
+      "path": "src/domain/weatherVisualState.js",
+      "sha256": "ec7e1e935c0a582433dc63ffc6b393fa46d6cd8b4d6d56c9d64ab3e6d8a047bc"
+    },
+    {
+      "path": "src/hooks/useClockWeather.js",
+      "sha256": "350ce26f999de1d120f88da49fcaa107ad07d1b6a98b98282cd3c0bae50b0b05"
+    },
+    {
+      "path": "src/hooks/useDesktopWindow.js",
+      "sha256": "9e3f6f5426a0bfc87906a6a40f4d772083ffc5a2d538097c23dceae85477560d"
+    },
+    {
+      "path": "src/hooks/useFishingGame.js",
+      "sha256": "5ed2cae405ec2bda0ea3d94fa340ed1520fd8644cb9830dca04b340f6a5643d9"
+    },
+    {
+      "path": "src/hooks/useGeoRegion.js",
+      "sha256": "3fa0ca308ecd6225bd9ff47a2c0ed5ea89899dad070f339f412d8f9e95b8bffe"
+    },
+    {
+      "path": "src/hooks/useRegionWeather.js",
+      "sha256": "a291e747d0296fbf35fadba6ea6c3ee212415a9bcab5c5ded01c057d1d6c5828"
+    },
+    {
+      "path": "src/hooks/useSceneWeather.js",
+      "sha256": "b7024568eb1e8dac27d2300e6c88de5904863f9c8b7e9a34fb9f6b13b5e0efff"
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "244c8e38e85bc1dfe28364b94dfffb7ac4f50d5ffa9266424389852b03a21b39"
+    },
+    {
+      "path": "src/lib/dialogueDirector.js",
+      "sha256": "aa25ae1498b90feed93082a8742c350dd01fc1a20ff049ecfb4dcd39c547ffa6"
+    },
+    {
+      "path": "src/lib/gameConfig.js",
+      "sha256": "f8908aa2d6aa0c1cd837b4e50f698ba9ede30a54272056dbfa706d371c0d9eb4"
+    },
+    {
+      "path": "src/lib/gameUtils.js",
+      "sha256": "809973f0a61a3382777935afa5614c731a5e8ff5c386b927ce1643f7c2233658"
+    },
+    {
+      "path": "src/lib/speech.js",
+      "sha256": "5303f8cda0bb282b6c1c64e4b253bc12913b990547b72e2f1cc51f5c95c18e2c"
+    },
+    {
+      "path": "src/lib/utils.js",
+      "sha256": "ba252326d87fbe9144ec41063847d1a50c161c65c8134b1c12c909d1cc2eae5a"
+    },
+    {
+      "path": "src/main.jsx",
+      "sha256": "7f5d170ad64bad389c98627202ce97e382e245ea3050ebc42d0c97cfc67b97aa"
+    },
+    {
+      "path": "src/nav-items.jsx",
+      "sha256": "1d368aa6e54c0e38f0024b3e14e6c1314758690d4e0d196711217498ce8137b8"
+    },
+    {
+      "path": "src/pages/Index.jsx",
+      "sha256": "52ad6b76c27d932d1e383e2f9064edf6b45e203edffcd1e8dcfe22395da696ea"
+    },
+    {
+      "path": "src/services/biteAudio.js",
+      "sha256": "2b5383f576b0282cbe7979370a65ce024a9c42cf20a87a17eae36c4f3bae3cf2"
+    },
+    {
+      "path": "src/services/environment.js",
+      "sha256": "ea17e7e9c32241ca6d5223b28c50bf2d1ca95d4daf8e45dc3ccd94f9acacc77a"
+    },
+    {
+      "path": "src/services/networkDiagnostics.js",
+      "sha256": "0b3e211c3bf06a543310d29447d443de92aacf316e42a47accece691213cf880"
+    },
+    {
+      "path": "src/services/regionWeatherStore.js",
+      "sha256": "11bc36b269ac4bbdc6b394c8951a0bb16dbbb00da75e06b3591893ff80396b9e"
+    },
+    {
+      "path": "src/services/weatherRefresh.js",
+      "sha256": "534da35b2ffe72a54770db6af357a8518752fdbcadc56b5345a0642a70fdb8d7"
+    },
+    {
+      "path": "src/services/weatherScheduler.js",
+      "sha256": "737ddfad7af9d546e6773a7fa393ae90582500a818786075660f3a9fad14b93d"
+    },
+    {
+      "path": "src/services/weatherSnapshot.js",
+      "sha256": "cf6f74077e513333942ec3d58d87d7e4fd512f04432b1bab3304f0a1767ef104"
+    },
+    {
+      "path": "src/storage/repository.js",
+      "sha256": "54db45a4c3b6b6239f3d1211ff91e68ea1df059e544978715acb2b16a166d882"
+    },
+    {
+      "path": "src/styles/appearance.css",
+      "sha256": "a2a3fae922cbdd07a760c944f687a5d6a1ec3c81733aec5cfa393b9533531961"
+    },
+    {
+      "path": "src/styles/inkwash.css",
+      "sha256": "b6dae1878251a8a59c4b33377b6d0c421dd38ccb255c76c45f8f2f76c34a6811"
+    },
+    {
+      "path": "tests/appearance-rendering.test.js",
+      "sha256": "cc14fa1e2f4f2b0bb12a6113fecfa2315e73ca14984b06ab0ab8c40fd7c91d0a"
+    },
+    {
+      "path": "tests/appearance-transactions.test.js",
+      "sha256": "b2fd30820c4a3575adc8f33268d2d0184de1c78bd598a7c68fb587f43a8ef164"
+    },
+    {
+      "path": "tests/default-character-review.test.js",
+      "sha256": "0715926262296c3c7ff96f6dc50ec52e2c8a105d216834bced44095d15219a43"
+    },
+    {
+      "path": "tests/desktop-storage.test.js",
+      "sha256": "b6772b3673299a6ce41199b975550984960dc6dada8065be222072712b96062a"
+    },
+    {
+      "path": "tests/dialogue-audio.test.js",
+      "sha256": "1911a09003ee646dceb3ca4943a9cecaae6267f5bbc3a72089f6c507a906e757"
+    },
+    {
+      "path": "tests/domain.test.js",
+      "sha256": "7582cd9b3ad5dfe5919b8475c54a64bfe076eaa69fcdab6b8b6aa1a4e1bfe74d"
+    },
+    {
+      "path": "tests/environment.test.js",
+      "sha256": "052aa1c59173f33f7990bdda2ca7315c3912657193df1c07274ca813306e6f92"
+    },
+    {
+      "path": "tests/fish-data.test.js",
+      "sha256": "c1e04255222c474bb7f7192fc5c1de299747ffb36a5f188ac63f3bfe657e2189"
+    },
+    {
+      "path": "tests/geo-failover.test.js",
+      "sha256": "02c080fcf4cce86cf955e1f591f9ba31f222cd5437709123ace5c547c2064b62"
+    },
+    {
+      "path": "tests/geo-refresh.test.js",
+      "sha256": "3cd0d09578acdeb8058fafddf051a0c720364c437209698cc4337c9daaa45710"
+    },
+    {
+      "path": "tests/ink-rendering.test.js",
+      "sha256": "032434639b3a4a729f0363815df1507a0085993f9bf7f6b1c09904ac32bb9826"
+    },
+    {
+      "path": "tests/installer.test.js",
+      "sha256": "6c552f365af07f871772b6eea4168386e2eba75578ef452fc32fc7ccc002f34c"
+    },
+    {
+      "path": "tests/lifecycle.test.js",
+      "sha256": "f1e73f227622d908aefc35769deb06ccb5e57339250eca3ee2b35203640c023c"
+    },
+    {
+      "path": "tests/loot-transactions.test.js",
+      "sha256": "9a1a8e5603d4e164d53c17afc948447cc24b37656149b94b3b89d96350e6678b"
+    },
+    {
+      "path": "tests/network-diagnostics.test.js",
+      "sha256": "da4ac29427cfcb954ef4b0f2c3c17c553cc435f7f786648aa469567699c78775"
+    },
+    {
+      "path": "tests/packaged-smoke-harness.test.js",
+      "sha256": "785fabdef1558a64849b9577fcd3e7ea5c35dd023d6141630799ed9bd9e574cd"
+    },
+    {
+      "path": "tests/review-repair-followup.test.js",
+      "sha256": "fcb8f24e63b769ea872b2e16b5de3b5e1b7322852cf343e4b674b63774ad1c9a"
+    },
+    {
+      "path": "tests/review-transactions.test.js",
+      "sha256": "cae6247272081f54421e4a1e9b8a97f63be14aa7cd44ab9c9b5a7817bcda96e9"
+    },
+    {
+      "path": "tests/save-migration.test.js",
+      "sha256": "bc14a2f25550b022ee5c0a527615b38de4afde11ea69245888001ad8698efdff"
+    },
+    {
+      "path": "tests/session.test.js",
+      "sha256": "4b27eddf378b92dce8a6feca159989316d81c3d86cac959e69db795b03b4f439"
+    },
+    {
+      "path": "tests/style-supervisor.test.js",
+      "sha256": "7f7ba19a67124b286d955f6f7a82ecb71b931f65705f4d94501e7ad57bc79cbb"
+    },
+    {
+      "path": "tests/weather-presentation.test.js",
+      "sha256": "65f0875560b73304f45a8fcba1723f30482f07425e3617f383f1def815586517"
+    },
+    {
+      "path": "tests/weather-refresh.test.js",
+      "sha256": "ddc9e6826794e7b0ad16f5b1e35bd531403d2c59d7a1aa6de2ad7285e3a6015a"
+    },
+    {
+      "path": "tests/weather-v2.test.js",
+      "sha256": "98dfc27b8adacd1a5c26f5e48d4bfd217335c1fb4c47a438fe5f14e8bcabd62a"
+    },
+    {
+      "path": "tests/web-storage.test.js",
+      "sha256": "ad7615999b1bfa41ce0af11b8aa58c942e760dc8e1752d23974ccb168543ed84"
+    },
+    {
+      "path": "tests/windowState.test.js",
+      "sha256": "db8c13aa12dcc956183be284104ba43e519022a397c3b5385194f6a42ef2f419"
+    }
+  ]
+}

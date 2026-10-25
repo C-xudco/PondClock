@@ -1,0 +1,29 @@
+{
+  "recordedOn": "2026-10-26",
+  "method": "Read-only ASAR package.json extraction/hash and directory listing. No EXE launched or ZIP overwritten.",
+  "unpacked": [
+    {
+      "directoryVersion": "1.1.0",
+      "asarPath": "X:/game/PondClock-1.1.0/resources/app.asar",
+      "packageVersion": "1.1.0",
+      "asarSha256": "ab4ed63f61911fe41ce49c3d9cb2cd31c61f99f8cdf56a403332c1ae90e6f1f7",
+      "sourceClaim": "Packaged version confirmed; component source provenance is git blob, not reverse-engineered UI screenshot."
+    },
+    {
+      "directoryVersion": "1.1.1",
+      "asarPath": "X:/game/PondClock-1.1.1/resources/app.asar",
+      "packageVersion": "1.1.1",
+      "asarSha256": "ed440e7324752f0dc6293a24f951b05889b5c5221a7455e4466c233500db1e03",
+      "sourceClaim": "Packaged version confirmed; component source provenance is git blob, not reverse-engineered UI screenshot."
+    }
+  ],
+  "oldArtifactNames": [
+    "PondClock-1.0.1-x64.zip",
+    "PondClock-1.1.0-x64.zip",
+    "PondClock-1.1.1-x64.zip",
+    "PondClock-Setup-1.0.0-x64.exe",
+    "PondClock-Setup-1.0.1-x64.exe",
+    "PondClock-Setup-1.1.0-x64.exe",
+    "PondClock-Setup-1.1.1-x64.exe"
+  ]
+}

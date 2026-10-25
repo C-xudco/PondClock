@@ -1,0 +1,150 @@
+{
+  "recordedOn": "2026-10-26",
+  "method": "Read-only git show / git rev-parse; SHA256 on original blob bytes. No product mutations, builds or executable launches.",
+  "records": [
+    {
+      "commit": "6f8a037",
+      "packageVersion": "0.0.0",
+      "files": [
+        {
+          "path": "src/components/pond/Fisherman.jsx",
+          "bytes": 5439,
+          "sha256": "41f0f77cf65ffc507d657b0b572124912e7fa25e5509573799a20df4b1317b09",
+          "gitBlob": "a6e9bf02a51f07365f91706af392cad2ca5f031f"
+        },
+        {
+          "path": "src/components/pond/scene.js",
+          "bytes": 6025,
+          "sha256": "e661cb8c033ececbf389d51f659c89eef96e06d1e17c58d87558e15f1c16caae",
+          "gitBlob": "8967a2dba7b3434b55ab76c57cfc4d6094c86f4f"
+        },
+        {
+          "path": "src/components/pond/palette.js",
+          "bytes": 5162,
+          "sha256": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd",
+          "gitBlob": "373891e0fdf094166a64349b0a8a2b5009a938d5"
+        }
+      ]
+    },
+    {
+      "commit": "e0c933e",
+      "packageVersion": "1.0.0",
+      "files": [
+        {
+          "path": "src/components/pond/Fisherman.jsx",
+          "bytes": 5439,
+          "sha256": "41f0f77cf65ffc507d657b0b572124912e7fa25e5509573799a20df4b1317b09",
+          "gitBlob": "a6e9bf02a51f07365f91706af392cad2ca5f031f"
+        },
+        {
+          "path": "src/components/pond/scene.js",
+          "bytes": 6025,
+          "sha256": "e661cb8c033ececbf389d51f659c89eef96e06d1e17c58d87558e15f1c16caae",
+          "gitBlob": "8967a2dba7b3434b55ab76c57cfc4d6094c86f4f"
+        },
+        {
+          "path": "src/components/pond/palette.js",
+          "bytes": 5162,
+          "sha256": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd",
+          "gitBlob": "373891e0fdf094166a64349b0a8a2b5009a938d5"
+        }
+      ]
+    },
+    {
+      "commit": "477a6ae",
+      "packageVersion": "1.0.1",
+      "files": [
+        {
+          "path": "src/components/pond/Fisherman.jsx",
+          "bytes": 5439,
+          "sha256": "41f0f77cf65ffc507d657b0b572124912e7fa25e5509573799a20df4b1317b09",
+          "gitBlob": "a6e9bf02a51f07365f91706af392cad2ca5f031f"
+        },
+        {
+          "path": "src/components/pond/scene.js",
+          "bytes": 6025,
+          "sha256": "e661cb8c033ececbf389d51f659c89eef96e06d1e17c58d87558e15f1c16caae",
+          "gitBlob": "8967a2dba7b3434b55ab76c57cfc4d6094c86f4f"
+        },
+        {
+          "path": "src/components/pond/palette.js",
+          "bytes": 5162,
+          "sha256": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd",
+          "gitBlob": "373891e0fdf094166a64349b0a8a2b5009a938d5"
+        }
+      ]
+    },
+    {
+      "commit": "83ccaf0",
+      "packageVersion": "1.1.0",
+      "files": [
+        {
+          "path": "src/components/pond/Fisherman.jsx",
+          "bytes": 5439,
+          "sha256": "41f0f77cf65ffc507d657b0b572124912e7fa25e5509573799a20df4b1317b09",
+          "gitBlob": "a6e9bf02a51f07365f91706af392cad2ca5f031f"
+        },
+        {
+          "path": "src/components/pond/scene.js",
+          "bytes": 6025,
+          "sha256": "e661cb8c033ececbf389d51f659c89eef96e06d1e17c58d87558e15f1c16caae",
+          "gitBlob": "8967a2dba7b3434b55ab76c57cfc4d6094c86f4f"
+        },
+        {
+          "path": "src/components/pond/palette.js",
+          "bytes": 5162,
+          "sha256": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd",
+          "gitBlob": "373891e0fdf094166a64349b0a8a2b5009a938d5"
+        }
+      ]
+    },
+    {
+      "commit": "6685447",
+      "packageVersion": "1.1.1",
+      "files": [
+        {
+          "path": "src/components/pond/Fisherman.jsx",
+          "bytes": 5439,
+          "sha256": "41f0f77cf65ffc507d657b0b572124912e7fa25e5509573799a20df4b1317b09",
+          "gitBlob": "a6e9bf02a51f07365f91706af392cad2ca5f031f"
+        },
+        {
+          "path": "src/components/pond/scene.js",
+          "bytes": 6025,
+          "sha256": "e661cb8c033ececbf389d51f659c89eef96e06d1e17c58d87558e15f1c16caae",
+          "gitBlob": "8967a2dba7b3434b55ab76c57cfc4d6094c86f4f"
+        },
+        {
+          "path": "src/components/pond/palette.js",
+          "bytes": 5162,
+          "sha256": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd",
+          "gitBlob": "373891e0fdf094166a64349b0a8a2b5009a938d5"
+        }
+      ]
+    },
+    {
+      "commit": "96fd232",
+      "packageVersion": "1.3.0",
+      "files": [
+        {
+          "path": "src/components/pond/Fisherman.jsx",
+          "bytes": 6523,
+          "sha256": "1f629b987c34d0cf653ff688b0dccf5af4820b0f5f1cf9d129d4c265852fae6d",
+          "gitBlob": "826ac59036cc979f52ab889ad967120ae4a85cef"
+        },
+        {
+          "path": "src/components/pond/scene.js",
+          "bytes": 7693,
+          "sha256": "2f507ddf8f0fe7ea0c713fb5e6c4604c0621d05b3cd639603a0f82b5b5bcc364",
+          "gitBlob": "2d62e8bbbaa725e3d76a34c1e94c8e84776903b9"
+        },
+        {
+          "path": "src/components/pond/palette.js",
+          "bytes": 5162,
+          "sha256": "5463809d61fdecd374ad92591f300e90ccdfd266d07b517febd6c6d4129c3acd",
+          "gitBlob": "373891e0fdf094166a64349b0a8a2b5009a938d5"
+        }
+      ]
+    }
+  ]
+}
