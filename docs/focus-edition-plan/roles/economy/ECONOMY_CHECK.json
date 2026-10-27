@@ -1,0 +1,630 @@
+{
+  "date": "2026-10-27",
+  "status": "DRAFT_AWAITING_USER_APPROVAL",
+  "implemented": false,
+  "scope": "All requirements here are Edition One; Edition Two undefined.",
+  "inputs": [
+    {
+      "path": "../../../classic-items-proposal/roles/economy/INPUT_SNAPSHOT.json",
+      "sha256": "4fcf09d5f1509085176da387eb2d6668467e7f9035745bacff7a83ba447b677e"
+    },
+    {
+      "path": "../../../classic-items-proposal/roles/economy/BALANCE_CANDIDATE.json",
+      "sha256": "dffc5883afb188b12301f252376bb627c2edced14191c187fc466b30aa21e185"
+    }
+  ],
+  "assumptions": {
+    "normal": "One ordinary rod, no upgrade quality/speed/window bonus, no idle acceleration; 20s response window. Manual click before deadline catches with100% success, not guaranteed fish vs item.",
+    "normalMeanTarget": 50,
+    "priorPricingAndLootCandidateApproved": false,
+    "editionOneLoot": {
+      "fishProbability": 0.974,
+      "nonFishDirectSalePerSuccess": 0.233,
+      "ferryTokenDeferred": true
+    },
+    "pityThreshold": 30,
+    "baitCatches": 5,
+    "active": "Fish-only pool; no bait, separate from ordinary pity; factors compare normal non-pity species distributions. 15 gauge activations, empty swings do not consume charges (confirmed by user).",
+    "activeFactors": {
+      "common": 1,
+      "rare": 1.25,
+      "epic": 3.5,
+      "legendary": 5
+    },
+    "widths": {
+      "white": 0.2,
+      "red": 0.25,
+      "yellow": 0.3,
+      "green": 0.25
+    },
+    "uniformStopSuccess": 0.425,
+    "bundlePrice": 450,
+    "charges": 15,
+    "swingSeconds": 3,
+    "swingsMean": 2.5,
+    "gaugeSeconds": 6
+  },
+  "normalHourly": {
+    "manual": 1956.5217391304348,
+    "automatic": [
+      {
+        "p": 0.2,
+        "grossPerBite": 10,
+        "grossPerHour": 327.2727272727273,
+        "ratioToManual": 0.1672727272727273
+      },
+      {
+        "p": 0.3,
+        "grossPerBite": 15,
+        "grossPerHour": 490.90909090909093,
+        "ratioToManual": 0.2509090909090909
+      },
+      {
+        "p": 0.4,
+        "grossPerBite": 20,
+        "grossPerHour": 654.5454545454546,
+        "ratioToManual": 0.3345454545454546
+      }
+    ]
+  },
+  "normalRows": [
+    {
+      "regionId": "jiangnan",
+      "bait": false,
+      "fishMean": 49.48993893990863,
+      "gross": 48.436200527471,
+      "probabilities": {
+        "common": 0.6815899979260802,
+        "rare": 0.2937216845465019,
+        "epic": 0.02085749686945641,
+        "legendary": 0.003830820657961839
+      }
+    },
+    {
+      "regionId": "jiangnan",
+      "bait": true,
+      "fishMean": 50.77253666381341,
+      "gross": 49.68545071055426,
+      "probabilities": {
+        "common": 0.6700926347271929,
+        "rare": 0.3000491903573207,
+        "epic": 0.024350299523159088,
+        "legendary": 0.005507875392327307
+      }
+    },
+    {
+      "regionId": "huaihe",
+      "bait": false,
+      "fishMean": 48.14828447125117,
+      "gross": 47.12942907499864,
+      "probabilities": {
+        "common": 0.5959968702528344,
+        "rare": 0.3813573749168093,
+        "epic": 0.019206322997225245,
+        "legendary": 0.003439431833130928
+      }
+    },
+    {
+      "regionId": "huaihe",
+      "bait": true,
+      "fishMean": 49.24356378450712,
+      "gross": 48.19623112610993,
+      "probabilities": {
+        "common": 0.586932316362603,
+        "rare": 0.3854348738370288,
+        "epic": 0.02258739942262002,
+        "legendary": 0.005045410377748298
+      }
+    },
+    {
+      "regionId": "huanghe",
+      "bait": false,
+      "fishMean": 49.26879208240251,
+      "gross": 48.220803488260046,
+      "probabilities": {
+        "common": 0.7498380827497781,
+        "rare": 0.2236017113422663,
+        "epic": 0.02252034146819378,
+        "legendary": 0.0040398644397617745
+      }
+    },
+    {
+      "regionId": "huanghe",
+      "bait": true,
+      "fishMean": 50.722310623296586,
+      "gross": 49.63653054709087,
+      "probabilities": {
+        "common": 0.7362269078207018,
+        "rare": 0.23195416932356763,
+        "epic": 0.026040831964440174,
+        "legendary": 0.005778090891290536
+      }
+    },
+    {
+      "regionId": "changjiang",
+      "bait": false,
+      "fishMean": 49.17340394889925,
+      "gross": 48.12789544622787,
+      "probabilities": {
+        "common": 0.7890959831306988,
+        "rare": 0.18172522321598755,
+        "epic": 0.025048118322869413,
+        "legendary": 0.004130675330444021
+      }
+    },
+    {
+      "regionId": "changjiang",
+      "bait": true,
+      "fishMean": 50.69709807911678,
+      "gross": 49.61197352905974,
+      "probabilities": {
+        "common": 0.7742957892528852,
+        "rare": 0.19144571336422248,
+        "epic": 0.028379911852021135,
+        "legendary": 0.005878585530871007
+      }
+    },
+    {
+      "regionId": "dongnan",
+      "bait": false,
+      "fishMean": 49.720721087194356,
+      "gross": 48.6609823389273,
+      "probabilities": {
+        "common": 0.6331361763925262,
+        "rare": 0.3396929217295908,
+        "epic": 0.02302380235898576,
+        "legendary": 0.004147099518897237
+      }
+    },
+    {
+      "regionId": "dongnan",
+      "bait": true,
+      "fishMean": 50.82159660639976,
+      "gross": 49.73323509463336,
+      "probabilities": {
+        "common": 0.6233507461183111,
+        "rare": 0.34503377517392314,
+        "epic": 0.02598877325110487,
+        "legendary": 0.005626705456661002
+      }
+    },
+    {
+      "regionId": "lingnan",
+      "bait": false,
+      "fishMean": 49.355883027848584,
+      "gross": 48.30563006912452,
+      "probabilities": {
+        "common": 0.741016648151346,
+        "rare": 0.22978850282875676,
+        "epic": 0.024536317835414725,
+        "legendary": 0.004658531184482291
+      }
+    },
+    {
+      "regionId": "lingnan",
+      "bait": true,
+      "fishMean": 50.72925608499651,
+      "gross": 49.643295426786594,
+      "probabilities": {
+        "common": 0.7279374241105661,
+        "rare": 0.23807415602973853,
+        "epic": 0.027752661416998406,
+        "legendary": 0.0062357584426968905
+      }
+    },
+    {
+      "regionId": "xinan",
+      "bait": false,
+      "fishMean": 49.524601301417704,
+      "gross": 48.46996166758084,
+      "probabilities": {
+        "common": 0.6827278110032596,
+        "rare": 0.2893506398095422,
+        "epic": 0.02389724169288547,
+        "legendary": 0.004024307494312767
+      }
+    },
+    {
+      "regionId": "xinan",
+      "bait": true,
+      "fishMean": 50.77268626924328,
+      "gross": 49.68559642624295,
+      "probabilities": {
+        "common": 0.6714137490751746,
+        "rare": 0.29601118191381237,
+        "epic": 0.026963860200734564,
+        "legendary": 0.005611208810278541
+      }
+    },
+    {
+      "regionId": "yungui",
+      "bait": false,
+      "fishMean": 48.871333495852866,
+      "gross": 47.833678824960685,
+      "probabilities": {
+        "common": 0.8534061906770158,
+        "rare": 0.11315920394039437,
+        "epic": 0.028126375542831213,
+        "legendary": 0.005308229839758606
+      }
+    },
+    {
+      "regionId": "yungui",
+      "bait": true,
+      "fishMean": 50.606867941081035,
+      "gross": 49.52408937461292,
+      "probabilities": {
+        "common": 0.8364084135911565,
+        "rare": 0.12522638327050328,
+        "epic": 0.0314200676002394,
+        "legendary": 0.006945135538100694
+      }
+    },
+    {
+      "regionId": "hainan",
+      "bait": false,
+      "fishMean": 49.44580060491607,
+      "gross": 48.39320978918825,
+      "probabilities": {
+        "common": 0.7018395509031002,
+        "rare": 0.2715838265388069,
+        "epic": 0.022679109342789456,
+        "legendary": 0.003897513215303401
+      }
+    },
+    {
+      "regionId": "hainan",
+      "bait": true,
+      "fishMean": 50.74964853576044,
+      "gross": 49.66315767383067,
+      "probabilities": {
+        "common": 0.6898628704019503,
+        "rare": 0.2786007584622476,
+        "epic": 0.025974151221042668,
+        "legendary": 0.005562219914759505
+      }
+    },
+    {
+      "regionId": "dongbei",
+      "bait": false,
+      "fishMean": 49.407196391236305,
+      "gross": 48.355609285064155,
+      "probabilities": {
+        "common": 0.7207513877024567,
+        "rare": 0.25036128986945677,
+        "epic": 0.024697317242381823,
+        "legendary": 0.004190005185704659
+      }
+    },
+    {
+      "regionId": "dongbei",
+      "bait": true,
+      "fishMean": 50.74280181487002,
+      "gross": 49.656488967683394,
+      "probabilities": {
+        "common": 0.7082817861106234,
+        "rare": 0.25809445527127345,
+        "epic": 0.027816586064199247,
+        "legendary": 0.005807172553903976
+      }
+    },
+    {
+      "regionId": "xibei",
+      "bait": false,
+      "fishMean": 51.100995584744716,
+      "gross": 50.00536969954135,
+      "probabilities": {
+        "common": 0.8700004117770458,
+        "rare": 0.09906390797936143,
+        "epic": 0.026573336591421384,
+        "legendary": 0.004362343652171457
+      }
+    },
+    {
+      "regionId": "xibei",
+      "bait": true,
+      "fishMean": 53.051373389564525,
+      "gross": 51.90503768143584,
+      "probabilities": {
+        "common": 0.8522520111034049,
+        "rare": 0.11151755295025019,
+        "epic": 0.03003722425069632,
+        "legendary": 0.00619321169564865
+      }
+    },
+    {
+      "regionId": "qingzang",
+      "bait": false,
+      "fishMean": 49.67558800885102,
+      "gross": 48.617022720620895,
+      "probabilities": {
+        "common": 0.667923824083272,
+        "rare": 0.30242360379042865,
+        "epic": 0.025036832885148103,
+        "legendary": 0.00461573924115124
+      }
+    },
+    {
+      "regionId": "qingzang",
+      "bait": true,
+      "fishMean": 50.80999110222585,
+      "gross": 49.72193133356797,
+      "probabilities": {
+        "common": 0.6572318255271966,
+        "rare": 0.3087966484260698,
+        "epic": 0.02791280045624251,
+        "legendary": 0.006058725590491086
+      }
+    }
+  ],
+  "activeRows": [
+    {
+      "regionId": "jiangnan",
+      "fishMean": 53.588720066918405,
+      "probabilities": {
+        "common": 0.6270475565138747,
+        "rare": 0.33773319745675606,
+        "epic": 0.02789867772045587,
+        "legendary": 0.007320568308913498
+      },
+      "high": 0.035219246029369364,
+      "allGreenBundleGross": 803.8308010037761,
+      "uniformStopBundleGross": 341.62809042660484,
+      "allGreenNet": 353.83080100377606,
+      "uniformStopNet": -108.37190957339516,
+      "breakEvenSuccess": 0.5598193045577089
+    },
+    {
+      "regionId": "huaihe",
+      "fishMean": 51.40154865052709,
+      "probabilities": {
+        "common": 0.5391328418638139,
+        "rare": 0.4311907551375705,
+        "epic": 0.023630546013404412,
+        "legendary": 0.0060458569852112395
+      },
+      "high": 0.029676402998615653,
+      "allGreenBundleGross": 771.0232297579064,
+      "uniformStopBundleGross": 327.6848726471102,
+      "allGreenNet": 321.0232297579064,
+      "uniformStopNet": -122.31512735288982,
+      "breakEvenSuccess": 0.5836400028327233
+    },
+    {
+      "regionId": "huanghe",
+      "fishMean": 54.025024393123324,
+      "probabilities": {
+        "common": 0.6988319588908987,
+        "rare": 0.2604515388549807,
+        "epic": 0.03241037616844579,
+        "legendary": 0.008306126085674647
+      },
+      "high": 0.040716502254120435,
+      "allGreenBundleGross": 810.3753658968499,
+      "uniformStopBundleGross": 344.4095305061612,
+      "allGreenNet": 360.37536589684987,
+      "uniformStopNet": -105.59046949383878,
+      "breakEvenSuccess": 0.555298222203461
+    },
+    {
+      "regionId": "changjiang",
+      "fishMean": 54.87862398654277,
+      "probabilities": {
+        "common": 0.7388013145395432,
+        "rare": 0.21264587109676972,
+        "epic": 0.03929557049517,
+        "legendary": 0.009257243868516984
+      },
+      "high": 0.04855281436368698,
+      "allGreenBundleGross": 823.1793597981416,
+      "uniformStopBundleGross": 349.85122791421014,
+      "allGreenNet": 373.1793597981416,
+      "uniformStopNet": -100.14877208578986,
+      "breakEvenSuccess": 0.5466609368222596
+    },
+    {
+      "regionId": "dongnan",
+      "fishMean": 54.27818275514351,
+      "probabilities": {
+        "common": 0.5738883576086564,
+        "rare": 0.3848095323765062,
+        "epic": 0.032849794109691854,
+        "legendary": 0.008452315905145617
+      },
+      "high": 0.04130211001483747,
+      "allGreenBundleGross": 814.1727413271527,
+      "uniformStopBundleGross": 346.0234150640399,
+      "allGreenNet": 364.1727413271527,
+      "uniformStopNet": -103.97658493596009,
+      "breakEvenSuccess": 0.5527082609846059
+    },
+    {
+      "regionId": "lingnan",
+      "fishMean": 54.94886404953438,
+      "probabilities": {
+        "common": 0.6858608290894508,
+        "rare": 0.2657742897561918,
+        "epic": 0.038046941218651646,
+        "legendary": 0.01031793993570587
+      },
+      "high": 0.04836488115435752,
+      "allGreenBundleGross": 824.2329607430157,
+      "uniformStopBundleGross": 350.2990083157817,
+      "allGreenNet": 374.2329607430157,
+      "uniformStopNet": -99.70099168421831,
+      "breakEvenSuccess": 0.5459621507908899
+    },
+    {
+      "regionId": "xinan",
+      "fishMean": 54.35771848451857,
+      "probabilities": {
+        "common": 0.625211036249778,
+        "rare": 0.3310429590495386,
+        "epic": 0.03526319511161854,
+        "legendary": 0.008482809589064885
+      },
+      "high": 0.04374600470068342,
+      "allGreenBundleGross": 815.3657772677785,
+      "uniformStopBundleGross": 346.5304553388059,
+      "allGreenNet": 365.3657772677785,
+      "uniformStopNet": -103.4695446611941,
+      "breakEvenSuccess": 0.5518995431816035
+    },
+    {
+      "regionId": "yungui",
+      "fishMean": 56.2892368499532,
+      "probabilities": {
+        "common": 0.8033742694011743,
+        "rare": 0.1330320037368652,
+        "epic": 0.050089299828726154,
+        "legendary": 0.013504427033234324
+      },
+      "high": 0.06359372686196048,
+      "allGreenBundleGross": 844.338552749298,
+      "uniformStopBundleGross": 358.84388491845164,
+      "allGreenNet": 394.33855274929795,
+      "uniformStopNet": -91.15611508154836,
+      "breakEvenSuccess": 0.5329615691889584
+    },
+    {
+      "regionId": "hainan",
+      "fishMean": 54.057563888780926,
+      "probabilities": {
+        "common": 0.646903970300691,
+        "rare": 0.31286465245827894,
+        "epic": 0.032300010108978254,
+        "legendary": 0.00793136713205189
+      },
+      "high": 0.040231377241030146,
+      "allGreenBundleGross": 810.8634583317139,
+      "uniformStopBundleGross": 344.61696979097843,
+      "allGreenNet": 360.8634583317139,
+      "uniformStopNet": -105.38303020902157,
+      "breakEvenSuccess": 0.5549639651117572
+    },
+    {
+      "regionId": "dongbei",
+      "fishMean": 54.68150424345484,
+      "probabilities": {
+        "common": 0.6645717547364747,
+        "rare": 0.28846452076858237,
+        "epic": 0.03780138473481921,
+        "legendary": 0.009162339760123707
+      },
+      "high": 0.04696372449494292,
+      "allGreenBundleGross": 820.2225636518226,
+      "uniformStopBundleGross": 348.5945895520246,
+      "allGreenNet": 370.2225636518226,
+      "uniformStopNet": -101.40541044797538,
+      "breakEvenSuccess": 0.548631578722359
+    },
+    {
+      "regionId": "xibei",
+      "fishMean": 57.64150383485178,
+      "probabilities": {
+        "common": 0.8272521918233166,
+        "rare": 0.11769699238890997,
+        "epic": 0.04459350278551707,
+        "legendary": 0.010457313002256483
+      },
+      "high": 0.05505081578777355,
+      "allGreenBundleGross": 864.6225575227768,
+      "uniformStopBundleGross": 367.4645869471801,
+      "allGreenNet": 414.6225575227768,
+      "uniformStopNet": -82.53541305281988,
+      "breakEvenSuccess": 0.5204583156947599
+    },
+    {
+      "regionId": "qingzang",
+      "fishMean": 55.158739529381585,
+      "probabilities": {
+        "common": 0.6073835239690383,
+        "rare": 0.3437285482222732,
+        "epic": 0.03869691463766626,
+        "legendary": 0.010191013171022306
+      },
+      "high": 0.048887927808688565,
+      "allGreenBundleGross": 827.3810929407238,
+      "uniformStopBundleGross": 351.6369644998076,
+      "allGreenNet": 377.38109294072376,
+      "uniformStopNet": -98.36303550019238,
+      "breakEvenSuccess": 0.5438847996883577
+    }
+  ],
+  "summary": {
+    "normalSuccessfulCatchGrossRange": [
+      47.12942907499864,
+      51.90503768143584
+    ],
+    "normalNoBaitGrossRange": [
+      47.12942907499864,
+      50.00536969954135
+    ],
+    "activeSuccessfulFishGrossRange": [
+      51.40154865052709,
+      57.64150383485178
+    ],
+    "activeAllGreenBundleGross": [
+      771.0232297579064,
+      864.6225575227768
+    ],
+    "activeUniformStopBundleGross": [
+      327.6848726471102,
+      367.4645869471801
+    ],
+    "activeBreakEvenSuccessRange": [
+      0.5204583156947599,
+      0.5836400028327233
+    ],
+    "activeAllGreenBundleNet": [
+      321.0232297579064,
+      414.6225575227768
+    ],
+    "activeUniformStopBundleNet": [
+      -122.31512735288982,
+      -82.53541305281988
+    ],
+    "estimatedBundleSeconds": 202.5,
+    "allActiveHigherThanOrdinaryWithBait": true,
+    "activeQualityProbabilityRanges": {
+      "common": [
+        0.5391328418638139,
+        0.8272521918233166
+      ],
+      "rare": [
+        0.11769699238890997,
+        0.4311907551375705
+      ],
+      "epic": [
+        0.023630546013404412,
+        0.050089299828726154
+      ],
+      "legendary": [
+        0.0060458569852112395,
+        0.013504427033234324
+      ]
+    }
+  },
+  "exclusions": [
+    "Five new regions not yet approved or configured; all monetary conclusions require rerun against final17-area supply matrix.",
+    "Prior price and quality inputs are unapproved. Edition One loot candidate uses97.4% fish; prior97.2% table is historical and still unimplemented.",
+    "Hourly comparison ignores transaction/animation latency beyond2s manual response, no sleeping/offline catch-up, no automatic sale or coin credit.",
+    "Special-rod all-green scenario is upper skill benchmark; uniform stop .425 is a mathematical control, not observed human success.",
+    "Bait gift has no direct coin credit; current shop120/5 is not its marginal earning value.",
+    "No manual sales-buff, cross-region arbitrage, repairs, ticket savings or seven-day inventory aging in target."
+  ],
+  "previousFiveItemHistoricalComparison": {
+    "status": "HISTORICAL_UNIMPLEMENTED_PROPOSAL",
+    "fishProbability": 0.972,
+    "nonFishDirectSalePerSuccess": 0.283,
+    "note": "Previous five-new-item draft included upgrade token; Edition One now defers it.",
+    "normalGrossRange": [
+      47.08313250605614,
+      51.84893493465672
+    ],
+    "normalNoBaitGrossRange": [
+      47.08313250605614,
+      49.953167708371865
+    ]
+  }
+}

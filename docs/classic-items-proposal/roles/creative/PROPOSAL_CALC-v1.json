@@ -1,0 +1,213 @@
+{
+  "proposalDate": "2026-10-26",
+  "status": "DRAFT_AWAITING_USER_APPROVAL",
+  "implemented": false,
+  "input": {
+    "currentLootConfigVersion": 1,
+    "currentWeights": {
+      "fish": 9820,
+      "old_shoe": 150,
+      "waterlogged_watch": 20,
+      "influencer_manual": 10
+    },
+    "existingBaitCost": 120,
+    "existingBaitCatches": 5,
+    "basicWaitSeconds": {
+      "minSeconds": 55,
+      "maxSeconds": 125
+    }
+  },
+  "denominator": 10000,
+  "proposedWeights": {
+    "fish": 9420,
+    "old_shoe": 150,
+    "waterlogged_watch": 20,
+    "influencer_manual": 10,
+    "rusty_tin_can": 70,
+    "river_shell": 60,
+    "ferry_token": 30,
+    "sealed_bait_box": 100,
+    "message_bottle": 80,
+    "scratched_compass": 60
+  },
+  "proposedItemWeight": 580,
+  "newItemWeight": 400,
+  "oldItemWeight": 180,
+  "fishProbabilityDeltaPercentagePoints": -4,
+  "existingAbsoluteItemProbabilitiesPreserved": true,
+  "items": [
+    {
+      "id": "rusty_tin_can",
+      "name": "锈铁罐",
+      "weight": 70,
+      "sellPrice": 3,
+      "action": "sell/keep",
+      "probability": 0.007,
+      "meanRounds": 142.85714285714286,
+      "illustrativeMeanHours": 3.5714285714285716
+    },
+    {
+      "id": "river_shell",
+      "name": "河蚌壳",
+      "weight": 60,
+      "sellPrice": 8,
+      "action": "sell/keep",
+      "probability": 0.006,
+      "meanRounds": 166.66666666666666,
+      "illustrativeMeanHours": 4.166666666666666
+    },
+    {
+      "id": "ferry_token",
+      "name": "渡口代币",
+      "weight": 30,
+      "sellPrice": 25,
+      "action": "sell/keep",
+      "probability": 0.003,
+      "meanRounds": 333.3333333333333,
+      "illustrativeMeanHours": 8.333333333333332
+    },
+    {
+      "id": "sealed_bait_box",
+      "name": "密封饵盒",
+      "weight": 100,
+      "sellPrice": 30,
+      "action": "sell/use",
+      "grantsBaitUnits": 1,
+      "probability": 0.01,
+      "meanRounds": 100,
+      "illustrativeMeanHours": 2.5
+    },
+    {
+      "id": "message_bottle",
+      "name": "漂流瓶",
+      "weight": 80,
+      "sellPrice": 12,
+      "action": "sell/read",
+      "probability": 0.008,
+      "meanRounds": 125,
+      "illustrativeMeanHours": 3.125
+    },
+    {
+      "id": "scratched_compass",
+      "name": "磨花指南针",
+      "weight": 60,
+      "sellPrice": 18,
+      "action": "sell/route-preview",
+      "probability": 0.006,
+      "meanRounds": 166.66666666666666,
+      "illustrativeMeanHours": 4.166666666666666
+    }
+  ],
+  "pacingScenario": {
+    "assumptions": "Basic rod; 90s mean wait; every bite caught immediately; excludes reaction/window time, misses, suspension and boosts. Expectations are not guarantees.",
+    "roundsPerHour": 40,
+    "anyItem": {
+      "probability": 0.058,
+      "meanRounds": 17.24137931034483,
+      "meanMinutes": 25.862068965517242
+    },
+    "anyNewItem": {
+      "probability": 0.04,
+      "meanRounds": 25,
+      "meanMinutes": 37.5,
+      "chanceIn30Minutes": 0.5579975661205926,
+      "chanceIn60Minutes": 0.8046338484446801
+    }
+  },
+  "economics": {
+    "sellAllNewGrossPerRound": 0.648,
+    "sellAllNewGrossPerIllustrativeHour": 25.92,
+    "allBaitUsedStockReplacementValuePerRound": 1.548,
+    "allBaitUsedStockReplacementValuePerIllustrativeHour": 61.92,
+    "liquidCoinDeltaFormula": "0.648 - 0.04 * F, where F is the old expected local sale quote conditional on a fish under the actual equipment/quality/weight/freshness/travel policy.",
+    "breakEvenConditionalFishPrice": 16.2,
+    "stockReplacementIsNotCash": true,
+    "commonMidweightLocalScenario": [
+      {
+        "regionId": "jiangnan",
+        "conditionalFishCommonMidweight": 11.686440677966099,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.46745762711864397,
+        "liquidCoinDeltaPerRound": 0.18054237288135605
+      },
+      {
+        "regionId": "huaihe",
+        "conditionalFishCommonMidweight": 11.080000000000002,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.4432000000000001,
+        "liquidCoinDeltaPerRound": 0.20479999999999993
+      },
+      {
+        "regionId": "huanghe",
+        "conditionalFishCommonMidweight": 14.46,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.5784,
+        "liquidCoinDeltaPerRound": 0.0696
+      },
+      {
+        "regionId": "changjiang",
+        "conditionalFishCommonMidweight": 19.39682539682539,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.7758730158730156,
+        "liquidCoinDeltaPerRound": -0.12787301587301558
+      },
+      {
+        "regionId": "dongnan",
+        "conditionalFishCommonMidweight": 17.269230769230766,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.6907692307692307,
+        "liquidCoinDeltaPerRound": -0.04276923076923067
+      },
+      {
+        "regionId": "lingnan",
+        "conditionalFishCommonMidweight": 17.849056603773583,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.7139622641509433,
+        "liquidCoinDeltaPerRound": -0.0659622641509433
+      },
+      {
+        "regionId": "xinan",
+        "conditionalFishCommonMidweight": 18.6,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.7440000000000001,
+        "liquidCoinDeltaPerRound": -0.09600000000000009
+      },
+      {
+        "regionId": "yungui",
+        "conditionalFishCommonMidweight": 20,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.8,
+        "liquidCoinDeltaPerRound": -0.15200000000000002
+      },
+      {
+        "regionId": "hainan",
+        "conditionalFishCommonMidweight": 19.52,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.7808,
+        "liquidCoinDeltaPerRound": -0.13280000000000003
+      },
+      {
+        "regionId": "dongbei",
+        "conditionalFishCommonMidweight": 21.220000000000002,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.8488000000000001,
+        "liquidCoinDeltaPerRound": -0.2008000000000001
+      },
+      {
+        "regionId": "xibei",
+        "conditionalFishCommonMidweight": 24.12,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.9648000000000001,
+        "liquidCoinDeltaPerRound": -0.3168000000000001
+      },
+      {
+        "regionId": "qingzang",
+        "conditionalFishCommonMidweight": 22.099999999999998,
+        "sellAllNewGrossPerRound": 0.648,
+        "displacedFishQuotePerRound": 0.8839999999999999,
+        "liquidCoinDeltaPerRound": -0.23599999999999988
+      }
+    ],
+    "scenarioLimits": "The common-quality/midweight scenario is a pricing illustration, not full gameplay earnings. No bait-quality/pity/rod/best-click/manual/late-sale simulation is claimed."
+  }
+}

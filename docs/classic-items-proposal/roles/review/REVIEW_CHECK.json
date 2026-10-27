@@ -1,9 +1,10 @@
 {
   "proposalDate": "2026-10-26",
+  "revision": "v2",
   "role": "proposal_supervisor",
-  "status": "PROPOSAL_REVIEWED_AWAITING_USER_APPROVAL",
+  "status": "V2_SOURCE_AND_ARITHMETIC_REVIEW_AWAITING_FINAL_SPEC",
   "passed": true,
-  "scope": "Independent source inspection and exact proposal arithmetic only; no product implementation, gameplay/GUI tests, save migration, network or release validation performed.",
+  "scope": "Current five-item/coupon proposal arithmetic and source inspection only. No implementation, transaction test, migration, GUI or release validation.",
   "sourceBaseline": "96fd232 delivered 1.3.0 plus frozen uncommitted 1.3.1 character candidate",
   "sourceFingerprints": {
     "src/config/lootConfig.js": "cf64f68fbe837930d1da31fe4ae0512b4b4d081ef6cb09a8088a80e9187f33da",
@@ -15,154 +16,135 @@
     "src/components/panels/BucketPanel.jsx": "72c62ec8240aaedc0adff0642b79ed85635ea6dc190e73b6054a8c4523331596",
     "src/hooks/useFishingGame.js": "5ed2cae405ec2bda0ea3d94fa340ed1520fd8644cb9830dca04b340f6a5643d9"
   },
+  "currentRequirements": {
+    "activeNewItemKinds": 5,
+    "eachNewAbsoluteProbability": 0.002,
+    "messageBottleDeferred": true,
+    "compass": "Consume to activate next valid paid ticket at90%",
+    "ferryToken": "Consume to activate next numeric rod upgrade at90%; cosmetics excluded",
+    "sameKindDoesNotStack": true,
+    "secondItemRetained": true
+  },
   "arithmetic": {
     "denominator": 10000,
-    "proposedSlotSum": 10000,
-    "existingItemSlots": 180,
-    "newItemSlots": 400,
-    "totalItemSlots": 580,
-    "fishSlots": 9420,
-    "anyNewProbability": 0.04,
-    "anyItemProbability": 0.058,
-    "oldAbsoluteItemProbabilitiesPreserved": true,
-    "fishRelativeDropPercent": 4.0733197556008145,
-    "directNewCashPerSuccessfulCatch": 0.648,
-    "baitStockEquivalentPerSuccessfulCatch": 1.548,
-    "stockEquivalentIsNotCash": true,
-    "cashDeltaFormula": "0.648 - 0.04 * F",
-    "conditionalFishCashBreakEven": 16.2,
-    "examplePacing": {
-      "roundsPerHour": 40,
-      "meanAnyNewRounds": 25,
-      "meanAnyNewMinutes": 37.5,
-      "chanceAnyNewIn20Successes": 0.5579975661205926,
-      "chanceAnyNewIn40Successes": 0.8046338484446801,
-      "disclaimer": "Illustrative basic-rod 90s successful cycles, not measurement or guarantee."
+    "proposedWeights": {
+      "fish": 9720,
+      "old_shoe": 150,
+      "waterlogged_watch": 20,
+      "influencer_manual": 10,
+      "rusty_tin_can": 20,
+      "river_shell": 20,
+      "ferry_token": 20,
+      "sealed_bait_box": 20,
+      "scratched_compass": 20
     },
-    "twelveRegionCommonMidweightChecks": [
+    "slotSum": 10000,
+    "newItemSlots": 100,
+    "oldItemSlots": 180,
+    "totalItemSlots": 280,
+    "newItemProbability": 0.01,
+    "totalItemProbability": 0.028,
+    "fishRelativeDropPercent": 1.0183299389002036,
+    "newItemDirectPrices": {
+      "rusty_tin_can": 3,
+      "river_shell": 8,
+      "ferry_token": 25,
+      "sealed_bait_box": 30,
+      "scratched_compass": 18
+    },
+    "directNewCashPerSuccessfulCatch": 0.168,
+    "directOldItemCashPerSuccessfulCatch": 0.115,
+    "allDirectNonFishCashPerSuccessfulCatch": 0.28300000000000003,
+    "grossEquation": "0.972 * conditionalFishMean + 0.283",
+    "couponSavingIncluded": false,
+    "baitStockValueIncluded": false,
+    "manualFutureBonusIncluded": false,
+    "costIncluded": false,
+    "conditionalFishMeanNeededForGross50": 51.14917695473251,
+    "oldToNewDirectCashDelta": "0.168 - 0.01 * F",
+    "conditionalFishBreakEven": 16.8,
+    "pacingExample": {
+      "successesPerHour": 40,
+      "meanAnyNewSuccesses": 100,
+      "meanAnyNewMinutes": 150,
+      "meanIndividualSuccesses": 500,
+      "meanIndividualMinutes": 750,
+      "chanceAnyNewIn40Successes": 0.3310282414303197,
+      "disclaimer": "Ideal90s successful cycles, not measurement or guarantee."
+    }
+  },
+  "couponArithmetic": {
+    "rule": "Math.round(basePrice*9/10)",
+    "rodExamples": [
       {
-        "regionId": "jiangnan",
-        "commonMidweight": 11.686440677966099,
-        "liquidCoinDelta": 0.18054237288135605,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+        "toLevel": 1,
+        "basePrice": 600,
+        "paidPrice": 540,
+        "saving": 60
       },
       {
-        "regionId": "huaihe",
-        "commonMidweight": 11.080000000000002,
-        "liquidCoinDelta": 0.20479999999999993,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+        "toLevel": 2,
+        "basePrice": 2600,
+        "paidPrice": 2340,
+        "saving": 260
       },
       {
-        "regionId": "huanghe",
-        "commonMidweight": 14.46,
-        "liquidCoinDelta": 0.0696,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "changjiang",
-        "commonMidweight": 19.39682539682539,
-        "liquidCoinDelta": -0.12787301587301558,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "dongnan",
-        "commonMidweight": 17.269230769230766,
-        "liquidCoinDelta": -0.04276923076923067,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "lingnan",
-        "commonMidweight": 17.849056603773583,
-        "liquidCoinDelta": -0.0659622641509433,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "xinan",
-        "commonMidweight": 18.6,
-        "liquidCoinDelta": -0.09600000000000009,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "yungui",
-        "commonMidweight": 20,
-        "liquidCoinDelta": -0.15200000000000002,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "hainan",
-        "commonMidweight": 19.52,
-        "liquidCoinDelta": -0.13280000000000003,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "dongbei",
-        "commonMidweight": 21.220000000000002,
-        "liquidCoinDelta": -0.2008000000000001,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "xibei",
-        "commonMidweight": 24.12,
-        "liquidCoinDelta": -0.3168000000000001,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
-      },
-      {
-        "regionId": "qingzang",
-        "commonMidweight": 22.099999999999998,
-        "liquidCoinDelta": -0.23599999999999988,
-        "basis": "Common-quality fresh fish at species midpoint weight sold in same region; not actual full-quality EV."
+        "toLevel": 3,
+        "basePrice": 9000,
+        "paidPrice": 8100,
+        "saving": 900
       }
-    ]
+    ],
+    "routeCount": 132,
+    "routeBaseRange": [
+      200,
+      6000
+    ],
+    "routePaidRange": [
+      180,
+      5400
+    ],
+    "transactionBehaviorImplementedOrTested": false
+  },
+  "grossTarget": {
+    "userConfirmed": true,
+    "meanApproximately": 50,
+    "notPerCatchGuarantee": true,
+    "notUpperCap": true,
+    "definition": "Successful catch gross: local fresh fish immediately sold plus directly sellable item face value; excludes costs, repair, couponsavings, stock value, manual future bonuses and arbitrage.",
+    "fullEconomicProposalReviewed": false
   },
   "implementationRequirements": [
-    "Bump serialized schema to4 for new item/appearance identities; preserve raw legacy slots before migration",
-    "Separate new drop-table rule version from existing buff/repair version1",
-    "Explicit item-price and capability dispatch; no watch50 fallback for new types",
-    "Bait conversion removes one UID and adds exactly1 baitCount atomically; never resets baitLeft",
-    "Minimal restores true historical classic; whitecape is an independent optional identity",
-    "PolicyB old-save gift requires explicit approval and records migration-gift rather than false paid provenance",
-    "Read-only bottle/compass never grant assets or bypass flight/freshness/route rules"
+    "Schema4 once for new IDs/items, two pending discounts and minimal settlement provenance",
+    "Activation removes one sourceUID and creates exactly one matching benefit atomically; no same-kind replacement",
+    "SourceUID absent from live items and unique across pending benefits",
+    "Payment quote and settlement share same rule; funds checked against discounted payable, not base",
+    "Successful matching payment clears only matching benefit; free REAL_VISIT/invalid/insufficient/max-level/flying do not consume",
+    "New travel persists baseFare,actual farePaid,discount source/version; legacy travel keeps original paid fare without reprice",
+    "Numeric rod upgrade receipt distinguished from cosmetic purchase",
+    "Keep existing buff/repair version1 separate from new drop-table version"
   ],
-  "pendingUserDecisions": [
-    "Classic default and optional whitecape pack",
-    "A paid-for-all vs B one-time gift for valid schema<=3 migrations; proposed650 coin price",
-    "Six items and5.8% total item rate; fish94.2%"
-  ],
+  "sourceBoundaryCheck": {
+    "relevantFiles": 8,
+    "allMatchV1SourceSnapshot": true
+  },
+  "pendingUserApproval": true,
   "featureAcceptancePassed": false,
   "productFilesWrittenByThisRole": false,
-  "documentationBoundaryCheck": {
-    "checkedFiles": 8,
-    "allMatchProductBefore": true,
-    "scope": "Only the eight relevant files in this review; Leader separately checks the complete product snapshot."
+  "mainApprovalSpec": {
+    "status": "PENDING_V2_FREEZE_AND_FINAL_REVIEW"
+  },
+  "archive": {
+    "previousReview": "REVIEW_CHECK.v1.json",
+    "previousNarrative": "README.v1.md"
   },
   "crossRoleConsistency": {
-    "classicArt": "True original1.1.1 recovered; minimal stays free; independent whitecape identity; character-specific geometry, not global FISHER rollback",
-    "creative": "All six IDs/prices/weights agree; only bait box consumes, bottle and compass read-only; all active item buttons disabled while flying; exact noteId/noteVersion persisted; routes sorted price/duration/id",
-    "reviewed": true
-  },
-  "mainApprovalSpec": {
-    "path": "docs/classic-items-proposal/SPEC.md",
-    "sha256": "df635146df880d8f15d2803baaed1de94e13c186aeb97508150e2155be23333d",
-    "reviewedInFull": true,
-    "materialContradictions": [],
-    "status": "CONSISTENT_AND_READY_FOR_USER_APPROVAL",
-    "checks": [
-      "B recommendation is conditional on explicit user approval;650 game coins for new schema4 saves",
-      "Only minimal returns to historical classic; all other owned equipment retained",
-      "Six new items400 slots; fish9420; old three absolute rates unchanged",
-      "Schema4 and separate loot/buff versions required",
-      "All active item buttons disabled while flying",
-      "Approval gate and deferred features explicit; three separate approval choices"
-    ],
-    "featureAcceptancePassed": false
-  },
-  "leaderBoundaryEvidence": {
-    "path": "docs/classic-items-proposal/DOCUMENT_SCOPE_CHECK.json",
-    "passed": true,
-    "beforeFiles": 201,
-    "afterFiles": 201,
-    "changed": 0,
-    "added": 0,
-    "attribution": "Produced by Leader, read by this reviewer; reviewer independently compared eight relevant source hashes earlier, not a second full201-file run."
+    "creativeV2": true,
+    "fullWeightsAndPricesMatch": true,
+    "all132TicketQuotesMatch": true,
+    "all3RodQuotesMatch": true,
+    "sourceUIDAndFlightConstraintsAligned": true,
+    "bottleDeferred": true,
+    "scope": "Document arithmetic and semantic consistency only; coupons not implemented or transaction-tested."
   }
 }

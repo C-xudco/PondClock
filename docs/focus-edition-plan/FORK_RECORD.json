@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-27",
+  "timeZone": "Asia/Shanghai",
+  "demandSplitPoint": "This chat request introducing first-edition focus timer, removal of numeric rod upgrades and automatic/active fishing",
+  "userClarification": "我现在说的所有都是第一版，第二版我还没给你说，我只是现在希望你开发第一版同时知道是什么时候开始分行一二版的",
+  "confirmedUseCounting": "每触发一次收鱼进度条扣1次，空挥不扣",
+  "secondEdition": {"status":"UNDEFINED","features":null,"branch":null,"saveNamespace":null},
+  "firstEdition": {"status":"PLAN_FOR_REVIEW","proposedEditionId":"focus-v1","proposedBranch":"edition/first-focus","actualBranchCreated":false,"productChangesMadeThisRound":false},
+  "sourceState": {"lastDeliveredCommit":"96fd232","lastDeliveredVersion":"1.3.0","headAtObservation":"1f1a7c73793ce489756da9b7871d93118a28dd75","headKind":"documentation commit","workingTreePackageVersion":"1.3.1","uncommittedCandidatePreserved":true,"snapshot":"PRODUCT_BEFORE.json","snapshotKind":"working tree observation, not a clean release baseline"},
+  "technicalForkGate": "Before first functional change, freeze exact code/lockfile/assets and old-package hashes; resolve existing candidate decisions; record immutable baseline and then first-edition implementation ref",
+  "savePolicyProposal": "Independent first-edition userData and application identity; copy-based old-save import with raw backup; no automatic writable save sharing or bidirectional synchronization",
+  "approval": {"implementationPlanApproved":false,"specificNumericRecommendationsApproved":false,"reason":"User requested planning first; previous document-before-micro-update gate retained for concrete new recommendations."}
+}

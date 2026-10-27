@@ -1,0 +1,379 @@
+{
+  "date": "2026-10-27",
+  "status": "DRAFT_NOT_IMPLEMENTED",
+  "scope": "First edition only; five additional regions, not replacements. Coordinates are approximate planning points pending geographic verification.",
+  "newSpecies": [
+    {
+      "id": "maisui",
+      "name": "麦穗鱼",
+      "scientificName": "Pseudorasbora parva",
+      "catalogueRecord": null,
+      "evidence": "regional-supplement",
+      "referenceIds": [
+        "T1",
+        "B1"
+      ],
+      "basePriceDraft": 21,
+      "wt": [
+        0.01,
+        0.06
+      ]
+    },
+    {
+      "id": "huahuan",
+      "name": "花䱻",
+      "scientificName": "Hemibarbus maculatus",
+      "catalogueRecord": null,
+      "evidence": "regional-supplement",
+      "referenceIds": [
+        "T1",
+        "B2"
+      ],
+      "basePriceDraft": 26,
+      "wt": [
+        0.1,
+        1.5
+      ]
+    },
+    {
+      "id": "hechuanshatangli",
+      "name": "河川沙塘鳢",
+      "scientificName": "Odontobutis potamophila",
+      "catalogueRecord": null,
+      "evidence": "regional-supplement",
+      "referenceIds": [
+        "T1"
+      ],
+      "basePriceDraft": 26,
+      "wt": [
+        0.03,
+        0.25
+      ]
+    },
+    {
+      "id": "xushipingyou",
+      "name": "许氏平鲉",
+      "scientificName": "Sebastes schlegelii",
+      "catalogueRecord": "F1360",
+      "evidence": "catalogue-A-and-regional-list",
+      "referenceIds": [
+        "W1"
+      ],
+      "basePriceDraft": 33,
+      "wt": [
+        0.2,
+        2
+      ]
+    },
+    {
+      "id": "dalongliuxian",
+      "name": "大泷六线鱼",
+      "scientificName": "Hexagrammos otakii",
+      "catalogueRecord": "F0657",
+      "evidence": "catalogue-A-and-regional-list",
+      "referenceIds": [
+        "W1"
+      ],
+      "basePriceDraft": 30,
+      "wt": [
+        0.15,
+        1.5
+      ]
+    },
+    {
+      "id": "heidiao",
+      "name": "黑鲷",
+      "scientificName": "Acanthopagrus schlegelii",
+      "catalogueRecord": "F1411",
+      "evidence": "catalogue-A-and-regional-list",
+      "referenceIds": [
+        "W1"
+      ],
+      "basePriceDraft": 34,
+      "wt": [
+        0.2,
+        2.5
+      ]
+    }
+  ],
+  "newRegions": [
+    {
+      "id": "taihu",
+      "name": "江南·太湖",
+      "landmark": "鼋头渚湖岸",
+      "address": "江苏省无锡市太湖鼋头渚一带",
+      "coordinateStatus": "planning-approximation",
+      "latitude": 31.52,
+      "longitude": 120.22,
+      "ipCityCandidates": [
+        "无锡",
+        "苏州",
+        "湖州"
+      ],
+      "fish": [
+        [
+          "jiyu",
+          23
+        ],
+        [
+          "liyu",
+          18
+        ],
+        [
+          "baitiao",
+          10
+        ],
+        [
+          "lianyu",
+          10
+        ],
+        [
+          "huangsang",
+          10
+        ],
+        [
+          "qiaozuibai",
+          7
+        ],
+        [
+          "maisui",
+          8
+        ],
+        [
+          "huahuan",
+          7
+        ],
+        [
+          "hechuanshatangli",
+          7
+        ]
+      ],
+      "referenceIds": [
+        "T1"
+      ],
+      "artBrief": "辽阔湖面、帆影、湖石与樱枝；简洁版保持留白",
+      "legacyUnlockRegionId": "jiangnan"
+    },
+    {
+      "id": "dongting",
+      "name": "湖湘·洞庭湖",
+      "landmark": "岳阳—君山湖面",
+      "address": "湖南省岳阳市洞庭湖君山一带",
+      "coordinateStatus": "planning-approximation",
+      "latitude": 29.38,
+      "longitude": 113.1,
+      "ipCityCandidates": [
+        "岳阳"
+      ],
+      "fish": [
+        [
+          "jiyu",
+          16
+        ],
+        [
+          "liyu",
+          14
+        ],
+        [
+          "caoyu",
+          16
+        ],
+        [
+          "lianyu",
+          14
+        ],
+        [
+          "yongyu",
+          14
+        ],
+        [
+          "huangsang",
+          12
+        ],
+        [
+          "qingyu",
+          8
+        ],
+        [
+          "nianyu",
+          6
+        ]
+      ],
+      "referenceIds": [
+        "D1"
+      ],
+      "artBrief": "洲滩、芦苇、远处君山；水面开阔",
+      "legacyUnlockRegionId": "changjiang"
+    },
+    {
+      "id": "jialing",
+      "name": "川渝·嘉陵江",
+      "landmark": "合川三江汇流",
+      "address": "重庆市合川区嘉陵江汇流河段一带",
+      "coordinateStatus": "planning-approximation",
+      "latitude": 29.99,
+      "longitude": 106.25,
+      "ipCityCandidates": [
+        "合川"
+      ],
+      "fish": [
+        [
+          "liyu",
+          20
+        ],
+        [
+          "jiyu",
+          18
+        ],
+        [
+          "caoyu",
+          16
+        ],
+        [
+          "lianyu",
+          12
+        ],
+        [
+          "yongyu",
+          12
+        ],
+        [
+          "qingyu",
+          8
+        ],
+        [
+          "huangsang",
+          8
+        ],
+        [
+          "nianyu",
+          6
+        ]
+      ],
+      "referenceIds": [
+        "J1",
+        "J2"
+      ],
+      "artBrief": "缓急相接的江水、层叠山岸与古城屋檐",
+      "legacyUnlockRegionId": "xinan"
+    },
+    {
+      "id": "baiyangdian",
+      "name": "华北·白洋淀",
+      "landmark": "安新芦苇水巷",
+      "address": "河北省雄安新区安新县白洋淀一带",
+      "coordinateStatus": "planning-approximation",
+      "latitude": 38.94,
+      "longitude": 115.99,
+      "ipCityCandidates": [
+        "安新",
+        "雄安"
+      ],
+      "fish": [
+        [
+          "jiyu",
+          30
+        ],
+        [
+          "liyu",
+          20
+        ],
+        [
+          "huangsang",
+          15
+        ],
+        [
+          "nianyu",
+          10
+        ],
+        [
+          "maisui",
+          15
+        ],
+        [
+          "huahuan",
+          10
+        ]
+      ],
+      "referenceIds": [
+        "B1",
+        "B2"
+      ],
+      "artBrief": "芦苇、荷叶与曲折水巷；不套用南方高山",
+      "legacyUnlockRegionId": "huanghe"
+    },
+    {
+      "id": "jiaodong",
+      "name": "胶东·威海近海",
+      "landmark": "刘公岛远眺",
+      "address": "山东省威海市威海湾—刘公岛近岸海域意象",
+      "coordinateStatus": "planning-approximation",
+      "latitude": 37.5,
+      "longitude": 122.18,
+      "ipCityCandidates": [
+        "威海"
+      ],
+      "fish": [
+        [
+          "hualu",
+          24
+        ],
+        [
+          "xushipingyou",
+          28
+        ],
+        [
+          "dalongliuxian",
+          28
+        ],
+        [
+          "heidiao",
+          20
+        ]
+      ],
+      "referenceIds": [
+        "W1"
+      ],
+      "artBrief": "海湾礁岸、远岛、薄浪与海鸟；不能复用淡水荷塘",
+      "legacyUnlockRegionId": "huanghe"
+    }
+  ],
+  "references": {
+    "T1": {
+      "title": "2018—2020年太湖各湖区鱼种组成：原始调查附录",
+      "url": "https://www.ere.ac.cn/attached/file/20210517/20210517100746_819.pdf",
+      "scope": "太湖各湖区，不是鼋头渚机位逐种采样"
+    },
+    "D1": {
+      "title": "湖南省农业农村厅：湘江及洞庭湖鱼类资源监测报告发布（2015）",
+      "url": "https://agri.hunan.gov.cn/xxgk/gzdt/gzdt_5/201503/t20150327_3372390.html",
+      "scope": "洞庭湖调查，支持候选八种；不宣称2026鱼量或地标精确分布"
+    },
+    "J1": {
+      "title": "重庆市政府：嘉陵江利泽航运枢纽鱼道工程竣工（2024）",
+      "url": "https://cq.gov.cn/zwgk/zfxxgkzl/fdzdgknr/zdxm/dtxx/202404/t20240416_13135540.html",
+      "scope": "合川段青、草、鲢、鳙记录"
+    },
+    "J2": {
+      "title": "苍溪县东溪镇东河防洪治理工程环境影响报告（2022）",
+      "url": "https://www.cncx.gov.cn/UploadFile/SiteFile/10000000000000001/2022/06/22/beeacfa5ed94450d8247132adf3d968b.pdf",
+      "scope": "嘉陵江支流及干流资料，支持宽水系候选，不是合川逐种定点调查"
+    },
+    "B1": {
+      "title": "白洋淀鱼类群落结构与环境因子关系分析：2019—2020原始调查",
+      "url": "https://html.rhhz.net/shhydxxb/20211003581.htm",
+      "scope": "白洋淀调查，支持鲫、鲤、鲇、黄颡与麦穗候选"
+    },
+    "B2": {
+      "title": "雄安新区：野生鱼类增加至50种（2025）",
+      "url": "https://www.xiongan.gov.cn/20250822/40a8355ed1754cbfb90380142e2ad214/c.html",
+      "scope": "花䱻恢复记录，非当前丰度统计"
+    },
+    "W1": {
+      "title": "威海市海洋游钓基地布局规划（2012—2020）：对象鱼表",
+      "url": "https://hyyy.weihai.gov.cn/module/download/downfile.jsp?classid=0&filename=1807060947296624924.pdf",
+      "scope": "威海宽海域历史对象鱼；不是刘公岛机位调查或现行垂钓许可"
+    }
+  },
+  "legacyUnlockMeaning": "Old province-level unlock fallback only; not ecological parent, basin membership or pool inheritance."
+}

@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-27",
+  "status": "PLAN_DOCUMENT_AND_ARITHMETIC_CHECK_PASS",
+  "implemented": false,
+  "checks": {
+    "productFilesUnchanged": true,
+    "allLocalMarkdownLinksExist": true,
+    "firstOnlySecondUndefined": true,
+    "fifteenGaugeCharges": true,
+    "singleRunningPlan": true,
+    "newRegionCounts": true,
+    "lootTableSums": true,
+    "economyUsesFirstEditionTable": true,
+    "colorsSumOne": true,
+    "uniformColorSuccess": true,
+    "no17AreaCalibrationClaim": true,
+    "mixedHourlyWithinBounds": true
+  },
+  "runtime": {
+    "node": "v24.22.1",
+    "pnpmDeclared": "pnpm@11.25.0"
+  },
+  "productSnapshotFiles": 201,
+  "productChanged": [],
+  "productAdded": [],
+  "markdownFiles": 10,
+  "checkedLocalLinks": 68,
+  "brokenLinks": [],
+  "primaryDocHashes": {
+    "SPEC.md": "ed7420780cab760ae2b2ccc47f5570ecd977843796dfdc94cd8829f6118ae557",
+    "REGIONS.md": "536ff7663ea6dae59b6316c966fb196b839bc8df01dd34812fd72665768d9d66",
+    "REGION_CANDIDATE.json": "17f7a420d4400e88328102db2becf23911d5f2b57fa9d385ed4e4b84c92b69a9",
+    "FORK_RECORD.json": "475d8a49356a0c9945b53362269efb440ae55888d3a4825871f65fd6d79200bb"
+  },
+  "notValidated": [
+    "No first-edition product implementation or migration",
+    "No final17-region expected-reward calibration",
+    "No verified new coordinates or completed angling evidence",
+    "No UI, keyboard, timer, network, executable, installer or release acceptance"
+  ]
+}

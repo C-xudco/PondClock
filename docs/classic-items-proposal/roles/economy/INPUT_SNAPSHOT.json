@@ -1,0 +1,1574 @@
+{
+  "capturedOn": "2026-10-26",
+  "status": "PROPOSAL_INPUT_ONLY",
+  "FISH": [
+    {
+      "id": "baitiao",
+      "name": "白条",
+      "basePrice": 2,
+      "len": [
+        8,
+        18
+      ],
+      "wt": [
+        0.02,
+        0.12
+      ],
+      "qw": {
+        "common": 89.5,
+        "rare": 9.3,
+        "epic": 1,
+        "legendary": 0.2
+      },
+      "habitat": "长江下游干流与湖泊中上层"
+    },
+    {
+      "id": "jiyu",
+      "name": "鲫鱼",
+      "basePrice": 4,
+      "len": [
+        8,
+        25
+      ],
+      "wt": [
+        0.08,
+        0.6
+      ],
+      "qw": {
+        "common": 89.5,
+        "rare": 9.3,
+        "epic": 1,
+        "legendary": 0.2
+      },
+      "habitat": "长江、淮河、黄河水系河湖底层"
+    },
+    {
+      "id": "bianyu",
+      "name": "鳊鱼",
+      "basePrice": 7,
+      "len": [
+        15,
+        35
+      ],
+      "wt": [
+        0.2,
+        1.2
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "长江下游湖泊中下层"
+    },
+    {
+      "id": "liyu",
+      "name": "鲤鱼",
+      "basePrice": 11,
+      "len": [
+        25,
+        60
+      ],
+      "wt": [
+        1,
+        6
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "黄河、长江干流与湖泊底层"
+    },
+    {
+      "id": "caoyu",
+      "name": "草鱼",
+      "basePrice": 11,
+      "len": [
+        30,
+        80
+      ],
+      "wt": [
+        1.5,
+        10
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "长江中下游水草区中上层"
+    },
+    {
+      "id": "guiyu",
+      "name": "鳜鱼",
+      "basePrice": 30,
+      "len": [
+        18,
+        50
+      ],
+      "wt": [
+        0.4,
+        3
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "长江、珠江与黄河下游岩缝伏击"
+    },
+    {
+      "id": "lianyu",
+      "name": "鲢鱼",
+      "basePrice": 8,
+      "len": [
+        30,
+        80
+      ],
+      "wt": [
+        1.5,
+        8
+      ],
+      "qw": {
+        "common": 89.5,
+        "rare": 9.3,
+        "epic": 1,
+        "legendary": 0.2
+      },
+      "habitat": "淮河、黄河干流中上层滤食"
+    },
+    {
+      "id": "yongyu",
+      "name": "鳙鱼",
+      "basePrice": 12,
+      "len": [
+        35,
+        90
+      ],
+      "wt": [
+        2,
+        12
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "淮河与长江中游敞水区"
+    },
+    {
+      "id": "wuliyu",
+      "name": "乌鳢",
+      "basePrice": 15,
+      "len": [
+        20,
+        50
+      ],
+      "wt": [
+        0.4,
+        2.5
+      ],
+      "qw": {
+        "common": 88.5,
+        "rare": 10,
+        "epic": 1.3,
+        "legendary": 0.2
+      },
+      "habitat": "淮河水草区与沟渠肉食性"
+    },
+    {
+      "id": "huangsang",
+      "name": "黄颡鱼",
+      "basePrice": 8,
+      "len": [
+        10,
+        22
+      ],
+      "wt": [
+        0.05,
+        0.25
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "淮河与闽江底层夜行"
+    },
+    {
+      "id": "nianyu",
+      "name": "鲶鱼",
+      "basePrice": 11,
+      "len": [
+        25,
+        70
+      ],
+      "wt": [
+        1,
+        5
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "黄河与长江上游深潭底层"
+    },
+    {
+      "id": "qingyu",
+      "name": "青鱼",
+      "basePrice": 20,
+      "len": [
+        40,
+        110
+      ],
+      "wt": [
+        3,
+        20
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "长江中游深水底层"
+    },
+    {
+      "id": "qiaozuibai",
+      "name": "翘嘴鲌",
+      "basePrice": 13,
+      "len": [
+        20,
+        60
+      ],
+      "wt": [
+        0.3,
+        3
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "长江中游敞水中上层"
+    },
+    {
+      "id": "tuantoufang",
+      "name": "团头鲂",
+      "basePrice": 9,
+      "len": [
+        18,
+        40
+      ],
+      "wt": [
+        0.3,
+        1.8
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "长江中游湖泊水草区"
+    },
+    {
+      "id": "xiangyu",
+      "name": "香鱼",
+      "basePrice": 18,
+      "len": [
+        12,
+        25
+      ],
+      "wt": [
+        0.05,
+        0.2
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "闽江下游与东南沿海溪流"
+    },
+    {
+      "id": "hualu",
+      "name": "花鲈",
+      "basePrice": 22,
+      "len": [
+        20,
+        60
+      ],
+      "wt": [
+        0.4,
+        3.5
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "闽江河口与东南近海"
+    },
+    {
+      "id": "ziyu",
+      "name": "鲻鱼",
+      "basePrice": 9,
+      "len": [
+        15,
+        45
+      ],
+      "wt": [
+        0.2,
+        1.5
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "东南沿海河口咸淡水"
+    },
+    {
+      "id": "manyu",
+      "name": "鳗鲡",
+      "basePrice": 30,
+      "len": [
+        30,
+        70
+      ],
+      "wt": [
+        0.3,
+        2
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "闽江与东南沿海河海洄游"
+    },
+    {
+      "id": "lingyu",
+      "name": "鲮鱼",
+      "basePrice": 5,
+      "len": [
+        12,
+        30
+      ],
+      "wt": [
+        0.1,
+        1
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "珠江流域底层刮食"
+    },
+    {
+      "id": "huzinian",
+      "name": "胡子鲶",
+      "basePrice": 6,
+      "len": [
+        15,
+        40
+      ],
+      "wt": [
+        0.1,
+        1.5
+      ],
+      "qw": {
+        "common": 89.5,
+        "rare": 9.3,
+        "epic": 1,
+        "legendary": 0.2
+      },
+      "habitat": "珠江三角洲沟渠与池塘"
+    },
+    {
+      "id": "luofeiyu",
+      "name": "罗非鱼",
+      "basePrice": 4,
+      "len": [
+        10,
+        28
+      ],
+      "wt": [
+        0.1,
+        1
+      ],
+      "qw": {
+        "common": 89.5,
+        "rare": 9.3,
+        "epic": 1,
+        "legendary": 0.2
+      },
+      "habitat": "岭南与海南温暖水域"
+    },
+    {
+      "id": "huanmanyu",
+      "name": "花鳗鲡",
+      "basePrice": 55,
+      "len": [
+        40,
+        100
+      ],
+      "wt": [
+        1,
+        6
+      ],
+      "qw": {
+        "common": 88.5,
+        "rare": 9.5,
+        "epic": 1.7,
+        "legendary": 0.3
+      },
+      "habitat": "海南岛河流与河口洄游"
+    },
+    {
+      "id": "daciqiu",
+      "name": "大刺鳅",
+      "basePrice": 20,
+      "len": [
+        20,
+        55
+      ],
+      "wt": [
+        0.1,
+        0.7
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "海南岛山溪石缝"
+    },
+    {
+      "id": "changwenwei",
+      "name": "长吻鮠",
+      "basePrice": 30,
+      "len": [
+        25,
+        60
+      ],
+      "wt": [
+        0.5,
+        4
+      ],
+      "qw": {
+        "common": 86,
+        "rare": 12,
+        "epic": 1.7,
+        "legendary": 0.3
+      },
+      "habitat": "长江上游岷江等深水底层"
+    },
+    {
+      "id": "yanyuanli",
+      "name": "岩原鲤",
+      "basePrice": 24,
+      "len": [
+        20,
+        45
+      ],
+      "wt": [
+        0.5,
+        2.5
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "长江上游峡谷岩缝"
+    },
+    {
+      "id": "zhonghuadaociba",
+      "name": "中华倒刺鲃",
+      "basePrice": 20,
+      "len": [
+        25,
+        55
+      ],
+      "wt": [
+        0.8,
+        4
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "长江上游急流回水沱"
+    },
+    {
+      "id": "kanglangbaiyu",
+      "name": "鱇浪白鱼",
+      "basePrice": 20,
+      "len": [
+        8,
+        18
+      ],
+      "wt": [
+        0.02,
+        0.1
+      ],
+      "qw": {
+        "common": 86,
+        "rare": 12,
+        "epic": 1.7,
+        "legendary": 0.3
+      },
+      "habitat": "抚仙湖敞水上层"
+    },
+    {
+      "id": "daliliefuyu",
+      "name": "大理裂腹鱼",
+      "basePrice": 24,
+      "len": [
+        15,
+        35
+      ],
+      "wt": [
+        0.1,
+        0.8
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "洱海与滇西高原湖泊"
+    },
+    {
+      "id": "dianchijinyuba",
+      "name": "滇池金线鲃",
+      "basePrice": 26,
+      "len": [
+        8,
+        18
+      ],
+      "wt": [
+        0.02,
+        0.1
+      ],
+      "qw": {
+        "common": 86.5,
+        "rare": 11,
+        "epic": 2.1,
+        "legendary": 0.4
+      },
+      "habitat": "滇池地下涌泉与溶洞"
+    },
+    {
+      "id": "damahayu",
+      "name": "大马哈鱼",
+      "basePrice": 28,
+      "len": [
+        45,
+        90
+      ],
+      "wt": [
+        1.5,
+        8
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "黑龙江与乌苏里江洄游"
+    },
+    {
+      "id": "zheluogui",
+      "name": "哲罗鲑",
+      "basePrice": 45,
+      "len": [
+        50,
+        130
+      ],
+      "wt": [
+        2,
+        25
+      ],
+      "qw": {
+        "common": 86.5,
+        "rare": 11,
+        "epic": 2.1,
+        "legendary": 0.4
+      },
+      "habitat": "黑龙江上游冷水急流"
+    },
+    {
+      "id": "heilongjianghuiyu",
+      "name": "黑龙江茴鱼",
+      "basePrice": 22,
+      "len": [
+        20,
+        45
+      ],
+      "wt": [
+        0.1,
+        1
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "黑龙江上游清澈冷溪"
+    },
+    {
+      "id": "baibangouyu",
+      "name": "白斑狗鱼",
+      "basePrice": 18,
+      "len": [
+        35,
+        90
+      ],
+      "wt": [
+        0.5,
+        6
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "黑龙江与额尔齐斯河草滩"
+    },
+    {
+      "id": "jiangxue",
+      "name": "江鳕",
+      "basePrice": 20,
+      "len": [
+        30,
+        70
+      ],
+      "wt": [
+        0.3,
+        4
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "黑龙江深水底层"
+    },
+    {
+      "id": "talimuliefuyu",
+      "name": "塔里木裂腹鱼",
+      "basePrice": 24,
+      "len": [
+        15,
+        35
+      ],
+      "wt": [
+        0.1,
+        1
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "塔里木河与博斯腾湖"
+    },
+    {
+      "id": "xinjiangdatouyu",
+      "name": "新疆大头鱼",
+      "basePrice": 45,
+      "len": [
+        40,
+        90
+      ],
+      "wt": [
+        2,
+        10
+      ],
+      "qw": {
+        "common": 86.5,
+        "rare": 11,
+        "epic": 2.1,
+        "legendary": 0.4
+      },
+      "habitat": "塔里木河水系深潭"
+    },
+    {
+      "id": "helu",
+      "name": "河鲈",
+      "basePrice": 20,
+      "len": [
+        15,
+        35
+      ],
+      "wt": [
+        0.15,
+        1
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "额尔齐斯河与伊犁河"
+    },
+    {
+      "id": "qinghailuoli",
+      "name": "青海湖裸鲤",
+      "basePrice": 26,
+      "len": [
+        20,
+        45
+      ],
+      "wt": [
+        0.2,
+        1.5
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "青海湖咸水湖"
+    },
+    {
+      "id": "namucuoluoli",
+      "name": "纳木错裸鲤",
+      "basePrice": 24,
+      "len": [
+        15,
+        35
+      ],
+      "wt": [
+        0.1,
+        0.8
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "纳木错高原咸水湖"
+    },
+    {
+      "id": "lasaliefuyu",
+      "name": "拉萨裂腹鱼",
+      "basePrice": 24,
+      "len": [
+        20,
+        50
+      ],
+      "wt": [
+        0.2,
+        1.8
+      ],
+      "qw": {
+        "common": 87.5,
+        "rare": 10.2,
+        "epic": 1.9,
+        "legendary": 0.4
+      },
+      "habitat": "雅鲁藏布江与拉萨河"
+    },
+    {
+      "id": "gaoyuanluoli",
+      "name": "高原裸鲤",
+      "basePrice": 26,
+      "len": [
+        18,
+        38
+      ],
+      "wt": [
+        0.15,
+        1
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "羊卓雍错等高原湖泊"
+    },
+    {
+      "id": "xiweigaoyuanqiu",
+      "name": "细尾高原鳅",
+      "basePrice": 4,
+      "len": [
+        6,
+        15
+      ],
+      "wt": [
+        0.005,
+        0.04
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "青藏高原溪流石隙"
+    },
+    {
+      "id": "guangzehuangsang",
+      "name": "光泽黄颡鱼",
+      "basePrice": 7,
+      "len": [
+        10,
+        20
+      ],
+      "wt": [
+        0.04,
+        0.2
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "长江中下游干流与太湖底层；宽水系鱼池"
+    },
+    {
+      "id": "washihuangsang",
+      "name": "瓦氏黄颡鱼",
+      "basePrice": 10,
+      "len": [
+        15,
+        35
+      ],
+      "wt": [
+        0.1,
+        1
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "长江中下游干流与太湖底层；宽水系鱼池"
+    },
+    {
+      "id": "hongqiyuanbai",
+      "name": "红鳍原鲌",
+      "basePrice": 11,
+      "len": [
+        15,
+        40
+      ],
+      "wt": [
+        0.15,
+        1.3
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "长江中下游干流与湖泊；宽水系鱼池"
+    },
+    {
+      "id": "menggubai",
+      "name": "蒙古鲌",
+      "basePrice": 14,
+      "len": [
+        20,
+        55
+      ],
+      "wt": [
+        0.3,
+        2.5
+      ],
+      "qw": {
+        "common": 88,
+        "rare": 10.4,
+        "epic": 1.4,
+        "legendary": 0.2
+      },
+      "habitat": "长江中下游干流与湖泊；宽水系鱼池"
+    },
+    {
+      "id": "ganyu",
+      "name": "鳡",
+      "basePrice": 32,
+      "len": [
+        35,
+        100
+      ],
+      "wt": [
+        1.2,
+        12
+      ],
+      "qw": {
+        "common": 88.5,
+        "rare": 10,
+        "epic": 1.3,
+        "legendary": 0.2
+      },
+      "habitat": "长江中下游干流敞水区；宽水系鱼池"
+    },
+    {
+      "id": "chiyanzun",
+      "name": "赤眼鳟",
+      "basePrice": 9,
+      "len": [
+        15,
+        40
+      ],
+      "wt": [
+        0.15,
+        1.5
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "长江中下游江湖水域；宽水系鱼池"
+    },
+    {
+      "id": "chunhuan",
+      "name": "唇䱻",
+      "basePrice": 10,
+      "len": [
+        18,
+        45
+      ],
+      "wt": [
+        0.2,
+        2
+      ],
+      "qw": {
+        "common": 89,
+        "rare": 9.6,
+        "epic": 1.2,
+        "legendary": 0.2
+      },
+      "habitat": "长江中游枝江、黄石调查江段；宽水系鱼池"
+    },
+    {
+      "id": "banli",
+      "name": "斑鳢",
+      "basePrice": 14,
+      "len": [
+        18,
+        45
+      ],
+      "wt": [
+        0.25,
+        2
+      ],
+      "qw": {
+        "common": 88.5,
+        "rare": 10,
+        "epic": 1.3,
+        "legendary": 0.2
+      },
+      "habitat": "珠江、闽江与湘江水系野生群体记录；宽水系鱼池"
+    }
+  ],
+  "REGIONS": [
+    {
+      "id": "jiangnan",
+      "name": "华东·长江下游",
+      "waterSystem": "长江下游干流、太湖与巢湖水系",
+      "tier": 1,
+      "flightPrice": 0,
+      "fish": [
+        [
+          "baitiao",
+          30
+        ],
+        [
+          "jiyu",
+          32
+        ],
+        [
+          "bianyu",
+          12
+        ],
+        [
+          "liyu",
+          11
+        ],
+        [
+          "caoyu",
+          10
+        ],
+        [
+          "guiyu",
+          5
+        ],
+        [
+          "guangzehuangsang",
+          4
+        ],
+        [
+          "washihuangsang",
+          3
+        ],
+        [
+          "hongqiyuanbai",
+          3
+        ],
+        [
+          "menggubai",
+          3
+        ],
+        [
+          "ganyu",
+          1
+        ],
+        [
+          "chiyanzun",
+          4
+        ]
+      ]
+    },
+    {
+      "id": "huaihe",
+      "name": "黄淮·淮河水系",
+      "waterSystem": "淮河干流及洪泽湖、南四湖水系",
+      "tier": 2,
+      "flightPrice": 1000,
+      "fish": [
+        [
+          "jiyu",
+          30
+        ],
+        [
+          "lianyu",
+          18
+        ],
+        [
+          "yongyu",
+          14
+        ],
+        [
+          "liyu",
+          14
+        ],
+        [
+          "wuliyu",
+          14
+        ],
+        [
+          "huangsang",
+          10
+        ]
+      ]
+    },
+    {
+      "id": "huanghe",
+      "name": "华北·黄河水系",
+      "waterSystem": "黄河中下游干流与汾河、渭河水系",
+      "tier": 3,
+      "flightPrice": 1200,
+      "fish": [
+        [
+          "liyu",
+          32
+        ],
+        [
+          "jiyu",
+          26
+        ],
+        [
+          "caoyu",
+          16
+        ],
+        [
+          "lianyu",
+          12
+        ],
+        [
+          "nianyu",
+          8
+        ],
+        [
+          "guiyu",
+          6
+        ]
+      ]
+    },
+    {
+      "id": "changjiang",
+      "name": "华中·长江中游",
+      "waterSystem": "长江中游干流、洞庭湖与鄱阳湖水系",
+      "tier": 4,
+      "flightPrice": 1800,
+      "fish": [
+        [
+          "caoyu",
+          20
+        ],
+        [
+          "yongyu",
+          18
+        ],
+        [
+          "guiyu",
+          14
+        ],
+        [
+          "qiaozuibai",
+          22
+        ],
+        [
+          "qingyu",
+          12
+        ],
+        [
+          "tuantoufang",
+          14
+        ],
+        [
+          "guangzehuangsang",
+          4
+        ],
+        [
+          "washihuangsang",
+          4
+        ],
+        [
+          "hongqiyuanbai",
+          4
+        ],
+        [
+          "menggubai",
+          4
+        ],
+        [
+          "ganyu",
+          1
+        ],
+        [
+          "chiyanzun",
+          4
+        ],
+        [
+          "chunhuan",
+          3
+        ],
+        [
+          "banli",
+          2
+        ]
+      ]
+    },
+    {
+      "id": "dongnan",
+      "name": "东南·闽江与东南沿海",
+      "waterSystem": "闽江干流与东南沿海河口",
+      "tier": 5,
+      "flightPrice": 2200,
+      "fish": [
+        [
+          "xiangyu",
+          18
+        ],
+        [
+          "hualu",
+          16
+        ],
+        [
+          "manyu",
+          14
+        ],
+        [
+          "ziyu",
+          22
+        ],
+        [
+          "huangsang",
+          16
+        ],
+        [
+          "caoyu",
+          14
+        ],
+        [
+          "banli",
+          4
+        ]
+      ]
+    },
+    {
+      "id": "lingnan",
+      "name": "岭南·珠江流域",
+      "waterSystem": "珠江流域西江、北江水系与珠江三角洲",
+      "tier": 6,
+      "flightPrice": 2400,
+      "fish": [
+        [
+          "guiyu",
+          36
+        ],
+        [
+          "caoyu",
+          16
+        ],
+        [
+          "yongyu",
+          16
+        ],
+        [
+          "lingyu",
+          14
+        ],
+        [
+          "huzinian",
+          10
+        ],
+        [
+          "luofeiyu",
+          8
+        ],
+        [
+          "banli",
+          6
+        ]
+      ]
+    },
+    {
+      "id": "xinan",
+      "name": "西南·长江上游",
+      "waterSystem": "长江上游金沙江、岷江与嘉陵江水系",
+      "tier": 7,
+      "flightPrice": 3200,
+      "fish": [
+        [
+          "liyu",
+          22
+        ],
+        [
+          "caoyu",
+          20
+        ],
+        [
+          "nianyu",
+          16
+        ],
+        [
+          "changwenwei",
+          16
+        ],
+        [
+          "yanyuanli",
+          12
+        ],
+        [
+          "zhonghuadaociba",
+          14
+        ]
+      ]
+    },
+    {
+      "id": "yungui",
+      "name": "云贵高原湖泊",
+      "waterSystem": "滇池、洱海、抚仙湖等高原湖泊",
+      "tier": 8,
+      "flightPrice": 3600,
+      "fish": [
+        [
+          "jiyu",
+          20
+        ],
+        [
+          "kanglangbaiyu",
+          24
+        ],
+        [
+          "daliliefuyu",
+          18
+        ],
+        [
+          "dianchijinyuba",
+          18
+        ],
+        [
+          "liyu",
+          12
+        ],
+        [
+          "caoyu",
+          8
+        ]
+      ]
+    },
+    {
+      "id": "hainan",
+      "name": "华南·海南岛",
+      "waterSystem": "南渡江、万泉河与海南岛河口",
+      "tier": 9,
+      "flightPrice": 4000,
+      "fish": [
+        [
+          "huanmanyu",
+          18
+        ],
+        [
+          "daciqiu",
+          22
+        ],
+        [
+          "luofeiyu",
+          18
+        ],
+        [
+          "lingyu",
+          14
+        ],
+        [
+          "huzinian",
+          14
+        ],
+        [
+          "caoyu",
+          14
+        ]
+      ]
+    },
+    {
+      "id": "dongbei",
+      "name": "东北·黑龙江水系",
+      "waterSystem": "黑龙江、松花江与乌苏里江水系",
+      "tier": 10,
+      "flightPrice": 5200,
+      "fish": [
+        [
+          "damahayu",
+          20
+        ],
+        [
+          "baibangouyu",
+          22
+        ],
+        [
+          "zheluogui",
+          8
+        ],
+        [
+          "heilongjianghuiyu",
+          14
+        ],
+        [
+          "jiangxue",
+          14
+        ],
+        [
+          "jiyu",
+          22
+        ]
+      ]
+    },
+    {
+      "id": "xibei",
+      "name": "西北·内陆河水系",
+      "waterSystem": "塔里木河、伊犁河与额尔齐斯河水系",
+      "tier": 11,
+      "flightPrice": 5600,
+      "fish": [
+        [
+          "talimuliefuyu",
+          26
+        ],
+        [
+          "helu",
+          20
+        ],
+        [
+          "baibangouyu",
+          16
+        ],
+        [
+          "jiyu",
+          14
+        ],
+        [
+          "liyu",
+          12
+        ],
+        [
+          "xinjiangdatouyu",
+          12
+        ]
+      ]
+    },
+    {
+      "id": "qingzang",
+      "name": "青藏高原湖泊",
+      "waterSystem": "青海湖、纳木错、羊卓雍错与雅鲁藏布江水系",
+      "tier": 12,
+      "flightPrice": 6000,
+      "fish": [
+        [
+          "qinghailuoli",
+          26
+        ],
+        [
+          "lasaliefuyu",
+          22
+        ],
+        [
+          "gaoyuanluoli",
+          18
+        ],
+        [
+          "namucuoluoli",
+          16
+        ],
+        [
+          "xiweigaoyuanqiu",
+          18
+        ]
+      ]
+    }
+  ],
+  "QUALITIES": [
+    {
+      "id": "common",
+      "name": "普通",
+      "mult": 1,
+      "rank": 0,
+      "text": "text-slate-300"
+    },
+    {
+      "id": "rare",
+      "name": "稀有",
+      "mult": 2.2,
+      "rank": 1,
+      "text": "text-sky-400"
+    },
+    {
+      "id": "epic",
+      "name": "史诗",
+      "mult": 5,
+      "rank": 2,
+      "text": "text-purple-400"
+    },
+    {
+      "id": "legendary",
+      "name": "传说",
+      "mult": 12,
+      "rank": 3,
+      "text": "text-amber-400"
+    }
+  ],
+  "RODS": [
+    {
+      "name": "竹竿",
+      "cost": 0,
+      "windowBonus": 0,
+      "intervalMult": 1,
+      "qualityBonus": 0
+    },
+    {
+      "name": "玻璃钢竿",
+      "cost": 600,
+      "windowBonus": 5,
+      "intervalMult": 0.85,
+      "qualityBonus": 3
+    },
+    {
+      "name": "碳素竿",
+      "cost": 2600,
+      "windowBonus": 10,
+      "intervalMult": 0.72,
+      "qualityBonus": 6
+    },
+    {
+      "name": "大师手工竿",
+      "cost": 9000,
+      "windowBonus": 15,
+      "intervalMult": 0.6,
+      "qualityBonus": 10
+    }
+  ],
+  "BAIT_COST": 120,
+  "BAIT_CATCHES": 5,
+  "BAIT_QUALITY_BONUS": 6,
+  "JUDGE": {
+    "windowSeconds": 20,
+    "bestClickStart": 3,
+    "bestClickEnd": 10,
+    "qualityBonusBest": 0
+  },
+  "PITY_THRESHOLD": 30,
+  "FISHING_CONFIG": {
+    "startCoins": 100,
+    "startBait": 2,
+    "speechMs": 4600,
+    "waitFloorSeconds": 25,
+    "idleBoostMax": 0.12,
+    "idleBoostPerHour": 0.04,
+    "firstSpeechMinSeconds": 30,
+    "firstSpeechMaxSeconds": 60,
+    "speechMinSeconds": 35,
+    "speechMaxSeconds": 75,
+    "pokeWindowMs": 10000,
+    "pokeCount": 5,
+    "qualityBonusRate": {
+      "rare": 1,
+      "epic": 0.3,
+      "legendary": 0.1
+    },
+    "pityWeightMultiplier": 5
+  },
+  "ECONOMY_CONFIG": {
+    "ruleVersion": 1,
+    "freshnessMs": 604800000,
+    "expiredPrice": 1,
+    "abundantMultiplier": 0.8,
+    "absentMultiplier": 2,
+    "minimumFreshPrice": 1,
+    "weightFactorBase": 0.7,
+    "weightFactorRate": 0.6,
+    "weightFactorMin": 0.5,
+    "weightFactorMax": 2.5
+  },
+  "sourceHashes": {
+    "src/lib/gameConfig.js": "f8908aa2d6aa0c1cd837b4e50f698ba9ede30a54272056dbfa706d371c0d9eb4",
+    "src/config/fishing.js": "2333ee5998115fd4f6456b863b28a7e83465e13230d989c72a8d41c85cab4250",
+    "src/config/economy.js": "c12bb51f071fe301ced07a8594b8502361f40ef722ebace9d1fdfa44868ea7e0",
+    "src/domain/market.js": "33c1b60adb571807482baddd12c1e113e240769f40a5d28e9854d64b6d084f38",
+    "src/domain/loot.js": "daa6fba12b0f1d34c0f9fe0998edfd045036afa51aeb67a42867609004966ebe",
+    "src/config/lootConfig.js": "cf64f68fbe837930d1da31fe4ae0512b4b4d081ef6cb09a8088a80e9187f33da"
+  }
+}

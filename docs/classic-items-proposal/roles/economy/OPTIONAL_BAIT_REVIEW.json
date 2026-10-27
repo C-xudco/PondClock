@@ -1,0 +1,22 @@
+{
+  "proposalDate": "2026-10-26",
+  "status": "OPTIONAL_NOT_APPROVED_NOT_IN_MAIN_CANDIDATE",
+  "fixedCashModel": "same rod; all items sold; both sides indefinitely maintained quality state; opportunity-cost and fish index excluded",
+  "currentPrice": 120,
+  "fishPerPack": 5,
+  "minMarginalGrossPerSuccessfulRound": 0.8135865113865961,
+  "maxMarginalGrossPerSuccessfulRound": 1.8957672262848533,
+  "minMarginalGrossPer5Fish": 4.185115799313766,
+  "maxMarginalGrossPer5Fish": 9.75188902409904,
+  "highestWholeCoinPackPriceNonnegativeInAllModelRows": 4,
+  "examplePrice": 4,
+  "exampleMarginPerSuccessfulRound": [
+    0.03598651138659614,
+    1.1181672262848532
+  ],
+  "notes": [
+    "Does not change BALANCE_CANDIDATE.preserved.baitCost120",
+    "A four-coin pack would make bait-box sell30 vs open+one pack asymmetrical; revisit that tradeoff separately if approved",
+    "User requested gross target; this optional item is not required to make the gross target arithmetic pass"
+  ]
+}

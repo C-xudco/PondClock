@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-27",
+  "status": "PLANNING_DATA_CHECK_ONLY",
+  "implemented": false,
+  "regions": 17,
+  "species": 56,
+  "newRegions": 5,
+  "newSpecies": 6,
+  "routes": 272,
+  "newDirectedRoutes": 140,
+  "oldRoutesRepriced": 128,
+  "oldRoutesRetimed": 130,
+  "routeBoundsKm": {
+    "min": 56.26187933706414,
+    "max": 3561.85840394447
+  },
+  "minDurationMs": 60000,
+  "maxDurationMs": 180000,
+  "minPrice": 200,
+  "maxPrice": 6000,
+  "marketCells": 952,
+  "oldMarketMultipliersChanged": 1,
+  "oldMarketMultiplierDirection": "May change both ways; no nondecrease guarantee after expanding supplies.",
+  "oldPaidFlightPolicy": "Preserve original quoted price, departure/arrival and rules; never reprice a paid trip.",
+  "examples": [
+    {
+      "id": "jiangnan:taihu",
+      "fromId": "jiangnan",
+      "toId": "taihu",
+      "distanceKm": 149.0210242924105,
+      "durationMs": 63175,
+      "price": 350,
+      "ruleVersionDraft": 2,
+      "coordinateStatus": "includes-planning-approximation"
+    },
+    {
+      "id": "jiangnan:dongting",
+      "fromId": "jiangnan",
+      "toId": "dongting",
+      "distanceKm": 619.1215436473651,
+      "durationMs": 79267,
+      "price": 1130,
+      "ruleVersionDraft": 2,
+      "coordinateStatus": "includes-planning-approximation"
+    },
+    {
+      "id": "jiangnan:jialing",
+      "fromId": "jiangnan",
+      "toId": "jialing",
+      "distanceKm": 1215.0001540220712,
+      "durationMs": 99665,
+      "price": 2120,
+      "ruleVersionDraft": 2,
+      "coordinateStatus": "includes-planning-approximation"
+    },
+    {
+      "id": "jiangnan:baiyangdian",
+      "fromId": "jiangnan",
+      "toId": "baiyangdian",
+      "distanceKm": 805.2716478970187,
+      "durationMs": 85639,
+      "price": 1440,
+      "ruleVersionDraft": 2,
+      "coordinateStatus": "includes-planning-approximation"
+    },
+    {
+      "id": "jiangnan:jiaodong",
+      "fromId": "jiangnan",
+      "toId": "jiaodong",
+      "distanceKm": 679.7356883974894,
+      "durationMs": 81342,
+      "price": 1230,
+      "ruleVersionDraft": 2,
+      "coordinateStatus": "includes-planning-approximation"
+    }
+  ],
+  "checks": {
+    "uniqueRegionAndFishIds": true,
+    "allPoolsPositiveAndResolvable": true,
+    "routeCoverageNoSelf": true,
+    "reverseSymmetry": true,
+    "priceDurationBounds": true,
+    "allSpeciesHaveOrigin": true,
+    "fullMarketMatrix": true
+  },
+  "unverified": [
+    "Coordinates are approximate design points, not verified weather/airport locations",
+    "Candidate pool weights are game balance, not field abundance",
+    "No17-region gross-50 calibration has passed",
+    "No code, migration, UI, network or release acceptance performed"
+  ],
+  "sourceHashes": {
+    "src/lib/gameConfig.js": "f8908aa2d6aa0c1cd837b4e50f698ba9ede30a54272056dbfa706d371c0d9eb4",
+    "src/data/regionLocations.js": "ea53dd0b4947cb8d21c1b3ce2450b0491695f7a3119e0d2c551ce6fcba1345b6",
+    "src/domain/routes.js": "3b19646bc2d6b8aec6fea9d5e67583411bf370ba4bdbbed5791a38f95b4b5c52",
+    "src/domain/market.js": "33c1b60adb571807482baddd12c1e113e240769f40a5d28e9854d64b6d084f38",
+    "src/config/travel.js": "ade7dfe0d62c5fb8000d44f475fa659a04a82ece0882e6c154395ad94eb905b9"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "status": "DRAFT_AWAITING_USER_APPROVAL",
+  "implemented": false,
+  "target": "About50 earned coins per successful catch; fresh local immediate-sale gross, not a per-fish floor/cap",
+  "engineeringTolerance": [
+    45,
+    55
+  ],
+  "priceRule": {
+    "formula": "max(oldBasePrice, round(20 + 0.55 * oldBasePrice))",
+    "offset": 20,
+    "slope": 0.55
+  },
+  "qualityRule": {
+    "baseScale": 4,
+    "rareFactors": {
+      "jiangnan": 4.04,
+      "huaihe": 6,
+      "huanghe": 2.77,
+      "changjiang": 2.05,
+      "dongnan": 4.78,
+      "lingnan": 2.81,
+      "xinan": 3.63,
+      "yungui": 1.11,
+      "hainan": 3.56,
+      "dongbei": 3.01,
+      "xibei": 1,
+      "qingzang": 3.92
+    },
+    "formula": "originalSpeciesWeight * baseScale * (quality=rare ? regionalRareFactor : 1), then add existing equipment bonus and apply existing pity multiplier"
+  },
+  "preserved": {
+    "fishPools": true,
+    "marketSupplyAndMultipliers": true,
+    "qualityPriceMultipliers": true,
+    "weightRanges": true,
+    "pityThreshold": 30,
+    "pityMultiplier": 5,
+    "baitCost": 120,
+    "baitCatches": 5
+  },
+  "fishProbability": 0.972,
+  "nonFishDirectSalePerRound": 0.283,
+  "newItemDirectSalePerRound": 0.168
+}

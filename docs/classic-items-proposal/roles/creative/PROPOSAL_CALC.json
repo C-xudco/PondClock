@@ -1,7 +1,25 @@
 {
   "proposalDate": "2026-10-26",
+  "revision": "v2",
   "status": "DRAFT_AWAITING_USER_APPROVAL",
   "implemented": false,
+  "supersedes": {
+    "readme": "README-v1.md",
+    "calculation": "PROPOSAL_CALC-v1.json",
+    "script": "calculate-v1.mjs"
+  },
+  "userRevision": {
+    "deferMessageBottle": true,
+    "eachNewItemProbability": 0.002,
+    "compass": "next valid airfare90%",
+    "token": "next numeric rod upgrade90%",
+    "sameTypeNoStack": true,
+    "grossTarget": {
+      "averageCoins": 50,
+      "isUpperCap": false,
+      "scope": "Successful catch, fresh fish sold immediately at current local quote plus direct item sale"
+    }
+  },
   "input": {
     "currentLootConfigVersion": 1,
     "currentWeights": {
@@ -10,204 +28,1227 @@
       "waterlogged_watch": 20,
       "influencer_manual": 10
     },
-    "existingBaitCost": 120,
-    "existingBaitCatches": 5,
+    "baitCost": 120,
+    "baitCatches": 5,
     "basicWaitSeconds": {
       "minSeconds": 55,
       "maxSeconds": 125
     }
   },
+  "salePricesAreDraftRecommendations": true,
   "denominator": 10000,
   "proposedWeights": {
-    "fish": 9420,
+    "fish": 9720,
     "old_shoe": 150,
     "waterlogged_watch": 20,
     "influencer_manual": 10,
-    "rusty_tin_can": 70,
-    "river_shell": 60,
-    "ferry_token": 30,
-    "sealed_bait_box": 100,
-    "message_bottle": 80,
-    "scratched_compass": 60
+    "rusty_tin_can": 20,
+    "river_shell": 20,
+    "ferry_token": 20,
+    "sealed_bait_box": 20,
+    "scratched_compass": 20
   },
-  "proposedItemWeight": 580,
-  "newItemWeight": 400,
+  "proposedItemWeight": 280,
+  "newItemWeight": 100,
   "oldItemWeight": 180,
-  "fishProbabilityDeltaPercentagePoints": -4,
+  "relativeFishCountChange": -0.010183299389002087,
   "existingAbsoluteItemProbabilitiesPreserved": true,
   "items": [
     {
       "id": "rusty_tin_can",
       "name": "锈铁罐",
-      "weight": 70,
+      "weight": 20,
       "sellPrice": 3,
       "action": "sell/keep",
-      "probability": 0.007,
-      "meanRounds": 142.85714285714286,
-      "illustrativeMeanHours": 3.5714285714285716
+      "probability": 0.002,
+      "meanRounds": 500,
+      "illustrativeMeanHours": 12.5
     },
     {
       "id": "river_shell",
       "name": "河蚌壳",
-      "weight": 60,
+      "weight": 20,
       "sellPrice": 8,
       "action": "sell/keep",
-      "probability": 0.006,
-      "meanRounds": 166.66666666666666,
-      "illustrativeMeanHours": 4.166666666666666
+      "probability": 0.002,
+      "meanRounds": 500,
+      "illustrativeMeanHours": 12.5
     },
     {
       "id": "ferry_token",
       "name": "渡口代币",
-      "weight": 30,
+      "weight": 20,
       "sellPrice": 25,
-      "action": "sell/keep",
-      "probability": 0.003,
-      "meanRounds": 333.3333333333333,
-      "illustrativeMeanHours": 8.333333333333332
+      "action": "sell/activate-rod-discount",
+      "benefit": "rodUpgrade10",
+      "probability": 0.002,
+      "meanRounds": 500,
+      "illustrativeMeanHours": 12.5
     },
     {
       "id": "sealed_bait_box",
       "name": "密封饵盒",
-      "weight": 100,
+      "weight": 20,
       "sellPrice": 30,
       "action": "sell/use",
       "grantsBaitUnits": 1,
-      "probability": 0.01,
-      "meanRounds": 100,
-      "illustrativeMeanHours": 2.5
-    },
-    {
-      "id": "message_bottle",
-      "name": "漂流瓶",
-      "weight": 80,
-      "sellPrice": 12,
-      "action": "sell/read",
-      "probability": 0.008,
-      "meanRounds": 125,
-      "illustrativeMeanHours": 3.125
+      "probability": 0.002,
+      "meanRounds": 500,
+      "illustrativeMeanHours": 12.5
     },
     {
       "id": "scratched_compass",
       "name": "磨花指南针",
-      "weight": 60,
+      "weight": 20,
       "sellPrice": 18,
-      "action": "sell/route-preview",
-      "probability": 0.006,
-      "meanRounds": 166.66666666666666,
-      "illustrativeMeanHours": 4.166666666666666
+      "action": "sell/activate-ticket-discount",
+      "benefit": "ticket10",
+      "probability": 0.002,
+      "meanRounds": 500,
+      "illustrativeMeanHours": 12.5
     }
   ],
   "pacingScenario": {
-    "assumptions": "Basic rod; 90s mean wait; every bite caught immediately; excludes reaction/window time, misses, suspension and boosts. Expectations are not guarantees.",
+    "assumptions": "Basic rod90s mean; all bites caught immediately; excludes window/reaction time, misses, boosts and suspension. Expectations are not guarantees.",
     "roundsPerHour": 40,
     "anyItem": {
-      "probability": 0.058,
-      "meanRounds": 17.24137931034483,
-      "meanMinutes": 25.862068965517242
+      "probability": 0.028,
+      "meanRounds": 35.714285714285715,
+      "meanMinutes": 53.57142857142857
     },
     "anyNewItem": {
-      "probability": 0.04,
-      "meanRounds": 25,
-      "meanMinutes": 37.5,
-      "chanceIn30Minutes": 0.5579975661205926,
-      "chanceIn60Minutes": 0.8046338484446801
+      "probability": 0.01,
+      "meanRounds": 100,
+      "meanMinutes": 150,
+      "chanceIn30Minutes": 0.18209306240276923,
+      "chanceIn60Minutes": 0.3310282414303197
     }
   },
-  "economics": {
-    "sellAllNewGrossPerRound": 0.648,
-    "sellAllNewGrossPerIllustrativeHour": 25.92,
-    "allBaitUsedStockReplacementValuePerRound": 1.548,
-    "allBaitUsedStockReplacementValuePerIllustrativeHour": 61.92,
-    "liquidCoinDeltaFormula": "0.648 - 0.04 * F, where F is the old expected local sale quote conditional on a fish under the actual equipment/quality/weight/freshness/travel policy.",
-    "breakEvenConditionalFishPrice": 16.2,
-    "stockReplacementIsNotCash": true,
-    "commonMidweightLocalScenario": [
+  "discountRecommendations": {
+    "slots": [
+      "ticket10",
+      "rodUpgrade10"
+    ],
+    "numerator": 9,
+    "denominator": 10,
+    "rounding": "Positive integer half-up: floor((basePrice*9+5)/10), equivalent to Math.round(basePrice*9/10).",
+    "durationChanges": false,
+    "fishingStatsChanges": false,
+    "ticketRange": {
+      "baseMin": 200,
+      "baseMax": 6000,
+      "payableMin": 180,
+      "payableMax": 5400,
+      "discountMin": 20,
+      "discountMax": 600
+    },
+    "ticketQuotes": [
       {
-        "regionId": "jiangnan",
-        "conditionalFishCommonMidweight": 11.686440677966099,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.46745762711864397,
-        "liquidCoinDeltaPerRound": 0.18054237288135605
+        "fromId": "jiangnan",
+        "toId": "huaihe",
+        "basePrice": 200,
+        "payablePrice": 180,
+        "discount": 20,
+        "durationMs": 60000
       },
       {
-        "regionId": "huaihe",
-        "conditionalFishCommonMidweight": 11.080000000000002,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.4432000000000001,
-        "liquidCoinDeltaPerRound": 0.20479999999999993
+        "fromId": "jiangnan",
+        "toId": "huanghe",
+        "basePrice": 880,
+        "payablePrice": 792,
+        "discount": 88,
+        "durationMs": 74043
       },
       {
-        "regionId": "huanghe",
-        "conditionalFishCommonMidweight": 14.46,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.5784,
-        "liquidCoinDeltaPerRound": 0.0696
+        "fromId": "jiangnan",
+        "toId": "changjiang",
+        "basePrice": 700,
+        "payablePrice": 630,
+        "discount": 70,
+        "durationMs": 70384
       },
       {
-        "regionId": "changjiang",
-        "conditionalFishCommonMidweight": 19.39682539682539,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.7758730158730156,
-        "liquidCoinDeltaPerRound": -0.12787301587301558
+        "fromId": "jiangnan",
+        "toId": "dongnan",
+        "basePrice": 1060,
+        "payablePrice": 954,
+        "discount": 106,
+        "durationMs": 77812
       },
       {
-        "regionId": "dongnan",
-        "conditionalFishCommonMidweight": 17.269230769230766,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.6907692307692307,
-        "liquidCoinDeltaPerRound": -0.04276923076923067
+        "fromId": "jiangnan",
+        "toId": "lingnan",
+        "basePrice": 1850,
+        "payablePrice": 1665,
+        "discount": 185,
+        "durationMs": 94217
       },
       {
-        "regionId": "lingnan",
-        "conditionalFishCommonMidweight": 17.849056603773583,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.7139622641509433,
-        "liquidCoinDeltaPerRound": -0.0659622641509433
+        "fromId": "jiangnan",
+        "toId": "xinan",
+        "basePrice": 1970,
+        "payablePrice": 1773,
+        "discount": 197,
+        "durationMs": 96528
       },
       {
-        "regionId": "xinan",
-        "conditionalFishCommonMidweight": 18.6,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.7440000000000001,
-        "liquidCoinDeltaPerRound": -0.09600000000000009
+        "fromId": "jiangnan",
+        "toId": "yungui",
+        "basePrice": 2910,
+        "payablePrice": 2619,
+        "discount": 291,
+        "durationMs": 115976
       },
       {
-        "regionId": "yungui",
-        "conditionalFishCommonMidweight": 20,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.8,
-        "liquidCoinDeltaPerRound": -0.15200000000000002
+        "fromId": "jiangnan",
+        "toId": "hainan",
+        "basePrice": 2610,
+        "payablePrice": 2349,
+        "discount": 261,
+        "durationMs": 109954
       },
       {
-        "regionId": "hainan",
-        "conditionalFishCommonMidweight": 19.52,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.7808,
-        "liquidCoinDeltaPerRound": -0.13280000000000003
+        "fromId": "jiangnan",
+        "toId": "dongbei",
+        "basePrice": 2760,
+        "payablePrice": 2484,
+        "discount": 276,
+        "durationMs": 113008
       },
       {
-        "regionId": "dongbei",
-        "conditionalFishCommonMidweight": 21.220000000000002,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.8488000000000001,
-        "liquidCoinDeltaPerRound": -0.2008000000000001
+        "fromId": "jiangnan",
+        "toId": "xibei",
+        "basePrice": 5050,
+        "payablePrice": 4545,
+        "discount": 505,
+        "durationMs": 160363
       },
       {
-        "regionId": "xibei",
-        "conditionalFishCommonMidweight": 24.12,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.9648000000000001,
-        "liquidCoinDeltaPerRound": -0.3168000000000001
+        "fromId": "jiangnan",
+        "toId": "qingzang",
+        "basePrice": 4440,
+        "payablePrice": 3996,
+        "discount": 444,
+        "durationMs": 147729
       },
       {
-        "regionId": "qingzang",
-        "conditionalFishCommonMidweight": 22.099999999999998,
-        "sellAllNewGrossPerRound": 0.648,
-        "displacedFishQuotePerRound": 0.8839999999999999,
-        "liquidCoinDeltaPerRound": -0.23599999999999988
+        "fromId": "huaihe",
+        "toId": "jiangnan",
+        "basePrice": 200,
+        "payablePrice": 180,
+        "discount": 20,
+        "durationMs": 60000
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "huanghe",
+        "basePrice": 600,
+        "payablePrice": 540,
+        "discount": 60,
+        "durationMs": 68228
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "changjiang",
+        "basePrice": 590,
+        "payablePrice": 531,
+        "discount": 59,
+        "durationMs": 68047
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "dongnan",
+        "basePrice": 1260,
+        "payablePrice": 1134,
+        "discount": 126,
+        "durationMs": 82000
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "lingnan",
+        "basePrice": 1910,
+        "payablePrice": 1719,
+        "discount": 191,
+        "durationMs": 95300
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "xinan",
+        "basePrice": 1780,
+        "payablePrice": 1602,
+        "discount": 178,
+        "durationMs": 92781
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "yungui",
+        "basePrice": 2770,
+        "payablePrice": 2493,
+        "discount": 277,
+        "durationMs": 113195
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "hainan",
+        "basePrice": 2640,
+        "payablePrice": 2376,
+        "discount": 264,
+        "durationMs": 110509
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "dongbei",
+        "basePrice": 2700,
+        "payablePrice": 2430,
+        "discount": 270,
+        "durationMs": 111768
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "xibei",
+        "basePrice": 4770,
+        "payablePrice": 4293,
+        "discount": 477,
+        "durationMs": 154540
+      },
+      {
+        "fromId": "huaihe",
+        "toId": "qingzang",
+        "basePrice": 4210,
+        "payablePrice": 3789,
+        "discount": 421,
+        "durationMs": 143027
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "jiangnan",
+        "basePrice": 880,
+        "payablePrice": 792,
+        "discount": 88,
+        "durationMs": 74043
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "huaihe",
+        "basePrice": 600,
+        "payablePrice": 540,
+        "discount": 60,
+        "durationMs": 68228
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "changjiang",
+        "basePrice": 720,
+        "payablePrice": 648,
+        "discount": 72,
+        "durationMs": 70697
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "dongnan",
+        "basePrice": 1810,
+        "payablePrice": 1629,
+        "discount": 181,
+        "durationMs": 93323
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "lingnan",
+        "basePrice": 2130,
+        "payablePrice": 1917,
+        "discount": 213,
+        "durationMs": 99920
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "xinan",
+        "basePrice": 1430,
+        "payablePrice": 1287,
+        "discount": 143,
+        "durationMs": 85347
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "yungui",
+        "basePrice": 2490,
+        "payablePrice": 2241,
+        "discount": 249,
+        "durationMs": 107419
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "hainan",
+        "basePrice": 2770,
+        "payablePrice": 2493,
+        "discount": 277,
+        "durationMs": 113132
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "dongbei",
+        "basePrice": 2720,
+        "payablePrice": 2448,
+        "discount": 272,
+        "durationMs": 112191
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "xibei",
+        "basePrice": 4090,
+        "payablePrice": 3681,
+        "discount": 409,
+        "durationMs": 140497
+      },
+      {
+        "fromId": "huanghe",
+        "toId": "qingzang",
+        "basePrice": 3660,
+        "payablePrice": 3294,
+        "discount": 366,
+        "durationMs": 131572
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "jiangnan",
+        "basePrice": 700,
+        "payablePrice": 630,
+        "discount": 70,
+        "durationMs": 70384
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "huaihe",
+        "basePrice": 590,
+        "payablePrice": 531,
+        "discount": 59,
+        "durationMs": 68047
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "huanghe",
+        "basePrice": 720,
+        "payablePrice": 648,
+        "discount": 72,
+        "durationMs": 70697
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "dongnan",
+        "basePrice": 1120,
+        "payablePrice": 1008,
+        "discount": 112,
+        "durationMs": 79049
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "lingnan",
+        "basePrice": 1350,
+        "payablePrice": 1215,
+        "discount": 135,
+        "durationMs": 83717
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "xinan",
+        "basePrice": 1200,
+        "payablePrice": 1080,
+        "discount": 120,
+        "durationMs": 80679
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "yungui",
+        "basePrice": 2120,
+        "payablePrice": 1908,
+        "discount": 212,
+        "durationMs": 99787
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "hainan",
+        "basePrice": 2030,
+        "payablePrice": 1827,
+        "discount": 203,
+        "durationMs": 97876
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "dongbei",
+        "basePrice": 3330,
+        "payablePrice": 2997,
+        "discount": 333,
+        "durationMs": 124779
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "xibei",
+        "basePrice": 4640,
+        "payablePrice": 4176,
+        "discount": 464,
+        "durationMs": 151781
+      },
+      {
+        "fromId": "changjiang",
+        "toId": "qingzang",
+        "basePrice": 3720,
+        "payablePrice": 3348,
+        "discount": 372,
+        "durationMs": 132836
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "jiangnan",
+        "basePrice": 1060,
+        "payablePrice": 954,
+        "discount": 106,
+        "durationMs": 77812
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "huaihe",
+        "basePrice": 1260,
+        "payablePrice": 1134,
+        "discount": 126,
+        "durationMs": 82000
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "huanghe",
+        "basePrice": 1810,
+        "payablePrice": 1629,
+        "discount": 181,
+        "durationMs": 93323
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "changjiang",
+        "basePrice": 1120,
+        "payablePrice": 1008,
+        "discount": 112,
+        "durationMs": 79049
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "lingnan",
+        "basePrice": 1100,
+        "payablePrice": 990,
+        "discount": 110,
+        "durationMs": 78698
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "xinan",
+        "basePrice": 2160,
+        "payablePrice": 1944,
+        "discount": 216,
+        "durationMs": 100518
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "yungui",
+        "basePrice": 2760,
+        "payablePrice": 2484,
+        "discount": 276,
+        "durationMs": 113057
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "hainan",
+        "basePrice": 1860,
+        "payablePrice": 1674,
+        "discount": 186,
+        "durationMs": 94266
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "dongbei",
+        "basePrice": 3820,
+        "payablePrice": 3438,
+        "discount": 382,
+        "durationMs": 134876
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "xibei",
+        "basePrice": 5840,
+        "payablePrice": 5256,
+        "discount": 584,
+        "durationMs": 176588
+      },
+      {
+        "fromId": "dongnan",
+        "toId": "qingzang",
+        "basePrice": 4690,
+        "payablePrice": 4221,
+        "discount": 469,
+        "durationMs": 152893
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "jiangnan",
+        "basePrice": 1850,
+        "payablePrice": 1665,
+        "discount": 185,
+        "durationMs": 94217
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "huaihe",
+        "basePrice": 1910,
+        "payablePrice": 1719,
+        "discount": 191,
+        "durationMs": 95300
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "huanghe",
+        "basePrice": 2130,
+        "payablePrice": 1917,
+        "discount": 213,
+        "durationMs": 99920
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "changjiang",
+        "basePrice": 1350,
+        "payablePrice": 1215,
+        "discount": 135,
+        "durationMs": 83717
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "dongnan",
+        "basePrice": 1100,
+        "payablePrice": 990,
+        "discount": 110,
+        "durationMs": 78698
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "xinan",
+        "basePrice": 1590,
+        "payablePrice": 1431,
+        "discount": 159,
+        "durationMs": 88735
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "yungui",
+        "basePrice": 1780,
+        "payablePrice": 1602,
+        "discount": 178,
+        "durationMs": 92678
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "hainan",
+        "basePrice": 700,
+        "payablePrice": 630,
+        "discount": 70,
+        "durationMs": 70268
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "dongbei",
+        "basePrice": 4690,
+        "payablePrice": 4221,
+        "discount": 469,
+        "durationMs": 152797
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "xibei",
+        "basePrice": 5520,
+        "payablePrice": 4968,
+        "discount": 552,
+        "durationMs": 170155
+      },
+      {
+        "fromId": "lingnan",
+        "toId": "qingzang",
+        "basePrice": 3880,
+        "payablePrice": 3492,
+        "discount": 388,
+        "durationMs": 136072
+      },
+      {
+        "fromId": "xinan",
+        "toId": "jiangnan",
+        "basePrice": 1970,
+        "payablePrice": 1773,
+        "discount": 197,
+        "durationMs": 96528
+      },
+      {
+        "fromId": "xinan",
+        "toId": "huaihe",
+        "basePrice": 1780,
+        "payablePrice": 1602,
+        "discount": 178,
+        "durationMs": 92781
+      },
+      {
+        "fromId": "xinan",
+        "toId": "huanghe",
+        "basePrice": 1430,
+        "payablePrice": 1287,
+        "discount": 143,
+        "durationMs": 85347
+      },
+      {
+        "fromId": "xinan",
+        "toId": "changjiang",
+        "basePrice": 1200,
+        "payablePrice": 1080,
+        "discount": 120,
+        "durationMs": 80679
+      },
+      {
+        "fromId": "xinan",
+        "toId": "dongnan",
+        "basePrice": 2160,
+        "payablePrice": 1944,
+        "discount": 216,
+        "durationMs": 100518
+      },
+      {
+        "fromId": "xinan",
+        "toId": "lingnan",
+        "basePrice": 1590,
+        "payablePrice": 1431,
+        "discount": 159,
+        "durationMs": 88735
+      },
+      {
+        "fromId": "xinan",
+        "toId": "yungui",
+        "basePrice": 990,
+        "payablePrice": 891,
+        "discount": 99,
+        "durationMs": 76418
+      },
+      {
+        "fromId": "xinan",
+        "toId": "hainan",
+        "basePrice": 1840,
+        "payablePrice": 1656,
+        "discount": 184,
+        "durationMs": 93947
+      },
+      {
+        "fromId": "xinan",
+        "toId": "dongbei",
+        "basePrice": 4200,
+        "payablePrice": 3780,
+        "discount": 420,
+        "durationMs": 142834
+      },
+      {
+        "fromId": "xinan",
+        "toId": "xibei",
+        "basePrice": 3860,
+        "payablePrice": 3474,
+        "discount": 386,
+        "durationMs": 135627
+      },
+      {
+        "fromId": "xinan",
+        "toId": "qingzang",
+        "basePrice": 2470,
+        "payablePrice": 2223,
+        "discount": 247,
+        "durationMs": 106927
+      },
+      {
+        "fromId": "yungui",
+        "toId": "jiangnan",
+        "basePrice": 2910,
+        "payablePrice": 2619,
+        "discount": 291,
+        "durationMs": 115976
+      },
+      {
+        "fromId": "yungui",
+        "toId": "huaihe",
+        "basePrice": 2770,
+        "payablePrice": 2493,
+        "discount": 277,
+        "durationMs": 113195
+      },
+      {
+        "fromId": "yungui",
+        "toId": "huanghe",
+        "basePrice": 2490,
+        "payablePrice": 2241,
+        "discount": 249,
+        "durationMs": 107419
+      },
+      {
+        "fromId": "yungui",
+        "toId": "changjiang",
+        "basePrice": 2120,
+        "payablePrice": 1908,
+        "discount": 212,
+        "durationMs": 99787
+      },
+      {
+        "fromId": "yungui",
+        "toId": "dongnan",
+        "basePrice": 2760,
+        "payablePrice": 2484,
+        "discount": 276,
+        "durationMs": 113057
+      },
+      {
+        "fromId": "yungui",
+        "toId": "lingnan",
+        "basePrice": 1780,
+        "payablePrice": 1602,
+        "discount": 178,
+        "durationMs": 92678
+      },
+      {
+        "fromId": "yungui",
+        "toId": "xinan",
+        "basePrice": 990,
+        "payablePrice": 891,
+        "discount": 99,
+        "durationMs": 76418
+      },
+      {
+        "fromId": "yungui",
+        "toId": "hainan",
+        "basePrice": 1560,
+        "payablePrice": 1404,
+        "discount": 156,
+        "durationMs": 88107
+      },
+      {
+        "fromId": "yungui",
+        "toId": "dongbei",
+        "basePrice": 5280,
+        "payablePrice": 4752,
+        "discount": 528,
+        "durationMs": 165078
+      },
+      {
+        "fromId": "yungui",
+        "toId": "xibei",
+        "basePrice": 4180,
+        "payablePrice": 3762,
+        "discount": 418,
+        "durationMs": 142348
+      },
+      {
+        "fromId": "yungui",
+        "toId": "qingzang",
+        "basePrice": 2060,
+        "payablePrice": 1854,
+        "discount": 206,
+        "durationMs": 98542
+      },
+      {
+        "fromId": "hainan",
+        "toId": "jiangnan",
+        "basePrice": 2610,
+        "payablePrice": 2349,
+        "discount": 261,
+        "durationMs": 109954
+      },
+      {
+        "fromId": "hainan",
+        "toId": "huaihe",
+        "basePrice": 2640,
+        "payablePrice": 2376,
+        "discount": 264,
+        "durationMs": 110509
+      },
+      {
+        "fromId": "hainan",
+        "toId": "huanghe",
+        "basePrice": 2770,
+        "payablePrice": 2493,
+        "discount": 277,
+        "durationMs": 113132
+      },
+      {
+        "fromId": "hainan",
+        "toId": "changjiang",
+        "basePrice": 2030,
+        "payablePrice": 1827,
+        "discount": 203,
+        "durationMs": 97876
+      },
+      {
+        "fromId": "hainan",
+        "toId": "dongnan",
+        "basePrice": 1860,
+        "payablePrice": 1674,
+        "discount": 186,
+        "durationMs": 94266
+      },
+      {
+        "fromId": "hainan",
+        "toId": "lingnan",
+        "basePrice": 700,
+        "payablePrice": 630,
+        "discount": 70,
+        "durationMs": 70268
+      },
+      {
+        "fromId": "hainan",
+        "toId": "xinan",
+        "basePrice": 1840,
+        "payablePrice": 1656,
+        "discount": 184,
+        "durationMs": 93947
+      },
+      {
+        "fromId": "hainan",
+        "toId": "yungui",
+        "basePrice": 1560,
+        "payablePrice": 1404,
+        "discount": 156,
+        "durationMs": 88107
+      },
+      {
+        "fromId": "hainan",
+        "toId": "dongbei",
+        "basePrice": 5420,
+        "payablePrice": 4878,
+        "discount": 542,
+        "durationMs": 168099
+      },
+      {
+        "fromId": "hainan",
+        "toId": "xibei",
+        "basePrice": 5690,
+        "payablePrice": 5121,
+        "discount": 569,
+        "durationMs": 173612
+      },
+      {
+        "fromId": "hainan",
+        "toId": "qingzang",
+        "basePrice": 3700,
+        "payablePrice": 3330,
+        "discount": 370,
+        "durationMs": 132323
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "jiangnan",
+        "basePrice": 2760,
+        "payablePrice": 2484,
+        "discount": 276,
+        "durationMs": 113008
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "huaihe",
+        "basePrice": 2700,
+        "payablePrice": 2430,
+        "discount": 270,
+        "durationMs": 111768
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "huanghe",
+        "basePrice": 2720,
+        "payablePrice": 2448,
+        "discount": 272,
+        "durationMs": 112191
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "changjiang",
+        "basePrice": 3330,
+        "payablePrice": 2997,
+        "discount": 333,
+        "durationMs": 124779
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "dongnan",
+        "basePrice": 3820,
+        "payablePrice": 3438,
+        "discount": 382,
+        "durationMs": 134876
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "lingnan",
+        "basePrice": 4690,
+        "payablePrice": 4221,
+        "discount": 469,
+        "durationMs": 152797
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "xinan",
+        "basePrice": 4200,
+        "payablePrice": 3780,
+        "discount": 420,
+        "durationMs": 142834
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "yungui",
+        "basePrice": 5280,
+        "payablePrice": 4752,
+        "discount": 528,
+        "durationMs": 165078
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "hainan",
+        "basePrice": 5420,
+        "payablePrice": 4878,
+        "discount": 542,
+        "durationMs": 168099
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "xibei",
+        "basePrice": 5140,
+        "payablePrice": 4626,
+        "discount": 514,
+        "durationMs": 162244
+      },
+      {
+        "fromId": "dongbei",
+        "toId": "qingzang",
+        "basePrice": 6000,
+        "payablePrice": 5400,
+        "discount": 600,
+        "durationMs": 180000
+      },
+      {
+        "fromId": "xibei",
+        "toId": "jiangnan",
+        "basePrice": 5050,
+        "payablePrice": 4545,
+        "discount": 505,
+        "durationMs": 160363
+      },
+      {
+        "fromId": "xibei",
+        "toId": "huaihe",
+        "basePrice": 4770,
+        "payablePrice": 4293,
+        "discount": 477,
+        "durationMs": 154540
+      },
+      {
+        "fromId": "xibei",
+        "toId": "huanghe",
+        "basePrice": 4090,
+        "payablePrice": 3681,
+        "discount": 409,
+        "durationMs": 140497
+      },
+      {
+        "fromId": "xibei",
+        "toId": "changjiang",
+        "basePrice": 4640,
+        "payablePrice": 4176,
+        "discount": 464,
+        "durationMs": 151781
+      },
+      {
+        "fromId": "xibei",
+        "toId": "dongnan",
+        "basePrice": 5840,
+        "payablePrice": 5256,
+        "discount": 584,
+        "durationMs": 176588
+      },
+      {
+        "fromId": "xibei",
+        "toId": "lingnan",
+        "basePrice": 5520,
+        "payablePrice": 4968,
+        "discount": 552,
+        "durationMs": 170155
+      },
+      {
+        "fromId": "xibei",
+        "toId": "xinan",
+        "basePrice": 3860,
+        "payablePrice": 3474,
+        "discount": 386,
+        "durationMs": 135627
+      },
+      {
+        "fromId": "xibei",
+        "toId": "yungui",
+        "basePrice": 4180,
+        "payablePrice": 3762,
+        "discount": 418,
+        "durationMs": 142348
+      },
+      {
+        "fromId": "xibei",
+        "toId": "hainan",
+        "basePrice": 5690,
+        "payablePrice": 5121,
+        "discount": 569,
+        "durationMs": 173612
+      },
+      {
+        "fromId": "xibei",
+        "toId": "dongbei",
+        "basePrice": 5140,
+        "payablePrice": 4626,
+        "discount": 514,
+        "durationMs": 162244
+      },
+      {
+        "fromId": "xibei",
+        "toId": "qingzang",
+        "basePrice": 2660,
+        "payablePrice": 2394,
+        "discount": 266,
+        "durationMs": 110826
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "jiangnan",
+        "basePrice": 4440,
+        "payablePrice": 3996,
+        "discount": 444,
+        "durationMs": 147729
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "huaihe",
+        "basePrice": 4210,
+        "payablePrice": 3789,
+        "discount": 421,
+        "durationMs": 143027
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "huanghe",
+        "basePrice": 3660,
+        "payablePrice": 3294,
+        "discount": 366,
+        "durationMs": 131572
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "changjiang",
+        "basePrice": 3720,
+        "payablePrice": 3348,
+        "discount": 372,
+        "durationMs": 132836
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "dongnan",
+        "basePrice": 4690,
+        "payablePrice": 4221,
+        "discount": 469,
+        "durationMs": 152893
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "lingnan",
+        "basePrice": 3880,
+        "payablePrice": 3492,
+        "discount": 388,
+        "durationMs": 136072
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "xinan",
+        "basePrice": 2470,
+        "payablePrice": 2223,
+        "discount": 247,
+        "durationMs": 106927
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "yungui",
+        "basePrice": 2060,
+        "payablePrice": 1854,
+        "discount": 206,
+        "durationMs": 98542
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "hainan",
+        "basePrice": 3700,
+        "payablePrice": 3330,
+        "discount": 370,
+        "durationMs": 132323
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "dongbei",
+        "basePrice": 6000,
+        "payablePrice": 5400,
+        "discount": 600,
+        "durationMs": 180000
+      },
+      {
+        "fromId": "qingzang",
+        "toId": "xibei",
+        "basePrice": 2660,
+        "payablePrice": 2394,
+        "discount": 266,
+        "durationMs": 110826
       }
     ],
-    "scenarioLimits": "The common-quality/midweight scenario is a pricing illustration, not full gameplay earnings. No bait-quality/pity/rod/best-click/manual/late-sale simulation is claimed."
+    "rodQuotes": [
+      {
+        "fromLevel": 0,
+        "toLevel": 1,
+        "name": "玻璃钢竿",
+        "basePrice": 600,
+        "payablePrice": 540,
+        "discount": 60
+      },
+      {
+        "fromLevel": 1,
+        "toLevel": 2,
+        "name": "碳素竿",
+        "basePrice": 2600,
+        "payablePrice": 2340,
+        "discount": 260
+      },
+      {
+        "fromLevel": 2,
+        "toLevel": 3,
+        "name": "大师手工竿",
+        "basePrice": 9000,
+        "payablePrice": 8100,
+        "discount": 900
+      }
+    ],
+    "activation": "Consume inventory uid and create a sourceItemUid/type/ruleVersion pending entitlement in one commit. Duplicate same-type activation rejects and preserves the second item.",
+    "payment": "Check discounted payable balance; commit coins+travel or numeric upgrade+clear only the matching entitlement. View/invalid request/insufficient funds/save failure never consume it. Unknown receipts reconcile the original command.",
+    "noExpiry": true,
+    "atMaxRodActivation": "reject and preserve token",
+    "alreadyPendingAtMaxLevel": "preserve on load; show no available upgrade",
+    "realVisitConsumesTicketCoupon": false,
+    "sourceUIDMustBeAbsentFromInventory": true,
+    "twoBenefitsCannotShareSourceUID": true
+  },
+  "economics": {
+    "newDirectCashGrossPerRound": 0.168,
+    "oldDirectCashGrossPerRound": 0.115,
+    "allItemDirectCashGrossPerRound": 0.28300000000000003,
+    "newDirectCashGrossPerIllustrativeHour": 6.720000000000001,
+    "baitStockReplacementValuePerRound": 0.348,
+    "directCashDeltaFormula": "0.168 -0.01*F; F is the old conditional expected fish sale quote, not the total per-success gross target.",
+    "breakEvenConditionalFishPrice": 16.8,
+    "excludesFishQuotes": true,
+    "excludesRepairGambling": true,
+    "excludesManualBonus": true,
+    "couponSavingsAreConditionalNotCash": true,
+    "baitReplacementIsNotCash": true,
+    "totalGross50TargetCompleted": false,
+    "broaderEconomyTarget": "User confirmed average about50coins, not a cap, for successful catches sold immediately fresh at local quotes plus direct item sales. The economics role handles fish-quality tuning. New-item0.168 and old-item0.115 contributions do not prove the average50target achieved."
   }
 }
