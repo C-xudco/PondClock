@@ -1,23 +1,45 @@
 {
   "date": "2026-10-27",
-  "status": "INDEPENDENT_DOCUMENT_CHECKS_PASSED_PENDING_IMPLEMENTATION",
+  "status": "SEPARATE_METHOD_CHECKS_PASSED_PENDING_INDEPENDENT_REVIEW_AND_IMPLEMENTATION",
+  "latestRevisionReview": {
+    "originalReviewer": "focus_supervisor",
+    "latestAdaptationAndExecution": "Leader after reviewer usage interruption",
+    "independentReviewerFinalSignOffForV2": false
+  },
   "editionScope": "All new requirements belong to Edition One. Edition Two is undefined.",
   "implemented": false,
   "applicationStarted": false,
   "economics": {
-    "fishRate": 0.974,
-    "itemDirectContribution": 0.233,
-    "ordinaryConditions": 24,
-    "activeConditions": 12,
-    "maxAbsoluteDrift": 3.993250174971763e-12,
+    "fishRate": 0.74,
+    "itemDirectContribution": 4.57,
+    "ordinaryConditions": 48,
+    "activeConditions": 24,
+    "maxAbsoluteDrift": 3.61666252501891e-12,
     "maxStationaryIterations": 622,
-    "ordinaryGrossRange": [
-      47.12942907499714,
-      51.90503768143315
+    "scenarioChecks": [
+      {
+        "id": "new-loot-with-unchanged-prior-draft-prices",
+        "extraPriceScale": 1,
+        "ordinaryGrossRange": [
+          40.199730508724734,
+          43.8280163082757
+        ],
+        "allWithinSuggested45to55Tolerance": false
+      },
+      {
+        "id": "optional-extra-price-scale-1.2",
+        "extraPriceScale": 1.2,
+        "ordinaryGrossRange": [
+          47.189761996993035,
+          51.59487681983297
+        ],
+        "allWithinSuggested45to55Tolerance": true
+      }
     ],
+    "maximumFrozenPriceMeanDrift": 1.7053025658242404e-13,
     "activeEpicAndLegendaryBothAboveOrdinaryWithBait": true,
     "uniformStopSuccess": 0.425,
-    "method": "Independent 31-state iteration; frozen price CSV reused, not a new price-formula audit"
+    "method": "Separate31-state iteration; expected quotes enumerated by Leader and scale1 cross-checked against frozen price CSV; no new independent reviewer sign-off"
   },
   "regions": {
     "count": 17,
@@ -28,23 +50,26 @@
     "maximumMarketMultiplierDrift": 0
   },
   "reviewedFileHashes": {
-    "docs/focus-edition-plan/SPEC.md": "ed7420780cab760ae2b2ccc47f5570ecd977843796dfdc94cd8829f6118ae557",
+    "docs/focus-edition-plan/SPEC.md": "54acc7bee80a4700b679aeef706af4f465dd385a266f6d3ee7466dd2333b8112",
     "docs/focus-edition-plan/REGIONS.md": "536ff7663ea6dae59b6316c966fb196b839bc8df01dd34812fd72665768d9d66",
     "docs/focus-edition-plan/REGION_CANDIDATE.json": "17f7a420d4400e88328102db2becf23911d5f2b57fa9d385ed4e4b84c92b69a9",
+    "docs/focus-edition-plan/LOOT_RULES.json": "bc4e1b09748cdb5c8057745af8a767d85294a93d038e4df95abd3674badf6aeb",
     "docs/focus-edition-plan/ROUTES_CANDIDATE.csv": "437c188747802ccd750eab4b4ea7a640e205f997b9b73ef58b24f8e2957da12a",
     "docs/focus-edition-plan/MARKETS_CANDIDATE.csv": "2bbdad83aeb10d7c42b1b7a800e13c5cf7f543351a7612e7e37ce49185f84ee2",
-    "docs/focus-edition-plan/roles/gameplay/README.md": "090fc448cb98e4d5736adaa3c9cf29cc429c101fd760852198e81f3649a9d453",
-    "docs/focus-edition-plan/roles/economy/README.md": "c80771a10c5e51ca90a80615c5b0550e0835cc874428a66e671b9c0437e8986e",
-    "docs/focus-edition-plan/roles/economy/calculate.mjs": "b81c8fbafc8e115b21c38618a5570f34783751519865e5d128023662729e4356",
-    "docs/focus-edition-plan/roles/economy/ECONOMY_CHECK.json": "ad1ed243d989e16f7f05aa0ec4b109838378bcb1651a9f1f01d4cf0f64b0ce80",
+    "docs/focus-edition-plan/roles/gameplay/README.md": "8ceaab1ccb6b650b8605ec8fceb9ed42be6a407810720e8593dff69a8aac0435",
+    "docs/focus-edition-plan/roles/economy/README.md": "621e4ab2c30942fef720fad44cabbf0935b4370951a2139b426cc1e8794b916d",
+    "docs/focus-edition-plan/roles/economy/README-v2.md": "e033f96af486fea22f16d9ac40c7f684bbf0080cb1d6005fc5011419c5a6deb6",
+    "docs/focus-edition-plan/roles/economy/calculate.mjs": "be6520c472264ab4591ce42e4c72adf4c6fd109fd467c6ba2146a6cb7b42ea21",
+    "docs/focus-edition-plan/roles/economy/ECONOMY_CHECK.json": "1d2b5a5e716acf49b5553094a257b7ab9e59fb8a7c184c8f840b1297fde9d4c6",
     "docs/classic-items-proposal/roles/economy/INPUT_SNAPSHOT.json": "4fcf09d5f1509085176da387eb2d6668467e7f9035745bacff7a83ba447b677e",
     "docs/classic-items-proposal/roles/economy/BALANCE_CANDIDATE.json": "dffc5883afb188b12301f252376bb627c2edced14191c187fc466b30aa21e185",
     "docs/classic-items-proposal/roles/economy/PRICE_CELLS.csv": "4ad01a09aa13b0afc06d1dc797440268f20c5462eec8cfb899e281e2ceb6e2a5",
     "src/lib/gameConfig.js": "f8908aa2d6aa0c1cd837b4e50f698ba9ede30a54272056dbfa706d371c0d9eb4",
     "src/data/regionLocations.js": "ea53dd0b4947cb8d21c1b3ce2450b0491695f7a3119e0d2c551ce6fcba1345b6"
   },
-  "reviewScriptSha256": "01e270456948dc8d4fb966d07d45b13b9d216a375711710226b5d3ad7d60a492",
+  "reviewScriptSha256": "c4f21bc610f30c0c5e9593dbd3460d5384e2837c6f1a5c0b1a15f41d0fe4eb18",
   "limitations": [
+    "Latest v2 was completed by Leader after reviewer usage interruption; new independent reviewer final sign-off is outstanding.",
     "Explicit approval is still required for recommended product parameters.",
     "Economic calibration only covers the previous 12 regions; full 17-region gross-50 balance has not passed.",
     "Candidate geography uses approximate planning coordinates; ecological sources and hook-fishing evidence remain bounded.",

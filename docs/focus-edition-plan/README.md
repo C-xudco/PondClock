@@ -2,10 +2,13 @@
 
 2026-10-27（Asia/Shanghai）。本次所有新需求属于第一版；第二版尚未定义。这里是第一版实施前的评审资料，尚未改变产品、版本号或实际存档。
 
+**v2最新确认：** 五件新物各3%，鞋5%、表4%、秘籍2%，鱼74%；渡口代币用于下次购买15次主动竿九折，同类不叠加。主动玩法全部在第一版。新掉率与50毛均的影响分开核算，额外调价不自动采用。
+
 - [总方案与待审批参数](SPEC.md)
 - [五水域、鱼种、市场和航线](REGIONS.md)
 - [玩法与存档角色](roles/gameplay/README.md)
-- [经济计算角色](roles/economy/README.md)
+- [经济计算角色最新v2](roles/economy/README-v2.md)
+- [统一掉率及代币用途](LOOT_RULES.json)
 - [独立监督角色](roles/review/README.md)
 - [需求分流记录](FORK_RECORD.json)
 - [决定与实际协作记录](DECISIONS.md)

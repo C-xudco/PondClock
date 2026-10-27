@@ -1,18 +1,24 @@
 {
   "date": "2026-10-27",
+  "revision": "v2-loot-and-active-token",
   "status": "PLAN_DOCUMENT_AND_ARITHMETIC_CHECK_PASS",
   "implemented": false,
   "checks": {
     "productFilesUnchanged": true,
     "allLocalMarkdownLinksExist": true,
     "firstOnlySecondUndefined": true,
+    "activeFishingStillFirstEdition": true,
     "fifteenGaugeCharges": true,
     "singleRunningPlan": true,
     "newRegionCounts": true,
     "lootTableSums": true,
+    "confirmedItemWeights": true,
+    "bottleExcluded": true,
+    "tokenTargetsActiveRod": true,
     "economyUsesFirstEditionTable": true,
     "colorsSumOne": true,
     "uniformColorSuccess": true,
+    "priceScenariosKeptSeparate": true,
     "no17AreaCalibrationClaim": true,
     "mixedHourlyWithinBounds": true
   },
@@ -23,16 +29,18 @@
   "productSnapshotFiles": 201,
   "productChanged": [],
   "productAdded": [],
-  "markdownFiles": 10,
-  "checkedLocalLinks": 68,
+  "markdownFiles": 14,
+  "checkedLocalLinks": 101,
   "brokenLinks": [],
   "primaryDocHashes": {
-    "SPEC.md": "ed7420780cab760ae2b2ccc47f5570ecd977843796dfdc94cd8829f6118ae557",
+    "SPEC.md": "54acc7bee80a4700b679aeef706af4f465dd385a266f6d3ee7466dd2333b8112",
     "REGIONS.md": "536ff7663ea6dae59b6316c966fb196b839bc8df01dd34812fd72665768d9d66",
     "REGION_CANDIDATE.json": "17f7a420d4400e88328102db2becf23911d5f2b57fa9d385ed4e4b84c92b69a9",
-    "FORK_RECORD.json": "475d8a49356a0c9945b53362269efb440ae55888d3a4825871f65fd6d79200bb"
+    "LOOT_RULES.json": "bc4e1b09748cdb5c8057745af8a767d85294a93d038e4df95abd3674badf6aeb",
+    "FORK_RECORD.json": "aed61b7a42feaf6dbca5d3d6bd89647609646764c799ef0e8ccd3a3bb4ce5862"
   },
   "notValidated": [
+    "Latest revision independent reviewer final sign-off interrupted by usage limit; Leader completed separate-method checks",
     "No first-edition product implementation or migration",
     "No final17-region expected-reward calibration",
     "No verified new coordinates or completed angling evidence",

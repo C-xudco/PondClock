@@ -1,0 +1,24 @@
+{
+  "revision": "2026-10-27-loot-v2",
+  "status": "USER_CONFIRMED_DROP_RATES_NOT_IMPLEMENTED",
+  "scope": "Edition One ordinary successful catches. Active fishing remains Edition One; its fish-only pool is still a separate proposed rule.",
+  "denominator": 10000,
+  "entries": [
+    {"id":"fish","name":"鱼","weight":7400,"directSale":null},
+    {"id":"old_shoe","name":"破鞋","weight":500,"directSale":1},
+    {"id":"waterlogged_watch","name":"泡水手表","weight":400,"directSale":50},
+    {"id":"influencer_manual","name":"网红秘籍","weight":200,"directSale":0},
+    {"id":"rusty_tin_can","name":"锈铁罐","weight":300,"directSale":3},
+    {"id":"river_shell","name":"河蚌壳","weight":300,"directSale":8},
+    {"id":"ferry_token","name":"渡口代币","weight":300,"directSale":25},
+    {"id":"sealed_bait_box","name":"密封饵盒","weight":300,"directSale":30},
+    {"id":"scratched_compass","name":"磨花指南针","weight":300,"directSale":18}
+  ],
+  "deferred": ["message_bottle"],
+  "confirmedFerryBenefit": {"target":"next valid paid purchase of one15-charge active rod bundle","paymentRatio":0.9,"sameKindStacks":false,"secondSourceItemRetained":true},
+  "fishProbability": 0.74,
+  "itemProbability": 0.26,
+  "nonFishDirectSalePerSuccess": 4.57,
+  "directSalePricesStatus": "Previous proposal prices retained; latest user confirmed rates and token target, not new item prices or active bundle base price.",
+  "notIncludedInGross": ["watch repair jackpots","manual fish markup","cross-region premiums","coupon savings","bait gifts","free travel savings"]
+}
