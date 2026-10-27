@@ -1,6 +1,32 @@
+import { useId } from 'react';
 import { FISHER, ROD_BITE_DEG, PERSON_BITE_DEG, fisherTipAt, bobberTopAt, actorPlacementFor } from "./scene";
 import { useTween } from "./useTween";
 import { CHARACTER_VISUALS, ROD_VISUALS } from "../../data/appearanceVisuals";
+import { defaultCharacterVariant } from "../../config/defaultCharacter";
+
+const pointOnRod = (start, end, amount) => {
+  const inverse = 1 - amount;
+  return { x: inverse ** 2 * start.x + 2 * inverse * amount * 711 + amount ** 2 * end.x,
+    y: inverse ** 2 * start.y + 2 * inverse * amount * 151 + amount ** 2 * end.y };
+};
+
+const DefaultCharacter = ({ art, rain, snow, p }) => {
+  const rawId = useId();
+  const uid = `default-character-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+  const image = art.render;
+  return <g data-character-art="minimal" data-default-character-variant={rain ? 'rain' : 'clear'}
+    data-default-character-revision="1" data-default-grip-x={art.grip.x} data-default-grip-y={art.grip.y}>
+    <ellipse cx={art.support.x} cy={art.support.y} rx="18" ry="3.5" fill={p.ink} opacity=".3"/>
+    <image id={`${uid}-body`} href={`${import.meta.env.BASE_URL}${art.asset}`} x={image.x} y={image.y} width={image.width} height={image.height}
+      preserveAspectRatio="xMidYMid meet" data-default-character-sprite="v1" data-default-character-asset={rain ? 'rain' : 'clear'}/>
+    <defs><mask id={`${uid}-alpha`} maskUnits="userSpaceOnUse" x={image.x} y={image.y} width={image.width} height={image.height}
+      style={{ maskType: 'alpha' }}><use href={`#${uid}-body`}/></mask></defs>
+    {snow > .001 && <g mask={`url(#${uid}-alpha)`} data-snow-support="hat-shoulder"><g opacity={snow} fill="#f4f8fc" stroke="#c4d8df" strokeWidth="3" strokeLinejoin="round"
+      transform={`translate(${image.x} ${image.y}) scale(${image.scale})`}>
+      {art.snowPaths.map((d, index) => <path key={index} d={d}/>)}
+    </g></g>}
+  </g>;
+};
 
 // Original SVG silhouettes, all authored around the shared grip and support point.
 // No licensed character, face, hairstyle or game-specific insignia is reproduced.
@@ -57,13 +83,18 @@ const Fisherman = ({
 }) => {
   const snowTarget = visualState.fisherman.snowTarget;
   const snow = useTween(snowTarget, snowTarget ? 2600 : 10000);
+  const rain = visualState.fisherman.rainGear;
+  const defaultArt = character === 'minimal' ? defaultCharacterVariant(rain) : null;
+  const grip = defaultArt?.grip || FISHER.grip;
   const placement = actorPlacementFor(geometry);
-  const tip = fisherTipAt(pose, geometry),
+  const tip = fisherTipAt(pose, geometry, grip),
     end = bobberTopAt(pose);
   const personDeg = PERSON_BITE_DEG * pose;
   const image = FISHER.image;
-  const rain = visualState.fisherman.rainGear;
   const rodColors = ROD_VISUALS[rod] || ROD_VISUALS.minimal;
+  const rodStart = { x: grip.x + 7, y: grip.y + 5 };
+  const rings = defaultArt ? [.12, .32, .57, .9].map((amount) => pointOnRod(rodStart, FISHER.rodTip, amount))
+    : [{ x: 810, y: 219 }, { x: 747, y: 184 }, { x: 676, y: 154 }, { x: 596, y: 132 }];
   return <g pointerEvents="none" data-layer="fisherman" data-actor-offset-y={placement.offsetY} data-rain-gear={rain ? "true" : "false"} data-snow-cover={snow.toFixed(3)}>
     <path d={`M${tip.x} ${tip.y} Q${(tip.x + end.x) / 2 + 2} ${(tip.y + end.y) / 2} ${end.x} ${end.y}`} fill="none" stroke={p.isNight ? "#d4dfd3" : "#344c48"} strokeWidth="1.15" opacity=".9" data-fishing-line="true" data-tip-x={tip.x} data-tip-y={tip.y} />
     <g transform={placement.transform} data-actor-placement="true">
@@ -80,12 +111,15 @@ const Fisherman = ({
         <path d="M924 201q11 2 15 8l8 10 -12 -4 -8 -5 -8 -2Z" />
         <path d="M953 230l6 9 -8 -4 -4 -5Z" opacity=".75" />
       </g>}
-      </g> : <Silhouette skin={character} rain={rain} snow={snow} p={p}/>}
-      <g transform={`rotate(${ROD_BITE_DEG * pose} ${FISHER.grip.x} ${FISHER.grip.y})`} data-rod-art={rod}>
-        <path d="M860 249Q711 151 575 128" fill="none" stroke={rodColors.body} strokeWidth="3.1" strokeLinecap="round" />
-        <path d="M851 243Q708 149 575 128" fill="none" stroke={rodColors.highlight} strokeWidth=".85" />
-        <g stroke={rodColors.wrap} fill="none" strokeWidth="1"><circle cx="810" cy="219" r="2" /><circle cx="747" cy="184" r="1.8" /><circle cx="676" cy="154" r="1.4" /><circle cx="596" cy="132" r="1.2" /></g>
-        {(rod === 'jade' || rod === 'dawn') && <path d="M831 228l-3 5M816 219l-3 5M762 188l-2 4M692 157l-1 3" fill="none" stroke={rodColors.wrap} strokeWidth="2.6" strokeLinecap="round"/>}
+      </g> : defaultArt ? <DefaultCharacter art={defaultArt} rain={rain} snow={snow} p={p}/>
+        : <Silhouette skin={character} rain={rain} snow={snow} p={p}/>}
+      <g transform={`rotate(${ROD_BITE_DEG * pose} ${grip.x} ${grip.y})`} data-rod-art={rod}>
+        <path d={`M${rodStart.x} ${rodStart.y}Q711 151 575 128`} fill="none" stroke={rodColors.body} strokeWidth="3.1" strokeLinecap="round" />
+        <path d={`M${grip.x - 2} ${grip.y - 1}Q708 149 575 128`} fill="none" stroke={rodColors.highlight} strokeWidth=".85" />
+        <g stroke={rodColors.wrap} fill="none" strokeWidth="1">{rings.map((ring, index) => <circle key={index} cx={ring.x} cy={ring.y} r={[2, 1.8, 1.4, 1.2][index]}/>)}</g>
+        {(rod === 'jade' || rod === 'dawn') && <path d={defaultArt
+          ? rings.map((ring) => `M${ring.x + 9} ${ring.y + 4}l-2 4`).join('')
+          : 'M831 228l-3 5M816 219l-3 5M762 188l-2 4M692 157l-1 3'} fill="none" stroke={rodColors.wrap} strokeWidth="2.6" strokeLinecap="round"/>}
       </g>
     </g>
     </g>

@@ -45,6 +45,7 @@ function alphaAudit(buffer) {
   const stride = info.width * 4;
   const decoded = Buffer.alloc(stride * info.height);
   let input = 0, transparent = 0, opaque = 0, partial = 0, nearOpaque = 0, alphaTotal = 0, saturatedEdge = 0, saturatedColorMaxAlpha = 0;
+  let minX = info.width, minY = info.height, maxX = -1, maxY = -1;
   for (let y = 0; y < info.height; y++) {
     const filter = raw[input++];
     if (filter > 4) throw new Error("Invalid PNG row filter");
@@ -61,6 +62,11 @@ function alphaAudit(buffer) {
         if (saturated) saturatedColorMaxAlpha = Math.max(saturatedColorMaxAlpha, decoded[index]);
         if (decoded[index] > 30 && saturated) saturatedEdge++;
         alphaTotal += decoded[index];
+        if (decoded[index] > 30) {
+          const pixelX = Math.floor(x / 4);
+          minX = Math.min(minX, pixelX); maxX = Math.max(maxX, pixelX);
+          minY = Math.min(minY, y); maxY = Math.max(maxY, y);
+        }
         if (decoded[index] >= 230) nearOpaque++;
         if (!decoded[index]) transparent++;
         else if (decoded[index] === 255) opaque++;
@@ -72,7 +78,8 @@ function alphaAudit(buffer) {
   const corners = [alphaAt(0, 0), alphaAt(info.width - 1, 0), alphaAt(0, info.height - 1), alphaAt(info.width - 1, info.height - 1)];
   const pixels = info.width * info.height;
   if (transparent / pixels < .2 || nearOpaque / pixels < .1 || corners.some((n) => n !== 0)) throw new Error("Sprite is not a usable transparent cutout: " + JSON.stringify({ transparent, opaque, partial, nearOpaque, alphaMean: alphaTotal / pixels, pixels, corners }));
-  return { pixels, transparent, opaque, partial, nearOpaque, saturatedEdge, saturatedColorMaxAlpha, alphaMean: alphaTotal / pixels, transparentFraction: transparent / pixels, cornerAlphas: corners };
+  return { pixels, transparent, opaque, partial, nearOpaque, saturatedEdge, saturatedColorMaxAlpha, alphaMean: alphaTotal / pixels, transparentFraction: transparent / pixels, cornerAlphas: corners,
+    visibleBounds: { x: minX, y: minY, width: maxX - minX + 1, height: maxY - minY + 1, alphaThreshold: 30 } };
 }
 function auditArt() {
   const prompts = JSON.parse(fs.readFileSync(path.join(documentation, "generation-prompts.json"), "utf8")).filter((record) => record.active !== false);

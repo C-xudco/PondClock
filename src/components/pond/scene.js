@@ -50,8 +50,8 @@ export const fisherBodyPointAt = (point, pose, geometry) => {
   const rotated = rotatePoint(point, { x: FISHER.x, y: FISHER.seatY }, PERSON_BITE_DEG * pose);
   return { x: rotated.x, y: rotated.y + (geometry?.actorOffsetY || 0) };
 };
-export const fisherTipAt = (pose, geometry) => fisherBodyPointAt(
-  rotatePoint(FISHER.rodTip, FISHER.grip, ROD_BITE_DEG * pose), pose, geometry,
+export const fisherTipAt = (pose, geometry, grip = FISHER.grip) => fisherBodyPointAt(
+  rotatePoint(FISHER.rodTip, grip, ROD_BITE_DEG * pose), pose, geometry,
 );
 // The image, click target and speech anchor consume the same per-scene placement.
 export const actorPlacementFor = (geometry) => {

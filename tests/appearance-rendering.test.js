@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
+import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { buildSync } from 'esbuild';
 import React from 'react';
@@ -13,6 +14,7 @@ import {
   FISHER, VIEW, BOBBER, fisherBodyPointAt, fisherTipAt, actorPlacementFor,
 } from '../src/components/pond/scene.js';
 import { createPrecipitation } from '../src/components/pond/precipitation.js';
+import { DEFAULT_CHARACTER, defaultCharacterVariant } from '../src/config/defaultCharacter.js';
 
 // Bundle the actual production JSX and render with real React. This checks markup
 // and resource selection; effects, timing, on-screen layout remain UI acceptance.
@@ -32,14 +34,16 @@ const render = (props = {}) => renderToStaticMarkup(React.createElement(Pond, {
   ...props,
 }));
 
-test('appearance defaults and invalid visual IDs resolve to the free minimal renderer without raster art', () => {
+test('appearance defaults preserve the free minimal scene and use the new local character sprite', () => {
   assert.deepEqual(resolveAppearanceVisuals(), { scene: 'minimal', character: 'minimal', rod: 'minimal' });
   assert.deepEqual(resolveAppearanceVisuals({ equipped: { scene: 'bad', character: 'bad', rod: 'bad' } }), resolveAppearanceVisuals());
   const markup = render();
   assert.match(markup, /data-scene-style="minimal"/);
   assert.match(markup, /data-character-art="minimal"/);
   assert.match(markup, /data-rod-art="minimal"/);
-  assert.doesNotMatch(markup, /<image\b|art\/inkwash/);
+  assert.doesNotMatch(markup, /<image[^>]*data-scene-art|art\/inkwash/);
+  assert.match(markup, /data-default-character-variant="clear"/);
+  assert.match(markup, /art\/characters\/default-clear-v1\.png/);
 });
 
 test('all 32 scene/character/rod combinations independently select their local resources', () => {
@@ -50,6 +54,7 @@ test('all 32 scene/character/rod combinations independently select their local r
     assert.ok(markup.includes(`data-rod-art="${rod}"`));
     assert.equal(markup.includes('art/inkwash/lingnan-v1.jpg'), scene === 'inkwash');
     assert.equal(markup.includes('art/inkwash/fisherman-v1.png'), character === 'inkwash');
+    assert.equal(markup.includes('art/characters/default-clear-v1.png'), character === 'minimal');
     assert.equal((markup.match(/data-fishing-line="true"/g) || []).length, 1);
   }
 });
@@ -62,6 +67,10 @@ test('both renderers obey the same day/night, overcast, rain and snow visual con
       assert.ok(markup.includes(`data-precipitation="${kind}"`));
       assert.doesNotMatch(markup, /data-celestial="sun"|data-celestial="reflection"/);
       assert.equal(markup.includes('data-rain-gear="true"'), kind === 'rain');
+      if (character === 'minimal') {
+        assert.equal(markup.includes('art/characters/default-rain-v1.png'), kind === 'rain');
+        assert.equal(markup.includes('art/characters/default-clear-v1.png'), kind !== 'rain');
+      }
       if (kind === 'snow') {
         assert.match(markup, /data-snow-cover="1.000"/);
         assert.match(markup, /data-snow-support="hat-shoulder"/);
@@ -72,6 +81,18 @@ test('both renderers obey the same day/night, overcast, rain and snow visual con
     assert.doesNotMatch(moon, /data-celestial="sun"/);
     assert.match(render({ appearance }), /data-celestial="sun"/);
   }
+});
+
+test('default character files match the declared source dimensions and use a uniform image scale', () => {
+  for (const [name, art] of Object.entries(DEFAULT_CHARACTER.variants)) {
+    const png = fs.readFileSync(path.resolve('public', art.asset));
+    assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', name);
+    assert.equal(png.readUInt32BE(16), art.source.width, name);
+    assert.equal(png.readUInt32BE(20), art.source.height, name);
+    assert.equal(art.render.width / art.source.width, art.render.height / art.source.height, name + ': no width/height distortion');
+  }
+  assert.equal(defaultCharacterVariant(false), DEFAULT_CHARACTER.variants.clear);
+  assert.equal(defaultCharacterVariant(true), DEFAULT_CHARACTER.variants.rain);
 });
 
 test('minimal geometry covers all regions, grounds all shared actors and keeps the float/line and contacts in water', () => {

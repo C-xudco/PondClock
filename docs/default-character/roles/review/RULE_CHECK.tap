@@ -1,0 +1,13 @@
+✔ independent scope audit: default-character revision changes no economic, catch, market, route or save rule source (556.6167ms)
+✔ independent free-identity audit: minimal remains free and visible, paid ownership still required and appearance cannot reroll outcomes (7.244ms)
+✔ independent PNG audit: both shipped default variants have real alpha, clear borders and substantial visible artwork (94.3192ms)
+✔ independent anchor audit: real sprite pixels map uniformly to hand/support, all24 scene geometries keep visible content, contact and click target on screen (85.1471ms)
+✔ independent actual JSX audit: one default image, alpha-clipped snow, correct clear/rain resources and stable single rod across every background (227.8154ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1127.9534

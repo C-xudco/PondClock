@@ -1,0 +1,22 @@
+✔ appearance defaults preserve the free minimal scene and use the new local character sprite (14.8404ms)
+✔ all 32 scene/character/rod combinations independently select their local resources (62.4591ms)
+✔ both renderers obey the same day/night, overcast, rain and snow visual contract for every character (110.6158ms)
+✔ default character files match the declared source dimensions and use a uniform image scale (2.2069ms)
+✔ minimal geometry covers all regions, grounds all shared actors and keeps the float/line and contacts in water (48.5617ms)
+✔ weather overlay labels distinguish a Dongguan source from the Guangzhou landscape and mark manual weather honestly (5.9379ms)
+✔ all 12 shipped scenes have their own geometry, valid float water, and excluded banks (2.4961ms)
+✔ painted foreground stones and Tarim poplar peninsula reject water contact (0.2765ms)
+✔ rain/snow are bounded and every deterministic contact belongs to the authored water polygon (15.1873ms)
+✔ a particle reaches its own exact water point before the response; skipped frames never create another location (3.5711ms)
+✔ scenes have isolated contact identity and long running animation keeps constant bounded state (1.1661ms)
+✔ seated body and rod share the exact transform, while line end follows the real float (0.7628ms)
+✔ all production image headers retain dimensions and both character variants have real decoded alpha (210.9404ms)
+✔ every region grounds the seated figure and moves body, rod, click target and speech together (1.5745ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 567.1763

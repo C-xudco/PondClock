@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-10-25T08:22:31.628Z",
+  "passed": true,
+  "provider": "built-in image_gen",
+  "assets": [
+    {
+      "variant": "clear",
+      "asset": "public/art/characters/default-clear-v1.png",
+      "bytes": 722020,
+      "sha256": "fe906817e078ec70793a38fc50af796a9a078b7edbd1c1c52e24eb6ec3f41941",
+      "width": 1254,
+      "height": 1254,
+      "bitDepth": 8,
+      "colorType": 6,
+      "interlace": 0,
+      "alpha": {
+        "pixels": 1572516,
+        "transparent": 1209145,
+        "opaque": 1080,
+        "partial": 362291,
+        "nearOpaque": 333112,
+        "saturatedEdge": 1103,
+        "saturatedColorMaxAlpha": 254,
+        "alphaMean": 54.28146231898435,
+        "transparentFraction": 0.7689238138117513,
+        "cornerAlphas": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "visibleBounds": {
+          "x": 394,
+          "y": 25,
+          "width": 724,
+          "height": 1202,
+          "alphaThreshold": 30
+        }
+      }
+    },
+    {
+      "variant": "rain",
+      "asset": "public/art/characters/default-rain-v1.png",
+      "bytes": 824901,
+      "sha256": "9d06cfb697ff8e1e728c2af03fcd317e58e9f049d20ba4f21aa140be4992716a",
+      "width": 1254,
+      "height": 1254,
+      "bitDepth": 8,
+      "colorType": 6,
+      "interlace": 0,
+      "alpha": {
+        "pixels": 1572516,
+        "transparent": 1185551,
+        "opaque": 838,
+        "partial": 386127,
+        "nearOpaque": 359659,
+        "saturatedEdge": 482,
+        "saturatedColorMaxAlpha": 254,
+        "alphaMean": 58.38219006992615,
+        "transparentFraction": 0.7539198329301577,
+        "cornerAlphas": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "visibleBounds": {
+          "x": 393,
+          "y": 59,
+          "width": 748,
+          "height": 1169,
+          "alphaThreshold": 30
+        }
+      }
+    }
+  ],
+  "runtimeBytes": 1546921,
+  "scope": "Exact original PNG format/dimensions, real alpha/bounds and hashes. RGB saturation includes the ochre scarf, not a fringe-failure criterion. Human composition and runtime anchors verified separately."
+}

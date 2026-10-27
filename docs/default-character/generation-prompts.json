@@ -1,0 +1,41 @@
+[
+  {
+    "id": "concept-seated-v1",
+    "active": false,
+    "date": "2026-10-25",
+    "provider": "built-in image_gen",
+    "intent": "redesign from visual references",
+    "references": [
+      "references/scene-reference.png",
+      "references/character-reference.png"
+    ],
+    "output": "source-art/concept-seated-v1.png",
+    "decision": "Superseded: seated boot position would require distorted mapping to the old grip/support geometry.",
+    "prompt": "Use case: stylized-concept / character redesign. Image 1 is composition and calm desktop fishing-game context only. Image 2 is a reference for the appealing white hair, soft cape folds, small proportions and gentle light only. Redesign the ugly initial dark stick-figure fisherman into one beautiful original small wandering angler, supplied as a production-ready single FULL BODY TRANSPARENT PNG cutout, square canvas. No screenshot/UI/background. Three-quarter SIDE VIEW facing LEFT, sitting quietly on an invisible riverbank edge, both legs bent naturally with dark boots resting together below, body near right side and both forearms extended comfortably to the LEFT, hands together in a gentle closed fishing grip. NO fishing rod, fishing line, stick, stool, rock, ground, lake or cast shadow: the game adds rod and bank separately. Beautiful softly sculpted silver-white tousled short hair with a unique small tied rear tuft, a tiny warm brown calm face in soft shade (not a black mask), short ivory mantle over desaturated blue-gray tunic, one modest warm ochre neck scarf, dark teal roomy trousers and simple charcoal ankle boots. Premium hand-painted stylized 3D storybook illustration, smooth elegant low-detail folds, clean thin dark edge accents, cool rim lighting with warm reflected face light, very subtle warm chest clasp, no logos/wings/emblems, no glossy plastic, no manga line art, no flat featureless silhouette. Clear readable shape at an 80px-tall game size. Anatomically natural hands, seated posture, peaceful and unhurried. Very important normalized canvas layout: hair/head around x=65%,y=22%; hands' gripping center around x=28%,y=50%; lower boot ground contact around x=72%,y=90%; character stays within 12%..92% horizontal, 8%..92% vertical, no clipping. This hand/contact arrangement must be usable for runtime fishing-rod anchoring. Only one character and generous real alpha transparency all around. No text, no baked glow halo into empty background, no white/checkerboard backdrop."
+  },
+  {
+    "id": "default-clear-v1",
+    "active": true,
+    "date": "2026-10-25",
+    "provider": "built-in image_gen",
+    "intent": "pose edit; identity preserved",
+    "references": [
+      "source-art/concept-seated-v1.png"
+    ],
+    "output": "../../public/art/characters/default-clear-v1.png",
+    "prompt": "Edit this transparent character asset. KEEP exactly the same beautiful original character identity, silver-white tufted short hair and tiny rear tie, calm warm face, ivory mantle, ochre scarf, blue-gray tunic, dark teal trousers, charcoal boots, soft premium 3D illustration lighting, clean readable small-game silhouette. Change ONLY the pose and canvas positioning: character now STANDS quietly on a riverbank (bank itself completely invisible), full body side view facing LEFT, knees almost straight, feet TOGETHER under the torso near the LOWER RIGHT, hands still extended FAR TO THE LEFT in the gentle closed fishing grip. We need a near-diagonal relationship between hands at normalized canvas (x=28%, y=50%) and boot sole ground contact (x=72%, y=90%). Head center around (x=69%, y=19%). Both wrists around 30% horizontal, both feet around72% horizontal: shift lower body/legs/boots right, NOT sitting or squatting. Relaxed slim standing posture. Maintain natural 3D proportions and graceful short cape. The empty grip will hold a runtime fishing rod added by the app, so DO NOT DRAW ANY rod, pole, stick, line, object, rock, ground or chair. Square transparent RGBA canvas with full figure and ample padding, no clipping, no background, no text, no drop shadow in empty area. Keep genuinely transparent alpha."
+  },
+  {
+    "id": "default-rain-v1",
+    "active": true,
+    "date": "2026-10-25",
+    "provider": "built-in image_gen",
+    "intent": "rain clothing variant; identity/pose preserved",
+    "references": [
+      "../../public/art/characters/default-clear-v1.png"
+    ],
+    "output": "../../public/art/characters/default-rain-v1.png",
+    "prompt": "Make a WEATHER VARIANT of this exact transparent original standing white-haired angler sprite for a fishing game. Preserve identity, face, white hair fringe, body proportions, side view facing LEFT, hand pose and boots. Keep exactly the same square canvas, camera, scale and transparent padding. Hands center around source (435,580) on a1280x1280 canvas; boot sole ground contact around (835,1215). DO NOT MOVE hands, head, boots, torso or crop. Change only clothing for rain: wear a graceful muted blue-gray waterproof travel cape over the existing ivory mantle, a modest woven gray-brown conical rain hat over hair, tiny ochre scarf still showing. White hair visible at sides under the hat, face still clear and calm. Gentle damp cloth folds, slightly cooler soft ambient lighting, clean readable bright/cool contours. No falling rain or clouds drawn; game animates rain separately. No rod, stick, line, fishing gear in hands, no ground, rock, stool, scenery, shadow backdrop, UI, text or watermark. One full-body production sprite only with genuine alpha transparency. Keep the lovely original stylized 3D storybook quality and natural standing pose; never flatten into a black silhouette.",
+    "note": "Prompt coordinates described the visual preview. Delivered files measured1254x1254; runtime uses measured source metadata, not the prompt's assumed1280."
+  }
+]
