@@ -61,7 +61,9 @@ switch ($Action) {
     $repo = Request-GitHub 'GET' $base
     $branch = Request-GitHub 'GET' ($base + '/branches/main')
     $release = Request-GitHub 'GET' ($base + '/releases/tags/v2.0.1')
-    [ordered]@{ repo=$repo.html_url; visibility=$repo.visibility; head=$branch.commit.sha; release=$release.html_url; tag=$release.tag_name; assets=@($release.assets | ForEach-Object { [ordered]@{ name=$_.name; size=$_.size; state=$_.state; digest=$_.digest; url=$_.browser_download_url } }) } | ConvertTo-Json -Depth 6
+    $tree = Request-GitHub 'GET' ($base + '/git/trees/' + $branch.commit.commit.tree.sha + '?recursive=1')
+    if ($tree.truncated) { throw 'Remote tree listing is truncated; verification incomplete.' }
+    [ordered]@{ repo=$repo.html_url; visibility=$repo.visibility; head=$branch.commit.sha; release=$release.html_url; tag=$release.tag_name; assets=@($release.assets | ForEach-Object { [ordered]@{ name=$_.name; size=$_.size; state=$_.state; digest=$_.digest; url=$_.browser_download_url } }); sourceTree=@($tree.tree | Where-Object { $_.type -eq 'blob' } | ForEach-Object { [ordered]@{ path=$_.path; sha=$_.sha; size=$_.size } }) } | ConvertTo-Json -Depth 6
   }
 }
 $headers = $null

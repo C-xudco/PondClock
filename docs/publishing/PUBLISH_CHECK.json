@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-10-28T14:39:05.3877203Z",
+  "passed": true,
+  "repository": "https://github.com/C-xudco/PondClock",
+  "visibility": "public",
+  "verifiedHead": "adeebd2fe017ead9d7f1c6ee080bf3d07aed9495",
+  "verifiedSourceFiles": 510,
+  "verificationBeforeReceiptCommit": true,
+  "release": "https://github.com/C-xudco/PondClock/releases/tag/v2.0.1",
+  "assets": [
+    {
+      "name": "PondClock-2.0.1-x64.zip",
+      "size": 172694943,
+      "state": "uploaded",
+      "digest": "sha256:5b9ece8ecdd845c5460cdcaa6954f5f89f8102ef550397ae47ee3afbb7b1a749",
+      "url": "https://github.com/C-xudco/PondClock/releases/download/v2.0.1/PondClock-2.0.1-x64.zip"
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "size": 90,
+      "state": "uploaded",
+      "digest": "sha256:8d924bea33b2df0624716abf6dbb772e2adfa256fdce5b8d306a544f59827df6",
+      "url": "https://github.com/C-xudco/PondClock/releases/download/v2.0.1/SHA256SUMS.txt"
+    }
+  ],
+  "localHistoryUnchanged": true,
+  "sourceMirror": "20 source commits imported with reference originals excluded and personal paths normalized; further documentation/check commits retain public chronology",
+  "tests": {
+    "skipped": 1,
+    "failed": 0,
+    "total": 329,
+    "passed": 328
+  },
+  "license": "Noncommercial derivatives; commercial use requires separate authorization",
+  "copyrightRegistrationCompleted": false,
+  "notes": [
+    "Initial local dependency link required normal execution permissions; existing dependencies reused.",
+    "Historical test aliases and LF checkout corrected before final pass.",
+    "Remote Unicode filenames compared with core.quotepath=false; original remote response retained."
+  ]
+}

@@ -223,6 +223,7 @@
 | [docs/publishing/DISTRIBUTION_CHECK.json](<../../docs/publishing/DISTRIBUTION_CHECK.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/HISTORY_MAP.json](<../../docs/publishing/HISTORY_MAP.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/LOCAL_CHECK.json](<../../docs/publishing/LOCAL_CHECK.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
+| [docs/publishing/PUBLISH_CHECK.json](<../../docs/publishing/PUBLISH_CHECK.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/README.md](<../../docs/publishing/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/RELEASE_NOTES.md](<../../docs/publishing/RELEASE_NOTES.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/roles/architecture/README.md](<../../docs/publishing/roles/architecture/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |

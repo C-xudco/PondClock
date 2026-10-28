@@ -72,11 +72,13 @@ IP只累计解锁，不自动瞬移；可信城市匹配才解锁新增细区，
 
 ## 开发、协作与验证
 
-当前聊天可随时提出变更，由Leader记录到 [需求收件台](docs/team/REQUESTS.md)，定向通知受影响角色。遵守 [开发规范](docs/style-packs/DEVELOPMENT_STANDARD.md)，配置/数据/领域规则/保存/渲染分层，各角色README与独立监督结果见 [V2.0.0索引](docs/v2.0.0/README.md)。
+问题与需求可提交到 [GitHub Issues](https://github.com/C-xudco/PondClock/issues)，维护者记录到 [需求收件台](docs/team/REQUESTS.md)，定向通知受影响角色。公开问题请移除个人IP、目录和完整存档。遵守 [开发规范](docs/style-packs/DEVELOPMENT_STANDARD.md)，配置/数据/领域规则/保存/渲染分层，各角色README与独立监督结果见 [V2.0.0索引](docs/v2.0.0/README.md)。
 
 封存基线：`archive/pre-v2-20261027` / `874cdac`；第一版分支 `edition/first-focus`。首次修改前201文件哈希见 [记录](docs/v2.0.0/PRE_IMPLEMENTATION.json)。第二版未定义；本轮不把它默认为旧完整版。
 
 Node24、pnpm11，沿用锁定依赖，无新增运行依赖。常用检查：`pnpm test`、`pnpm run lint`、`pnpm run build:desktop`。免安装发行使用 `pnpm run package:portable`、`pnpm run verify:release -- --portable-only`；历史安装器双目标为 `pnpm run package:win`。真实EXE测试保持正常安全设置、独立测试档案与断网环境。单元测试、界面、EXE、安装器分别记录，不能互相替代。
 
 [流程架构图与模块说明](docs/v2.0.0/README.md) · [历史1.3.0](docs/HISTORY_1.3.0.md) · [发行记录](docs/RELEASE.md)
+
+GitHub源码与下载包的实际发布回读见 [发布检查](docs/publishing/PUBLISH_CHECK.json)：包含公开可见性、已核对的源码提交/文件和Release资产SHA256。原始本地历史保留；公开镜像去掉了无公开授权的参考原图及个人路径，保留提交映射。许可采用非商业二创条款，官方软著登记尚未办理。
 

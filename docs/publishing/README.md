@@ -2,6 +2,8 @@
 
 用户确认目标：公开仓库 **C-xudco/PondClock**。许可：**非商业二创，商业使用另行授权**。本轮是发布与文档补全，不调整V2.0.1游戏规则；不把软件第二版预设为旧完整版。
 
+已完成发布：[仓库](https://github.com/C-xudco/PondClock) · [V2.0.1免安装Release](https://github.com/C-xudco/PondClock/releases/tag/v2.0.1)。源码checkpoint的510文件逐一与远端Git blob SHA核对，ZIP及SHA256SUMS均与GitHub服务端digest一致；实际[回读记录](PUBLISH_CHECK.json)在main后续提交追加，因此其verifiedHead是追加回执之前的验收checkpoint，不伪造自包含的提交哈希。原始20个来源提交按先后/日期过滤导入，公开镜像另有映射、LF策略和发布说明提交。
+
 ## 发布内容
 
 源码、开发文档、源素材制作/审计记录、阶段计划与检查结果、自动测试和必要工具；Windows免安装包通过Release分发，不把约165MB的ZIP放进普通Git提交。根README是使用入口；开发导航在docs/development。
