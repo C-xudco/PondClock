@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-28T14:26:10.989Z",
+  "checkedAt": "2026-10-28T14:28:13.752Z",
   "passed": true,
   "scope": "Every reachable public Git object; pattern scan is not a proof that no sensitive data exists",
   "sourceHistoryMutated": false,
@@ -9,11 +9,11 @@
     "docs/default-character/references/scene-reference.png",
     "docs/default-character/references/character-reference.png"
   ],
-  "objects": 1076,
-  "blobs": 772,
-  "textBlobs": 736,
-  "publicCommits": 22,
-  "head": "d8280b522255b6fd4ae1677103f6cc871d29980c",
+  "objects": 1087,
+  "blobs": 777,
+  "textBlobs": 741,
+  "publicCommits": 23,
+  "head": "5dc0ed9e937e04266cc8c5028108554ea455a86c",
   "originalAliasTags": [
     "a270e84",
     "96fd232",
