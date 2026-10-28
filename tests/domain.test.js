@@ -1,11 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { FISH, REGIONS, QUALITIES, BAIT_COST, BAIT_CATCHES, RODS } from "../src/lib/gameConfig.js";
+import { FISH, REGIONS, QUALITIES, BAIT_COST, BAIT_CATCHES } from "../src/lib/gameConfig.js";
 import { ROUTES, quoteRoute, routeBounds, haversineKm } from "../src/domain/routes.js";
 import { MARKET_QUOTES, marketFor, quoteFish, calcMarketPrice } from "../src/domain/market.js";
 import { createNewGame, applyCommand } from "../src/domain/gameState.js";
 import { validateSave } from "../src/domain/saveSchema.js";
-import { catchOutcome } from "../src/domain/loot.js";
+import { findBite, outcomeForBite, captureCommand } from "./helpers/ordinaryCapture.js";
 
 // Business invariants use deterministic inputs; no network, timers, or desktop writes.
 const NOW = Date.UTC(2026, 9, 20, 8);
@@ -58,10 +58,10 @@ function expectedFreshPrice(species, quality, weight, multiplier) {
 }
 
 test("route network contains every ordered pair exactly once and no self routes", () => {
-  assert.equal(REGIONS.length, 12);
-  assert.equal(ROUTES.length, 132);
+  assert.equal(REGIONS.length, 17);
+  assert.equal(ROUTES.length, 272);
   const keys = new Set(ROUTES.map((route) => `${route.fromId}->${route.toId}`));
-  assert.equal(keys.size, 132);
+  assert.equal(keys.size, 272);
   for (const from of REGIONS) {
     for (const to of REGIONS) {
       const route = quoteRoute(from.id, to.id);
@@ -355,27 +355,33 @@ test("a different command cannot resell an already removed fish", () => {
 });
 
 test("catch is persisted with codex and consumes bait once; replay cannot duplicate the fish", () => {
-  const state = createNewGame(HOME, NOW, { randomSeed: 1 });
-  const fish = catchOutcome(state).fish;
-  const action = command("CATCH", { expectedCatchSequence: 1 });
-  const caught = applyCommand(freezeDeep(state), action, NOW);
+  const state = findBite(seed => createNewGame(HOME, NOW, { randomSeed: seed }), 'fish');
+  const fish = outcomeForBite(state).fish;
+  const action = captureCommand(state);
+  const caught = applyCommand(freezeDeep(state), action, state.lastEffectiveNowMs);
   assert.equal(caught.bucket.length, 1);
   assert.equal(caught.bucket[0].uid, fish.uid);
   assert.equal(caught.codex[fish.speciesId].catchCount, 1);
   assert.equal(caught.baitCount, state.baitCount - 1);
   assert.equal(caught.baitLeft, BAIT_CATCHES - 1);
   assert.deepEqual(applyCommand(caught, action, NOW + 1), caught);
-  assert.equal(validateSave(JSON.parse(JSON.stringify(caught))).bucket[0].caughtAtMs, NOW);
+  assert.equal(validateSave(JSON.parse(JSON.stringify(caught))).bucket[0].caughtAtMs, state.lastEffectiveNowMs);
 });
 
 test("different catch commands cannot duplicate a fish UID or introduce an out-of-region fish", () => {
-  const fish = catchOutcome(createNewGame(HOME, NOW, { randomSeed: 1 })).fish;
-  const caught = applyCommand(createNewGame(HOME, NOW, { randomSeed: 1 }), command("CATCH", { expectedCatchSequence: 1 }), NOW);
+  const opened = findBite(seed => createNewGame(HOME, NOW, { randomSeed: seed }), 'fish');
+  const fish = outcomeForBite(opened).fish;
+  const caught = applyCommand(opened, captureCommand(opened), opened.lastEffectiveNowMs);
   assert.throws(() => applyCommand(freezeDeep(caught), command("CATCH", { expectedCatchSequence: 1 }), NOW + 1));
   const habitat = REGIONS.find((region) => region.id === HOME).fish.map(([id]) => id);
   const foreignSpecies = FISH.find((species) => !habitat.includes(species.id));
   assert.ok(foreignSpecies);
   assert.throws(() => applyCommand(caught, command("CATCH", { expectedCatchSequence: 2, fish: fishFixture(foreignSpecies) }), NOW + 1));
+  assert.throws(() => applyCommand(caught, command('RESOLVE_BITE', { attemptId: opened.fishing.attempt.id, manual: true }), caught.lastEffectiveNowMs), /鱼讯/);
+  const forged = captureCommand(opened, { fish: fishFixture(foreignSpecies), expectedCatchSequence: 999 });
+  const protectedCatch = applyCommand(opened, forged, opened.lastEffectiveNowMs);
+  assert.equal(protectedCatch.bucket[0].speciesId, fish.speciesId, 'renderer-supplied fish fields cannot replace the local seeded outcome');
+  assert.equal(protectedCatch.catchSequence, opened.catchSequence + 1);
   assert.equal(caught.bucket.length, 1);
   assert.equal(caught.codex[fish.speciesId].catchCount, 1);
 });
@@ -387,9 +393,13 @@ test("equipment purchases deduct exactly once and reject insufficient funds", ()
   assert.equal(withBait.coins, state.coins - BAIT_COST);
   assert.equal(withBait.baitCount, state.baitCount + 1);
   assert.deepEqual(applyCommand(withBait, bait, NOW + 1), withBait);
-  const withRod = applyCommand(withBait, command("BUY_ROD"), NOW + 2);
-  assert.equal(withRod.rodLevel, 1);
-  assert.equal(withRod.coins, withBait.coins - RODS[1].cost);
+  assert.throws(() => applyCommand(withBait, command("BUY_ROD"), NOW + 2), /移除鱼竿等级/);
+  const pass = command("BUY_ACTIVE_PASS");
+  const withRod = applyCommand(withBait, pass, NOW + 2);
+  assert.equal(withRod.rodLevel, 0);
+  assert.equal(withRod.activePass.remaining, 15);
+  assert.equal(withRod.coins, withBait.coins - 450);
+  assert.deepEqual(applyCommand(withRod, pass, NOW + 3), withRod);
   const empty = freezeDeep({ ...state, coins: 0 });
   assert.throws(() => applyCommand(empty, command("BUY_BAIT"), NOW));
   assert.throws(() => applyCommand(empty, command("BUY_ROD"), NOW));

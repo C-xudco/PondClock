@@ -4,10 +4,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
 import { createNewGame } from '../src/domain/gameState.js';
 import { validateSave } from '../src/domain/saveSchema.js';
 import { STORAGE_CONFIG } from '../src/config/storage.js';
-import { FISH } from '../src/lib/gameConfig.js';
+import { FISH, REGIONS } from '../src/lib/gameConfig.js';
+import { MARKET_QUOTES } from '../src/domain/market.js';
 import { createWeatherScheduler } from '../src/services/weatherScheduler.js';
 import { SERVICES_CONFIG } from '../src/config/services.js';
 import { buildMarketComparison, loadApprovedBaseline } from '../docs/next-iteration/roles/fish-catalogue/market-comparison.mjs';
@@ -107,17 +109,43 @@ test('review followup: cancelled same-key transport retains its slot and budget 
   scheduler.dispose();
 });
 
-test('review followup: the 50-fish market metadata reproduces from approved baseline and current real quotes', async () => {
+test('historical review: the archived 50-fish candidate reproduces its original market report', async () => {
   const baseline = await loadApprovedBaseline();
-  const comparison = buildMarketComparison(baseline);
+  const archivedText = file => execFileSync('git', ['show', `874cdac:${file}`], { encoding: 'utf8', windowsHide: true });
+  const dataUrl = source => `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
+  const configUrl = dataUrl(archivedText('src/lib/gameConfig.js'));
+  const economyUrl = dataUrl(archivedText('src/config/economy.js'));
+  const lootUrl = dataUrl(archivedText('src/config/lootConfig.js'));
+  const config = await import(configUrl);
+  const market = await import(dataUrl(archivedText('src/domain/market.js')
+    .replace('"../lib/gameConfig.js"', JSON.stringify(configUrl))
+    .replace('"../config/economy.js"', JSON.stringify(economyUrl))
+    .replace('"../config/lootConfig.js"', JSON.stringify(lootUrl))));
+  const comparison = buildMarketComparison(baseline, { config, market });
   const recorded = JSON.parse(await fs.readFile(new URL('../docs/next-iteration/roles/fish-catalogue/implementation/market-diff-report.json', import.meta.url), 'utf8'));
   assert.deepEqual(comparison.summary, recorded);
   for (const original of baseline.config.FISH) {
-    const current = FISH.find((fish) => fish.id === original.id);
+    const current = config.FISH.find((fish) => fish.id === original.id);
     assert.ok(current, `missing old species: ${original.id}`);
     for (const field of ['name', 'basePrice', 'len', 'wt', 'qw']) assert.deepEqual(current[field], original[field], `${original.id}.${field}`);
   }
   assert.equal(comparison.summary.fishCountAfter, 50);
   assert.equal(comparison.summary.marketCellsAfter, 600);
   assert.equal(comparison.summary.changedOldPriceQualityCells, 72);
+});
+
+test('V2 review: all archived fish identities remain and approved repricing covers the complete 17-by-56 market', async () => {
+  const source = execFileSync('git', ['show', '874cdac:src/lib/gameConfig.js'], { encoding: 'utf8', windowsHide: true });
+  const archived = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`);
+  assert.equal(archived.FISH.length, 50);
+  for (const original of archived.FISH) {
+    const current = FISH.find(fish => fish.id === original.id);
+    assert.ok(current, original.id);
+    for (const field of ['name', 'len', 'wt', 'qw']) assert.deepEqual(current[field], original[field], `${original.id}.${field}`);
+    const expectedPrice = Math.round(Math.max(original.basePrice, Math.round(20 + .55 * original.basePrice)) * 1.2);
+    assert.equal(current.basePrice, expectedPrice, original.id + ': approved V2 price formula');
+  }
+  assert.equal(FISH.length, 56); assert.equal(REGIONS.length, 17);
+  assert.equal(MARKET_QUOTES.length, 952);
+  assert.equal(new Set(MARKET_QUOTES.map(row => `${row.speciesId}:${row.regionId}`)).size, 952);
 });

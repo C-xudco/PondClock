@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-27",
+  "baseline": "874cdac",
+  "status": "SOURCE_COMPARISON_ONLY_NOT_SAVE_MIGRATION_TEST",
+  "oldSpecies": 50,
+  "currentSpecies": 56,
+  "oldRegions": 12,
+  "oldFreshCells": 2400,
+  "freshChanged": 2400,
+  "freshDecreased": 0,
+  "largestMidweightIncrease": 718,
+  "maxMidweightRatio": 13,
+  "expiredAllStillOne": true,
+  "oldRoutes": 132,
+  "repricedRoutes": 128,
+  "retimedRoutes": 130,
+  "policy": "Fresh legacy stock uses new prices; no reroll of UID, species, size, quality or age. Already-paid trips retain saved payment/departure/arrival."
+}

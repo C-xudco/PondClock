@@ -1,0 +1,311 @@
+✖ route network contains every ordered pair exactly once and no self routes (1.6401ms)
+✔ geographical distance handles known equatorial and antipodal cases (0.3583ms)
+✔ global distance scaling has exact 60/180 second limits, 200/6000 fares, and symmetric trips (1.5524ms)
+✔ market matrix covers all species x regions from the habitat shares (3.9979ms)
+✔ fresh quotes use the sale region and round only after applying the market multiplier (12.481ms)
+✔ every fish and quality becomes exactly 1 at seven days in every sale region (4.8955ms)
+✔ missing or corrupt catch time cannot be converted into a newly fresh fish (0.3906ms)
+✔ new save unlocks only its actual initial region and is schema-valid (7.0874ms)
+✔ new games reject unknown regions rather than silently unlocking a default (0.293ms)
+✔ new startup IP/VPN region is permanently unlocked for free without teleportation (1.4526ms)
+✔ flying to a free IP-unlocked region still charges the origin/destination route (0.4384ms)
+✔ real-location entry is free, preserves home, and only uses the recorded IP region (0.3934ms)
+✔ invalid and unaffordable departures do not change the input state (0.5241ms)
+✔ travel blocks a second takeoff, fishing, and selling until arrival (0.3219ms)
+✔ new startup IP region during a flight unlocks for free without cancelling the flight (0.5318ms)
+✔ arrival uses its persisted deadline once, including a long offline period (0.7194ms)
+✔ one-by-one and batch selling agree while expired fish override local premiums (1.2947ms)
+✔ sale replay remains idempotent after JSON save/restore (0.575ms)
+✔ sale credits the actual current region and cannot reset age by changing regions (0.3075ms)
+✔ commands keep the saved logical time when the supplied wall clock goes backwards (0.13ms)
+✔ a different command cannot resell an already removed fish (0.2317ms)
+✖ catch is persisted with codex and consumes bait once; replay cannot duplicate the fish (0.6749ms)
+✖ different catch commands cannot duplicate a fish UID or introduce an out-of-region fish (0.2219ms)
+✖ equipment purchases deduct exactly once and reject insufficient funds (0.1949ms)
+✔ unknown commands and missing command IDs cannot modify game assets (0.1449ms)
+✔ schema rejects future versions, corrupt assets, IDs, fish times, and duplicate fish (0.815ms)
+✔ valid logical save time survives a system clock rollback without rejecting existing fish (0.3329ms)
+✔ schema rejects inconsistent flight endpoints, deadlines, and negative paid fare (0.9389ms)
+✔ enumerate all 10000 mutually exclusive catch slots and all 1000 paid repair slots (10.8631ms)
+✔ repair integer ranges include both endpoints and only top branch can yield 10000 (0.246ms)
+✖ named capture streams keep item rates independent of rod/bait/quality and retry IDs (4.8293ms)
+✖ nonfish captures are exclusive, leave bait/pity/codex alone and are schema-valid (1.3348ms)
+✖ new fish remains local, consumes bait once, and old catch replay fails beyond 128 command IDs (0.3715ms)
+✔ shoe and unopened watch sell once at fixed prices, manuals cannot be sold (0.9011ms)
+✔ repair charges 500 and saves a fixed terminal outcome; failed balance and second repair change nothing (1.3424ms)
+✔ repair retry, lost receipt, restart and sell/repair races cannot reroll or charge twice (2.5907ms)
+✔ terminal item receipts do not depend on the bounded recent-command history (3.1775ms)
+✔ using a manual consumes it atomically, excludes same-millisecond old fish, and blocks stacking (1.3386ms)
+✔ only three fresh post-use fish gain 50%; old fish, items and exactly 168h fish do not spend charges (0.7124ms)
+✔ batch uses catchSequence/uid order, rounds per fish and agrees with the same single-sale order (0.4921ms)
+✖ two eligible fish worth three each sell for five each rather than a rounded aggregate of nine (0.3227ms)
+✔ buff qualification and charges persist through JSON, region changes, then next activation excludes existing fish (0.35ms)
+✔ arrival event is committed only for actual arrival and consume watermarks survive replay and restart (0.4852ms)
+✔ schema rejects inconsistent item terminals, shared IDs/sequences, buff fields, audio and watermark values (0.5587ms)
+✔ review followup: a preexisting corrupted migration backup prevents replacement of the legacy original (29.29ms)
+✔ review followup: recovery backup permission failure leaves both conflicting original slots intact (18.9844ms)
+✔ review followup: losing a whole-repository import verification read reports unknown but restart keeps the import (22.2238ms)
+✔ review followup: cancelled same-key transport retains its slot and budget through re-enable (1.4712ms)
+✖ review followup: the 50-fish market metadata reproduces from approved baseline and current real quotes (165.7827ms)
+✔ review: explicit conflict recovery import remains authoritative after restart (48.9096ms)
+✔ review: ENOENT during backup write is not mistaken for a missing original (12.6263ms)
+✖ review: independently enumerate the complete loot and paid-repair denominators (9.6509ms)
+✔ review: mixed-age preview and all permutations of batch/single sales agree without spending preview charges (5.9571ms)
+✖ review: paid repair survives unknown acknowledgment and its replay after command-history eviction (1.4378ms)
+✖ review: concurrent real-visit callbacks speak once for one durable arrival (4.0695ms)
+✖ review: import consumes old arrival without speaking and without nested-enqueue deadlock (2.4753ms)
+✔ v1 migration preserves every existing asset, identity and paid deadline with deterministic old-fish sequence (5.5875ms)
+✔ desktop startup retains exact old slots before atomically persisting the current schema and can restart (40.4293ms)
+✔ corrupt primary can migrate a valid v1 backup without losing either original (20.6465ms)
+✔ migration backup failure and interrupted rename preserve original bytes and allow a safe retry (16.2552ms)
+✔ future desktop schema blocks v1 migration and leaves all bytes unchanged (14.7825ms)
+✔ explicit v1 import uses the same migration while retaining the previous valid current slot (27.7112ms)
+✔ Web migration retains all original slots and persists the identical normalized schema (1.507ms)
+✔ Web backup quota failure refuses to migrate rather than silently starting empty (0.5069ms)
+✔ Web migration interrupted after backups keeps the original loadable for retry (0.6718ms)
+✔ future Web schema blocks legacy migration without even creating backup keys (0.6047ms)
+✔ conflict import advances above every valid slot, retains both originals, and stays authoritative for restart and next save (48.4068ms)
+✔ ENOENT while creating an explicit recovery backup aborts before either original is replaced (8.2027ms)
+✔ lost conflict-import verification receipt leaves the imported revision recoverable without reverting to an old slot (10.9331ms)
+✔ explicit import cannot bypass a future schema when valid old slots would otherwise permit recovery (21.4705ms)
+✔ initialization publishes only after save acknowledgment, then stays idempotent (5.2224ms)
+✔ initialization that reached disk survives a lost reply without creating another save (1.3072ms)
+✔ a clearly failed first write leaves no game and allows an explicit retry (0.9273ms)
+✔ a durable purchase with a lost reply is reconciled and cannot be charged twice after restart (2.2168ms)
+✔ an explicitly failed transaction preserves confirmed assets and can be retried (0.8342ms)
+✔ failed write plus failed reconciliation blocks all subsequent economic commands (0.5731ms)
+✔ reconciliation with no durable save cannot silently recreate an existing game (0.6698ms)
+✔ concurrent sales are serialized so one fish is sold exactly once (1.152ms)
+✔ an invalid queued command does not stop a later valid command (0.4628ms)
+✔ effective time continues after wall-clock forward and backward changes (0.3292ms)
+✔ restoring a logical time ahead of the wall clock keeps advancing monotonically (0.4016ms)
+✖ catch and arrival both persist before notification and can recover lost acknowledgments (0.501ms)
+✔ a rejected or mismatched save acknowledgment is reconciled before success is published (1.2199ms)
+✔ UI subscriber exceptions cannot turn a confirmed disk commit into an unknown transaction (0.3701ms)
+✖ actual schema, file repository and session preserve catches and paid flights across restart (25.831ms)
+ℹ tests 85
+ℹ suites 0
+ℹ pass 70
+ℹ fail 15
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 376.014
+
+✖ failing tests:
+
+test at tests\domain.test.js:60:1
+✖ route network contains every ordered pair exactly once and no self routes (1.6401ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  17 !== 12
+  
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/domain.test.js:61:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 17,
+    expected: 12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\domain.test.js:357:1
+✖ catch is persisted with codex and consumes bait once; replay cannot duplicate the fish (0.6749ms)
+  Error: 收竿事件无效，请使用当前鱼讯收鱼
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:87:25)
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/domain.test.js:361:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\domain.test.js:371:1
+✖ different catch commands cannot duplicate a fish UID or introduce an out-of-region fish (0.2219ms)
+  Error: 收竿事件无效，请使用当前鱼讯收鱼
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:87:25)
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/domain.test.js:373:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\domain.test.js:383:1
+✖ equipment purchases deduct exactly once and reject insufficient funds (0.1949ms)
+  Error: V2.0.0已移除鱼竿等级升级，主动竿和外观可在商店购买
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:150:27)
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/domain.test.js:390:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\loot-transactions.test.js:55:1
+✖ named capture streams keep item rates independent of rod/bait/quality and retry IDs (4.8293ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Set(4) {
+  +   'ferry_token',
+      'fish',
+  -   'influencer_manual',
+      'old_shoe',
+  +   'sealed_bait_box'
+  -   'waterlogged_watch'
+    }
+  
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/loot-transactions.test.js:66:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Set(4) { 'fish', 'old_shoe', 'ferry_token', 'sealed_bait_box' },
+    expected: Set(4) { 'fish', 'old_shoe', 'waterlogged_watch', 'influencer_manual' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\loot-transactions.test.js:71:1
+✖ nonfish captures are exclusive, leave bait/pity/codex alone and are schema-valid (1.3348ms)
+  Error: 收竿事件无效，请使用当前鱼讯收鱼
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:87:25)
+      at collect (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/loot-transactions.test.js:16:52)
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/loot-transactions.test.js:79:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\loot-transactions.test.js:87:1
+✖ new fish remains local, consumes bait once, and old catch replay fails beyond 128 command IDs (0.3715ms)
+  Error: 收竿事件无效，请使用当前鱼讯收鱼
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:87:25)
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/loot-transactions.test.js:90:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\loot-transactions.test.js:213:1
+✖ two eligible fish worth three each sell for five each rather than a rounded aggregate of nine (0.3227ms)
+  AssertionError [ERR_ASSERTION]: the existing market must provide a 3-coin fixture
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/loot-transactions.test.js:216:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\review-repair-followup.test.js:110:1
+✖ review followup: the 50-fish market metadata reproduces from approved baseline and current real quotes (165.7827ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'fish')
+      at yieldPerFish (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/docs/next-iteration/roles/fish-catalogue/market-comparison.mjs:38:24)
+      at file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/docs/next-iteration/roles/fish-catalogue/market-comparison.mjs:66:25
+      at Array.map (<anonymous>)
+      at buildMarketComparison (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/docs/next-iteration/roles/fish-catalogue/market-comparison.mjs:64:47)
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-repair-followup.test.js:112:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\review-transactions.test.js:60:1
+✖ review: independently enumerate the complete loot and paid-repair denominators (9.6509ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   ferry_token: 300,
+  +   fish: 7400,
+  +   influencer_manual: 200,
+  +   old_shoe: 500,
+  +   river_shell: 300,
+  +   rusty_tin_can: 300,
+  +   scratched_compass: 300,
+  +   sealed_bait_box: 300,
+  +   waterlogged_watch: 400
+  -   fish: 9820,
+  -   influencer_manual: 10,
+  -   old_shoe: 150,
+  -   waterlogged_watch: 20
+    }
+  
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:63:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { fish: 7400, old_shoe: 500, waterlogged_watch: 400, influencer_manual: 200, rusty_tin_can: 300, river_shell: 300, ferry_token: 300, sealed_bait_box: 300, scratched_compass: 300 },
+    expected: { fish: 9820, old_shoe: 150, waterlogged_watch: 20, influencer_manual: 10 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\review-transactions.test.js:94:1
+✖ review: paid repair survives unknown acknowledgment and its replay after command-history eviction (1.4378ms)
+  Error: 收竿事件无效，请使用当前鱼讯收鱼
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:87:25)
+      at TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:101:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\review-transactions.test.js:156:1
+✖ review: concurrent real-visit callbacks speak once for one durable arrival (4.0695ms)
+  ReferenceError [Error]: fishingView is not defined
+      at useFishingGame (eval at hookHarness (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:151:19), <anonymous>:338:16)
+      at hookHarness (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:152:55)
+      at async TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:158:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\review-transactions.test.js:165:1
+✖ review: import consumes old arrival without speaking and without nested-enqueue deadlock (2.4753ms)
+  ReferenceError [Error]: fishingView is not defined
+      at useFishingGame (eval at hookHarness (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:151:19), <anonymous>:338:16)
+      at hookHarness (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:152:55)
+      at async TestContext.<anonymous> (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/tests/review-transactions.test.js:169:19)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests\session.test.js:233:1
+✖ catch and arrival both persist before notification and can recover lost acknowledgments (0.501ms)
+  Error: 收竿事件无效，请使用当前鱼讯收鱼
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:87:25)
+      at file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/application/gameSession.js:125:20
+
+test at tests\session.test.js:283:1
+✖ actual schema, file repository and session preserve catches and paid flights across restart (25.831ms)
+  Error: 收竿事件无效，请使用当前鱼讯收鱼
+      at applyCommand (file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/domain/gameState.js:87:25)
+      at file:///X:/game/lthgolfmk9bc38cp-ai-089edb3e/nocode/src/application/gameSession.js:125:20

@@ -34,7 +34,7 @@ const render = (props = {}) => renderToStaticMarkup(React.createElement(Pond, {
   ...props,
 }));
 
-test('appearance defaults preserve the free minimal scene and use the new local character sprite', () => {
+test('appearance defaults restore the free classic 1.1.1 silhouette without a raster body', () => {
   assert.deepEqual(resolveAppearanceVisuals(), { scene: 'minimal', character: 'minimal', rod: 'minimal' });
   assert.deepEqual(resolveAppearanceVisuals({ equipped: { scene: 'bad', character: 'bad', rod: 'bad' } }), resolveAppearanceVisuals());
   const markup = render();
@@ -42,11 +42,11 @@ test('appearance defaults preserve the free minimal scene and use the new local 
   assert.match(markup, /data-character-art="minimal"/);
   assert.match(markup, /data-rod-art="minimal"/);
   assert.doesNotMatch(markup, /<image[^>]*data-scene-art|art\/inkwash/);
-  assert.match(markup, /data-default-character-variant="clear"/);
-  assert.match(markup, /art\/characters\/default-clear-v1\.png/);
+  assert.match(markup, /data-classic-source="1.1.1"/);
+  assert.doesNotMatch(markup, /data-default-character-sprite|art\/characters\/default-/);
 });
 
-test('all 32 scene/character/rod combinations independently select their local resources', () => {
+test('every scene/character/rod combination independently selects its local resources', () => {
   for (const scene of ['minimal', 'inkwash']) for (const character of [...Object.keys(CHARACTER_VISUALS), 'inkwash']) for (const rod of Object.keys(ROD_VISUALS)) {
     const markup = render({ appearance: { equipped: { scene, character, rod } } });
     assert.ok(markup.includes(`data-scene-style="${scene}"`));
@@ -54,7 +54,8 @@ test('all 32 scene/character/rod combinations independently select their local r
     assert.ok(markup.includes(`data-rod-art="${rod}"`));
     assert.equal(markup.includes('art/inkwash/lingnan-v1.jpg'), scene === 'inkwash');
     assert.equal(markup.includes('art/inkwash/fisherman-v1.png'), character === 'inkwash');
-    assert.equal(markup.includes('art/characters/default-clear-v1.png'), character === 'minimal');
+    assert.equal(markup.includes('art/characters/default-clear-v1.png'), character === 'whitecape');
+    assert.equal(markup.includes('data-classic-source="1.1.1"'), character === 'minimal');
     assert.equal((markup.match(/data-fishing-line="true"/g) || []).length, 1);
   }
 });
@@ -67,7 +68,7 @@ test('both renderers obey the same day/night, overcast, rain and snow visual con
       assert.ok(markup.includes(`data-precipitation="${kind}"`));
       assert.doesNotMatch(markup, /data-celestial="sun"|data-celestial="reflection"/);
       assert.equal(markup.includes('data-rain-gear="true"'), kind === 'rain');
-      if (character === 'minimal') {
+      if (character === 'whitecape') {
         assert.equal(markup.includes('art/characters/default-rain-v1.png'), kind === 'rain');
         assert.equal(markup.includes('art/characters/default-clear-v1.png'), kind !== 'rain');
       }

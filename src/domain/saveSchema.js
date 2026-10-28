@@ -1,9 +1,10 @@
 import { FISH, REGIONS, QUALITIES, RODS, BAIT_CATCHES } from '../lib/gameConfig.js';
-import { DEFAULT_SETTINGS, GAME_VERSION, STORAGE_CONFIG } from '../config/storage.js';
+import { DEFAULT_SETTINGS, GAME_VERSION, STORAGE_CONFIG, EDITION_ID } from '../config/storage.js';
 import { LOOT_CONFIG, ITEM_DEFINITIONS } from '../config/lootConfig.js';
 import { stableSeed, watchRepairOutcome } from './loot.js';
 import { APPEARANCE_OPTIONS, APPEARANCE_PRODUCTS, DEFAULT_APPEARANCE, ownsAppearanceStyle } from '../config/appearance.js';
 import { SCENE_WEATHER_MODES, MANUAL_WEATHER_OPTIONS } from '../config/weatherPresentation.js';
+import { createEditionFields, validateEditionFields } from './editionState.js';
 
 const regionIds = new Set(REGIONS.map((r) => r.id));
 const fishIds = new Set(FISH.map((f) => f.id));
@@ -23,7 +24,8 @@ export function validateSave(input) {
   const s = object(input, '根对象');
   const legacy = s.schemaVersion === 1;
   const legacyAppearance = legacy || s.schemaVersion === 2;
-  if (!legacyAppearance && s.schemaVersion !== STORAGE_CONFIG.schemaVersion) fail('不支持的版本，请使用对应版本应用，原存档会保留');
+  const legacyEdition = [1, 2, 3].includes(s.schemaVersion);
+  if (!legacyEdition && s.schemaVersion !== STORAGE_CONFIG.schemaVersion) fail('不支持的版本，请使用对应版本应用，原存档会保留');
   const now = num(s.lastEffectiveNowMs, '逻辑时间');
   const createdAtMs = num(s.createdAtMs, '创建时间');
   if (createdAtMs > now) fail('创建时间晚于逻辑时间');
@@ -36,6 +38,7 @@ export function validateSave(input) {
   if (!unlockedRegions.includes(homeRegion) || !unlockedRegions.includes(currentRegion) || (realRegion && !unlockedRegions.includes(realRegion))) fail('所在地区尚未解锁');
   const rodLevel = num(s.rodLevel, '鱼竿等级', 0, true);
   if (rodLevel >= RODS.length) fail('鱼竿等级越界');
+  if (!legacyEdition && rodLevel !== 0) fail('第一版不使用鱼竿等级');
   const baitLeft = num(s.baitLeft, '鱼饵余次', 0, true);
   if (baitLeft >= BAIT_CATCHES) fail('鱼饵余次越界');
   if (!Array.isArray(s.bucket) || s.bucket.length > 100000) fail('鱼篓');
@@ -133,6 +136,15 @@ export function validateSave(input) {
     if (fromId === toId || fromId !== currentRegion || departAtMs > now || arriveAtMs <= departAtMs || !Number.isSafeInteger(arriveAtMs)) fail('航程时间或地区关系');
     travel = { id: text(t.id, '航程编号'), fromId, toId, departAtMs, arriveAtMs,
       farePaid: num(t.farePaid, '已付票价', 0, true), routesVersion: num(t.routesVersion, '航线版本', 1, true) };
+    if (legacyEdition) Object.assign(travel, { baseFare: travel.farePaid, payment: 'coins', discountSourceItemUid: null });
+    else {
+      const baseFare = num(t.baseFare, '机票原价', 0, true);
+      if (!['coins', 'free'].includes(t.payment)) fail('旅行支付方式');
+      const source = t.discountSourceItemUid == null ? null : text(t.discountSourceItemUid, '机票优惠凭据');
+      if (t.payment === 'free' ? travel.farePaid !== 0 || source !== null
+        : travel.farePaid !== (source ? Math.round(baseFare * .9) : baseFare)) fail('旅行优惠关系');
+      Object.assign(travel, { baseFare, payment: t.payment, discountSourceItemUid: source });
+    }
   }
   const history = s.recentCommittedCommandIds;
   if (!Array.isArray(history) || history.length > STORAGE_CONFIG.commandHistorySize || new Set(history).size !== history.length) fail('命令记录');
@@ -160,17 +172,32 @@ export function validateSave(input) {
   for (const slot of Object.keys(APPEARANCE_OPTIONS)) {
     if (!ownsAppearanceStyle(appearance, slot, appearance.equipped[slot])) fail('外观尚未拥有或分类错误');
   }
+  const benefitIds = new Set(ids);
+  if (saleBuff) benefitIds.add(saleBuff.sourceItemUid);
+  let edition;
+  let ownedProducts = [...appearance.ownedProducts];
+  let coins = num(s.coins, '金币', 0, true);
+  if (legacyEdition) {
+    const rodCompensation = [0, 600, 3200, 12200][rodLevel];
+    coins = num(coins + rodCompensation, '补偿后金币', 0, true);
+    const whitecapeGift = APPEARANCE_PRODUCTS.some(product => product.id === 'whitecape_character_pack');
+    if (whitecapeGift && !ownedProducts.includes('whitecape_character_pack')) ownedProducts.push('whitecape_character_pack');
+    edition = { ...createEditionFields(), legacy: { sourceSchemaVersion: s.schemaVersion, rodLevel, rodCompensation,
+      migrationId: 'focus-v2-once', whitecapeGift }, travelReceiptIds: travel ? [travel.id] : [] };
+  } else edition = validateEditionFields(s, { now, regionIds, currentRegion, itemIds: benefitIds });
+  if (edition.editionId !== EDITION_ID) fail('档案版本身份');
+  if (travel && (edition.fishing.mode !== 'stopped' || edition.fishing.attempt || !edition.travelReceiptIds.includes(travel.id))) fail('飞行与钓鱼状态冲突');
   return {
     schemaVersion: STORAGE_CONFIG.schemaVersion, gameVersion: GAME_VERSION, revision: num(s.revision, '修订号', 0, true),
     createdAtMs, lastEffectiveNowMs: now, homeRegion, currentRegion, realRegion, unlockedRegions: [...unlockedRegions],
-    coins: num(s.coins, '金币', 0, true), rodLevel, baitCount: num(s.baitCount, '鱼饵份数', 0, true), baitLeft,
+    coins, rodLevel: 0, baitCount: num(s.baitCount, '鱼饵份数', 0, true), baitLeft,
     pityCounter: num(s.pityCounter, '保底次数', 0, true), bucket, codex, travel, items, catchSequence, randomSeed, saleBuff,
     arrivalSequence, arrivalConsumedSequence, arrivalEvent,
-    appearance: { ownedProducts: [...appearance.ownedProducts], equipped: { ...appearance.equipped } },
+    appearance: { ownedProducts, equipped: { ...appearance.equipped } },
     settings: { onlineEnhancements: settings.onlineEnhancements, alwaysOnTop: settings.alwaysOnTop,
       biteSoundEnabled: settings.biteSoundEnabled, biteSoundVolume, backgroundBiteSound: settings.backgroundBiteSound,
       sceneWeatherMode: settings.sceneWeatherMode, manualWeather: settings.manualWeather },
-    lastCommittedCommandId, recentCommittedCommandIds: [...history],
+    lastCommittedCommandId, recentCommittedCommandIds: [...history], ...edition,
   };
 }
 

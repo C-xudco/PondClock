@@ -7,6 +7,8 @@ export const FISH_SOURCE_SNAPSHOT = Object.freeze({
   approvedBaseline: "a270e84",
   implementedDate: "2026-10-25",
   poolScope: "宽水系鱼池；景观地标不等于逐种采样点",
+  v2ExpansionDate: '2026-10-27',
+  v2ExpansionScope: '五新水域与六新鱼；三淡水补充的竿钓细节属游戏演绎，未声称一手钩钓证据已核实',
 });
 
 export const FISH_REFERENCES = Object.freeze({
@@ -34,6 +36,30 @@ export const FISH_REFERENCES = Object.freeze({
     type: "original-research", locator: "表1：野生群体采集水系", surveyedAt: "2020年发表",
     scope: "珠江河口/邕江、闽江邵武、湘江江华；表中广州地名与坐标关系有疑点，不复用坐标或声称沙面定点",
   }),
+  R05: Object.freeze({
+    title: '王银肖等(2022)：白洋淀鱼类群落结构与环境因子关系分析',
+    url: 'https://html.rhhz.net/shhydxxb/20211003581.htm',
+    type: 'original-research', locator: '表1与2.1节', surveyedAt: '2019—2020',
+    scope: '白洋淀30位点；生态调查，不等于竿钓记录或实时丰度',
+  }),
+  R06: Object.freeze({
+    title: '雄安新区：野生鱼类增加至50种',
+    url: 'https://www.xiongan.gov.cn/20250822/40a8355ed1754cbfb90380142e2ad214/c.html',
+    type: 'official-regional-monitoring', locator: '花䱻恢复记录', surveyedAt: '2024—2025记录，2025发表',
+    scope: '白洋淀恢复／跟踪记录，不推断安新机位逐种可钓',
+  }),
+  R07: Object.freeze({
+    title: '威海市海洋游钓基地布局规划（2012—2020）',
+    url: 'https://hyyy.weihai.gov.cn/module/download/downfile.jsp?classid=0&filename=1807060947296624924.pdf',
+    type: 'official-historical-angling-catalogue', locator: '主要游钓鱼类表', surveyedAt: '2012—2020历史规划',
+    scope: '威海宽海域对象鱼，不作为刘公岛机位调查、当前丰度或现行许可',
+  }),
+  R08: Object.freeze({
+    title: '太湖麦穗鱼生长、死亡和利用状况评估',
+    url: 'https://xuebao.dlou.edu.cn/article/2016/2095-1388/201604006.html',
+    type: 'original-research', locator: '摘要与采样方法', surveyedAt: '2014年，2016发表',
+    scope: '太湖虾笼网采样，不据此宣称普通竿钓已证实',
+  }),
 });
 
 const yangtzeEvidence = [
@@ -41,9 +67,9 @@ const yangtzeEvidence = [
   { regionId: "changjiang", references: ["R03"], waterSystem: "长江中游调查江段" },
 ];
 
-function entry(scientificName, sourceFid, catalogueClass, references, regionEvidence, balanceReason, aliases = []) {
+function entry(scientificName, sourceFid, catalogueClass, references, regionEvidence, balanceReason, aliases = [], extra = {}) {
   return Object.freeze({
-    scientificName, sourceFids: Object.freeze([sourceFid]), catalogueClass,
+    scientificName, sourceFids: Object.freeze(sourceFid ? [sourceFid] : []), catalogueClass,
     references: Object.freeze(references), sourceUrls: Object.freeze(references.map((id) => FISH_REFERENCES[id].url)),
     evidenceTier: "R1", evidenceType: "水系原始研究记录", aliases: Object.freeze(aliases),
     regionEvidence: Object.freeze(regionEvidence.map((evidence) => Object.freeze({
@@ -53,6 +79,7 @@ function entry(scientificName, sourceFid, catalogueClass, references, regionEvid
     anglingEvidence: catalogueClass === "C" ? "区域补充；未独立确认普通竿钓" : "数据库游钓标签；具体普通竿钓方式未独立确认",
     parameterBasis: "价格、len/wt、品质与投放权重均为游戏平衡参数，不是野外最大值/丰度测量",
     balanceReason,
+    ...extra,
   });
 }
 
@@ -81,4 +108,36 @@ export const FISH_SOURCES = Object.freeze({
     { regionId: "dongnan", references: ["R04"], waterSystem: "闽江邵武野生群体" },
     { regionId: "changjiang", references: ["R04"], waterSystem: "洞庭湖水系湘江江华野生群体" },
   ], "与乌鳢分种，基础14接近旧乌鳢15；少量进入长江中游，闽江/珠江适度补充掠食档"),
+  maisui: entry('Pseudorasbora parva', null, 'regional-supplement', ['R02', 'R05', 'R08'], [
+    { regionId: 'taihu', references: ['R02', 'R08'], waterSystem: '太湖湖区' },
+    { regionId: 'baiyangdian', references: ['R05'], waterSystem: '白洋淀湖群' },
+  ], '小型鱼采用低基础价与常见品质组，物种常见与品质独立', [], {
+    anglingEvidence: '已核区域生态采样；一手竿钓证据未独立核实，本游戏钩获为演绎', addedVersion: '2.0.0',
+  }),
+  huahuan: entry('Hemibarbus maculatus', null, 'regional-supplement', ['R02', 'R06'], [
+    { regionId: 'taihu', references: ['R02'], waterSystem: '太湖湖区' },
+    { regionId: 'baiyangdian', references: ['R06'], waterSystem: '白洋淀湖群' },
+  ], '花䱻与唇䱻保留独立身份；基础价与体型为游戏参数', [], {
+    anglingEvidence: '已核区域生态／恢复记录；一手竿钓证据未独立核实，本游戏钩获为演绎', addedVersion: '2.0.0',
+  }),
+  hechuanshatangli: entry('Odontobutis potamophila', null, 'regional-supplement', ['R02'], [
+    { regionId: 'taihu', references: ['R02'], waterSystem: '太湖湖区' },
+  ], '底层小型掠食鱼，不因名称或生态自动赋高品质', ['Odontobutis potamophilus'], {
+    anglingEvidence: '已核太湖生态记录；一手竿钓证据未独立核实，本游戏钩获为演绎', addedVersion: '2.0.0',
+  }),
+  xushipingyou: entry('Sebastes schlegelii', 'F1360', 'A', ['R07'], [
+    { regionId: 'jiaodong', references: ['R07'], waterSystem: '威海近岸海域' },
+  ], '礁栖鱼与淡水鱼分池，品质仍独立抽取', [], {
+    evidenceTier: 'R2', anglingEvidence: '用户名录A类与官方历史游钓对象表；不是当前地标许可', addedVersion: '2.0.0',
+  }),
+  dalongliuxian: entry('Hexagrammos otakii', 'F0657', 'A', ['R07'], [
+    { regionId: 'jiaodong', references: ['R07'], waterSystem: '威海近岸海域' },
+  ], '近岸岩礁对象鱼，使用中档基础价和普通品质组', [], {
+    evidenceTier: 'R2', anglingEvidence: '用户名录A类与官方历史游钓对象表；不是当前地标许可', addedVersion: '2.0.0',
+  }),
+  heidiao: entry('Acanthopagrus schlegelii', 'F1411', 'A', ['R07'], [
+    { regionId: 'jiaodong', references: ['R07'], waterSystem: '威海近岸海域' },
+  ], '以学名去重，不按旧属名拆成新鱼；地域与品质分别处理', ['Acanthopagrus schlegeli'], {
+    evidenceTier: 'R2', anglingEvidence: '用户名录A类与官方历史游钓对象表；不是当前地标许可', addedVersion: '2.0.0',
+  }),
 });

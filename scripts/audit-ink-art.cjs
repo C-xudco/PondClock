@@ -105,16 +105,33 @@ function auditArt() {
       reviewStatus: "implementation-reviewed; independent product visual acceptance tracked separately",
     };
   });
+  // V2 additions are original code-authored SVGs, not raster conversions. Keep
+  // their provenance distinct while covering every runtime scene resource.
+  for (const id of ['taihu', 'dongting', 'jialing', 'baiyangdian', 'jiaodong']) {
+    const runtimeFile = path.join(art, id + '-v1.svg');
+    const runtime = fs.readFileSync(runtimeFile), svg = runtime.toString('utf8');
+    if (!/<svg\b[^>]*viewBox="0 0 1000 440"/.test(svg) || !svg.trim().endsWith('</svg>')) throw new Error('Invalid authored SVG: ' + id);
+    if (/<script\b|<foreignObject\b|\bon\w+=|(?:href|xlink:href)=["']https?:/i.test(svg)) throw new Error('SVG must be self-contained: ' + id);
+    if (/data-celestial|id=["'](?:sun|moon)["']/.test(svg)) throw new Error('Weather-independent background must not bake in a sun/moon: ' + id);
+    assets.push({ id, assetRevision: 1, regionId: id, runtimePath: path.relative(root, runtimeFile).replaceAll('\\', '/'),
+      sourcePath: 'scripts/build-focus-art.mjs', width: 1000, height: 440,
+      runtimeBytes: runtime.length, runtimeSha256: hash(runtime), alpha: null,
+      logicalViewBox: { width: 1000, height: 440 }, geometryId: id,
+      generation: { provider: 'project-authored SVG', generatedOn: '2026-10-27' },
+      reviewStatus: 'offline structural audit; product visual acceptance tracked separately' });
+  }
   const sprites = assets.filter((a) => a.alpha);
   if (sprites.length !== 2 || sprites[0].width !== sprites[1].width || sprites[0].height !== sprites[1].height) throw new Error("Alternate sprite canvas mismatch");
   return { schemaVersion: 1, checkedAt: new Date().toISOString(), passed: true,
     scope: "Offline format, dimensions, real alpha, packaged asset coverage and SHA256 only; not geographic or visual quality certification.",
-    provider: "built-in image_gen", assets, runtimeBytes: assets.reduce((n, a) => n + a.runtimeBytes, 0),
+    provider: "built-in image_gen (original raster assets) and project-authored SVG (V2 additions)", assets, runtimeBytes: assets.reduce((n, a) => n + a.runtimeBytes, 0),
     pending: ["Independent scene and character visual review", "Production UI motion and performance evidence"] };
 }
 if (require.main === module) {
   const report = auditArt();
-  const output = path.join(documentation, "art-production-manifest.json");
+  const outputDirectory = path.join(root, 'docs/v2.0.0/roles/art');
+  fs.mkdirSync(outputDirectory, { recursive: true });
+  const output = path.join(outputDirectory, "art-production-manifest.json");
   fs.writeFileSync(output, JSON.stringify(report, null, 2) + "\n");
   console.log(JSON.stringify({ passed: report.passed, assets: report.assets.length, runtimeBytes: report.runtimeBytes, report: output }));
 }

@@ -18,7 +18,7 @@ const permutations = (items) => items.length ? items.flatMap((item, i) => permut
 const envelope = (snapshot) => JSON.stringify({ format: 'pondclock.save', envelopeVersion: 1,
   revision: snapshot.revision, snapshot, checksum: checksum(snapshot) });
 
-test('independent purchase-order audit: all120 shop orders have the same exact balance, rights and untouched equipment', () => {
+test('independent purchase-order audit: all720 shop orders have the same exact balance, rights and untouched equipment', () => {
   const price = APPEARANCE_PRODUCTS.reduce((sum, product) => sum + product.price, 0);
   const expectedIds = APPEARANCE_PRODUCTS.map((product) => product.id).sort();
   const original = fresh();
@@ -32,7 +32,8 @@ test('independent purchase-order audit: all120 shop orders have the same exact b
     assert.equal(result.rodLevel, original.rodLevel);
     count++;
   }
-  assert.equal(count, 120);
+  assert.equal(APPEARANCE_PRODUCTS.length, 6);
+  assert.equal(count, 720);
 });
 
 test('independent ambiguous purchase audit: unreadable confirmation blocks more purchases until restart, never charges twice', async () => {

@@ -7,11 +7,16 @@ import { createNewGame, applyCommand } from '../src/domain/gameState.js';
 import { validateSave } from '../src/domain/saveSchema.js';
 import { STORAGE_CONFIG } from '../src/config/storage.js';
 import { GameSession } from '../src/application/gameSession.js';
-import { catchOutcome, watchRepairOutcome, lootKindForSlot, repairKindForSlot } from '../src/domain/loot.js';
+import { watchRepairOutcome, lootKindForSlot, repairKindForSlot } from '../src/domain/loot.js';
 import { quoteBucketSale, quoteSaleFish, compareCatchOrder } from '../src/domain/market.js';
 import { FISH, REGIONS, RODS, BITE, JUDGE } from '../src/lib/gameConfig.js';
 import { FISHING_CONFIG } from '../src/config/fishing.js';
 import { randInt, qualityById } from '../src/lib/gameUtils.js';
+
+import { FishingRuntimePump, fishingView, localDayKey, RUNTIME_INTERVAL_MS } from '../src/hooks/fishingRuntime.js';
+import { ACTIVE_FISHING_CONFIG, gaugePosition } from '../src/config/activeFishing.js';
+import { FOCUS_CONFIG } from '../src/config/focus.js';
+import { findBite, capture, captureCommand } from './helpers/ordinaryCapture.js';
 
 const { createSaveRepository, checksum } = createRequire(import.meta.url)('../desktop/saveRepository.cjs');
 const NOW = Date.UTC(2026, 9, 25, 10);
@@ -60,7 +65,7 @@ test('review: ENOENT during backup write is not mistaken for a missing original'
 test('review: independently enumerate the complete loot and paid-repair denominators', () => {
   const tally = (size, fn) => Array.from({ length: size }, (_, index) => fn(index))
     .reduce((counts, kind) => ({ ...counts, [kind]: (counts[kind] || 0) + 1 }), {});
-  assert.deepEqual(tally(10000, lootKindForSlot), { fish: 9820, old_shoe: 150, waterlogged_watch: 20, influencer_manual: 10 });
+  assert.deepEqual(tally(10000, lootKindForSlot), { fish: 7400, old_shoe: 500, waterlogged_watch: 400, influencer_manual: 200, rusty_tin_can: 300, river_shell: 300, ferry_token: 300, sealed_bait_box: 300, scratched_compass: 300 });
   assert.deepEqual(tally(1000, repairKindForSlot), { failed: 400, ordinary: 550, luxury: 49, top: 1 });
 });
 
@@ -92,13 +97,9 @@ test('review: mixed-age preview and all permutations of batch/single sales agree
 });
 
 test('review: paid repair survives unknown acknowledgment and its replay after command-history eviction', async () => {
-  let initial;
-  for (let seed = 0; seed < 50000; seed += 1) {
-    const candidate = freshGame({ randomSeed: seed, coins: 1000 });
-    if (catchOutcome(candidate).item?.type === 'waterlogged_watch') { initial = candidate; break; }
-  }
-  assert.ok(initial, 'fixture must find a naturally rolled watch');
-  let durable = applyCommand(initial, { type: 'CATCH', expectedCatchSequence: 1, id: 'review-catch' }, NOW);
+  const initial = findBite(seed => freshGame({ randomSeed: seed, coins: 1000 }), 'waterlogged_watch');
+  const catchEvent = captureCommand(initial);
+  let durable = capture(initial);
   const item = durable.items[0], expected = watchRepairOutcome(item);
   let lost = true;
   const repository = { loadSave: async () => ({ snapshot: clone(durable) }), saveGame: async (next) => {
@@ -118,7 +119,7 @@ test('review: paid repair survives unknown acknowledgment and its replay after c
   await assert.rejects(session.dispatch({ type: 'REPAIR_ITEM', uid: item.uid, id: 'review-paid-repair' }), /已经修过/);
   assert.equal(session.snapshot.coins, 500);
   assert.equal(session.snapshot.items[0].salePrice, expected.salePrice);
-  await assert.rejects(session.dispatch({ type: 'CATCH', expectedCatchSequence: 1, id: 'review-old-catch' }), /收竿事件已处理/);
+  await assert.rejects(session.dispatch(catchEvent), /鱼讯/);
 });
 
 // Execute the actual hook callbacks with injected lifecycle primitives and actual
@@ -144,7 +145,7 @@ async function hookHarness(initial, { importSnapshot } = {}) {
   const dependencies = { useState, useCallback: (fn) => fn, useRef: (value) => ({ current: value }), useEffect: () => {},
     toast: { success() {}, error() {}, info() {} }, GameSession: FixedSession, applyCommand,
     createRepository: () => repository, RODS, BITE, JUDGE, FISH, REGIONS, FISHING_CONFIG,
-    randInt, qualityById, DialogueDirector: Director, BiteAudio: class {}, itemName: () => 'item' };
+    randInt, qualityById, FishingRuntimePump, fishingView, localDayKey, RUNTIME_INTERVAL_MS, ACTIVE_FISHING_CONFIG, gaugePosition, FOCUS_CONFIG, DialogueDirector: Director, BiteAudio: class {}, itemName: () => 'item' };
   const source = (await fs.readFile(new URL('../src/hooks/useFishingGame.js', import.meta.url), 'utf8'))
     .replace(/^import .*;\r?\n/gm, '').replaceAll('import.meta.env.DEV', 'false')
     .replace('export function useFishingGame()', 'function useFishingGame()');

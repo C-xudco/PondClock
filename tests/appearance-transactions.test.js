@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import { createNewGame, applyCommand } from '../src/domain/gameState.js';
 import { validateSave } from '../src/domain/saveSchema.js';
+import { findBite, capture } from './helpers/ordinaryCapture.js';
 import { catchOutcome } from '../src/domain/loot.js';
 import { quoteBucketSale } from '../src/domain/market.js';
 import { GameSession } from '../src/application/gameSession.js';
@@ -25,13 +26,13 @@ const envelope = (snapshot) => `${JSON.stringify({ format: 'pondclock.save', env
   revision: snapshot.revision, snapshot, checksum: checksum(snapshot) })}\n`;
 
 function v2Fixture() {
-  let state = fresh();
-  state = run(state, 'CATCH', { expectedCatchSequence: 1, bestClick: true });
+  let state = capture(findBite(seed => ({ ...fresh(), randomSeed: seed }), 'fish'));
   state = run(state, 'BUY_BAIT');
   state = run(state, 'GEO_VISIT', { regionId: 'dongbei' });
   state = run(state, 'START_TRAVEL', { toId: 'dongbei' });
   state = { ...state, schemaVersion: 2, gameVersion: '1.2.0' };
-  delete state.appearance;
+  for (const key of ['appearance', 'editionId', 'legacy', 'fishing', 'activePass', 'focus', 'freeTravelTickets', 'discounts', 'travelReceiptIds']) delete state[key];
+  for (const key of ['baseFare', 'payment', 'discountSourceItemUid']) delete state.travel[key];
   delete state.settings.sceneWeatherMode;
   delete state.settings.manualWeather;
   return state;
@@ -196,12 +197,17 @@ test('schema2 migration restores minimal art and adds weather defaults while pre
   const migrated = validateSave(old);
   assert.deepEqual(old, original);
   for (const key of Object.keys(old)) {
-    if (!['schemaVersion', 'gameVersion', 'settings'].includes(key)) assert.deepEqual(migrated[key], old[key], key);
+    if (!['schemaVersion', 'gameVersion', 'settings', 'travel'].includes(key)) assert.deepEqual(migrated[key], old[key], key);
   }
   assert.equal(migrated.schemaVersion, STORAGE_CONFIG.schemaVersion);
   assert.equal(migrated.gameVersion, GAME_VERSION);
   assert.deepEqual(migrated.settings, { ...DEFAULT_SETTINGS, ...old.settings });
-  assert.deepEqual(migrated.appearance, DEFAULT_APPEARANCE);
+  assert.deepEqual(migrated.appearance.equipped, DEFAULT_APPEARANCE.equipped);
+  assert.deepEqual(migrated.appearance.ownedProducts, ['whitecape_character_pack']);
+  for (const key of Object.keys(old.travel)) assert.equal(migrated.travel[key], old.travel[key], key);
+  assert.equal(migrated.legacy.sourceSchemaVersion, 2);
+  assert.equal(migrated.legacy.rodCompensation, 0);
+  assert.deepEqual(validateSave(migrated), migrated);
   const spoof = structuredClone(old);
   spoof.appearance = { ownedProducts: ['inkwash_pack'], equipped: { scene: 'inkwash', character: 'inkwash', rod: 'inkwash' } };
   spoof.settings.sceneWeatherMode = 'manual'; spoof.settings.manualWeather = 'snow';

@@ -2,6 +2,7 @@ import { DEFAULT_REGION, REGIONS } from "../lib/gameConfig.js";
 import { matchRegionForProvince } from "../lib/gameUtils.js";
 import { regionLocation } from "../data/regionLocations.js";
 import { SERVICES_CONFIG } from "../config/services.js";
+import { matchDetailedRegionForCity } from '../data/focusRegions.js';
 import environmentEndpoints from "../config/environmentEndpoints.cjs";
 
 const { GEO_PROVIDERS, isGeoUrl } = environmentEndpoints;
@@ -129,9 +130,10 @@ export function parseGeoResponse(data, provider = "ipapi") {
   const country = cleanText(data.country_code, 10).toUpperCase();
   if (!/^[A-Z]{2}$/.test(country)) throw new EnvironmentError("IP 国家字段无效");
   const isChineseRegion = country === "CN" || Object.prototype.hasOwnProperty.call(specialRegions, country);
-  const matched = isChineseRegion ? matchRegionForProvince(
+  const detailed = country === 'CN' ? matchDetailedRegionForCity(data.city, data.region || data.region_code) : null;
+  const matched = detailed || (isChineseRegion ? matchRegionForProvince(
     specialRegions[country], data.region, data.region_code, data.city,
-  ) : null;
+  ) : null);
   const detail = [cleanText(data.region), cleanText(data.city)].filter(Boolean).join(" · ")
     || cleanText(data.country_name || data.country) || "未匹配到具体地区";
   const result = {

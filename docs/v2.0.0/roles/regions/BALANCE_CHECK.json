@@ -1,0 +1,1702 @@
+{
+  "date": "2026-10-27",
+  "scope": "V2.0.0 runtime numerical configuration; fresh local immediate sale; no real-player profitability guarantee",
+  "regions": 17,
+  "species": 56,
+  "directedRoutes": 272,
+  "marketCells": 952,
+  "fishProbability": 0.74,
+  "nonFishDirectValue": 4.57,
+  "target": 50,
+  "suggestedEngineeringTolerance": [
+    45,
+    55
+  ],
+  "rule": {
+    "ruleVersion": 2,
+    "basePriceOffset": 20,
+    "basePriceSlope": 0.55,
+    "finalPriceScale": 1.2,
+    "baseWeightScale": 4,
+    "baitQualityBonus": 6,
+    "pityThreshold": 30,
+    "pityWeightMultiplier": 5,
+    "qualityBonusRate": {
+      "rare": 1,
+      "epic": 0.3,
+      "legendary": 0.1
+    },
+    "activeMultipliers": {
+      "common": 1,
+      "rare": 1.25,
+      "epic": 4,
+      "legendary": 5
+    },
+    "rareFactors": {
+      "jiangnan": 4.736,
+      "huaihe": 8,
+      "huanghe": 3.408,
+      "changjiang": 2.616,
+      "dongnan": 3.075,
+      "lingnan": 3.349,
+      "xinan": 4.185,
+      "yungui": 1.584,
+      "hainan": 4.07,
+      "dongbei": 3.564,
+      "xibei": 0.841,
+      "qingzang": 4.163,
+      "taihu": 1.625,
+      "dongting": 1.771,
+      "jialing": 1.319,
+      "baiyangdian": 8,
+      "jiaodong": 3.856
+    }
+  },
+  "summary": {
+    "stationaryGrossRange": [
+      47.42064373334515,
+      51.05944233363727
+    ],
+    "noBaitGrossRange": [
+      47.42064373334515,
+      49.301183129668125
+    ],
+    "allStateGrossRange": [
+      45.85581645694166,
+      62.576747069368636
+    ],
+    "activeFishMeanRange": [
+      61.640427119105645,
+      70.02965778088368
+    ],
+    "activeHighAdvantage": true,
+    "ordinaryLegendaryRange": [
+      0.0031925708758897267,
+      0.006771151198085711
+    ],
+    "activeLegendaryRange": [
+      0.0052620152387467,
+      0.0126804276213348
+    ],
+    "allWithinSuggestedTolerance": true
+  },
+  "conditions": [
+    {
+      "regionId": "jiangnan",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.67018206995923,
+      "gross": 47.24593473176983,
+      "probabilities": {
+        "common": 0.6577866009772204,
+        "rare": 0.3323077198096102,
+        "epic": 0.008368599694813258,
+        "legendary": 0.0015370795183562475
+      },
+      "high": 0.009905679213169505
+    },
+    {
+      "regionId": "jiangnan",
+      "bait": false,
+      "pity": true,
+      "fishMean": 65.08828642672476,
+      "gross": 52.735331955776324,
+      "probabilities": {
+        "common": 0.6327878075100253,
+        "rare": 0.31961787402434316,
+        "epic": 0.04020873316748346,
+        "legendary": 0.007385585298147928
+      },
+      "high": 0.04759431846563139
+    },
+    {
+      "regionId": "jiangnan",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.90364170594477,
+      "gross": 48.15869486239913,
+      "probabilities": {
+        "common": 0.6477486253002832,
+        "rare": 0.33813708387729147,
+        "epic": 0.011510750381553865,
+        "legendary": 0.00260354044087154
+      },
+      "high": 0.014114290822425405
+    },
+    {
+      "regionId": "jiangnan",
+      "bait": true,
+      "pity": true,
+      "fishMean": 69.47267472128067,
+      "gross": 55.9797792937477,
+      "probabilities": {
+        "common": 0.6131968929696582,
+        "rare": 0.3200444809408897,
+        "epic": 0.05444265007218782,
+        "legendary": 0.01231597601726416
+      },
+      "high": 0.06675862608945198
+    },
+    {
+      "regionId": "huaihe",
+      "bait": false,
+      "pity": false,
+      "fishMean": 58.14745340936303,
+      "gross": 47.59911552292864,
+      "probabilities": {
+        "common": 0.5353610160103908,
+        "rare": 0.45673307702024707,
+        "epic": 0.006705189854147705,
+        "legendary": 0.001200717115214568
+      },
+      "high": 0.007905906969362273
+    },
+    {
+      "regionId": "huaihe",
+      "bait": false,
+      "pity": true,
+      "fishMean": 63.21604150427788,
+      "gross": 51.349870713165636,
+      "probabilities": {
+        "common": 0.5189699402302403,
+        "rare": 0.4427194844263709,
+        "epic": 0.03249085543486662,
+        "legendary": 0.005819719908522145
+      },
+      "high": 0.03831057534338877
+    },
+    {
+      "regionId": "huaihe",
+      "bait": true,
+      "pity": false,
+      "fishMean": 59.01639995623165,
+      "gross": 48.242135967611425,
+      "probabilities": {
+        "common": 0.5286945593710766,
+        "rare": 0.4599405947393909,
+        "epic": 0.009289755299319854,
+        "legendary": 0.0020750905902126903
+      },
+      "high": 0.011364845889532543
+    },
+    {
+      "regionId": "huaihe",
+      "bait": true,
+      "pity": true,
+      "fishMean": 66.48266111303711,
+      "gross": 53.767169223647464,
+      "probabilities": {
+        "common": 0.5057230755130843,
+        "rare": 0.439929637850948,
+        "epic": 0.04442272713453761,
+        "legendary": 0.00992455950143005
+      },
+      "high": 0.05434728663596766
+    },
+    {
+      "regionId": "huanghe",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.4085584633052,
+      "gross": 47.05233326284585,
+      "probabilities": {
+        "common": 0.7233081296260344,
+        "rare": 0.2653764463856845,
+        "epic": 0.009594101653687695,
+        "legendary": 0.0017213223345933456
+      },
+      "high": 0.01131542398828104
+    },
+    {
+      "regionId": "huanghe",
+      "bait": false,
+      "pity": true,
+      "fishMean": 66.35023778802795,
+      "gross": 53.66917596314069,
+      "probabilities": {
+        "common": 0.6920855821033736,
+        "rare": 0.2538578274208916,
+        "epic": 0.04583417425473062,
+        "legendary": 0.008222416221004124
+      },
+      "high": 0.054056590475734745
+    },
+    {
+      "regionId": "huanghe",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.882151123584116,
+      "gross": 48.14279183145224,
+      "probabilities": {
+        "common": 0.7111729199254205,
+        "rare": 0.2729081490805509,
+        "epic": 0.01302817598381785,
+        "legendary": 0.002890755010210799
+      },
+      "high": 0.01591893099402865
+    },
+    {
+      "regionId": "huanghe",
+      "bait": true,
+      "pity": true,
+      "fishMean": 71.4347241901364,
+      "gross": 57.43169590070093,
+      "probabilities": {
+        "common": 0.6686875080066134,
+        "rare": 0.25654607552276587,
+        "epic": 0.06118810435123441,
+        "legendary": 0.013578312119386466
+      },
+      "high": 0.07476641647062088
+    },
+    {
+      "regionId": "changjiang",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.23723026110977,
+      "gross": 46.92555039322123,
+      "probabilities": {
+        "common": 0.7624278376402568,
+        "rare": 0.22406017091842795,
+        "epic": 0.011598035758613855,
+        "legendary": 0.0019139556827013815
+      },
+      "high": 0.013511991441315237
+    },
+    {
+      "regionId": "changjiang",
+      "bait": false,
+      "pity": true,
+      "fishMean": 68.10800052351398,
+      "gross": 54.96992038740034,
+      "probabilities": {
+        "common": 0.7234390247269576,
+        "rare": 0.21255532612359598,
+        "epic": 0.05494667025705769,
+        "legendary": 0.009058978892388776
+      },
+      "high": 0.06400564914944647
+    },
+    {
+      "regionId": "changjiang",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.872156126442036,
+      "gross": 48.135395533567106,
+      "probabilities": {
+        "common": 0.7488773356284687,
+        "rare": 0.23277303001997643,
+        "epic": 0.015200266022704918,
+        "legendary": 0.0031493683288498294
+      },
+      "high": 0.018349634351554747
+    },
+    {
+      "regionId": "changjiang",
+      "bait": true,
+      "pity": true,
+      "fishMean": 73.59237623970449,
+      "gross": 59.02835841738133,
+      "probabilities": {
+        "common": 0.6977645877542812,
+        "rare": 0.21684232744429643,
+        "epic": 0.07074115175219296,
+        "legendary": 0.014651933049229477
+      },
+      "high": 0.08539308480142244
+    },
+    {
+      "regionId": "dongnan",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.46666457340737,
+      "gross": 47.09533178432145,
+      "probabilities": {
+        "common": 0.7328260353827174,
+        "rare": 0.25299360009575944,
+        "epic": 0.012013913288892949,
+        "legendary": 0.002166451232630148
+      },
+      "high": 0.014180364521523096
+    },
+    {
+      "regionId": "dongnan",
+      "bait": false,
+      "pity": true,
+      "fishMean": 67.9626262153631,
+      "gross": 54.8623433993687,
+      "probabilities": {
+        "common": 0.693686482076639,
+        "rare": 0.23939407095487536,
+        "epic": 0.05670998886404881,
+        "legendary": 0.010209458104436924
+      },
+      "high": 0.06691944696848573
+    },
+    {
+      "regionId": "dongnan",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.9810017757405,
+      "gross": 48.215941314047974,
+      "probabilities": {
+        "common": 0.7202815087235727,
+        "rare": 0.26089012257017197,
+        "epic": 0.015476331820157348,
+        "legendary": 0.0033520368860981294
+      },
+      "high": 0.018828368706255476
+    },
+    {
+      "regionId": "dongnan",
+      "bait": true,
+      "pity": true,
+      "fishMean": 73.08744012931827,
+      "gross": 58.65470569569552,
+      "probabilities": {
+        "common": 0.6700114263768759,
+        "rare": 0.24260045208413245,
+        "epic": 0.07183924970433754,
+        "legendary": 0.015548871834654143
+      },
+      "high": 0.08738812153899168
+    },
+    {
+      "regionId": "lingnan",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.4456464096996,
+      "gross": 47.0797783431777,
+      "probabilities": {
+        "common": 0.7201859548877176,
+        "rare": 0.2661950795759672,
+        "epic": 0.011444429708321775,
+        "legendary": 0.0021745358279933015
+      },
+      "high": 0.013618965536315076
+    },
+    {
+      "regionId": "lingnan",
+      "bait": false,
+      "pity": true,
+      "fishMean": 67.65822162318288,
+      "gross": 54.63708400115533,
+      "probabilities": {
+        "common": 0.683243913826226,
+        "rare": 0.25239751115797365,
+        "epic": 0.05409327907769337,
+        "legendary": 0.010265295938106983
+      },
+      "high": 0.06435857501580035
+    },
+    {
+      "regionId": "lingnan",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.908476615213736,
+      "gross": 48.16227269525817,
+      "probabilities": {
+        "common": 0.7080912176526215,
+        "rare": 0.2737203498739147,
+        "epic": 0.014850891564389682,
+        "legendary": 0.003337540909074185
+      },
+      "high": 0.018188432473463866
+    },
+    {
+      "regionId": "lingnan",
+      "bait": true,
+      "pity": true,
+      "fishMean": 72.63829693907104,
+      "gross": 58.32233973491257,
+      "probabilities": {
+        "common": 0.6603076201467961,
+        "rare": 0.2551153020065025,
+        "epic": 0.06906219617218873,
+        "legendary": 0.015514881674512735
+      },
+      "high": 0.08457707784670146
+    },
+    {
+      "regionId": "xinan",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.71957427382425,
+      "gross": 47.282484962629944,
+      "probabilities": {
+        "common": 0.663385912285097,
+        "rare": 0.32410692918933753,
+        "epic": 0.010703575236374108,
+        "legendary": 0.0018035832891914036
+      },
+      "high": 0.012507158525565512
+    },
+    {
+      "regionId": "xinan",
+      "bait": false,
+      "pity": true,
+      "fishMean": 66.38983176087466,
+      "gross": 53.69847550304725,
+      "probabilities": {
+        "common": 0.6319242517505307,
+        "rare": 0.3086025050432467,
+        "epic": 0.050903594716528625,
+        "legendary": 0.008569648489694014
+      },
+      "high": 0.05947324320622264
+    },
+    {
+      "regionId": "xinan",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.98537629229497,
+      "gross": 48.21917845629828,
+      "probabilities": {
+        "common": 0.6530486126990825,
+        "rare": 0.3301890437377532,
+        "epic": 0.013874389927500879,
+        "legendary": 0.0028879536356634502
+      },
+      "high": 0.01676234356316433
+    },
+    {
+      "regionId": "xinan",
+      "bait": true,
+      "pity": true,
+      "fishMean": 70.81323989719401,
+      "gross": 56.97179752392357,
+      "probabilities": {
+        "common": 0.612140678433827,
+        "rare": 0.30938764697454757,
+        "epic": 0.064955759280584,
+        "legendary": 0.013515915311041331
+      },
+      "high": 0.07847167459162534
+    },
+    {
+      "regionId": "yungui",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.19014141464479,
+      "gross": 46.89070464683714,
+      "probabilities": {
+        "common": 0.826159202681294,
+        "rare": 0.1562918086051524,
+        "epic": 0.0147619212184902,
+        "legendary": 0.0027870674950633465
+      },
+      "high": 0.017548988713553548
+    },
+    {
+      "regionId": "yungui",
+      "bait": false,
+      "pity": true,
+      "fishMean": 71.0653589417091,
+      "gross": 57.15836561686474,
+      "probabilities": {
+        "common": 0.7724198245171452,
+        "rare": 0.14593524539430516,
+        "epic": 0.06868356880773263,
+        "legendary": 0.012961361280817112
+      },
+      "high": 0.08164493008854974
+    },
+    {
+      "regionId": "yungui",
+      "bait": true,
+      "pity": false,
+      "fishMean": 59.13175801272248,
+      "gross": 48.32750092941463,
+      "probabilities": {
+        "common": 0.8101250112829387,
+        "rare": 0.1671217069251128,
+        "epic": 0.018634122625089195,
+        "legendary": 0.004119159166859218
+      },
+      "high": 0.022753281791948413
+    },
+    {
+      "regionId": "yungui",
+      "bait": true,
+      "pity": true,
+      "fishMean": 77.33172844304302,
+      "gross": 61.795479047851835,
+      "probabilities": {
+        "common": 0.7429476045472997,
+        "rare": 0.15308665676815789,
+        "epic": 0.0851413949616852,
+        "legendary": 0.018824343722857188
+      },
+      "high": 0.10396573868454238
+    },
+    {
+      "regionId": "hainan",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.5505567111087,
+      "gross": 47.15741196622044,
+      "probabilities": {
+        "common": 0.685342336953482,
+        "rare": 0.30318758535225193,
+        "epic": 0.009788109699682173,
+        "legendary": 0.001681967994583952
+      },
+      "high": 0.011470077694266126
+    },
+    {
+      "regionId": "hainan",
+      "bait": false,
+      "pity": true,
+      "fishMean": 66.16298015316625,
+      "gross": 53.530605313343024,
+      "probabilities": {
+        "common": 0.6553604402611204,
+        "rare": 0.28988442474217974,
+        "epic": 0.04672362952018331,
+        "legendary": 0.008031505476516517
+      },
+      "high": 0.054755134996699824
+    },
+    {
+      "regionId": "hainan",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.885804821252066,
+      "gross": 48.14549556772653,
+      "probabilities": {
+        "common": 0.6744169447529562,
+        "rare": 0.30974164611545163,
+        "epic": 0.013047745010869248,
+        "legendary": 0.002793664120722894
+      },
+      "high": 0.01584140913159214
+    },
+    {
+      "regionId": "hainan",
+      "bait": true,
+      "pity": true,
+      "fishMean": 70.81401212306483,
+      "gross": 56.97236897106797,
+      "probabilities": {
+        "common": 0.6343024266673883,
+        "rare": 0.2912828224741606,
+        "epic": 0.06128725380875354,
+        "legendary": 0.013127497049697491
+      },
+      "high": 0.07441475085845103
+    },
+    {
+      "regionId": "dongbei",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.57720798554071,
+      "gross": 47.177133909300125,
+      "probabilities": {
+        "common": 0.6991256487750986,
+        "rare": 0.28755644009010706,
+        "epic": 0.011384902606295036,
+        "legendary": 0.0019330085284991465
+      },
+      "high": 0.013317911134794183
+    },
+    {
+      "regionId": "dongbei",
+      "bait": false,
+      "pity": true,
+      "fishMean": 67.17505607055885,
+      "gross": 54.27954149221355,
+      "probabilities": {
+        "common": 0.6639754067118084,
+        "rare": 0.2729656881484745,
+        "epic": 0.0539139478451344,
+        "legendary": 0.009144957294582702
+      },
+      "high": 0.0630589051397171
+    },
+    {
+      "regionId": "dongbei",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.96757558946156,
+      "gross": 48.20600593620156,
+      "probabilities": {
+        "common": 0.687669811614749,
+        "rare": 0.2945493264499594,
+        "epic": 0.014709290595864098,
+        "legendary": 0.003071571339427536
+      },
+      "high": 0.017780861935291634
+    },
+    {
+      "regionId": "dongbei",
+      "bait": true,
+      "pity": true,
+      "fishMean": 71.95236613470547,
+      "gross": 57.81475093968205,
+      "probabilities": {
+        "common": 0.6421968362459054,
+        "rare": 0.2749489675709885,
+        "epic": 0.0685441950484006,
+        "legendary": 0.014310001134705585
+      },
+      "high": 0.08285419618310619
+    },
+    {
+      "regionId": "xibei",
+      "bait": false,
+      "pity": false,
+      "fishMean": 56.87744569449089,
+      "gross": 46.65930981392326,
+      "probabilities": {
+        "common": 0.897857438750317,
+        "rare": 0.08600150917732981,
+        "epic": 0.01386426074833326,
+        "legendary": 0.0022767913240200337
+      },
+      "high": 0.016141052072353293
+    },
+    {
+      "regionId": "xibei",
+      "bait": false,
+      "pity": true,
+      "fishMean": 70.96452009922068,
+      "gross": 57.0837448734233,
+      "probabilities": {
+        "common": 0.8436651607620413,
+        "rare": 0.08074747085068312,
+        "epic": 0.06493087085337396,
+        "legendary": 0.010656497533901601
+      },
+      "high": 0.07558736838727556
+    },
+    {
+      "regionId": "xibei",
+      "bait": true,
+      "pity": false,
+      "fishMean": 59.19956938311935,
+      "gross": 48.37768134350832,
+      "probabilities": {
+        "common": 0.8790963964974657,
+        "rare": 0.09912974019742829,
+        "epic": 0.01805211797172569,
+        "legendary": 0.003721745333380422
+      },
+      "high": 0.02177386330510611
+    },
+    {
+      "regionId": "xibei",
+      "bait": true,
+      "pity": true,
+      "fishMean": 78.38749603968735,
+      "gross": 62.576747069368636,
+      "probabilities": {
+        "common": 0.8089003997554578,
+        "rare": 0.09115425202790521,
+        "epic": 0.08286056454323955,
+        "legendary": 0.01708478367339747
+      },
+      "high": 0.09994534821663702
+    },
+    {
+      "regionId": "qingzang",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.618653206889974,
+      "gross": 47.20780337309858,
+      "probabilities": {
+        "common": 0.665575827778008,
+        "rare": 0.32005065317179365,
+        "epic": 0.012134031966631318,
+        "legendary": 0.0022394870835670128
+      },
+      "high": 0.014373519050198331
+    },
+    {
+      "regionId": "qingzang",
+      "bait": false,
+      "pity": true,
+      "fishMean": 67.6981272682575,
+      "gross": 54.66661417851054,
+      "probabilities": {
+        "common": 0.6295185031551798,
+        "rare": 0.3026666027580463,
+        "epic": 0.0572639166375605,
+        "legendary": 0.010550977449213284
+      },
+      "high": 0.06781489408677378
+    },
+    {
+      "regionId": "qingzang",
+      "bait": true,
+      "pity": false,
+      "fishMean": 58.87737423604945,
+      "gross": 48.13925693467659,
+      "probabilities": {
+        "common": 0.6551622836014483,
+        "rare": 0.32621904974759575,
+        "epic": 0.015296723305422909,
+        "legendary": 0.0033219433455329694
+      },
+      "high": 0.01861866665095588
+    },
+    {
+      "regionId": "qingzang",
+      "bait": true,
+      "pity": true,
+      "fishMean": 72.02486988865718,
+      "gross": 57.86840371760631,
+      "probabilities": {
+        "common": 0.6098685733825977,
+        "rare": 0.3036241674461432,
+        "epic": 0.07108346260501895,
+        "legendary": 0.015423796566240204
+      },
+      "high": 0.08650725917125915
+    },
+    {
+      "regionId": "taihu",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.10579009281142,
+      "gross": 46.828284668680446,
+      "probabilities": {
+        "common": 0.8413904376364378,
+        "rare": 0.14616322665576809,
+        "epic": 0.010558768959067823,
+        "legendary": 0.0018875667487263323
+      },
+      "high": 0.012446335707794156
+    },
+    {
+      "regionId": "taihu",
+      "bait": false,
+      "pity": true,
+      "fishMean": 67.69718215851395,
+      "gross": 54.665914797300324,
+      "probabilities": {
+        "common": 0.8015295296560383,
+        "rare": 0.13921572063307647,
+        "epic": 0.0502642327879303,
+        "legendary": 0.008990516922954932
+      },
+      "high": 0.059254749710885235
+    },
+    {
+      "regionId": "taihu",
+      "bait": true,
+      "pity": false,
+      "fishMean": 59.130502433831445,
+      "gross": 48.32657180103527,
+      "probabilities": {
+        "common": 0.8250384286240742,
+        "rare": 0.15720443132272832,
+        "epic": 0.014518094557527504,
+        "legendary": 0.0032390454956699698
+      },
+      "high": 0.017757140053197472
+    },
+    {
+      "regionId": "taihu",
+      "bait": true,
+      "pity": true,
+      "fishMean": 74.44044490927446,
+      "gross": 59.6559292328631,
+      "probabilities": {
+        "common": 0.77036061125395,
+        "rare": 0.1467646503457377,
+        "epic": 0.06775313734667611,
+        "legendary": 0.015121601053636245
+      },
+      "high": 0.08287473840031236
+    },
+    {
+      "regionId": "dongting",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.17466709464079,
+      "gross": 46.87925365003419,
+      "probabilities": {
+        "common": 0.8286431490203625,
+        "rare": 0.15862428556143832,
+        "epic": 0.010870678714831328,
+        "legendary": 0.001861886703367737
+      },
+      "high": 0.012732565418199065
+    },
+    {
+      "regionId": "dongting",
+      "bait": false,
+      "pity": true,
+      "fishMean": 67.7419175928375,
+      "gross": 54.699019018699744,
+      "probabilities": {
+        "common": 0.7885264227502167,
+        "rare": 0.15091947605106015,
+        "epic": 0.05169555781427217,
+        "legendary": 0.008858543384451054
+      },
+      "high": 0.06055410119872322
+    },
+    {
+      "regionId": "dongting",
+      "bait": true,
+      "pity": false,
+      "fishMean": 59.13556913300546,
+      "gross": 48.33032115842404,
+      "probabilities": {
+        "common": 0.8127536760069083,
+        "rare": 0.16927930002024508,
+        "epic": 0.014771200351850856,
+        "legendary": 0.003195823620995894
+      },
+      "high": 0.01796702397284675
+    },
+    {
+      "regionId": "dongting",
+      "bait": true,
+      "pity": true,
+      "fishMean": 74.28225757058907,
+      "gross": 59.53887060223591,
+      "probabilities": {
+        "common": 0.7582957625204955,
+        "rare": 0.15791337992357832,
+        "epic": 0.06888272241865256,
+        "legendary": 0.014908135137273692
+      },
+      "high": 0.08379085755592626
+    },
+    {
+      "regionId": "jialing",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.02907754431233,
+      "gross": 46.771517382791124,
+      "probabilities": {
+        "common": 0.8635984029836739,
+        "rare": 0.12313020704649968,
+        "epic": 0.011330948022969377,
+        "legendary": 0.0019404419468569622
+      },
+      "high": 0.013271389969826339
+    },
+    {
+      "regionId": "jialing",
+      "bait": false,
+      "pity": true,
+      "fishMean": 68.44645084999593,
+      "gross": 55.22037362899699,
+      "probabilities": {
+        "common": 0.8201059102168105,
+        "rare": 0.11690828104745213,
+        "epic": 0.05377243775038551,
+        "legendary": 0.009213370985351877
+      },
+      "high": 0.06298580873573739
+    },
+    {
+      "regionId": "jialing",
+      "bait": true,
+      "pity": false,
+      "fishMean": 59.17035897374085,
+      "gross": 48.35606564056823,
+      "probabilities": {
+        "common": 0.8463541291618882,
+        "rare": 0.13493437093171484,
+        "epic": 0.015383532708160064,
+        "legendary": 0.0033279671982368027
+      },
+      "high": 0.018711499906396867
+    },
+    {
+      "regionId": "jialing",
+      "bait": true,
+      "pity": true,
+      "fishMean": 75.49736975430032,
+      "gross": 60.43805361818224,
+      "probabilities": {
+        "common": 0.7874559003524417,
+        "rare": 0.1255247878199909,
+        "epic": 0.07153779866071247,
+        "legendary": 0.015481513166854987
+      },
+      "high": 0.08701931182756746
+    },
+    {
+      "regionId": "baiyangdian",
+      "bait": false,
+      "pity": false,
+      "fishMean": 55.79164386073197,
+      "gross": 45.85581645694166,
+      "probabilities": {
+        "common": 0.5344024835580989,
+        "rare": 0.4576329029292146,
+        "epic": 0.0067654710928125765,
+        "legendary": 0.0011991424198738746
+      },
+      "high": 0.007964613512686451
+    },
+    {
+      "regionId": "baiyangdian",
+      "bait": false,
+      "pity": true,
+      "fishMean": 60.683716500051645,
+      "gross": 49.475950210038214,
+      "probabilities": {
+        "common": 0.5179291827825891,
+        "rare": 0.44348566383586985,
+        "epic": 0.03277433416715715,
+        "legendary": 0.005810819214383811
+      },
+      "high": 0.03858515338154096
+    },
+    {
+      "regionId": "baiyangdian",
+      "bait": true,
+      "pity": false,
+      "fishMean": 56.6207789462958,
+      "gross": 46.46937642025889,
+      "probabilities": {
+        "common": 0.5277559674280964,
+        "rare": 0.4608256662410185,
+        "epic": 0.009345965093492663,
+        "legendary": 0.0020724012373924154
+      },
+      "high": 0.011418366330885079
+    },
+    {
+      "regionId": "baiyangdian",
+      "bait": true,
+      "pity": true,
+      "fishMean": 63.80054547378272,
+      "gross": 51.782403650599214,
+      "probabilities": {
+        "common": 0.5047271495173857,
+        "rare": 0.44068163880639966,
+        "epic": 0.04468146548515903,
+        "legendary": 0.009909746191055441
+      },
+      "high": 0.05459121167621447
+    },
+    {
+      "regionId": "jiaodong",
+      "bait": false,
+      "pity": false,
+      "fishMean": 57.68426547176108,
+      "gross": 47.2563564491032,
+      "probabilities": {
+        "common": 0.6783020949672968,
+        "rare": 0.3082668908977291,
+        "epic": 0.01157789597640171,
+        "legendary": 0.0018531181585726376
+      },
+      "high": 0.01343101413497435
+    },
+    {
+      "regionId": "jiaodong",
+      "bait": false,
+      "pity": true,
+      "fishMean": 66.99021855144764,
+      "gross": 54.14276172807126,
+      "probabilities": {
+        "common": 0.6437655693447004,
+        "rare": 0.29258425055648574,
+        "epic": 0.05488064203248742,
+        "legendary": 0.008769538066326556
+      },
+      "high": 0.06365018009881399
+    },
+    {
+      "regionId": "jiaodong",
+      "bait": true,
+      "pity": false,
+      "fishMean": 59.005036338021725,
+      "gross": 48.233726890136076,
+      "probabilities": {
+        "common": 0.667485348601969,
+        "rare": 0.31474164785934244,
+        "epic": 0.014810395964162278,
+        "legendary": 0.002962607574526446
+      },
+      "high": 0.017773003538688725
+    },
+    {
+      "regionId": "jiaodong",
+      "bait": true,
+      "pity": true,
+      "fishMean": 71.55535345034262,
+      "gross": 57.52096155325354,
+      "probabilities": {
+        "common": 0.6232249407485896,
+        "rare": 0.29388353576332626,
+        "epic": 0.06908366841996898,
+        "legendary": 0.013807855068115167
+      },
+      "high": 0.08289152348808415
+    }
+  ],
+  "stationary": [
+    {
+      "regionId": "jiangnan",
+      "bait": false,
+      "fishMean": 60.44616161392377,
+      "gross": 49.30015959430359,
+      "pityFraction": 0.3742168363313408,
+      "probabilities": {
+        "common": 0.6484316315738261,
+        "rare": 0.327558965866315,
+        "epic": 0.02028371371132353,
+        "legendary": 0.0037256888485354515
+      }
+    },
+    {
+      "regionId": "jiangnan",
+      "bait": true,
+      "fishMean": 61.910177018039604,
+      "gross": 50.383530993349304,
+      "pityFraction": 0.2844664509735457,
+      "probabilities": {
+        "common": 0.6379198166292024,
+        "rare": 0.3329903453310997,
+        "epic": 0.023723435520100773,
+        "legendary": 0.005366402519597153
+      }
+    },
+    {
+      "regionId": "huaihe",
+      "bait": false,
+      "fishMean": 60.348458490525324,
+      "gross": 49.22785928298874,
+      "pityFraction": 0.43424421948401964,
+      "probabilities": {
+        "common": 0.5282432861017359,
+        "rare": 0.45064775544215224,
+        "epic": 0.01790246607812294,
+        "legendary": 0.003206492377988923
+      }
+    },
+    {
+      "regionId": "huaihe",
+      "bait": true,
+      "fishMean": 61.542219034418764,
+      "gross": 50.11124208546988,
+      "pityFraction": 0.3382977135597309,
+      "probabilities": {
+        "common": 0.5209233589048434,
+        "rare": 0.4531709337778883,
+        "epic": 0.021175159341732443,
+        "legendary": 0.004730547975535713
+      }
+    },
+    {
+      "regionId": "huanghe",
+      "bait": false,
+      "fishMean": 60.445891806273686,
+      "gross": 49.29995993664253,
+      "pityFraction": 0.33968265162122296,
+      "probabilities": {
+        "common": 0.7127023718931673,
+        "rare": 0.2614637713527091,
+        "epic": 0.021904225609755586,
+        "legendary": 0.003929631144367881
+      }
+    },
+    {
+      "regionId": "huanghe",
+      "bait": true,
+      "fishMean": 62.0972766052875,
+      "gross": 50.52198468791275,
+      "pityFraction": 0.25613278366572034,
+      "probabilities": {
+        "common": 0.7002910131054716,
+        "rare": 0.2687172856336521,
+        "epic": 0.025363512497705944,
+        "legendary": 0.005628188763170321
+      }
+    },
+    {
+      "regionId": "changjiang",
+      "bait": false,
+      "fishMean": 60.44641953673739,
+      "gross": 49.300350457185665,
+      "pityFraction": 0.2952126848569667,
+      "probabilities": {
+        "common": 0.7509178455007357,
+        "rare": 0.2206637947976829,
+        "epic": 0.02439510253378279,
+        "legendary": 0.0040232571677985395
+      }
+    },
+    {
+      "regionId": "changjiang",
+      "bait": true,
+      "fishMean": 62.17440851962829,
+      "gross": 50.57906230452493,
+      "pityFraction": 0.22433444389945092,
+      "probabilities": {
+        "common": 0.7374109857579401,
+        "rare": 0.2291992247167337,
+        "epic": 0.02765999973651257,
+        "legendary": 0.005729789788813641
+      }
+    },
+    {
+      "regionId": "dongnan",
+      "bait": false,
+      "fishMean": 60.44490708388224,
+      "gross": 49.29923124207286,
+      "pityFraction": 0.2837512761641463,
+      "probabilities": {
+        "common": 0.721720137183623,
+        "rare": 0.24913471634680207,
+        "epic": 0.02469648177287255,
+        "legendary": 0.004448664696702319
+      }
+    },
+    {
+      "regionId": "dongnan",
+      "bait": true,
+      "fishMean": 62.06930498813255,
+      "gross": 50.50128569121809,
+      "pityFraction": 0.21892862925309384,
+      "probabilities": {
+        "common": 0.7092759485029702,
+        "rare": 0.2568859900811726,
+        "epic": 0.027815788173245603,
+        "legendary": 0.0060222732426117274
+      }
+    },
+    {
+      "regionId": "lingnan",
+      "bait": false,
+      "fishMean": 60.44506033163782,
+      "gross": 49.299344645411985,
+      "pityFraction": 0.29369809859301704,
+      "probabilities": {
+        "common": 0.7093361476698123,
+        "rare": 0.2621427599663954,
+        "epic": 0.023970315675286208,
+        "legendary": 0.004550776688505918
+      }
+    },
+    {
+      "regionId": "lingnan",
+      "bait": true,
+      "fishMean": 62.01820852716678,
+      "gross": 50.463474310103415,
+      "pityFraction": 0.22649472743277566,
+      "probabilities": {
+        "common": 0.6972684847597821,
+        "rare": 0.26950640462831144,
+        "epic": 0.027129466225308305,
+        "legendary": 0.006095644386598217
+      }
+    },
+    {
+      "regionId": "xinan",
+      "bait": false,
+      "fishMean": 60.44484828789973,
+      "gross": 49.2991877330458,
+      "pityFraction": 0.314324461314541,
+      "probabilities": {
+        "common": 0.6534967427855085,
+        "rare": 0.31923350942162537,
+        "epic": 0.02333942470430773,
+        "legendary": 0.003930323088558448
+      }
+    },
+    {
+      "regionId": "xinan",
+      "bait": true,
+      "fishMean": 61.87572686908403,
+      "gross": 50.358037883122186,
+      "pityFraction": 0.24436793264946818,
+      "probabilities": {
+        "common": 0.6430520253737217,
+        "rare": 0.3251058494145073,
+        "epic": 0.026357038553217704,
+        "legendary": 0.005485086658553321
+      }
+    },
+    {
+      "regionId": "yungui",
+      "bait": false,
+      "fishMean": 60.446653588085155,
+      "gross": 49.300523655183014,
+      "pityFraction": 0.23469990053045087,
+      "probabilities": {
+        "common": 0.8135465759716,
+        "rare": 0.15386112424972923,
+        "epic": 0.027417326544123426,
+        "legendary": 0.005174973234547339
+      }
+    },
+    {
+      "regionId": "yungui",
+      "bait": true,
+      "fishMean": 62.41401376177263,
+      "gross": 50.756370183711745,
+      "pityFraction": 0.18034401548158707,
+      "probabilities": {
+        "common": 0.7980099680025938,
+        "rare": 0.16459056962232207,
+        "epic": 0.030628311176998393,
+        "legendary": 0.006771151198085711
+      }
+    },
+    {
+      "regionId": "hainan",
+      "bait": false,
+      "fishMean": 60.446375361453555,
+      "gross": 49.30031776747563,
+      "pityFraction": 0.33623737497665723,
+      "probabilities": {
+        "common": 0.675261302712821,
+        "rare": 0.2987145655498284,
+        "epic": 0.02220721192752577,
+        "legendary": 0.003816919809824852
+      }
+    },
+    {
+      "regionId": "hainan",
+      "bait": true,
+      "fishMean": 61.954733407995136,
+      "gross": 50.4165027219164,
+      "pityFraction": 0.25728330411198275,
+      "probabilities": {
+        "common": 0.6640961489970414,
+        "rare": 0.3049924989789999,
+        "epic": 0.02545896522312798,
+        "legendary": 0.0054523868008306865
+      }
+    },
+    {
+      "regionId": "dongbei",
+      "bait": false,
+      "fishMean": 60.44699273161946,
+      "gross": 49.3007746213984,
+      "pityFraction": 0.2990029348931216,
+      "probabilities": {
+        "common": 0.6886156232359713,
+        "rare": 0.2831937624372614,
+        "epic": 0.02410121195091034,
+        "legendary": 0.0040894023758569565
+      }
+    },
+    {
+      "regionId": "dongbei",
+      "bait": true,
+      "fishMean": 61.97176537952704,
+      "gross": 50.42910638085001,
+      "pityFraction": 0.23136220639045008,
+      "probabilities": {
+        "common": 0.6771490837022748,
+        "rare": 0.290014544173676,
+        "epic": 0.02716465287082201,
+        "legendary": 0.005671719253227239
+      }
+    },
+    {
+      "regionId": "xibei",
+      "bait": false,
+      "fishMean": 60.446316686235065,
+      "gross": 49.30027434781395,
+      "pityFraction": 0.2533436602383473,
+      "probabilities": {
+        "common": 0.8841281686881133,
+        "rare": 0.08467043187662458,
+        "epic": 0.026801662668308843,
+        "legendary": 0.004399736766953439
+      }
+    },
+    {
+      "regionId": "xibei",
+      "bait": true,
+      "fishMean": 62.823570721131446,
+      "gross": 51.05944233363727,
+      "pityFraction": 0.18886883418285358,
+      "probabilities": {
+        "common": 0.8658385604284993,
+        "rare": 0.09762341904481132,
+        "epic": 0.030292413720889262,
+        "legendary": 0.006245606805800216
+      }
+    },
+    {
+      "regionId": "qingzang",
+      "bait": false,
+      "fishMean": 60.444956014945305,
+      "gross": 49.29926745105953,
+      "pityFraction": 0.2804018137104941,
+      "probabilities": {
+        "common": 0.6554652885562189,
+        "rare": 0.31517613390614424,
+        "epic": 0.024788533480905286,
+        "legendary": 0.0045700440567315245
+      }
+    },
+    {
+      "regionId": "qingzang",
+      "bait": true,
+      "fishMean": 61.78675710300636,
+      "gross": 50.2922002562247,
+      "pityFraction": 0.22128798851360312,
+      "probabilities": {
+        "common": 0.6451393295748009,
+        "rare": 0.3212190736924057,
+        "epic": 0.027641658630763292,
+        "legendary": 0.005999938102030143
+      }
+    },
+    {
+      "regionId": "taihu",
+      "bait": false,
+      "fishMean": 60.445645843897445,
+      "gross": 49.29977792448411,
+      "pityFraction": 0.3153368065658979,
+      "probabilities": {
+        "common": 0.8288208262070815,
+        "rare": 0.14397242229297516,
+        "epic": 0.023079363126079087,
+        "legendary": 0.004127388373864267
+      }
+    },
+    {
+      "regionId": "taihu",
+      "bait": true,
+      "fishMean": 62.673076665342776,
+      "gross": 50.948076732353655,
+      "pityFraction": 0.23139043384346986,
+      "probabilities": {
+        "common": 0.8123865047411872,
+        "rare": 0.15478876587323168,
+        "epic": 0.026836174204184285,
+        "legendary": 0.0059885551813969205
+      }
+    },
+    {
+      "regionId": "dongting",
+      "bait": false,
+      "fishMean": 60.446842168286615,
+      "gross": 49.30066320453209,
+      "pityFraction": 0.3096524563512734,
+      "probabilities": {
+        "common": 0.8162209061900402,
+        "rare": 0.15623847237083105,
+        "epic": 0.023512202808216948,
+        "legendary": 0.004028418630911735
+      }
+    },
+    {
+      "regionId": "dongting",
+      "bait": true,
+      "fishMean": 62.6012108269574,
+      "gross": 50.894896011948475,
+      "pityFraction": 0.2288052407120627,
+      "probabilities": {
+        "common": 0.8002934200029729,
+        "rare": 0.16667871793661318,
+        "epic": 0.027152200183641513,
+        "legendary": 0.0058756618767725
+      }
+    },
+    {
+      "regionId": "jialing",
+      "bait": false,
+      "fishMean": 60.44754476982179,
+      "gross": 49.301183129668125,
+      "pityFraction": 0.2994092541239524,
+      "probabilities": {
+        "common": 0.8505763481643559,
+        "rare": 0.12126730482391043,
+        "epic": 0.024038322806164428,
+        "legendary": 0.0041180242055691586
+      }
+    },
+    {
+      "regionId": "jialing",
+      "bait": true,
+      "fishMean": 62.762271113176865,
+      "gross": 51.01408062375088,
+      "pityFraction": 0.21999814832687517,
+      "probabilities": {
+        "common": 0.8333966278840774,
+        "rare": 0.13286428007060774,
+        "epic": 0.027737367238376484,
+        "legendary": 0.0060017248069383616
+      }
+    },
+    {
+      "regionId": "baiyangdian",
+      "bait": false,
+      "fishMean": 57.906275315331285,
+      "gross": 47.42064373334515,
+      "pityFraction": 0.4322567571059986,
+      "probabilities": {
+        "common": 0.5272817879860454,
+        "rare": 0.4515176632367222,
+        "epic": 0.018007977901342717,
+        "legendary": 0.0031925708758897267
+      }
+    },
+    {
+      "regionId": "baiyangdian",
+      "bait": true,
+      "fishMean": 59.04106441781874,
+      "gross": 48.26038766918587,
+      "pityFraction": 0.3370980744648382,
+      "probabilities": {
+        "common": 0.5199929972531945,
+        "rare": 0.45403515338084166,
+        "epic": 0.02125749423577493,
+        "legendary": 0.004714355130188938
+      }
+    },
+    {
+      "regionId": "jiaodong",
+      "bait": false,
+      "fishMean": 60.444927486063165,
+      "gross": 49.29924633968674,
+      "pityFraction": 0.2966554839319125,
+      "probabilities": {
+        "common": 0.6680566452453987,
+        "rare": 0.3036145496379674,
+        "epic": 0.024423893063250532,
+        "legendary": 0.00390491205338369
+      }
+    },
+    {
+      "regionId": "jiaodong",
+      "bait": true,
+      "fishMean": 61.90800083782882,
+      "gross": 50.38192061999333,
+      "pityFraction": 0.23130606771339604,
+      "probabilities": {
+        "common": 0.6572476477060126,
+        "rare": 0.30991703997048775,
+        "epic": 0.0273641331978527,
+        "legendary": 0.005471179125647017
+      }
+    }
+  ],
+  "active": [
+    {
+      "regionId": "jiangnan",
+      "fishMean": 65.6820701334399,
+      "gross": 53.17473189874552,
+      "probabilities": {
+        "common": 0.5903637709982762,
+        "rare": 0.3727338895323377,
+        "epic": 0.030011211917292672,
+        "legendary": 0.006891127552093699
+      },
+      "high": 0.03690233946938637
+    },
+    {
+      "regionId": "huaihe",
+      "fishMean": 64.23128951128267,
+      "gross": 52.101154238349174,
+      "probabilities": {
+        "common": 0.4700100323994663,
+        "rare": 0.5011804641877683,
+        "epic": 0.023538834200657034,
+        "legendary": 0.005270669212108291
+      },
+      "high": 0.028809503412765326
+    },
+    {
+      "regionId": "huanghe",
+      "fishMean": 66.56727327456163,
+      "gross": 53.829782223175606,
+      "probabilities": {
+        "common": 0.6564392407082588,
+        "rare": 0.30097836755928953,
+        "epic": 0.034782033266584626,
+        "legendary": 0.007800358465866945
+      },
+      "high": 0.04258239173245157
+    },
+    {
+      "regionId": "changjiang",
+      "fishMean": 67.81087414077533,
+      "gross": 54.75004686417374,
+      "probabilities": {
+        "common": 0.6941758287735246,
+        "rare": 0.2549426911071443,
+        "epic": 0.04218549850073101,
+        "legendary": 0.008695981618600197
+      },
+      "high": 0.050881480119331204
+    },
+    {
+      "regionId": "dongnan",
+      "fishMean": 67.80257588530942,
+      "gross": 54.743906155128975,
+      "probabilities": {
+        "common": 0.66157616786615,
+        "rare": 0.28539721921527866,
+        "epic": 0.043283299305101296,
+        "legendary": 0.00974331361346986
+      },
+      "high": 0.05302661291857116
+    },
+    {
+      "regionId": "lingnan",
+      "fishMean": 67.60978910528122,
+      "gross": 54.6012439379081,
+      "probabilities": {
+        "common": 0.6492710821571241,
+        "rare": 0.29982814056688256,
+        "epic": 0.0411401226911384,
+        "legendary": 0.009760654584854828
+      },
+      "high": 0.05090077727599322
+    },
+    {
+      "regionId": "xinan",
+      "fishMean": 66.64009221918579,
+      "gross": 53.88366824219748,
+      "probabilities": {
+        "common": 0.5923208469349662,
+        "rare": 0.3614821817549928,
+        "epic": 0.038164409695849416,
+        "legendary": 0.008032561614191622
+      },
+      "high": 0.04619697131004104
+    },
+    {
+      "regionId": "yungui",
+      "fishMean": 70.02965778088368,
+      "gross": 56.39194675785392,
+      "probabilities": {
+        "common": 0.755226659288629,
+        "rare": 0.17834619259081486,
+        "epic": 0.05374672049922138,
+        "legendary": 0.0126804276213348
+      },
+      "high": 0.06642714812055618
+    },
+    {
+      "regionId": "hainan",
+      "fishMean": 66.44268616724118,
+      "gross": 53.73758776375847,
+      "probabilities": {
+        "common": 0.6164523618788745,
+        "rare": 0.3408216606184575,
+        "epic": 0.03516836968588648,
+        "legendary": 0.007557607816781563
+      },
+      "high": 0.042725977502668044
+    },
+    {
+      "regionId": "dongbei",
+      "fishMean": 67.21342308354191,
+      "gross": 54.30793308182101,
+      "probabilities": {
+        "common": 0.6278928594929623,
+        "rare": 0.3226582089867934,
+        "epic": 0.04079597069884459,
+        "legendary": 0.00865296082139971
+      },
+      "high": 0.049448931520244294
+    },
+    {
+      "regionId": "xibei",
+      "fishMean": 69.46723666301202,
+      "gross": 55.97575513062889,
+      "probabilities": {
+        "common": 0.837600909831942,
+        "rare": 0.10021897212851212,
+        "epic": 0.051594259672563175,
+        "legendary": 0.0105858583669828
+      },
+      "high": 0.06218011803954598
+    },
+    {
+      "regionId": "qingzang",
+      "fishMean": 67.64905229215839,
+      "gross": 54.63029869619721,
+      "probabilities": {
+        "common": 0.5915214341376932,
+        "rare": 0.3554940329938504,
+        "epic": 0.04306246666610667,
+        "legendary": 0.009922066202349757
+      },
+      "high": 0.052984532868456426
+    },
+    {
+      "regionId": "taihu",
+      "fishMean": 67.23380584642696,
+      "gross": 54.32301632635595,
+      "probabilities": {
+        "common": 0.7821682904639462,
+        "rare": 0.16981707208262983,
+        "epic": 0.03924128212410108,
+        "legendary": 0.008773355329322847
+      },
+      "high": 0.04801463745342392
+    },
+    {
+      "regionId": "dongting",
+      "fishMean": 67.31656050583479,
+      "gross": 54.38425477431774,
+      "probabilities": {
+        "common": 0.7675040635397028,
+        "rare": 0.18361935713643218,
+        "epic": 0.040254209042412885,
+        "legendary": 0.008622370281452164
+      },
+      "high": 0.04887657932386505
+    },
+    {
+      "regionId": "jialing",
+      "fishMean": 67.68158631003668,
+      "gross": 54.65437386942714,
+      "probabilities": {
+        "common": 0.8052291129710394,
+        "rare": 0.14348550192713339,
+        "epic": 0.042239135237465746,
+        "legendary": 0.00904624986436149
+      },
+      "high": 0.05128538510182724
+    },
+    {
+      "regionId": "baiyangdian",
+      "fishMean": 61.640427119105645,
+      "gross": 50.183916068138174,
+      "probabilities": {
+        "common": 0.4690158315757472,
+        "rare": 0.5019816603013547,
+        "epic": 0.023740492884151324,
+        "legendary": 0.0052620152387467
+      },
+      "high": 0.02900250812289802
+    },
+    {
+      "regionId": "jiaodong",
+      "fishMean": 67.07519873238324,
+      "gross": 54.205647061963596,
+      "probabilities": {
+        "common": 0.606076382735615,
+        "rare": 0.3443144400004435,
+        "epic": 0.04134678590587716,
+        "legendary": 0.008262391358064404
+      },
+      "high": 0.04960917726394157
+    }
+  ],
+  "sourceHashes": {
+    "src/lib/gameConfig.js": "d04e8cfa792c076f685f305445b9ef0a591143b7df5a69845d92be715970509d",
+    "src/config/balance.js": "8158f764039399361888fbd3a8e8adff7690736c26c55fb9aa4a0f5303346a64",
+    "src/data/focusRegions.js": "218c75ea49a5a6df24ec2b94ff6ffc144a2dc48bf1fb3c665004622a014781bc",
+    "src/config/lootConfig.js": "622045c49a3e21a697d44e5b029fb3a190fffd15187861363f1153eb96d36be9",
+    "src/domain/loot.js": "e0e3701dc7fb877f97dfab60bd6d7f678c8e65efcfbda94a28475c74fdc2166d",
+    "src/domain/market.js": "33c1b60adb571807482baddd12c1e113e240769f40a5d28e9854d64b6d084f38",
+    "src/domain/routes.js": "3b19646bc2d6b8aec6fea9d5e67583411bf370ba4bdbbed5791a38f95b4b5c52"
+  },
+  "limitations": [
+    "Model enumerates continuous-uniform2dp rounded weights; negligible32bit RNG quantization omitted",
+    "Gross excludes paid bait/active permits/tickets, repairs, sales buff, cross-region arbitrage, gifts and coupon savings",
+    "Pity rows are temporary states; target refers to long-run mean, not per-catch floor or cap",
+    "No graphical, keyboard, native executable, network or installer verification is represented by this report"
+  ]
+}

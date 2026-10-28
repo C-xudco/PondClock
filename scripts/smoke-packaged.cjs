@@ -7,6 +7,7 @@ const { createReadStream, mkdirSync, writeFileSync } = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
 const { createHash } = require('node:crypto');
+const { pathToFileURL } = require('node:url');
 const { setTimeout: delay } = require('node:timers/promises');
 const { _electron: electron } = require('playwright-core');
 
@@ -18,7 +19,8 @@ const report = {
   startedAt: new Date().toISOString(),
   host: { platform: process.platform, architecture: process.arch, release: os.release() },
   passed: false, hostSandboxEnabled: true, checks: [], launches: [], consoleErrors: [], cleanupErrors: [], fatalEvents: [],
-  limitations: ['UI fishing time is advanced with Playwright clock; this is not a real-time waiting or sleep test.',
+  limitations: ['Ordinary waiting uses Playwright wall-clock advancement; short active/focus intervals use its monotonic clock. This is not a real-time waiting or sleep test.',
+    'Near-complete focus and sufficient purchase coins are explicitly synthetic, schema-validated fixtures in a separate test profile; they are not earned through this smoke run.',
     'Same Windows host with development tools installed; child PATH omits developer tools, not a second clean computer.',
     'Playwright adds debugging transport; ordinary double-click and shortcut launches require separate checks.'],
 };
@@ -164,6 +166,36 @@ async function loadDiskSnapshot() {
   return candidates[0];
 }
 
+async function snapshot(page) {
+  return (await page.evaluate(() => window.pondDesktop.loadSave())).snapshot;
+}
+
+async function waitForSnapshot(page, predicate, argument) {
+  const deadline = Date.now() + 15000;
+  let state;
+  while (Date.now() < deadline) {
+    state = await snapshot(page);
+    if (predicate(state, argument)) return state;
+    await delay(40);
+  }
+  throw new Error('Expected saved state not reached: ' + JSON.stringify({ revision: state?.revision, fishing: state?.fishing, focus: state?.focus }));
+}
+
+async function writeFixtureProfile(fixture) {
+  assert.equal(application, null, 'Fixture writes require the test EXE to be closed');
+  const { validateSave } = await import(pathToFileURL(path.join(root, 'src/domain/saveSchema.js')));
+  const validated = validateSave(fixture);
+  assert.deepEqual(validated, fixture, 'Fixtures must already satisfy the current complete save schema');
+  const directory = path.join(userData, 'saves');
+  await fs.mkdir(directory, { recursive: true });
+  const envelope = { format: 'pondclock.save', envelopeVersion: 1, revision: fixture.revision,
+    snapshot: fixture, checksum: createHash('sha256').update(JSON.stringify(fixture)).digest('hex') };
+  await fs.writeFile(path.join(directory, 'save-a.json'), JSON.stringify(envelope));
+  report.fixtures ||= [];
+  report.fixtures.push({ profile: userData, purpose: 'V2 near-complete fourth focus plan, 5000 coins, Taihu ink scene',
+    schemaVersion: fixture.schemaVersion, editionId: fixture.editionId, sha256: envelope.checksum });
+}
+
 function childEnvironment() {
   const environment = { ...process.env };
   for (const key of Object.keys(environment)) {
@@ -268,6 +300,8 @@ async function run() {
   const initial = (await page.evaluate(() => window.pondDesktop.loadSave())).snapshot;
   assert.ok(initial);
   assert.equal(initial.revision, 0);
+  assert.equal(initial.schemaVersion, 4); assert.equal(initial.editionId, 'first-focus');
+  assert.equal(initial.fishing.mode, 'stopped');
   assert.equal(initial.bucket.length, 0);
   assert.equal(initial.unlockedRegions.length, 1);
   assert.deepEqual(await loadDiskSnapshot(), initial);
@@ -277,18 +311,25 @@ async function run() {
   await page.clock.install({ time: Date.now() });
   await page.reload();
   await page.getByRole('button', { name: '鱼篓', exact: true }).waitFor();
-  const waitText = await page.getByText(/静候鱼讯 · 约 \d+ 秒/).innerText();
-  const waitSeconds = Number(waitText.match(/约 (\d+) 秒/)[1]);
-  assert.ok(waitSeconds > 0 && waitSeconds <= 125);
-  await page.clock.runFor((waitSeconds + 1) * 1000);
+  await page.getByRole('button', { name: '开始钓鱼', exact: true }).click();
+  const waiting = await waitForSnapshot(page, state => state.fishing.phase === 'waiting');
+  const waitMs = waiting.fishing.attempt.waitUntilMs - waiting.lastEffectiveNowMs;
+  assert.ok(waitMs >= 55000 && waitMs <= 125000);
+  // Change Date only; a large monotonic jump correctly triggers sleep recovery.
+  await page.clock.setSystemTime(waiting.fishing.attempt.waitUntilMs + 1);
+  await page.clock.runFor(500);
+  await waitForSnapshot(page, state => state.fishing.phase === 'bite');
   await page.getByRole('button', { name: '点击收竿', exact: true }).click();
-  await page.waitForFunction(async () => (await window.pondDesktop.loadSave()).snapshot.bucket.length === 1);
-  const caught = (await page.evaluate(() => window.pondDesktop.loadSave())).snapshot;
+  await waitForSnapshot(page, state => state.catchSequence === 1);
+  await page.getByRole('button', { name: '停止钓鱼', exact: true }).click();
+  const caught = await waitForSnapshot(page, state => state.fishing.mode === 'stopped');
   assert.ok(caught.revision > initial.revision);
   assert.equal(caught.coins, initial.coins);
-  assert.equal(caught.codex[caught.bucket[0].speciesId].catchCount, 1);
+  assert.equal(caught.bucket.length + caught.items.length, 1);
+  if (caught.bucket.length) assert.equal(caught.codex[caught.bucket[0].speciesId].catchCount, 1);
+  else assert.deepEqual(caught.codex, initial.codex);
   assert.deepEqual(await loadDiskSnapshot(), caught);
-  checked('P02', 'Production fishing timer plus a UI catch commits a fish, codex and original catch time to disk');
+  checked('P02', 'UI start, production fish event, manual capture and UI stop persist exactly one fish or item');
 
   await closeWindowAndVerifyExit();
   assert.deepEqual(await loadDiskSnapshot(), caught);
@@ -299,17 +340,21 @@ async function run() {
   assert.deepEqual(restarted, caught);
   await page.getByRole('button', { name: '鱼篓', exact: true }).click();
   await page.screenshot({ path: path.join(runDirectory, 'restarted-catch.png'), fullPage: true });
-  const sellButton = page.getByRole('region', { name: '鱼篓', exact: true }).getByRole('button', { name: /^卖 ¥/ });
-  const price = Number((await sellButton.innerText()).match(/^卖 ¥(\d+)$/)[1]);
-  assert.ok(Number.isSafeInteger(price) && price > 0);
-  await sellButton.click();
-  await page.waitForFunction(async () => (await window.pondDesktop.loadSave()).snapshot.bucket.length === 0);
-  const sold = (await page.evaluate(() => window.pondDesktop.loadSave())).snapshot;
+  const bucketPanel = page.getByRole('region', { name: '鱼篓', exact: true });
+  const manual = restarted.items[0]?.type === 'influencer_manual';
+  const actionButton = manual ? bucketPanel.getByRole('button', { name: '使用秘籍 · 前3条 +50%', exact: true })
+    : bucketPanel.getByRole('button', { name: restarted.bucket.length ? /^卖 ¥/ : /^直接出售 · ¥/ });
+  const price = manual ? 0 : Number((await actionButton.innerText()).match(/¥(\d+)$/)[1]);
+  assert.ok(Number.isSafeInteger(price) && (manual ? price === 0 : price > 0));
+  await actionButton.click();
+  const sold = await waitForSnapshot(page, state => state.bucket.length + state.items.length === 0);
   assert.equal(sold.coins, restarted.coins + price);
   assert.deepEqual(sold.codex, restarted.codex);
+  if (manual) assert.equal(sold.saleBuff.remaining, 3);
   assert.ok(sold.revision > restarted.revision);
   assert.deepEqual(await loadDiskSnapshot(), sold);
-  checked('P04', 'The same real EXE reopens the saved catch and its UI sale credits the displayed price exactly once');
+  checked('P04', manual ? 'The same EXE reopens a captured manual and its UI use preserves exactly three buff charges'
+    : 'The same EXE reopens a captured fish/item and its UI sale credits the displayed price exactly once');
 
   await closeWindowAndVerifyExit();
   page = await launch();
@@ -317,6 +362,79 @@ async function run() {
   await page.screenshot({ path: path.join(runDirectory, 'restarted-sale.png'), fullPage: true });
   await closeWindowAndVerifyExit();
   checked('P05', 'A second restart preserves sale proceeds and codex, then normal close releases the runtime again');
+
+  // Independent synthetic profile: no edit to the ordinary-capture evidence or a real user's save.
+  const { createNewGame } = await import(pathToFileURL(path.join(root, 'src/domain/gameState.js')));
+  const { FOCUS_CONFIG } = await import(pathToFileURL(path.join(root, 'src/config/focus.js')));
+  const fixtureTime = Date.now();
+  const dayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(fixtureTime);
+  const fixture = { ...createNewGame('taihu', fixtureTime, { randomSeed: 471 }), coins: 5000,
+    settings: { ...createNewGame('taihu', fixtureTime, { randomSeed: 471 }).settings, onlineEnhancements: false },
+    appearance: { ownedProducts: ['inkwash_pack'], equipped: { scene: 'inkwash', character: 'minimal', rod: 'inkwash' } },
+    focus: { sequence: 4, completedPlanIds: ['fixture-focus-1', 'fixture-focus-2', 'fixture-focus-3'],
+      days: { [dayKey]: { completedCount: 3, ticketGranted: false } }, breakRemainingMs: 0,
+      plan: { id: 'fixture-focus-4', title: '验收：第四轮最后5秒', status: 'paused', elapsedMs: FOCUS_CONFIG.durationMs - 5000,
+        durationMs: FOCUS_CONFIG.durationMs, dayKey, timeZone: 'Asia/Shanghai' } } };
+  userData = path.join(runDirectory, 'fixture-profile');
+  await writeFixtureProfile(fixture);
+  page = await launch();
+  await page.clock.install({ time: fixtureTime });
+  await page.reload();
+  await page.getByRole('button', { name: '专注计划', exact: true }).waitFor();
+  await page.screenshot({ path: path.join(runDirectory, 'fixture-taihu-classic.png'), fullPage: true });
+  const sceneResources = await page.locator('[data-scene-art] image, image[data-scene-art]').evaluateAll(images => images.map(image => image.getAttribute('href')));
+  assert.ok(sceneResources.some(resource => resource?.endsWith('art/inkwash/taihu-v1.svg')));
+  assert.equal(await page.locator('[data-classic-source="1.1.1"]').count(), 1);
+  checked('P06', 'Separate schema-validated fixture renders bundled Taihu SVG with the restored classic character');
+  await page.getByRole('button', { name: '专注计划', exact: true }).click();
+  await page.getByRole('button', { name: '继续专注', exact: true }).click();
+  await waitForSnapshot(page, state => state.focus.plan?.status === 'running');
+  await page.clock.runFor(5250);
+  const focused = await waitForSnapshot(page, state => state.focus.plan === null && state.focus.completedPlanIds.length === 4);
+  assert.equal(focused.baitCount, fixture.baitCount + 1); assert.equal(focused.freeTravelTickets, 1);
+  assert.deepEqual(focused.focus.days[dayKey], { completedCount: 4, ticketGranted: true });
+  await page.screenshot({ path: path.join(runDirectory, 'fixture-focus-rewards.png'), fullPage: true });
+  checked('P07', 'Near-complete fourth-plan fixture resumes through UI and awards one bait pack plus one daily ticket exactly once');
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: '渔具店', exact: true }).click();
+  await page.getByRole('button', { name: '渔具与鱼饵', exact: true }).click();
+  await page.getByRole('button', { name: '购买15次 · ¥450', exact: true }).click();
+  const purchased = await waitForSnapshot(page, state => state.activePass.remaining === 15);
+  assert.equal(purchased.coins, fixture.coins - 450);
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: /主动抛竿/ }).click();
+  let casting = await waitForSnapshot(page, state => state.fishing.phase === 'casting');
+  const activeAttemptId = casting.fishing.attempt.id;
+  for (let swing = 0; swing < 3 && casting.fishing.phase === 'casting'; swing++) {
+    const previous = casting.fishing.attempt.completedSwings;
+    assert.equal(casting.activePass.remaining, 15, 'Empty swings must not consume charges');
+    await page.clock.setSystemTime(casting.fishing.attempt.nextSwingAtMs + 1);
+    await page.clock.runFor(275);
+    casting = await waitForSnapshot(page, (state, previous) => state.fishing.phase === 'gauge'
+      || state.fishing.attempt.completedSwings > previous, previous);
+  }
+  assert.equal(casting.fishing.phase, 'gauge'); assert.equal(casting.activePass.remaining, 14);
+  await page.clock.runFor(700);
+  await page.getByRole('region', { name: '主动收鱼进度条', exact: true }).waitFor();
+  assert.equal(await page.evaluate(() => document.hasFocus()), true, 'Keyboard smoke requires the game to have focus');
+  await page.screenshot({ path: path.join(runDirectory, 'fixture-active-green.png'), fullPage: true });
+  await page.keyboard.press('z');
+  const activeResult = await waitForSnapshot(page, (state, id) => state.fishing.lastResult?.attemptId === id, activeAttemptId);
+  assert.equal(activeResult.fishing.lastResult.success, true, 'A green stop must produce a fish');
+  assert.equal(activeResult.fishing.lastResult.kind, 'fish'); assert.equal(activeResult.bucket.length, 1);
+  assert.equal(activeResult.activePass.remaining, 14);
+  assert.equal(activeResult.baitCount, focused.baitCount); assert.equal(activeResult.baitLeft, focused.baitLeft);
+  await page.getByRole('button', { name: '停止钓鱼', exact: true }).click();
+  await waitForSnapshot(page, state => state.fishing.mode === 'stopped');
+  checked('P08', 'UI purchases 15 active chances; empty swings are free, gauge deducts one, a focused keyboard green stop catches a fish without consuming bait');
+  await closeWindowAndVerifyExit();
+  const completedFixture = await loadDiskSnapshot();
+  page = await launch();
+  assert.deepEqual(await snapshot(page), completedFixture);
+  assert.equal(completedFixture.focus.completedPlanIds.length, 4);
+  assert.equal(completedFixture.baitCount, fixture.baitCount + 1); assert.equal(completedFixture.freeTravelTickets, 1);
+  await closeWindowAndVerifyExit();
+  checked('P09', 'Restart preserves active charges, focus completion and ticket without repeating rewards');
   assert.deepEqual(report.consoleErrors, []);
   report.saved = { firstRevision: initial.revision, caughtRevision: caught.revision, finalRevision: sold.revision, finalCoins: sold.coins };
   report.passed = report.harnessSelfTest !== true;

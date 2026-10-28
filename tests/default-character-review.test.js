@@ -58,11 +58,25 @@ function decodePng(file) {
   return { width, height, alphaAt, bounds, transparent, solid, partiallyTransparent, pixels: width * height };
 }
 
-test('independent scope audit: default-character revision changes no economic, catch, market, route or save rule source', () => {
+test('historical candidate audit: archived 1.3.1 character revision changed no economic, catch, market, route or save rule source', () => {
   for (const file of ['src/domain/gameState.js', 'src/domain/loot.js', 'src/domain/market.js', 'src/domain/routes.js', 'src/domain/saveSchema.js', 'src/lib/gameConfig.js']) {
     const before = execFileSync('git', ['show', `96fd232:${file}`], { encoding: 'utf8', windowsHide: true });
-    assert.equal(normalize(fs.readFileSync(file, 'utf8')), normalize(before), file);
+    const archived = execFileSync('git', ['show', `874cdac:${file}`], { encoding: 'utf8', windowsHide: true });
+    assert.equal(normalize(archived), normalize(before), file);
   }
+});
+
+test('current default restores the archived 1.1.1 silhouette paths and exposes whitecape as an optional character pack', () => {
+  const original = fs.readFileSync('docs/classic-items-proposal/roles/classic-art/evidence/classic-1.1.1-Fisherman.jsx.txt', 'utf8');
+  const current = fs.readFileSync('src/components/pond/ClassicFisherman.jsx', 'utf8');
+  const originalPaths = [...original.matchAll(/\bd="([^"]+)"/g)].map(match => match[1]);
+  assert.ok(originalPaths.length >= 10, 'Check the complete original set of literal silhouette/rod paths');
+  for (const d of originalPaths) assert.ok(current.includes(`d="${d}"`), d);
+  const pack = APPEARANCE_PRODUCTS.find(product => product.id === 'whitecape_character_pack');
+  assert.equal(pack?.price, 650);
+  const free = createNewGame('jiangnan', NOON, { randomSeed: 471 });
+  assert.equal(ownsAppearanceStyle(free.appearance, 'character', 'whitecape'), false);
+  assert.throws(() => applyCommand(free, { id: 'review-whitecape-not-owned', type: 'EQUIP_APPEARANCE', slot: 'character', styleId: 'whitecape' }, NOON), /先拥有/);
 });
 
 test('independent free-identity audit: minimal remains free and visible, paid ownership still required and appearance cannot reroll outcomes', () => {
@@ -81,7 +95,7 @@ test('independent free-identity audit: minimal remains free and visible, paid ow
   assert.throws(() => applyCommand(free, { id: 'review-unowned', type: 'EQUIP_APPEARANCE', slot: 'character', styleId: 'cloudwalker' }, NOON), /先拥有/);
 });
 
-test('independent PNG audit: both shipped default variants have real alpha, clear borders and substantial visible artwork', () => {
+test('independent PNG audit: both optional whitecape variants have real alpha, clear borders and substantial visible artwork', () => {
   for (const variant of ['clear', 'rain']) {
     const file = path.resolve(`public/art/characters/default-${variant}-v1.png`), image = decodePng(file);
     assert.ok(image.width >= 256 && image.height >= 256, variant + ': enough source detail');
@@ -93,7 +107,7 @@ test('independent PNG audit: both shipped default variants have real alpha, clea
   }
 });
 
-test('independent anchor audit: real sprite pixels map uniformly to hand/support, all24 scene geometries keep visible content, contact and click target on screen', () => {
+test('independent anchor audit: real whitecape pixels map uniformly to hand/support and every scene geometry keeps visible content, contact and click target on screen', () => {
   for (const [name, art] of Object.entries(DEFAULT_CHARACTER.variants)) {
     const image = decodePng(path.resolve('public', art.asset));
     assert.equal(art.source.width, image.width); assert.equal(art.source.height, image.height);
@@ -134,7 +148,7 @@ test('independent anchor audit: real sprite pixels map uniformly to hand/support
   assert.notEqual(DEFAULT_CHARACTER.variants.clear.grip.x, FISHER.grip.x, 'New hand is independently anchored, not stretched to old silhouette');
 });
 
-test('independent actual JSX audit: one default image, alpha-clipped snow, correct clear/rain resources and stable single rod across every background', () => {
+test('independent actual JSX audit: optional whitecape has one image, alpha-clipped snow and one rod across every background', () => {
   const bundle = buildSync({ entryPoints: [path.resolve('src/components/pond/Pond.jsx')], bundle: true, write: false,
     format: 'cjs', platform: 'node', jsx: 'automatic', external: ['react', 'react/jsx-runtime'],
     alias: { '@': path.resolve('src') }, define: { 'import.meta.env.BASE_URL': '"./"' } });
@@ -143,7 +157,7 @@ test('independent actual JSX audit: one default image, alpha-clipped snow, corre
   for (const style of ['minimal', 'inkwash']) for (const region of REGIONS) for (const [code, variant] of [[0, 'clear'], [61, 'rain'], [71, 'clear']]) {
     const visualState = toWeatherVisualState({ weatherCode: code, isDay: true, observedAtMs: NOON }, { nowMs: NOON });
     const markup = renderToStaticMarkup(React.createElement(output.exports.default, {
-      regionId: region.id, status: 'idle', visualState, appearance: { equipped: { scene: style, character: 'minimal', rod: 'jade' } },
+      regionId: region.id, status: 'idle', visualState, appearance: { equipped: { scene: style, character: 'whitecape', rod: 'jade' } },
     }));
     assert.equal((markup.match(/data-default-character-sprite="v1"/g) || []).length, 1);
     assert.match(markup, new RegExp(`data-default-character-variant="${variant}"`));
@@ -151,5 +165,32 @@ test('independent actual JSX audit: one default image, alpha-clipped snow, corre
     assert.equal((markup.match(/data-rod-art="jade"/g) || []).length, 1); assert.equal((markup.match(/data-fishing-line="true"/g) || []).length, 1);
     assert.equal((markup.match(/data-scene-art=/g) || []).length, 1, 'Exactly one independently selected background');
     if (code === 71) { assert.match(markup, /<mask/); assert.match(markup, /<use/); assert.match(markup, /data-snow-support="hat-shoulder"/); }
+  }
+});
+
+test('actual classic JSX keeps one local silhouette, weather garment and fishing line in every scene', () => {
+  const bundle = buildSync({ entryPoints: [path.resolve('src/components/pond/Pond.jsx')], bundle: true, write: false,
+    format: 'cjs', platform: 'node', jsx: 'automatic', external: ['react', 'react/jsx-runtime'],
+    alias: { '@': path.resolve('src') }, define: { 'import.meta.env.BASE_URL': '"./"' } });
+  const output = { exports: {} };
+  new Function('require', 'module', 'exports', bundle.outputFiles[0].text)(createRequire(import.meta.url), output, output.exports);
+  for (const style of ['minimal', 'inkwash']) for (const region of REGIONS) for (const code of [0, 3, 61, 71]) {
+    const visualState = toWeatherVisualState({ weatherCode: code, isDay: true, observedAtMs: NOON }, { nowMs: NOON });
+    const markup = renderToStaticMarkup(React.createElement(output.exports.default, {
+      regionId: region.id, status: 'idle', visualState, appearance: { equipped: { scene: style, character: 'minimal', rod: 'jade' } },
+    }));
+    assert.equal((markup.match(/data-classic-source="1.1.1"/g) || []).length, 1);
+    assert.doesNotMatch(markup, /data-default-character-sprite|art\/characters\/default-/);
+    assert.equal((markup.match(/data-rod-art="jade"/g) || []).length, 1);
+    assert.equal((markup.match(/data-fishing-line="true"/g) || []).length, 1);
+    assert.equal(markup.includes('data-classic-rain-cape="true"'), code === 61);
+    assert.equal(markup.includes('data-snow-support="hat-shoulder"'), code === 71);
+    assert.equal((markup.match(/data-scene-art=/g) || []).length, 1);
+    if (code !== 0) assert.doesNotMatch(markup, /data-celestial="sun"/);
+    if (style === 'inkwash') {
+      const geometry = geometryForAppearance(region.id, style);
+      assert.ok(markup.includes(geometry.asset), region.id + ': bundled local artwork');
+      assert.ok(fs.existsSync(path.join('public', geometry.asset)));
+    }
   }
 });

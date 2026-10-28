@@ -17,6 +17,13 @@ async function invoke(channel, value) {
 }
 
 contextBridge.exposeInMainWorld('pondDesktop', Object.freeze({
+  onLifecycle: (callback) => {
+    if (typeof callback !== 'function') throw new TypeError('Lifecycle callback required');
+    const listener = (_event, value) => { if (['suspend', 'resume', 'shutdown'].includes(value?.type)) callback({ type: value.type }); };
+    ipcRenderer.on('pond:lifecycle', listener);
+    return () => ipcRenderer.removeListener('pond:lifecycle', listener);
+  },
+  ackLifecycle: (type) => invoke('pond:lifecycle-ack', type),
   loadSave: () => invoke('pond:load-save'),
   saveGame: (snapshot) => invoke('pond:save-game', snapshot),
   exportSave: (snapshot) => invoke('pond:export-save', snapshot),

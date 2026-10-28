@@ -4,16 +4,21 @@ import * as config from '../src/lib/gameConfig.js';
 import { FISH_SOURCES, FISH_REFERENCES, FISH_SOURCE_SNAPSHOT } from '../src/data/fishSources.js';
 import { catchOutcome } from '../src/domain/loot.js';
 import { quoteFish, MARKET_QUOTES } from '../src/domain/market.js';
-import { loadApprovedBaseline, buildMarketComparison } from '../docs/next-iteration/roles/fish-catalogue/market-comparison.mjs';
+import { loadApprovedBaseline } from '../docs/next-iteration/roles/fish-catalogue/market-comparison.mjs';
+import { fishBasePrice } from '../src/config/balance.js';
 
 const baseline = await loadApprovedBaseline();
 const newIds = Object.keys(FISH_SOURCES);
 const byId = new Map(config.FISH.map((fish) => [fish.id, fish]));
 
-test('approved fish expansion preserves every old fish value and non-fish config', () => {
-  assert.equal(config.FISH.length, baseline.config.FISH.length + 8);
+test('V2 retains old species identity/ranges and applies the explicit new base-price rule', () => {
+  assert.equal(config.FISH.length, baseline.config.FISH.length + 8 + 6);
   assert.equal(byId.size, config.FISH.length);
-  for (const fish of baseline.config.FISH) assert.deepEqual(byId.get(fish.id), fish, fish.id);
+  for (const fish of baseline.config.FISH) {
+    const current = byId.get(fish.id);
+    assert.deepEqual({ ...current, basePrice: fish.basePrice }, fish, fish.id);
+    assert.equal(current.basePrice, fishBasePrice(fish.basePrice), fish.id);
+  }
   for (const key of Object.keys(baseline.config).filter((key) => !['FISH', 'REGIONS'].includes(key))) {
     assert.deepEqual(config[key], baseline.config[key], key);
   }
@@ -24,17 +29,25 @@ test('approved fish expansion preserves every old fish value and non-fish config
   }
 });
 
-test('eight new species have independent identities and research-backed producing basins only', () => {
-  assert.equal(newIds.length, 8);
-  assert.equal(new Set(newIds.map((id) => FISH_SOURCES[id].scientificName)).size, 8);
+test('fourteen expanded species distinguish research, official records and unverified angling evidence', () => {
+  assert.equal(newIds.length, 14);
+  assert.equal(new Set(newIds.map((id) => FISH_SOURCES[id].scientificName)).size, 14);
   assert.equal(FISH_SOURCE_SNAPSHOT.sha256, '21b81697c65c5564b301ed70768c57181a9b402ac7bcec1d9cb386771774d46d');
   for (const id of newIds) {
     const species = byId.get(id), source = FISH_SOURCES[id];
     assert.ok(species, id);
-    assert.equal(source.evidenceTier, 'R1');
+    assert.ok(['R1', 'R2'].includes(source.evidenceTier));
     assert.equal(source.exactLandmarkVerified, false);
     assert.ok(source.sourceFids.every((fid) => /^F\d{4}$/.test(fid)));
-    assert.ok(source.references.every((ref) => FISH_REFERENCES[ref].type.startsWith('original-research')));
+    assert.ok(source.references.every((ref) => /^(original-research|official-)/.test(FISH_REFERENCES[ref].type)));
+    if (!source.addedVersion) {
+      assert.equal(source.evidenceTier, 'R1');
+      assert.ok(source.references.every(ref => FISH_REFERENCES[ref].type.startsWith('original-research')));
+    }
+    if (source.catalogueClass === 'regional-supplement') {
+      assert.deepEqual(source.sourceFids, [], 'do not invent a supplied-catalogue record');
+      assert.match(source.anglingEvidence, /未独立核实/);
+    }
     assert.deepEqual(source.sourceUrls, source.references.map((ref) => FISH_REFERENCES[ref].url));
     assert.deepEqual(config.REGIONS.filter((region) => region.fish.some(([fishId]) => fishId === id)).map((region) => region.id).sort(),
       source.regionEvidence.map((entry) => entry.regionId).sort(), id);
@@ -71,18 +84,12 @@ test('real persistent catch streams can produce each new species in every config
   }
 });
 
-test('full old/new market comparison covers all old prices, all new markets and seven-day expiry', () => {
-  const report = buildMarketComparison(baseline);
-  assert.equal(report.before.length, 42 * 12);
-  assert.equal(report.after.length, 50 * 12);
-  assert.equal(MARKET_QUOTES.length, report.after.length);
-  assert.equal(report.oldPriceDeltas.length, 42 * 12 * 4);
-  assert.equal(report.summary.oldBasePriceChanges, 0);
-  assert.equal(report.newParameters.length, 8);
-  assert.equal(report.regionYields.length, 12);
-  for (const row of report.oldPriceDeltas) assert.ok(row.priceAfter >= 1 && Number.isSafeInteger(row.priceAfter));
+test('expanded market covers56×17 cells and expiry overrides every species, quality and local premium', () => {
+  assert.equal(baseline.market.MARKET_QUOTES.length, 42 * 12);
+  assert.equal(MARKET_QUOTES.length, 56 * 17);
+  assert.equal(new Set(MARKET_QUOTES.map(row => `${row.speciesId}:${row.regionId}`)).size, 56 * 17);
   const caughtAtMs = Date.UTC(2026, 9, 25);
-  for (const id of newIds) {
+  for (const id of byId.keys()) {
     for (const region of config.REGIONS) {
       for (const quality of config.QUALITIES) {
         const fish = { speciesId: id, quality: quality.id, weight: byId.get(id).wt[1], caughtAtMs };

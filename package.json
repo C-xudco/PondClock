@@ -1,7 +1,7 @@
 {
   "name": "pondclock",
   "private": true,
-  "version": "1.3.1",
+  "version": "2.0.0",
   "description": "水塘时钟：可离线保存的桌面钓鱼游戏",
   "author": "PondClock",
   "main": "desktop/main.cjs",

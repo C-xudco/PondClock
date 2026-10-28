@@ -1,0 +1,390 @@
+{
+  "checkedAt": "2026-10-28T05:44:45.3667941Z",
+  "files": [
+    {
+      "path": "使用说明.txt",
+      "sha256": "881162F7AB763DC8617E14B4210075D1B4AABB953EAB539586A2FE1267AEBA84",
+      "bytes": 2444
+    },
+    {
+      "path": "chrome_100_percent.pak",
+      "sha256": "AB7C4B7B6CB8832A31D44B95EC50CE52294F49422A3BDDE4E21968ECA2930CBE",
+      "bytes": 719654
+    },
+    {
+      "path": "chrome_200_percent.pak",
+      "sha256": "30FA4A6E27C9FF2FB0F939F01158477E621A67D86E9ECB84CF11B3947DB8EB9D",
+      "bytes": 1269017
+    },
+    {
+      "path": "d3dcompiler_47.dll",
+      "sha256": "A05F99734F7C4822FEFC12B367AF21FD0976ED6608752FB1E1E80B6ECE7ECBBB",
+      "bytes": 4741488
+    },
+    {
+      "path": "dxcompiler.dll",
+      "sha256": "CEB93E48F7759EBFADEE4C7F26B4440957F1D50EF83519B266E16541216BC071",
+      "bytes": 25745408
+    },
+    {
+      "path": "dxil.dll",
+      "sha256": "77E039C905030A641E53658A008B74E90635A5EA9B6B79EABD0F2003BDFCA59A",
+      "bytes": 1509760
+    },
+    {
+      "path": "ffmpeg.dll",
+      "sha256": "0B7B23D16BF1EF722FB3C132E1E5A9F0973DB0C287630F96122ACD6660DC8F27",
+      "bytes": 3113472
+    },
+    {
+      "path": "icudtl.dat",
+      "sha256": "DA53F0B69843AAA43315F0F210A67E4A874B0BE338F3DAE08FF57B8AFE76AB0D",
+      "bytes": 10875024
+    },
+    {
+      "path": "LICENSE.electron.txt",
+      "sha256": "5154E165BD6C2CC0CFBCD8916498C7ABAB0497923BAFCD5CB07673FE8480087D",
+      "bytes": 1096
+    },
+    {
+      "path": "LICENSES.chromium.html",
+      "sha256": "E6E6B1F9CB0F32235412BE113DE7716333E88121F9159A0EA0FF3BE652021AF7",
+      "bytes": 20477229
+    },
+    {
+      "path": "PondClock.exe",
+      "sha256": "30A7F63979A05AD6E01630C2DC02F88B751E38ED00C0C4CD0B86FCAD77D4825F",
+      "bytes": 246592512
+    },
+    {
+      "path": "resources.pak",
+      "sha256": "9611F9A65A37EEA7D7F631EBA0ED2CC49205F47AAA8A2937694CA2DE2D821BD8",
+      "bytes": 12436085
+    },
+    {
+      "path": "snapshot_blob.bin",
+      "sha256": "8A4215C555B7F92A320CD9C273482195A34D35694C5E93BD0CAF0535239A4EC0",
+      "bytes": 369024
+    },
+    {
+      "path": "v8_context_snapshot.bin",
+      "sha256": "32CF2769C5912FDBE791A972570C51488C96585C0835601B6C86237033ED37E2",
+      "bytes": 742456
+    },
+    {
+      "path": "version",
+      "sha256": "092757B5CE6C0196120820F0661C92F660748495FAEEF3F43049C33EA65FAB4C",
+      "bytes": 6
+    },
+    {
+      "path": "vk_swiftshader_icd.json",
+      "sha256": "32D83FF113FEF532A9F97E0D2831F8656628AB1C99E9060F0332B1532839AFD9",
+      "bytes": 106
+    },
+    {
+      "path": "vk_swiftshader.dll",
+      "sha256": "0D5E4CEB257513B1FBE06565767A53EA0C8F9B8B5AC1A48FD3CCBF3847000437",
+      "bytes": 5520384
+    },
+    {
+      "path": "vulkan-1.dll",
+      "sha256": "CDD64583D00765CC3DF51B2B8D502E5ECFC7078FB7AF1B1C985743A271BDEF1E",
+      "bytes": 939520
+    },
+    {
+      "path": "locales\\af.pak",
+      "sha256": "3017B141BD16E24190D810F0748612F0FD4352CA8553002B9A63A7F77F7154F8",
+      "bytes": 636155
+    },
+    {
+      "path": "locales\\am.pak",
+      "sha256": "67B938D162BC75DB067120BB8366B5BAFD9A75FA99A0CA9AD4F46B47D1D37634",
+      "bytes": 1029450
+    },
+    {
+      "path": "locales\\ar.pak",
+      "sha256": "560244ECFF0D522B6FBF97693BDDE0A318C5BC516615CB15751EE2527A6EB730",
+      "bytes": 1130928
+    },
+    {
+      "path": "locales\\bg.pak",
+      "sha256": "2EB9C74C67E4B13B45A73061FA978738E335BC245DA71BAB0EA9B205FE91074E",
+      "bytes": 1178203
+    },
+    {
+      "path": "locales\\bn.pak",
+      "sha256": "415621A5C0B1546E6E447D43B76414425A8703CC7681D637EC1F283AD0C787E7",
+      "bytes": 1513545
+    },
+    {
+      "path": "locales\\ca.pak",
+      "sha256": "6F28297C1CCB628F534D65DADE167AE559F83EACE359ACF47E48FF890B9409D5",
+      "bytes": 716908
+    },
+    {
+      "path": "locales\\cs.pak",
+      "sha256": "799A789CE531991CB975425730DB310F9A8FE74091EEE568F3E65FCC7EF0CD57",
+      "bytes": 743351
+    },
+    {
+      "path": "locales\\da.pak",
+      "sha256": "236B73E0BD8CF984609F03612B40D4583525B0293F994EF5BBDDECFAA3AA1E7F",
+      "bytes": 666412
+    },
+    {
+      "path": "locales\\de.pak",
+      "sha256": "52B9D92D2D09532A6016CE07A355E7ACB385A9EA245436E0DB188A76B8B7F622",
+      "bytes": 717898
+    },
+    {
+      "path": "locales\\el.pak",
+      "sha256": "37D2E1EF69FEA9BDB1E0902CBC61A458BAA9009FC3761029BD1C1882A7A0C9B2",
+      "bytes": 1295538
+    },
+    {
+      "path": "locales\\en-GB.pak",
+      "sha256": "56EA59D5F21FBD25DFC02A6DE4504CB134464F388E64509B2EA1657E238AA427",
+      "bytes": 580030
+    },
+    {
+      "path": "locales\\en-US.pak",
+      "sha256": "23B271E8009BFA14783700CD0712B4ECAA5B8F2EA28A4D81AE1D7E05BC0C96B1",
+      "bytes": 586582
+    },
+    {
+      "path": "locales\\es-419.pak",
+      "sha256": "530E5B8EDC93F95A64700178C2A3FBB55F4D4EADEC8CABBA25FD21BC5835C63E",
+      "bytes": 707621
+    },
+    {
+      "path": "locales\\es.pak",
+      "sha256": "F0982C7EBC30101E609225E2011339378C96075E094E082B694A467ECA1108CD",
+      "bytes": 703944
+    },
+    {
+      "path": "locales\\et.pak",
+      "sha256": "1E3B4EB21D233E3ADAAB469310A8C6C61E045379771CBC381C4C000E1716AB28",
+      "bytes": 642216
+    },
+    {
+      "path": "locales\\fa.pak",
+      "sha256": "0E57A54B3BE643B9F5E3C46D40A26D40E00915828B0AB9DFD39991CFF1283240",
+      "bytes": 1063104
+    },
+    {
+      "path": "locales\\fi.pak",
+      "sha256": "1F3123D7FB5C22A95B5250EA17450B665C3C6CD6A6DFD28BBDDE15E1BF684A0E",
+      "bytes": 655113
+    },
+    {
+      "path": "locales\\fil.pak",
+      "sha256": "02E2C70D3D85B0DEB677A9AE576AE3CF89E80774532CB3315C14F1E8CE64B310",
+      "bytes": 741385
+    },
+    {
+      "path": "locales\\fr.pak",
+      "sha256": "8BAD7FD88072AC66649DD9307DA9163962F8AB00313E627BF1C5CA4450A48B4A",
+      "bytes": 763461
+    },
+    {
+      "path": "locales\\gu.pak",
+      "sha256": "E86E8C240D4B6283ABB03C49DF9E8899607EF9DEF6D4933C7A541D63B5835271",
+      "bytes": 1495625
+    },
+    {
+      "path": "locales\\he.pak",
+      "sha256": "DDC1F304AB1F4489D19AE2B31E7F8E3FFB47DAE439520159E8975422C65E4115",
+      "bytes": 928748
+    },
+    {
+      "path": "locales\\hi.pak",
+      "sha256": "015B3856DC05E8635A48E749E6970FE43F5D620B8DBD04E5ABFF586178213F6E",
+      "bytes": 1586602
+    },
+    {
+      "path": "locales\\hr.pak",
+      "sha256": "D46C64AE8AF3562E37EB80438AA2BEE228FAFDA251D58BA4D0991291F1C72AAB",
+      "bytes": 715279
+    },
+    {
+      "path": "locales\\hu.pak",
+      "sha256": "0A46FC8D50F74EFFD1CFE1979E677DF3DE6FC47E6B551267303D93D57BD83F50",
+      "bytes": 765640
+    },
+    {
+      "path": "locales\\id.pak",
+      "sha256": "F567569C42A25BB2DFC5C33E13AAC558C0E2A1D5D4B969592BBD0841B36438DB",
+      "bytes": 635080
+    },
+    {
+      "path": "locales\\it.pak",
+      "sha256": "0A4090FD79ACDA3B75EA4CBF59C299B7FBB2C8ED69696158C6F3620BF1901955",
+      "bytes": 693987
+    },
+    {
+      "path": "locales\\ja.pak",
+      "sha256": "65A19121DFDD2163072D104CFE71970D132E76847D6EAD6A2C103212314E83B0",
+      "bytes": 842014
+    },
+    {
+      "path": "locales\\kn.pak",
+      "sha256": "AF5FED2130102ECC0C878059C88FAED9D6DB2E8B147FB5AE9E15E3FE69706C8A",
+      "bytes": 1720240
+    },
+    {
+      "path": "locales\\ko.pak",
+      "sha256": "56449CC28BC41AF4CCBF35B98DD30019839E8CC193F7ECF4CCD8DACC26302303",
+      "bytes": 718706
+    },
+    {
+      "path": "locales\\lt.pak",
+      "sha256": "AF969F4407C190DD01A426FA1244CB1EC7CDF2909D1C3BA5B87FF662BA567303",
+      "bytes": 777281
+    },
+    {
+      "path": "locales\\lv.pak",
+      "sha256": "4455AB7C06172C2C80796A99558E41F452CC3B33BE76654D70440CF4AC7A2D34",
+      "bytes": 774733
+    },
+    {
+      "path": "locales\\ml.pak",
+      "sha256": "B5606265910E45098A88E989202A550531F6D00333C6B112ED4C5CBC07B2FF6A",
+      "bytes": 1767850
+    },
+    {
+      "path": "locales\\mr.pak",
+      "sha256": "8465D4077ED5414CBCB7D9BDB00D85E515A1A069703CDC1D4D67C9D6E5623FB0",
+      "bytes": 1467313
+    },
+    {
+      "path": "locales\\ms.pak",
+      "sha256": "AF7021A00BEFA586AA067AE3CCB339079E6F13EE0CAB1621836F6ABB608B6F2A",
+      "bytes": 668356
+    },
+    {
+      "path": "locales\\nb.pak",
+      "sha256": "D97A2B0CBE6ADC99ADD2ED3CE0D15D0BB124B778086C466C126634D60EA72608",
+      "bytes": 638121
+    },
+    {
+      "path": "locales\\nl.pak",
+      "sha256": "B642C8AB5CE11438E9A8FD4639244FA8F1D55CFD70269565490BC55EE907B048",
+      "bytes": 664759
+    },
+    {
+      "path": "locales\\pl.pak",
+      "sha256": "8A0969FC743D3E2F5111387D53C0D79E8C1D9F68256AD6553B87FCA2BCAA7E6E",
+      "bytes": 742064
+    },
+    {
+      "path": "locales\\pt-BR.pak",
+      "sha256": "8D893475AFAE1F579C7199F245AAD184650B0224E697E80CFE700B4061F6C16D",
+      "bytes": 696993
+    },
+    {
+      "path": "locales\\pt-PT.pak",
+      "sha256": "BDFA7264DDDF70F936F1785737969559A577B51D1952C820A468C611D18B17CA",
+      "bytes": 701056
+    },
+    {
+      "path": "locales\\ro.pak",
+      "sha256": "1E6B5B0DAC63A9E951DAF523DE310F6BD9E5C53E281F37706D41BD35D2A08BB5",
+      "bytes": 728144
+    },
+    {
+      "path": "locales\\ru.pak",
+      "sha256": "A9E76536472C45B39E7AE2AF5F3AE1BC0E50A11646EFDB6FB3CA373B5F2E2C70",
+      "bytes": 1200985
+    },
+    {
+      "path": "locales\\sk.pak",
+      "sha256": "8EFF7365EFF78623CD26E40D40540F52B511DF96C2824F62531DA65F0D3A8087",
+      "bytes": 755529
+    },
+    {
+      "path": "locales\\sl.pak",
+      "sha256": "0E1C50E529821F318E4200E024D863DACCD78E15DE1A5658FA3FB1EBF6312BD1",
+      "bytes": 722714
+    },
+    {
+      "path": "locales\\sr.pak",
+      "sha256": "C42A674E3F43AA70CEF005931915C8B7CEB34B29566FBA3309F8DA931DC7861F",
+      "bytes": 1112909
+    },
+    {
+      "path": "locales\\sv.pak",
+      "sha256": "7B0399A206BFBEBE77D1A4FC598C8A6636A1BD940D3AB56519CF4AF0134B6EDB",
+      "bytes": 646543
+    },
+    {
+      "path": "locales\\sw.pak",
+      "sha256": "BD41EA707A0D90D683EC8D5D0F0C79F3E925747BC4EA1982562DFB75080199B9",
+      "bytes": 685127
+    },
+    {
+      "path": "locales\\ta.pak",
+      "sha256": "91FB1460711DF108D8D435A378C8BE1D1E80B0886C0158D8C6AE92F35812681B",
+      "bytes": 1758067
+    },
+    {
+      "path": "locales\\te.pak",
+      "sha256": "FC8C2706C5DFD36E7AF8E380A240E0F697CC5FE969B512092A2185896512C4AF",
+      "bytes": 1629379
+    },
+    {
+      "path": "locales\\th.pak",
+      "sha256": "C1F4235C31BC05153230B0E55B7AABC9020D7460D5B0A025C386885E1E4BDA3C",
+      "bytes": 1368866
+    },
+    {
+      "path": "locales\\tr.pak",
+      "sha256": "3A3BC4EFFFAF53859A9B2D8488F2EA4862A6A082C2AF68A125923CC01F69A79C",
+      "bytes": 697398
+    },
+    {
+      "path": "locales\\uk.pak",
+      "sha256": "EC5D0B426E289C064E8F2D63636AE2A544FF30FC1E99DDE04FE1920971E4D060",
+      "bytes": 1211563
+    },
+    {
+      "path": "locales\\ur.pak",
+      "sha256": "C218E21744DF2FF0669A87D497D65D76333073577360D4C662C592DE146BF82A",
+      "bytes": 1047994
+    },
+    {
+      "path": "locales\\vi.pak",
+      "sha256": "B3171C4C3C1B7803C606EEE280456B380D57984745F6719AFEB8D95591071C25",
+      "bytes": 830014
+    },
+    {
+      "path": "locales\\zh-CN.pak",
+      "sha256": "66C3984C1345B5ABA722005458B9CC0AF54496260AD06F2509C7AFA011D4981F",
+      "bytes": 592069
+    },
+    {
+      "path": "locales\\zh-TW.pak",
+      "sha256": "45F34B57F5B54BA521561D4F818E650430114A713DE36B72603B880DB939AD37",
+      "bytes": 583867
+    },
+    {
+      "path": "resources\\app.asar",
+      "sha256": "DEDEFA1E6EA64E7FE90BB626C3D1A40FD2C6B6C73024B5151520C010C56E440C",
+      "bytes": 61040297
+    },
+    {
+      "path": "resources\\default_app.asar",
+      "sha256": "0EB2491B0A9AC94790389D39C09DD5005C6C1F0665842943829BBD0193F6CC4F",
+      "bytes": 110862
+    },
+    {
+      "path": "resources\\icon.ico",
+      "sha256": "0CBEADD579FA70FB72833F618FCB7F797FBEB838EC4C2520CBD5BC0184426F78",
+      "bytes": 41086
+    }
+  ],
+  "matchedFiles": 76,
+  "zipSha256": "93ECF10046DF91BEE964B2483F7B2475B37E0CE180B363D19C2C5CBE00DF1677",
+  "zip": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\release\\PondClock-2.0.0-x64.zip",
+  "destination": "X:\\game\\PondClock-2.0.0",
+  "version": "2.0.0"
+}

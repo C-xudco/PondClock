@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-10-28T05:41:13.1064612Z",
+  "version": "2.0.0",
+  "stage": "preflight before control palette polish",
+  "passedStartupAndClose": true,
+  "exe": "X:\\game\\PondClock-2.0.0\\PondClock.exe",
+  "exeSha256": "8A7A03F547991B18FF4FF15C4364C8154B0100D780F8010C1B0959C420EE198F",
+  "archiveSha256": "6CC3C6BD22A3E7536063E109E394B770F41D203F813322B73597ACD0E488A4D8",
+  "profile": "X:\\game\\lthgolfmk9bc38cp-ai-089edb3e\\nocode\\test-results\\v2-desktop-entry-183a779ee7ca496fae6d0f0d1b7cd6b3\\V2-ShortPath-profile",
+  "windowId": 657682,
+  "startup": [
+    {
+      "at": "2026-10-28T05:26:59.825Z",
+      "event": "STARTUP_BEGIN"
+    },
+    {
+      "at": "2026-10-28T05:27:00.256Z",
+      "event": "WINDOW_READY"
+    }
+  ],
+  "normalDesktopEntry": true,
+  "noDebugArguments": true,
+  "noSandboxDisabled": true,
+  "nativeObserved": [
+    "UIA exposes ordinary start, active rod count, focus plan and six function buttons",
+    "Normal Alt+F4 closes own test window; subsequent list has no V2 window",
+    "Window placement saved independently"
+  ],
+  "limits": [
+    "Native click geometry and per-window WGC screenshot were inconsistent at host scaling",
+    "Visual and interaction acceptance continued separately through actual EXE CDP attachment",
+    "This preflight snapshot precedes final CSS palette adaptation"
+  ]
+}

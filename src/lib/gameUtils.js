@@ -3,10 +3,9 @@ import {
   REGIONS,
   QUALITIES,
   PROVINCE_TO_REGION,
-  PITY_THRESHOLD,
   DEFAULT_REGION,
 } from "./gameConfig.js";
-import { FISHING_CONFIG } from "../config/fishing.js";
+import { fishQualityWeights } from '../config/balance.js';
 import { quoteFish } from "../domain/market.js";
 
 // ===== 基础随机与查表 =====
@@ -32,10 +31,8 @@ export function weightedPick(pairs) {
 }
 
 // ===== 随机产出引擎：种类 → 品质 → 个体尺寸（三套分布互不干扰）=====
-// mods: { qualityBonus: 鱼竿+鱼饵加成, bestClickBonus: 预留-最佳区间加成, pity: 保底计数 }
-// 加成只提升稀有权重（普通档不动），每点加成对应的权重增量见 QUALITY_BONUS_RATE。
-const QUALITY_BONUS_RATE = FISHING_CONFIG.qualityBonusRate;
-const PITY_WEIGHT_MULT = FISHING_CONFIG.pityWeightMultiplier;
+// mods: { useBait: boolean, pity: ordinary fish counter, active: boolean }.
+// Numeric rod bonuses are retired; persistent capture uses the same pure weights.
 
 const sampleRange = (range, digits) => {
   const [min, max] = Array.isArray(range) && range.length === 2 ? range : [0, 0];
@@ -48,15 +45,8 @@ export function rollFish(regionId, mods = {}) {
   const region = regionById(regionId) || regionById(DEFAULT_REGION) || REGIONS[0];
   const species = fishById(weightedPick(region.fish)) || FISH[0];
 
-  const bonus = Math.max(0, Number(mods.qualityBonus) || 0) + Math.max(0, Number(mods.bestClickBonus) || 0);
-  let qw = QUALITIES.map((q) => [q.id, Math.max(0, Number(species.qw?.[q.id]) || 0)]);
-  if (bonus > 0) {
-    qw = qw.map(([q, w]) => (QUALITY_BONUS_RATE[q] ? [q, w + bonus * QUALITY_BONUS_RATE[q]] : [q, w]));
-  }
-  // 保底节奏：距上次高品质达到阈值时，大幅提升史诗/传说权重
-  if ((Number(mods.pity) || 0) >= PITY_THRESHOLD) {
-    qw = qw.map(([q, w]) => (q === "epic" || q === "legendary" ? [q, w * PITY_WEIGHT_MULT] : [q, w]));
-  }
+  const qw = fishQualityWeights(species, region.id, { bait: Boolean(mods.useBait),
+    pity: Number(mods.pity) || 0, active: Boolean(mods.active) });
   const quality = weightedPick(qw) || "common";
 
   return {

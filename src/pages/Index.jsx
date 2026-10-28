@@ -20,9 +20,12 @@ import CodexPanel from '@/components/panels/CodexPanel';
 import ShopPanel from '@/components/panels/ShopPanel';
 import TravelPanel from '@/components/panels/TravelPanel';
 import SettingsPanel from '@/components/panels/SettingsPanel';
+import FocusPanel from '@/components/panels/FocusPanel';
+import ActiveFishingBar from '@/components/pond/ActiveFishingBar';
+import FishingControls from '@/components/pond/FishingControls';
 import { Button } from '@/components/ui/button';
 
-const PANEL_TITLES = { bucket: '鱼篓', codex: '图鉴', shop: '渔具与外观', travel: '漫游', settings: '设置与存档' };
+const PANEL_TITLES = { focus: '专注计划', bucket: '鱼篓', codex: '图鉴', shop: '渔具与外观', travel: '漫游', settings: '设置与存档' };
 const devParam = (key) => import.meta.env.DEV ? new URLSearchParams(window.location.search).get(key) : null;
 const DEMO_SPEECH = { idle: { text: SPEECH.idle[0], tone: 'idle' }, success: { text: SPEECH.success[0], tone: 'success' }, high: { text: SPEECH.high[0], tone: 'high' }, miss: { text: SPEECH.miss[0], tone: 'miss' } };
 
@@ -91,8 +94,9 @@ export default function Index() {
     switch (activePanel) {
       case 'bucket': return <BucketPanel game={game} disabled={disabled} />;
       case 'codex': return <CodexPanel codex={game.codex} pityCounter={game.pityCounter} currentRegion={game.currentRegion} />;
-      case 'shop': return <ShopPanel game={game} coins={game.coins} rodLevel={game.rodLevel} baitCount={game.baitCount} baitLeft={game.baitLeft} onBuyRod={game.buyRod} onBuyBait={game.buyBait} disabled={disabled} />;
-      case 'travel': return <TravelPanel coins={game.coins} currentRegion={game.currentRegion} unlockedRegions={game.unlockedRegions} realRegion={game.realRegion} geoSource={geo.source} onTravel={game.travelTo} onVisitReal={game.visitRealRegion} travel={game.travel} busy={game.busy || !!game.error} />;
+      case 'focus': return <FocusPanel game={game} disabled={game.busy || !!game.error}/>;
+      case 'shop': return <ShopPanel game={game} coins={game.coins} baitCount={game.baitCount} baitLeft={game.baitLeft} onBuyBait={game.buyBait} disabled={disabled} />;
+      case 'travel': return <TravelPanel game={game} coins={game.coins} currentRegion={game.currentRegion} unlockedRegions={game.unlockedRegions} realRegion={game.realRegion} geoSource={geo.source} onTravel={game.travelTo} onVisitReal={game.visitRealRegion} travel={game.travel} busy={game.busy || !!game.error} />;
       case 'settings': return <SettingsPanel game={game} geo={geo} weather={env} presentation={displayedScene.presentation} desktop={desktop} onChangeTop={changeTop} onRefreshGeo={geo.refresh} />;
       default: return null;
     }
@@ -103,6 +107,13 @@ export default function Index() {
       : geo.source === 'disabled' ? '离线垂钓' : '地区待识别 · 点击刷新';
 
   const theme = game.appearance?.equipped?.scene === 'inkwash' ? 'theme-inkwash' : 'theme-minimal';
+  const activeCasting = game.fishing?.mode === 'active' && game.fishing?.phase === 'casting';
+  const swingProgress = activeCasting ? Math.max(0, Math.min(1, (game.nowMs - (game.fishing.attempt.nextSwingAtMs - 3000)) / 3000)) : 0;
+  const actorPose = activeCasting ? Math.sin(swingProgress * Math.PI) * 1.6 : 0;
+  const pondStatus = activeCasting ? 'casting' : game.activeBar ? 'active' : game.status;
+  const waitLabel = game.fishing?.mode === 'stopped' ? '已停止 · 随时开始'
+    : game.fishing?.mode === 'active' ? game.activeBar ? '凝神收竿' : `主动探鱼 · 剩 ${game.activeRemaining} 次`
+      : game.status === 'bite' ? '浮漂下沉了，点击收竿' : `静候鱼讯 · 约 ${game.waitLeft} 秒`;
   return <div className={`app-shell ${theme} ${desktop.enabled ? 'widget-surface' : 'relative min-h-screen w-full'}`}>
     {!desktop.enabled && <div className="app-backdrop" />}
     <main className={desktop.enabled ? 'widget-main' : 'relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col justify-center px-3 py-6'}>
@@ -116,16 +127,18 @@ export default function Index() {
         {game.error && <div role="alert" className="mb-3 rounded-xl bg-red-950/80 p-3 text-sm text-red-200">{game.error}<Button size="sm" variant="outline" className="ml-2" onClick={game.importSave}>导入备份</Button></div>}
         <ClockPanel {...env} regionName={regionById(geo.regionId || game.realRegion || game.homeRegion)?.name || '所在地待识别'} />
         <div className="pond-container relative mt-3">
-          <Pond regionId={game.currentRegion} appearance={game.appearance} sceneDefinition={scene.sceneDefinition} sceneSite={scene.site} visualState={displayedScene.visualState} weatherEntry={displayedScene.entry} weatherPresentation={displayedScene.presentation} status={game.travel ? 'idle' : demo === 'bite' ? 'bite' : game.status} windowLeft={demo === 'bite' ? 17 : game.windowLeft} weather={displayedScene.weather} speech={demo ? DEMO_SPEECH[demo] || null : game.speech} onCatch={disabled ? undefined : game.catchFish} onPoke={disabled ? null : game.pokeBobber} />
+          <Pond regionId={game.currentRegion} appearance={game.appearance} sceneDefinition={scene.sceneDefinition} sceneSite={scene.site} visualState={displayedScene.visualState} weatherEntry={displayedScene.entry} weatherPresentation={displayedScene.presentation} status={game.travel ? 'stopped' : demo === 'bite' ? 'bite' : pondStatus} actorPose={actorPose} windowLeft={demo === 'bite' ? 17 : game.windowLeft} weather={displayedScene.weather} speech={demo ? DEMO_SPEECH[demo] || null : game.speech} onCatch={game.travel || game.error ? undefined : game.catchFish} onPoke={disabled ? null : game.pokeBobber} />
+          <ActiveFishingBar game={game} disabled={!!game.travel || !!game.error} inputBlocked={!!activePanel}/>
           {game.travel && <div className="ink-travel-overlay absolute inset-0 z-40 flex items-center justify-center rounded-2xl bg-slate-950/55 backdrop-blur-sm"><div className="w-4/5 max-w-sm rounded-2xl border border-white/10 bg-slate-900/80 p-6 text-center shadow-xl"><Plane size={28} className="mx-auto text-sky-300" /><p className="mt-3 text-sm">{regionById(game.travel.fromId)?.name} → {regionById(game.travel.toId)?.name}</p><p className="mt-2 text-2xl font-semibold tabular-nums text-sky-100">{Math.floor(travelLeft / 60)}:{String(travelLeft % 60).padStart(2, '0')}</p><div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-sky-300 transition-all" style={{ width: `${travelProgress}%` }} /></div><p className="mt-3 text-xs text-slate-400">鱼篓随身携带，关闭窗口后航程仍继续。</p></div></div>}
         </div>
+        <FishingControls game={game} disabled={!!game.travel || !!game.error} onOpenFocus={() => togglePanel('focus')}/>
         <ActionDock coins={game.coins} activePanel={activePanel} onToggle={togglePanel} />
-        <div className="fishing-status mt-2 flex justify-between px-2 text-[10px] text-slate-500"><span>{game.busy ? '正在保存…' : '本地进度已保存'}</span><span>{game.travel ? '旅途中暂停垂钓' : game.status === 'bite' ? '浮漂下沉了，点击水塘收竿' : `静候鱼讯 · 约 ${game.waitLeft} 秒`}</span></div>
+        <div className="fishing-status mt-2 flex justify-between px-2 text-[10px] text-slate-500"><span>{game.busy ? '正在保存…' : '本地进度已保存'}</span><span>{game.travel ? '旅途中暂停垂钓' : waitLabel}</span></div>
         {desktop.enabled && <footer className="widget-footer">
           <button className="flex min-w-0 items-center gap-1 truncate text-left hover:text-sky-100 disabled:opacity-50" disabled={!online} aria-label="刷新IP所在地" aria-busy={geo.refreshing} title={[geo.detail, geo.error, geo.fetchedAtMs ? `上次识别：${new Date(geo.fetchedAtMs).toLocaleTimeString('zh-CN')}` : '换网络后可点击立即识别'].filter(Boolean).join('\n')} onClick={() => void geo.refresh()}>
             <RefreshCw size={10} className={geo.refreshing ? 'animate-spin' : ''} /><span className="truncate">{geoLabel}</span>
           </button>
-          <span className="shrink-0">{game.busy ? '正在保存…' : game.travel ? '旅途中' : game.status === 'bite' ? '点击水塘收竿' : `鱼讯约 ${game.waitLeft} 秒`}</span>
+          <span className="shrink-0">{game.busy ? '正在保存…' : game.travel ? '旅途中' : waitLabel}</span>
         </footer>}
         {activePanel && <PanelWindow floating={desktop.enabled} title={PANEL_TITLES[activePanel]} onClose={() => setActivePanel(null)}>{renderPanel()}</PanelWindow>}
       </>}

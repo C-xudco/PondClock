@@ -1,5 +1,5 @@
-import { FISH, REGIONS, QUALITIES, RODS, BAIT_QUALITY_BONUS, PITY_THRESHOLD, JUDGE } from '../lib/gameConfig.js';
-import { FISHING_CONFIG } from '../config/fishing.js';
+import { FISH, REGIONS } from '../lib/gameConfig.js';
+import { fishQualityWeights } from '../config/balance.js';
 import { LOOT_CONFIG, ITEM_DEFINITIONS } from '../config/lootConfig.js';
 
 export function stableSeed(value) {
@@ -71,11 +71,11 @@ const roundedRange = (range, value, precision) => {
   return Math.round((range[0] + unit(value) * (range[1] - range[0])) * factor) / factor;
 };
 
-export function catchOutcome(state, { bestClick = false } = {}) {
+export function catchOutcome(state, { active = false, useBait, attemptSeed } = {}) {
   const sequence = state.catchSequence + 1;
-  const prefix = `${state.randomSeed}:catch:${sequence}`;
+  const prefix = attemptSeed == null ? `${state.randomSeed}:catch:${sequence}` : `${attemptSeed}:catch:${sequence}`;
   const random = (channel) => assetRandom(prefix, channel)();
-  const kind = lootKindForSlot(randomIntegerBelow(assetRandom(prefix, 'loot-kind'), LOOT_CONFIG.denominator));
+  const kind = active ? 'fish' : lootKindForSlot(randomIntegerBelow(assetRandom(prefix, 'loot-kind'), LOOT_CONFIG.denominator));
   const uid = `catch:${state.randomSeed}:${sequence}`;
   if (kind !== 'fish') return { kind: 'item', item: {
     uid, type: kind, status: 'found', catchSequence: sequence,
@@ -84,15 +84,8 @@ export function catchOutcome(state, { bestClick = false } = {}) {
   const habitat = REGIONS.find((region) => region.id === state.currentRegion);
   const speciesId = weighted(habitat.fish, random('fish-species'));
   const species = FISH.find((fish) => fish.id === speciesId);
-  const rod = RODS[state.rodLevel];
-  const baitBonus = state.baitLeft > 0 || state.baitCount > 0 ? BAIT_QUALITY_BONUS : 0;
-  const bonus = rod.qualityBonus + baitBonus + (bestClick ? JUDGE.qualityBonusBest : 0);
-  const weights = QUALITIES.map((quality) => {
-    let weight = Math.max(0, Number(species.qw?.[quality.id]) || 0);
-    weight += bonus * (FISHING_CONFIG.qualityBonusRate[quality.id] || 0);
-    if (state.pityCounter >= PITY_THRESHOLD && ['epic', 'legendary'].includes(quality.id)) weight *= FISHING_CONFIG.pityWeightMultiplier;
-    return [quality.id, weight];
-  });
+  const bait = !active && (useBait ?? state.fishing?.useBait ?? false) && (state.baitLeft > 0 || state.baitCount > 0);
+  const weights = fishQualityWeights(species, state.currentRegion, { bait, pity: active ? 0 : state.pityCounter, active });
   return { kind: 'fish', fish: {
     uid, speciesId, name: species.name, quality: weighted(weights, random('fish-quality')),
     length: roundedRange(species.len, random('fish-length'), 1), weight: roundedRange(species.wt, random('fish-weight'), 2),
@@ -114,6 +107,7 @@ export function itemSalePrice(item) {
   if (!ITEM_DEFINITIONS[item?.type]) throw new Error('未知物品');
   if (item.type === 'influencer_manual') throw new Error('秘籍只能使用，不能出售');
   if (item.type === 'old_shoe') return LOOT_CONFIG.shoePrice;
+  if (item.type !== 'waterlogged_watch') return ITEM_DEFINITIONS[item.type].price;
   return item.status === 'found' ? LOOT_CONFIG.unrepairedWatchPrice : item.salePrice;
 }
 

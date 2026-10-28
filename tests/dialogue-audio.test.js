@@ -3,10 +3,11 @@ import assert from 'node:assert/strict';
 import { DialogueDirector } from '../src/lib/dialogueDirector.js';
 import { DIALOGUE_CATALOG, REGION_DIALOGUE } from '../src/data/dialogueCatalog.js';
 import { BiteAudio } from '../src/services/biteAudio.js';
+import { REGIONS } from '../src/lib/gameConfig.js';
 
 test('dialogue pools are complete and avoid immediate repeat without fixed rotation', () => {
   for (const pool of Object.values(DIALOGUE_CATALOG)) assert.ok(pool.length >= 8);
-  assert.equal(Object.keys(REGION_DIALOGUE).length, 12);
+  assert.deepEqual(Object.keys(REGION_DIALOGUE).sort(), REGIONS.map(region => region.id).sort());
   for (const pool of Object.values(REGION_DIALOGUE)) assert.ok(pool.length >= 4);
   const d = new DialogueDirector({ random: () => 0.9 });
   const selected = Array.from({ length: 40 }, () => d.choose('idle', DIALOGUE_CATALOG.idle).id);

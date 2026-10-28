@@ -156,7 +156,13 @@ test('main-process widget options and IPC actions preserve the sandbox, saved pi
       // explicitly calibrate to the configured preset after construction.
       super(); this.options = options; this.bounds = { x: options.x, y: options.y, width: options.width + 4, height: options.height + 4 };
       this.pinned = options.alwaysOnTop;
-      this.webContents = Object.assign(new EventEmitter(), { mainFrame: { url: '' }, setWindowOpenHandler: () => {} });
+      this.webContents = Object.assign(new EventEmitter(), { mainFrame: { url: '' }, setWindowOpenHandler: () => {},
+        send: (channel, message) => {
+          if (channel === 'pond:lifecycle' && message.type === 'shutdown') {
+            queueMicrotask(() => handlers.get('pond:lifecycle-ack')({ sender: this.webContents,
+              senderFrame: this.webContents.mainFrame }, 'shutdown'));
+          }
+        } });
       actualWindow = this;
     }
     setMenu(value) { this.menu = value; }
@@ -177,7 +183,7 @@ test('main-process widget options and IPC actions preserve the sandbox, saved pi
     getPrimaryDisplay: () => ({ id: 1, workArea: primary }),
     getAllDisplays: () => [{ id: 1, workArea: primary }],
   });
-  const electron = { app, BrowserWindow: FakeWindow, screen,
+  const electron = { app, BrowserWindow: FakeWindow, screen, powerMonitor: new EventEmitter(),
     Menu: { setApplicationMenu: (value) => { assert.equal(value, null); } },
     ipcMain: { handle: (channel, handler) => handlers.set(channel, handler) },
     dialog: { showErrorBox: (_title, message) => { assert.fail(message); } },
@@ -198,7 +204,7 @@ test('main-process widget options and IPC actions preserve the sandbox, saved pi
     return mainRequire(id);
   };
   vm.runInNewContext(await fs.readFile(filename, 'utf8'), {
-    require: fakeRequire, __dirname: path.dirname(filename), URL,
+    require: fakeRequire, __dirname: path.dirname(filename), URL, setTimeout, clearTimeout,
     process: { ...process, env: { ...process.env, POND_DEV_SERVER_URL: undefined } },
   }, { filename, importModuleDynamically: vm.constants.USE_MAIN_CONTEXT_DEFAULT_LOADER });
   for (let attempt = 0; attempt < 100 && !actualWindow?.visible; attempt++) {

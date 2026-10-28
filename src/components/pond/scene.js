@@ -82,7 +82,12 @@ const shorelines = {
   hainan: [[0, 252], [240, 234], [490, 220], [650, 208], [1000, 211]],
   dongbei: [[0, 232], [400, 225], [700, 224], [1000, 223]],
   xibei: [[0, 249], [300, 246], [600, 241], [700, 235]],
-  qingzang: [[0, 184], [400, 185], [700, 185], [1000, 186]]
+  qingzang: [[0, 184], [400, 185], [700, 185], [1000, 186]],
+  taihu: [[0, 210], [400, 210], [1000, 210]],
+  dongting: [[0, 210], [400, 210], [1000, 210]],
+  jialing: [[0, 210], [400, 210], [1000, 210]],
+  baiyangdian: [[0, 210], [400, 210], [1000, 210]],
+  jiaodong: [[0, 210], [400, 210], [1000, 210]],
 };
 const nearBank = {
   default: [[1000, 268], [940, 285], [855, 307], [790, 330], [745, 360], [690, 395], [565, 440]],
@@ -107,6 +112,11 @@ const actorGrounding = {
   dongbei: { offsetY: 0, supportBand: [316, 380] },
   xibei: { offsetY: 0, supportBand: [313, 390] },
   qingzang: { offsetY: 0, supportBand: [316, 400] },
+  taihu: { offsetY: 0, supportBand: [305, 385] },
+  dongting: { offsetY: 0, supportBand: [305, 385] },
+  jialing: { offsetY: 0, supportBand: [305, 385] },
+  baiyangdian: { offsetY: 0, supportBand: [305, 385] },
+  jiaodong: { offsetY: 0, supportBand: [305, 385] },
 };
 const asPath = points => points.map(([x, y], i) => `${i ? "L" : "M"} ${x} ${y}`).join(" ") + " Z";
 export const SCENE_GEOMETRIES = Object.freeze(Object.fromEntries(Object.entries(shorelines).map(([id, far]) => {
@@ -119,7 +129,7 @@ export const SCENE_GEOMETRIES = Object.freeze(Object.fromEntries(Object.entries(
     horizonY: Math.max(...far.map(p => p[1])),
     waterPolygon: polygon,
     waterPath: asPath(polygon),
-    asset: `art/inkwash/${id}-v${id === "dongbei" ? 2 : 1}.jpg`,
+    asset: `art/inkwash/${id}-v${id === "dongbei" ? 2 : 1}.${['taihu','dongting','jialing','baiyangdian','jiaodong'].includes(id) ? 'svg' : 'jpg'}`,
     bobber: BOBBER,
     fisher: FISHER,
     actorOffsetY: actorGrounding[id].offsetY,

@@ -18,9 +18,11 @@ export default function BucketPanel({ game, disabled }) {
       return <div key={fish.uid} className="ink-list-row"><div className="min-w-0"><div className={`text-sm font-medium ${quality.text}`}>{quality.name}·{fish.name}<span className="ml-2 text-xs text-slate-400">{fish.length}cm / {fish.weight}kg</span></div><p className="mt-1 text-xs text-slate-500">{regionById(fish.originRegionId || fish.regionId)?.name} · {quote.expired ? '已过期 · 固定 ¥1' : `${remaining(quote.expiresAtMs - nowMs)}到期 · 行情 ×${quote.multiplier.toFixed(2)}`}</p>{quote.buffApplied && <p className="mt-1 text-xs text-emerald-200">单条出售可享网红加价 · 原价 ¥{quote.marketPrice}</p>}</div><Button size="sm" variant="outline" disabled={disabled} onClick={() => game.sellOne(fish.uid)} className="shrink-0">卖 ¥{quote.price}</Button></div>;
     })}</div>}
     <h3 className="ink-section-title">水底拾物 <span>{items.length}</span></h3>
-    {!items.length ? <p className="py-3 text-center text-xs text-slate-400">偶尔也能钓到破鞋、泡水表或网红秘籍。</p> : <div className="space-y-2">{items.map((item) => {
+    {!items.length ? <p className="py-3 text-center text-xs text-slate-400">水底藏着旧物、鱼饵和下一段旅途的小惊喜。</p> : <div className="space-y-2">{items.map((item) => {
       const manual = item.type === 'influencer_manual', watch = item.type === 'waterlogged_watch', repairable = watch && item.status === 'found';
       const price = manual ? null : itemSalePrice(item);
+      const useLabel = {sealed_bait_box: '打开 · 高级饵1包', scratched_compass: '使用 · 下一张机票九折', ferry_token: '使用 · 下一组主动竿九折'}[item.type];
+      const hasBenefit = item.type === 'scratched_compass' ? !!game.state.discounts.ticket : item.type === 'ferry_token' ? !!game.state.discounts.activeRod : false;
       return <article key={item.uid} className="rounded-xl border border-white/10 p-3" data-item-type={item.type}>
         <h4 className="text-sm font-medium">{itemName(item)}</h4>
         <p className="mt-1 text-xs leading-relaxed text-slate-400">{repairable || !watch ? ITEM_DEFINITIONS[item.type].description : `已试修一次 · ${item.repairOutcome === 'failed' ? '未能修好，可清理残骸' : `鉴定价 ¥${price}`}，结果已保存。`}</p>
@@ -28,6 +30,7 @@ export default function BucketPanel({ game, disabled }) {
         <div className="mt-3 flex flex-wrap gap-2">
           {manual ? <Button size="sm" disabled={disabled || saleBuff?.remaining > 0} onClick={() => game.useItem(item.uid)}>{saleBuff?.remaining > 0 ? '当前状态用尽后可使用' : '使用秘籍 · 前3条 +50%'}</Button> : <Button size="sm" variant="outline" disabled={disabled} onClick={() => game.sellItem(item.uid)}>{price === 0 ? '清理残骸' : '直接出售'} · ¥{price}</Button>}
           {repairable && <Button size="sm" variant="outline" disabled={disabled || game.coins < LOOT_CONFIG.repairCost} onClick={() => game.repairItem(item.uid)}>试修一次 · ¥{LOOT_CONFIG.repairCost}</Button>}
+          {useLabel && <Button size="sm" disabled={disabled || hasBenefit} onClick={() => game.useItem(item.uid)}>{hasBenefit ? '已有同类优惠 · 此件保留' : useLabel}</Button>}
         </div>
       </article>;
     })}</div>}

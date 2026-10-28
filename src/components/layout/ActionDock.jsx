@@ -1,7 +1,8 @@
-import { Coins, Fish, BookOpen, Wrench, Plane, Settings } from "lucide-react";
+import { Coins, Fish, BookOpen, Wrench, Plane, Settings, Timer } from "lucide-react";
 
 // 底部功能坞：默认只露出图标按钮，点击后由 Index 展开对应面板
 export const DOCK_ITEMS = [
+  { id: "focus", label: "专注计划", icon: Timer },
   { id: "bucket", label: "鱼篓", icon: Fish },
   { id: "codex", label: "图鉴", icon: BookOpen },
   { id: "shop", label: "渔具店", icon: Wrench },

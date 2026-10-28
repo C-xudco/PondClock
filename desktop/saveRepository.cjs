@@ -207,6 +207,12 @@ function createSaveRepository({ directory, validate, fileSystem = fs, supportedS
     save: (snapshot) => serial(() => commitInternal(snapshot)),
     // The caller must first confirm an explicit file-dialog import. This never runs on startup.
     importSnapshot: (snapshot) => serial(() => commitInternal(snapshot, { imported: true })),
+    // First-edition upgrade: source bytes have been backed up in the NEW profile.
+    // Never replace an existing profile through automatic legacy discovery.
+    importLegacySnapshot: (snapshot) => serial(async () => {
+      if ((await loadInternal()).snapshot) throw storageError('SAVE_ALREADY_EXISTS', '已有第一版进度，未覆盖。');
+      return commitInternal(snapshot, { imported: true });
+    }),
   });
 }
 

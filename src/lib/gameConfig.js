@@ -1,6 +1,9 @@
+import { FISH_BALANCE, fishBasePrice } from '../config/balance.js';
+import { FOCUS_FISH, FOCUS_REGIONS } from '../data/focusRegions.js';
+
 // ===== 《水塘时钟》配置表（策划调参区）=====
 // 全部数值集中在此：改值即生效，无需改代码。
-// 设计口径：仅限中国，按现实水系/鱼群划 12 个区域；品质、收益、解锁节奏整体收紧，
+// V2：仅限中国，17水域/56鱼；价格与品质校准在config/balance.js。
 // 桌面挂机下约 1~2 分钟一次咬钩，解锁新水域以"数小时"为节奏单位。
 
 // ===== 品质档位 =====
@@ -22,7 +25,7 @@ export const QUALITIES = [
 //   C 名贵：87.5 / 10.2 / 1.9 / 0.4   D 稀有旗舰：86 / 12 / 1.7 / 0.3
 //   E 传说旗舰：86.5 / 11 / 2.1 / 0.4 F 洄游名物：88.5 / 9.5 / 1.7 / 0.3
 // 口径：普通 86-90、稀有 9-13、史诗 1-2.5、传说 0.1-0.4。
-export const FISH = [
+const LEGACY_FISH = [
   // —— 长江中下游 / 淮河 / 黄河的广布种与四大家鱼 ——
   { id: "baitiao", name: "白条", basePrice: 2, len: [8, 18], wt: [0.02, 0.12], qw: { common: 89.5, rare: 9.3, epic: 1, legendary: 0.2 }, habitat: "长江下游干流与湖泊中上层" },
   { id: "jiyu", name: "鲫鱼", basePrice: 4, len: [8, 25], wt: [0.08, 0.6], qw: { common: 89.5, rare: 9.3, epic: 1, legendary: 0.2 }, habitat: "长江、淮河、黄河水系河湖底层" },
@@ -84,6 +87,9 @@ export const FISH = [
   { id: "banli", name: "斑鳢", basePrice: 14, len: [18, 45], wt: [0.25, 2], qw: { common: 88.5, rare: 10, epic: 1.3, legendary: 0.2 }, habitat: "珠江、闽江与湘江水系野生群体记录；宽水系鱼池" },
 ];
 
+// Old IDs/ranges retain identity; fresh quotes use the V2 base-price rule.
+export const FISH = [...LEGACY_FISH.map(fish => ({ ...fish, basePrice: fishBasePrice(fish.basePrice) })), ...FOCUS_FISH];
+
 // ===== 区域表 =====
 // fish 为 [鱼种id, 权重]，权重越大越常见；flightPrice 为机票价（解锁后永久保留）
 // tier 由低到高对应解锁顺序，机票价按 0 → 1000 → 1200 → … → 6000 递增
@@ -136,6 +142,7 @@ export const REGIONS = [
     id: "qingzang", name: "青藏高原湖泊", waterSystem: "青海湖、纳木错、羊卓雍错与雅鲁藏布江水系", tier: 12, flightPrice: 6000,
     fish: [["qinghailuoli", 26], ["lasaliefuyu", 22], ["gaoyuanluoli", 18], ["namucuoluoli", 16], ["xiweigaoyuanqiu", 18]],
   },
+  ...FOCUS_REGIONS,
 ];
 
 // 初始（本地）水域
@@ -153,7 +160,7 @@ export const RODS = [
 // ===== 鱼饵 =====
 export const BAIT_COST = 120;          // 鱼饵单价
 export const BAIT_CATCHES = 5;         // 每份鱼饵可用次数
-export const BAIT_QUALITY_BONUS = 6;   // 鱼饵品质权重加成
+export const BAIT_QUALITY_BONUS = FISH_BALANCE.baitQualityBonus;
 
 // ===== 咬钩节奏 =====
 // 桌面挂机：约 1~2 分钟一次咬钩（随鱼竿 intervalMult 缩短）
@@ -170,7 +177,7 @@ export const JUDGE = {
 };
 
 // 距上次高品质达到 N 条后触发保底加成（rollFish 中放大史诗/传说权重）
-export const PITY_THRESHOLD = 30;
+export const PITY_THRESHOLD = FISH_BALANCE.pityThreshold;
 
 // ===== 省份 → 区域映射 =====
 // 覆盖中国全部 34 个省级行政区，提供中文全称、简称与英文拼音键。

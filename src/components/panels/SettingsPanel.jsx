@@ -50,7 +50,7 @@ export default function SettingsPanel({ game, geo, weather, presentation, deskto
       </div>
       <details className="mt-3 text-xs text-slate-400"><summary className="cursor-pointer">查看联网诊断</summary><p className="my-2 leading-relaxed">可选中下面文字复制给开发者。仅含版本、服务状态和时间，不含IP、位置或存档。</p><textarea aria-label="联网诊断" readOnly value={networkDiagnostics({ geo, weather, enabled: game.settings.onlineEnhancements })} onFocus={(e) => e.target.select()} className="h-40 w-full resize-none rounded-lg bg-slate-950 p-2 font-mono text-[10px] text-slate-300" /></details>
     </div>
-    <div className="rounded-xl bg-white/5 p-3"><p className="font-medium text-emerald-200">本机记忆与备份</p><p className="mt-2 text-xs leading-relaxed text-slate-400">鱼获、金币、图鉴和旅途自动保存。换电脑前可导出存档；导入会替换当前进度，并保留备用存档。</p><div className="mt-3 flex gap-2"><Button size="sm" variant="outline" disabled={game.busy} onClick={game.exportSave}>导出存档</Button><Button size="sm" variant="outline" disabled={game.busy} onClick={game.importSave}>导入存档</Button></div></div>
+    <div className="rounded-xl bg-white/5 p-3"><p className="font-medium text-emerald-200">专注版 · 本机记忆与备份</p><p className="mt-2 text-xs leading-relaxed text-slate-400">鱼获、金币、计划、通票和旅途自动保存。专注版保留独立进度，首次会复制兼容的旧版存档。换电脑前可导出备份；导入会替换当前进度，并保留备用存档。</p><div className="mt-3 flex gap-2"><Button size="sm" variant="outline" disabled={game.busy} onClick={game.exportSave}>导出存档</Button><Button size="sm" variant="outline" disabled={game.busy} onClick={game.importSave}>导入存档</Button></div></div>
     <p className="text-[11px] leading-relaxed text-slate-500">水塘时钟 {GAME_VERSION} · 单机游戏，无账号与线上交易。天气：Open-Meteo；地理坐标：GeoNames。断网仍可玩。</p>
   </div>;
 }

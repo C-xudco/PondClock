@@ -55,6 +55,12 @@
 .theme-inkwash .ink-travel-overlay > div { background: #f4f1e7ef; border-color: var(--ink-border); color: var(--ink); }
 .theme-inkwash .ink-travel-overlay [class*='text-'] { color: var(--ink-soft); }
 .theme-inkwash :focus-visible { outline: 2px solid #52755e; outline-offset: 2px; }
+.theme-inkwash .fishing-controls { background: #f6f3e9f5; border-color: var(--ink-border); }
+.theme-inkwash .fishing-controls button { color: #305c4a; background: #416c5c12; border: 1px solid #416c5c25; }
+.theme-inkwash .fishing-controls button:hover { background: #416c5c22; }
+.theme-inkwash .fishing-controls label { color: var(--ink-soft); }
+.theme-inkwash .fishing-controls input { accent-color: #426a58; }
+.theme-inkwash .focus-panel [role='progressbar'] > div { background: #4e7c66; }
 @media (max-width: 520px) {
   .theme-inkwash .clock-panel { padding: 6px 9px; gap: 5px; }
   .theme-inkwash .clock-time { font-size: 26px; }

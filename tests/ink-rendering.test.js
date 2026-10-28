@@ -11,7 +11,7 @@ import { createPrecipitation, precipitationFrame, PRECIPITATION_BUDGET } from ".
 const require = createRequire(import.meta.url);
 const { auditArt } = require("../scripts/audit-ink-art.cjs");
 
-test("all 12 shipped scenes have their own geometry, valid float water, and excluded banks", () => {
+test("all 17 shipped scenes have their own geometry, valid float water, and excluded banks", () => {
   assert.deepEqual(Object.keys(SCENE_GEOMETRIES).sort(), REGIONS.map((region) => region.id).sort());
   for (const [id, geometry] of Object.entries(SCENE_GEOMETRIES)) {
     assert.equal(geometryForRegion(id), geometry);
@@ -21,7 +21,8 @@ test("all 12 shipped scenes have their own geometry, valid float water, and excl
     }
     assert.ok(geometry.waterPath.startsWith("M "));
     assert.ok(geometry.waterPath.endsWith(" Z"));
-    assert.equal(geometry.asset, "art/inkwash/" + id + "-v" + geometry.assetRevision + ".jpg");
+    const extension = ['taihu', 'dongting', 'jialing', 'baiyangdian', 'jiaodong'].includes(id) ? '.svg' : '.jpg';
+    assert.equal(geometry.asset, "art/inkwash/" + id + "-v" + geometry.assetRevision + extension);
   }
 });
 
@@ -107,7 +108,7 @@ test("seated body and rod share the exact transform, while line end follows the 
 
 test("all production image headers retain dimensions and both character variants have real decoded alpha", () => {
   const report = auditArt();
-  assert.equal(report.assets.length, 14);
+  assert.equal(report.assets.length, 19);
   assert.equal(report.passed, true);
   assert.ok(report.runtimeBytes < 10 * 1024 * 1024);
   const characters = report.assets.filter((a) => a.alpha);

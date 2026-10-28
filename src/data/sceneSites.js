@@ -28,15 +28,25 @@ const definitions = [
     "https://www.fnrrc.com/ziranbaohuqujianjie/10369.html", "published-area-reference"],
   ["qingzang", "namtso-tashi", "纳木错·扎西半岛", "西藏自治区拉萨市当雄县纳木错扎西半岛湖岸", 30.776327, 90.871296,
     commons("纳木错 - panoramio (1).jpg"), "published-camera-gps"],
+  ['taihu', 'taihu-yuantouzhu', '太湖·鼋头渚', '江苏省无锡市滨湖区鼋头渚景区湖岸', 31 + 31 / 60 + 30 / 3600, 120 + 12 / 60 + 52 / 3600,
+    'https://en.ytz.com.cn/dlwz.html', 'published-area-reference'],
+  ['dongting', 'dongting-junshan', '洞庭湖·君山', '湖南省岳阳市君山区洞庭湖湖区', 29.38, 113.10,
+    'https://junshan.gov.cn/32415/32465/39375/39381/content_1193499.html', 'selected-area-reference'],
+  ['jialing', 'jialing-hechuan', '嘉陵江·合川汇流', '重庆市合川区嘉陵江三江汇流河段意象', 29.99, 106.25,
+    'https://www.hc.gov.cn/xxgk/qzfwj/tjxx/tjnj/202210/W020230620389348308761.pdf', 'selected-area-reference'],
+  ['baiyangdian', 'baiyangdian-anxin', '白洋淀·芦苇水巷', '河北省雄安新区安新县白洋淀湖区', 38.94, 115.99,
+    'https://html.rhhz.net/shhydxxb/20211003581.htm', 'selected-area-reference'],
+  ['jiaodong', 'weihai-liugong', '威海湾·刘公岛', '山东省威海市威海湾刘公岛远眺意象', 37.50, 122.18,
+    'https://www.msa.gov.cn/public/documents/document/mdk1/mtey/~edisp/20170703095112360.pdf', 'selected-area-reference'],
 ];
 
 export const SCENE_SITES = Object.freeze(Object.fromEntries(definitions.map(([regionId, slug, place, address, latitude, longitude, url, kind]) => [
   regionId, Object.freeze({ siteId: slug, sceneId: `ink-${regionId}`, regionId, siteRevision: 1,
-    place, address, timeZone: "Asia/Shanghai", verification: "verified",
+    place, address, timeZone: "Asia/Shanghai", verification: kind === 'selected-area-reference' ? 'area-reference' : 'verified',
     weatherLocation: Object.freeze({ latitude, longitude }),
-    coordinateSource: Object.freeze({ url, checkedOn, kind,
-      precision: kind === "published-area-reference" ? "area-reference" : "published-reference-point" }),
-    weatherReferenceLabel: kind === "published-area-reference" ? "景区范围参考天气" : "景点参考天气",
+    coordinateSource: Object.freeze({ url, checkedOn: ['taihu', 'dongting', 'jialing', 'baiyangdian', 'jiaodong'].includes(regionId) ? '2026-10-27' : checkedOn, kind,
+      precision: kind.includes('area-reference') ? "area-reference" : "published-reference-point" }),
+    weatherReferenceLabel: kind.includes('area-reference') ? "景区范围参考天气" : "景点参考天气",
   }),
 ])));
 

@@ -6,6 +6,7 @@ import { LOOT_CONFIG } from '../src/config/lootConfig.js';
 import { FISH, BAIT_CATCHES, REGIONS, RODS } from '../src/lib/gameConfig.js';
 import { catchOutcome, lootKindForSlot, repairForSlot, integerInRange, randomIntegerBelow, watchRepairOutcome, itemSalePrice } from '../src/domain/loot.js';
 import { quoteSaleFish, quoteBucketSale, quoteFish } from '../src/domain/market.js';
+import { openBite, findBite, capture, captureCommand } from './helpers/ordinaryCapture.js';
 import { GameSession } from '../src/application/gameSession.js';
 
 const NOW = Date.UTC(2026, 9, 25, 8);
@@ -13,7 +14,7 @@ const WEEK = 168 * 60 * 60 * 1000;
 let serial = 0;
 const action = (type, fields = {}) => ({ id: `loot-test-${++serial}`, type, ...fields });
 const game = (seed = 1) => ({ ...createNewGame('jiangnan', NOW, { randomSeed: seed }), coins: 20000 });
-const collect = (state, now = NOW, fields = {}) => applyCommand(state, action('CATCH', { expectedCatchSequence: state.catchSequence + 1, ...fields }), now);
+const collect = (state) => capture(openBite(state));
 const itemFixture = (type, sequence, extra = {}) => ({ uid: `item-${type}-${sequence}`, type, catchSequence: sequence,
   caughtAtMs: NOW, originRegionId: 'jiangnan', status: 'found', repairSeed: type === 'waterlogged_watch' ? sequence : null,
   repairAttempted: false, repairOutcome: null, salePrice: null, repairedAtMs: null, repairCommandId: null, ...extra });
@@ -54,7 +55,7 @@ test('repair integer ranges include both endpoints and only top branch can yield
 
 test('named capture streams keep item rates independent of rod/bait/quality and retry IDs', () => {
   const found = new Set();
-  for (let seed = 0; seed < 12000 && found.size < 4; seed++) {
+  for (let seed = 0; seed < 12000 && found.size < Object.keys(LOOT_CONFIG.weights).length; seed++) {
     const base = game(seed);
     const outcome = catchOutcome(base);
     found.add(outcome.kind === 'fish' ? 'fish' : outcome.item.type);
@@ -63,20 +64,15 @@ test('named capture streams keep item rates independent of rod/bait/quality and 
     assert.equal(improved.kind, outcome.kind);
     if (outcome.kind === 'item') assert.deepEqual(improved, outcome);
   }
-  assert.deepEqual(found, new Set(['fish', 'old_shoe', 'waterlogged_watch', 'influencer_manual']));
+  assert.deepEqual(found, new Set(Object.keys(LOOT_CONFIG.weights)));
   const first = collect(game(1)), retry = collect(game(1));
   assert.deepEqual(first.bucket, retry.bucket);
 });
 
 test('nonfish captures are exclusive, leave bait/pity/codex alone and are schema-valid', () => {
-  for (const type of ['old_shoe', 'waterlogged_watch', 'influencer_manual']) {
-    let base;
-    for (let seed = 0; seed < 20000; seed++) {
-      const candidate = { ...game(seed), baitLeft: 3, pityCounter: 8 };
-      if (catchOutcome(candidate).item?.type === type) { base = candidate; break; }
-    }
-    assert.ok(base, type);
-    const next = collect(base);
+  for (const type of Object.keys(LOOT_CONFIG.weights).filter(type => type !== 'fish')) {
+    const base = findBite(seed => ({ ...game(seed), baitLeft: 3, pityCounter: 8 }), type);
+    const next = capture(base);
     assert.equal(next.items.length, 1); assert.equal(next.items[0].type, type);
     assert.equal(next.bucket.length, 0); assert.deepEqual(next.codex, {});
     assert.equal(next.baitCount, base.baitCount); assert.equal(next.baitLeft, 3); assert.equal(next.pityCounter, 8);
@@ -85,17 +81,17 @@ test('nonfish captures are exclusive, leave bait/pity/codex alone and are schema
 });
 
 test('new fish remains local, consumes bait once, and old catch replay fails beyond 128 command IDs', () => {
-  const initial = game(1);
-  const catchCommand = action('CATCH', { expectedCatchSequence: 1 });
-  let next = applyCommand(initial, catchCommand, NOW);
+  const initial = findBite(game, 'fish');
+  const catchCommand = captureCommand(initial);
+  let next = applyCommand(initial, catchCommand, initial.lastEffectiveNowMs);
   assert.equal(next.baitLeft, BAIT_CATCHES - 1);
   const habitat = REGIONS.find((region) => region.id === 'jiangnan').fish.map(([id]) => id);
   assert.ok(habitat.includes(next.bucket[0].speciesId));
   next = applyCommand(next, action('SELL_ALL'), NOW);
   for (let index = 0; index < 140; index++) next = applyCommand(next, action('SETTINGS', { patch: { biteSoundVolume: index % 100 } }), NOW);
   assert.equal(next.recentCommittedCommandIds.includes(catchCommand.id), false);
-  assert.throws(() => applyCommand(next, catchCommand, NOW), /收竿事件/);
-  assert.throws(() => collect(next, NOW, { fish: fishFixture(2) }));
+  assert.throws(() => applyCommand(next, catchCommand, NOW), /鱼讯/);
+  assert.throws(() => applyCommand(next, action('CATCH', { expectedCatchSequence: 2, fish: fishFixture(2) }), NOW), /收竿事件/);
   assert.equal(next.bucket.length, 0);
 });
 
@@ -210,16 +206,18 @@ test('batch uses catchSequence/uid order, rounds per fish and agrees with the sa
   assert.equal(batch.saleBuff.remaining, single.saleBuff.remaining); assert.equal(batch.saleBuff.remaining, 0);
 });
 
-test('two eligible fish worth three each sell for five each rather than a rounded aggregate of nine', () => {
+test('eligible odd-priced fish round the50% buff per fish rather than on the aggregate', () => {
   const specimen = FISH.map((species) => ({ ...fishFixture(2), speciesId: species.id, name: species.name, weight: species.wt[0] }))
-    .find((fish) => quoteFish(fish, 'jiangnan', NOW).price === 3);
-  assert.ok(specimen, 'the existing market must provide a 3-coin fixture');
+    .find((fish) => quoteFish(fish, 'jiangnan', NOW).price % 2 === 1);
+  assert.ok(specimen, 'the current market must provide an odd-coin fixture');
+  const base = quoteFish(specimen, 'jiangnan', NOW).price;
   const state = validateSave({ ...game(), catchSequence: 3,
-    bucket: [{ ...specimen, uid: 'three-a', catchSequence: 2 }, { ...specimen, uid: 'three-b', catchSequence: 3 }],
+    bucket: [{ ...specimen, uid: 'odd-a', catchSequence: 2 }, { ...specimen, uid: 'odd-b', catchSequence: 3 }],
     saleBuff: { version: 1, activationCatchSequence: 1, remaining: 3, sourceItemUid: 'used' } });
-  const quote = quoteBucketSale(state, NOW);
-  assert.deepEqual(quote.quotes.map((fish) => fish.price), [5, 5]); assert.equal(quote.price, 10);
-  assert.equal(applyCommand(state, action('SELL_ALL'), NOW).coins - state.coins, 10);
+  const quote = quoteBucketSale(state, NOW), each = Math.round(base * 1.5);
+  assert.deepEqual(quote.quotes.map((fish) => fish.price), [each, each]);
+  assert.equal(quote.price, each * 2); assert.notEqual(quote.price, Math.round(2 * base * 1.5));
+  assert.equal(applyCommand(state, action('SELL_ALL'), NOW).coins - state.coins, each * 2);
 });
 
 test('buff qualification and charges persist through JSON, region changes, then next activation excludes existing fish', () => {

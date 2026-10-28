@@ -9,6 +9,7 @@ import { validateSave } from "../src/domain/saveSchema.js";
 import { FISH, BAIT_COST } from "../src/lib/gameConfig.js";
 import { quoteFish } from "../src/domain/market.js";
 import { quoteRoute } from "../src/domain/routes.js";
+import { sessionBite } from "./helpers/ordinaryCapture.js";
 
 const NOW = Date.UTC(2026, 9, 20, 8);
 const HOME = "jiangnan";
@@ -239,7 +240,8 @@ test("catch and arrival both persist before notification and can recover lost ac
     assert.equal(repo.disk.revision, state.revision);
     notifications.push(state.lastCommittedCommandId);
   });
-  await session.dispatch({ type: "CATCH", id: "persist-catch", expectedCatchSequence: 1 });
+  const opened = await sessionBite(session, time, 'persist');
+  await session.dispatch({ type: "RESOLVE_BITE", id: "persist-catch", attemptId: opened.fishing.attempt.id, manual: true });
   assert.equal(repo.disk.bucket.length, 1);
   assert.equal(repo.disk.codex[repo.disk.bucket[0].speciesId].catchCount, 1);
   const flight = await session.dispatch({ type: "START_TRAVEL", id: "persist-takeoff", toId: AWAY });
@@ -255,7 +257,7 @@ test("catch and arrival both persist before notification and can recover lost ac
   assert.equal(arrival.currentRegion, AWAY);
   assert.equal(repo.disk.travel, null);
   assert.equal(repo.disk.coins, flight.coins);
-  assert.deepEqual(notifications, ["persist-catch", "persist-takeoff", "persist-arrival"]);
+  assert.deepEqual(notifications, ["persist:start", "persist:bite", "persist-catch", "persist-takeoff", "persist-arrival"]);
 });
 
 test("a rejected or mismatched save acknowledgment is reconciled before success is published", async () => {
@@ -300,9 +302,10 @@ test("actual schema, file repository and session preserve catches and paid fligh
       return result;
     },
   };
-  const { session } = setup(adapter);
+  const { session, time } = setup(adapter);
   await session.load();
-  const caught = await session.dispatch({ type: "CATCH", id: "real-repository-catch", expectedCatchSequence: 1 });
+  const opened = await sessionBite(session, time, 'real-repository');
+  const caught = await session.dispatch({ type: "RESOLVE_BITE", id: "real-repository-catch", attemptId: opened.fishing.attempt.id, manual: true });
   assert.equal(caught.bucket.length, 1);
   loseReply = true;
   const takeoff = { type: "START_TRAVEL", id: "real-repository-flight", toId: AWAY };
@@ -318,10 +321,10 @@ test("actual schema, file repository and session preserve catches and paid fligh
   const arrived = await restarted.dispatch({ type: "ARRIVE", id: "real-repository-arrival" });
   assert.equal(arrived.currentRegion, AWAY);
   assert.equal(arrived.travel, null);
-  assert.equal(arrived.bucket[0].caughtAtMs, NOW);
+  assert.equal(arrived.bucket[0].caughtAtMs, opened.lastEffectiveNowMs);
   assert.equal(arrived.coins, flight.coins);
   assert.equal(arrived.codex[arrived.bucket[0].speciesId].catchCount, 1);
   const stored = (await reopenedFiles.load()).snapshot;
   assert.deepEqual(stored, arrived);
-  assert.equal(stored.revision, 3);
+  assert.equal(stored.revision, 5);
 });

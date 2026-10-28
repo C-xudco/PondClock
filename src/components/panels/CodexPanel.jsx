@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Fish, Trophy } from "lucide-react";
 import { PITY_THRESHOLD, REGIONS } from "@/lib/gameConfig";
 import { qualityById, fishById, regionById, fishRegions } from "@/lib/gameUtils";
+import { FISH_SOURCES } from '@/data/fishSources';
 
 // 图鉴：只记最长/最重/最佳品质三项最佳，按水域筛选，卖鱼不影响记录
 const CodexPanel = ({ codex, pityCounter, currentRegion }) => {
@@ -78,6 +79,7 @@ const CodexPanel = ({ codex, pityCounter, currentRegion }) => {
                 <span className="font-medium">{rec ? sp.name : "？？？"}</span>
                 {rec && <span className={`text-xs ${bq.text}`}>{bq.name}</span>}
               </div>
+              {FISH_SOURCES[sp.id]?.scientificName && <p className="mt-1 text-[10px] italic text-slate-400">{FISH_SOURCES[sp.id].scientificName}</p>}
               {rec ? (
                 <div className="mt-1 space-y-0.5 text-xs text-slate-400">
                   <div>
@@ -87,6 +89,7 @@ const CodexPanel = ({ codex, pityCounter, currentRegion }) => {
                     累计 {rec.catchCount} 条 · 首获 {new Date(rec.firstCaughtAtMs).toLocaleDateString('zh-CN')}
                   </div>
                   <div className="text-slate-500">偏好水域：{habitats || "未知"}</div>
+                  {sp.habitat && <div className="text-slate-500">生境：{sp.habitat}</div>}
                 </div>
               ) : (
                 <div className="mt-1 space-y-0.5 text-xs text-slate-600">

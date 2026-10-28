@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { useState } from 'react';
 import AppearanceShop from './AppearanceShop';
-import { Anvil, Bug } from "lucide-react";
-import { RODS, BAIT_COST, BAIT_CATCHES, BAIT_QUALITY_BONUS, BITE } from "@/lib/gameConfig";
+import { Fish, Bug } from "lucide-react";
+import { BAIT_COST, BAIT_CATCHES } from "@/lib/gameConfig";
+import { quoteActivePass } from '@/config/activeFishing';
 
 // 外观和渔具分区，外观不会影响已有鱼竿等级或钓鱼数值。
-const ShopPanel = ({ game, coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuyBait, disabled }) => {
+const ShopPanel = ({ game, coins, baitCount, baitLeft, onBuyBait, disabled }) => {
   const [section, setSection] = useState('appearance');
-  const rod = RODS[rodLevel];
-  const next = RODS[rodLevel + 1];
-  const rodWait = Math.round(((BITE.minSeconds + BITE.maxSeconds) / 2) * rod.intervalMult);
+  const quote = quoteActivePass(game.state);
+  const remaining = game.activePass?.remaining || 0;
+  const uncompleted = game.state?.fishing?.phase === 'gauge';
   return (
     <div>
       <div className="shop-sections" role="group" aria-label="商店分区">
@@ -19,30 +20,21 @@ const ShopPanel = ({ game, coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuy
       {section === 'appearance' ? <AppearanceShop game={game} disabled={disabled}/> : <div className="mt-3 grid gap-3 md:grid-cols-2">
       <div className="space-y-2 rounded-lg bg-white/5 p-4">
         <h3 className="flex items-center gap-2 font-semibold">
-          <Anvil size={16} className="text-slate-300" />
-          鱼竿升级
+          <Fish size={16} className="text-slate-300" />
+          主动竿 · 十五次探鱼
         </h3>
         <p className="text-sm text-slate-400">
-          当前：{rod.name} · 平均约 {rodWait} 秒一竿
+          剩余 {remaining} 次收鱼机会
         </p>
         <ul className="list-disc space-y-0.5 pl-4 text-xs text-slate-400">
-          <li>判定窗口 +{rod.windowBonus} 秒</li>
-          <li>咬钩间隔 ×{rod.intervalMult}（越短越频繁）</li>
-          <li>品质权重加成 +{rod.qualityBonus}</li>
+          <li>平均2–3次挥杆遇鱼，空挥不扣次数</li>
+          <li>进入收鱼条扣一次，绿区必中，失败也扣次</li>
+          <li>主动鱼品质权重更高，操作结果不保证盈利</li>
         </ul>
-        {next ? (
-          <>
-            <p className="text-xs text-slate-500">
-              升级后平均约 {Math.round(((BITE.minSeconds + BITE.maxSeconds) / 2) * next.intervalMult)} 秒一竿，
-              窗口 +{next.windowBonus} 秒、品质加成 +{next.qualityBonus}
-            </p>
-            <Button size="sm" onClick={onBuyRod} disabled={disabled || coins < next.cost}>
-              升级到「{next.name}」 ¥{next.cost}
-            </Button>
-          </>
-        ) : (
-          <p className="text-sm text-amber-400">已是最高级鱼竿</p>
-        )}
+        {quote.discounted && <p className="text-xs text-amber-200">渡口代币九折 · 原价 ¥{quote.basePrice}，本组 ¥{quote.price}；成交才耗优惠。</p>}
+        <Button size="sm" onClick={game.buyActivePass} disabled={disabled || remaining > 0 || uncompleted || coins < quote.price}>
+          {remaining > 0 || uncompleted ? '用完当前一组后再购买' : `购买15次 · ¥${quote.price}`}
+        </Button>
       </div>
       <div className="space-y-2 rounded-lg bg-white/5 p-4">
         <h3 className="flex items-center gap-2 font-semibold">
@@ -54,12 +46,12 @@ const ShopPanel = ({ game, coins, rodLevel, baitCount, baitLeft, onBuyRod, onBuy
           {baitLeft > 0 && <span className="ml-2 text-emerald-400">使用中（剩 {baitLeft} 次）</span>}
         </p>
         <p className="text-xs text-slate-400">
-          每份可用 {BAIT_CATCHES} 次钓鱼，品质权重 +{BAIT_QUALITY_BONUS}；钓到鱼时自动消耗，
-          用尽后自动启用下一份。
+          每份作用于 {BAIT_CATCHES} 条成功鱼获。开启后使用，物品、失手和主动探鱼不消耗。
         </p>
         <Button size="sm" onClick={onBuyBait} disabled={disabled || coins < BAIT_COST}>
           购买鱼饵 ¥{BAIT_COST}
         </Button>
+        <label className="mt-2 flex items-center justify-between gap-3 text-xs"><span>普通钓鱼使用高级饵</span><input type="checkbox" aria-label="使用高级鱼饵" checked={!!game.state?.fishing?.useBait} disabled={disabled} onChange={event => game.setUseBait(event.target.checked)}/></label>
       </div>
     </div>}
     </div>

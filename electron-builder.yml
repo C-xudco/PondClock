@@ -1,5 +1,6 @@
-appId: cn.pondclock.desktop
-productName: PondClock
+appId: cn.pondclock.focus
+productName: PondClock Focus
+executableName: PondClock
 asar: true
 electronDist: node_modules/electron/dist
 extraResources:
@@ -38,5 +39,5 @@ nsis:
   allowToChangeInstallationDirectory: true
   createDesktopShortcut: always
   createStartMenuShortcut: true
-  shortcutName: 水塘时钟
+  shortcutName: 水塘时钟·专注版
   deleteAppDataOnUninstall: false

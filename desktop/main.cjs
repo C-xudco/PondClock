@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog, session, net, screen } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog, session, net, screen, powerMonitor } = require('electron');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
@@ -8,14 +8,15 @@ const { createGeoNetworkFetch } = require('./environmentNetwork.cjs');
 const { isGeoUrl } = require('../src/config/environmentEndpoints.cjs');
 const { resolveUserDataDirectory, createShutdownController, createStartupGuard, startupLogRecord } = require('./lifecycle.cjs');
 const { createWindowStateRepository, resolveWindowPlacement } = require('./windowState.cjs');
+const { EDITION, importLegacyCopy } = require('./edition.cjs');
 
-const APP_ID = 'cn.pondclock.desktop';
-app.setName('PondClock');
+const APP_ID = EDITION.appId;
+app.setName('PondClock Focus');
 // Keep this stable across package versions, architecture and install locations.
 // An explicit, fully qualified CLI profile also permits isolated verification of
 // the real packaged EXE. The renderer has no API to select a filesystem path.
 let startupPathError;
-let userDataDirectory = path.join(app.getPath('appData'), 'PondClock');
+let userDataDirectory = path.join(app.getPath('appData'), EDITION.profile);
 try {
   userDataDirectory = resolveUserDataDirectory(app.commandLine.getSwitchValue('user-data-dir'), userDataDirectory);
 } catch (error) { startupPathError = error; }
@@ -31,6 +32,9 @@ let startupFailurePending = false;
 let windowStateRepository;
 let sizePreset = 'compact';
 let defaultAlwaysOnTop = false;
+let prepareQuitPromise;
+let shutdownAcknowledge;
+let legacyImportNotice;
 const startupLogPath = path.join(userDataDirectory, 'logs', 'startup.log');
 
 async function writeStartupLog(event, error) {
@@ -68,7 +72,15 @@ function applyWindowPlacement(options = {}) {
   rememberWindowBounds();
 }
 
-function requestApplicationQuit(options) {
+async function requestApplicationQuit(options) {
+  if (!prepareQuitPromise && !options?.code && window && !window.isDestroyed()) {
+    prepareQuitPromise = new Promise((resolve) => {
+      const timeout = setTimeout(() => { shutdownAcknowledge = null; resolve(); }, 5000);
+      shutdownAcknowledge = () => { clearTimeout(timeout); shutdownAcknowledge = null; resolve(); };
+      window.webContents.send('pond:lifecycle', { type: 'shutdown' });
+    });
+  }
+  if (prepareQuitPromise) await prepareQuitPromise;
   if (!shutdown.isQuitting()) {
     rememberWindowBounds();
     if (windowStateRepository) void shutdown.runWrite(() => windowStateRepository.flush()).catch(() => {});
@@ -114,7 +126,12 @@ function windowInfo() {
 
 function registerHandlers() {
   const fetchGeoNetwork = createGeoNetworkFetch(session.fromPartition('pondclock-location', { cache: false }));
-  handle('pond:load-save', () => repository.load());
+  handle('pond:load-save', async () => {
+    const loaded = await repository.load();
+    if (legacyImportNotice) loaded.recovery = { ...loaded.recovery, recovered: true, message: legacyImportNotice };
+    return loaded;
+  });
+  handle('pond:lifecycle-ack', (type) => { if (type === 'shutdown') shutdownAcknowledge?.(); return true; });
   handle('pond:save-game', (snapshot) => shutdown.runWrite(() => repository.save(snapshot)));
   handle('pond:export-save', async (input) => {
     const snapshot = validateSave(input);
@@ -148,7 +165,7 @@ function registerHandlers() {
     return { canceled: false, ...(await shutdown.runWrite(() => repository.importSnapshot(snapshot))) };
   });
   handle('pond:app-info', () => ({
-    name: 'PondClock', displayName: '水塘时钟', version: app.getVersion(),
+    name: 'PondClock Focus', displayName: '水塘时钟 · 专注版', editionId: EDITION.id, version: app.getVersion(),
     platform: process.platform, packaged: app.isPackaged, ...windowInfo(),
     execPath: process.execPath, userData: app.getPath('userData'),
     versions: { electron: process.versions.electron, chrome: process.versions.chrome, node: process.versions.node },
@@ -195,7 +212,7 @@ async function createWindow() {
   window = new BrowserWindow({
     ...placement.bounds, frame: false, thickFrame: false, hasShadow: false, transparent: true, backgroundColor: '#00000000',
     resizable: false, maximizable: false, fullscreenable: false, skipTaskbar: false, autoHideMenuBar: true,
-    title: '水塘时钟', show: false, alwaysOnTop: initialAlwaysOnTop,
+    title: '水塘时钟 · 专注版', show: false, alwaysOnTop: initialAlwaysOnTop,
     icon: app.isPackaged
       ? path.join(process.resourcesPath, 'icon.ico')
       : path.join(__dirname, 'assets', 'icon.ico'),
@@ -271,6 +288,16 @@ if (!app.requestSingleInstanceLock()) {
     defaultAlwaysOnTop = storageConfig.DEFAULT_SETTINGS?.alwaysOnTop === true;
     repository = createSaveRepository({ directory: path.join(app.getPath('userData'), 'saves'), validate: validateSave,
       supportedSchemaVersion: storageConfig.STORAGE_CONFIG.schemaVersion });
+    if (!app.commandLine.getSwitchValue('user-data-dir')) {
+      try {
+        const result = await importLegacyCopy({ legacyDirectory: path.join(app.getPath('appData'), 'PondClock', 'saves'),
+          newDirectory: path.join(app.getPath('userData'), 'saves'), repository, validate: validateSave });
+        if (result.imported) legacyImportNotice = '已复制旧版进度到专注版，旧目录与原件保持不变。';
+      } catch (error) { legacyImportNotice = error.message; }
+    }
+    for (const type of ['suspend', 'resume']) powerMonitor.on(type, () => {
+      if (window && !window.isDestroyed()) window.webContents.send('pond:lifecycle', { type });
+    });
     windowStateRepository = createWindowStateRepository({ directory: app.getPath('userData'),
       onError: (error) => writeStartupLog('WINDOW_STATE_SAVE_FAILED', error) });
     for (const event of ['display-added', 'display-removed', 'display-metrics-changed']) {

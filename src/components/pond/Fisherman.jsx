@@ -3,6 +3,7 @@ import { FISHER, ROD_BITE_DEG, PERSON_BITE_DEG, fisherTipAt, bobberTopAt, actorP
 import { useTween } from "./useTween";
 import { CHARACTER_VISUALS, ROD_VISUALS } from "../../data/appearanceVisuals";
 import { defaultCharacterVariant } from "../../config/defaultCharacter";
+import ClassicFisherman from './ClassicFisherman';
 
 const pointOnRod = (start, end, amount) => {
   const inverse = 1 - amount;
@@ -14,7 +15,7 @@ const DefaultCharacter = ({ art, rain, snow, p }) => {
   const rawId = useId();
   const uid = `default-character-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
   const image = art.render;
-  return <g data-character-art="minimal" data-default-character-variant={rain ? 'rain' : 'clear'}
+  return <g data-character-art="whitecape" data-default-character-variant={rain ? 'rain' : 'clear'}
     data-default-character-revision="1" data-default-grip-x={art.grip.x} data-default-grip-y={art.grip.y}>
     <ellipse cx={art.support.x} cy={art.support.y} rx="18" ry="3.5" fill={p.ink} opacity=".3"/>
     <image id={`${uid}-body`} href={`${import.meta.env.BASE_URL}${art.asset}`} x={image.x} y={image.y} width={image.width} height={image.height}
@@ -84,7 +85,8 @@ const Fisherman = ({
   const snowTarget = visualState.fisherman.snowTarget;
   const snow = useTween(snowTarget, snowTarget ? 2600 : 10000);
   const rain = visualState.fisherman.rainGear;
-  const defaultArt = character === 'minimal' ? defaultCharacterVariant(rain) : null;
+  const defaultArt = character === 'whitecape' ? defaultCharacterVariant(rain) : null;
+  if (character === 'minimal') return <ClassicFisherman p={p} pose={pose} geometry={geometry} rain={rain} snow={snow} rod={rod}/>;
   const grip = defaultArt?.grip || FISHER.grip;
   const placement = actorPlacementFor(geometry);
   const tip = fisherTipAt(pose, geometry, grip),

@@ -14,6 +14,7 @@ import { VIEW, BOBBER, geometryForAppearance, actorPlacementFor } from "./scene"
 import { resolveAppearanceVisuals } from "../../data/appearanceVisuals";
 import { useTween } from "./useTween";
 import { useVisualClock } from "./useVisualClock";
+import RegionalLandmark from './RegionalLandmark';
 
 const SOURCE_LABEL = { online: "实时天气", cached: "缓存天气", simulated: "离线模拟", manual: "手动设置" };
 const LEGACY_CODE = { 晴: 0, 多云: 2, 阴: 3, 小雨: 61, 雨: 63, 雪: 71, 小雪: 71 };
@@ -45,7 +46,7 @@ const Pond = ({
   status, windowLeft = 0, weather, hour = 12, speech = null,
   onCatch, onPoke = null, regionId = "jiangnan",
   sceneDefinition, sceneSite, visualState, weatherEntry, entry,
-  appearance, weatherPresentation,
+  appearance, weatherPresentation, actorPose = 0,
 }) => {
   const rawId = useId();
   const uid = `ink-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
@@ -68,7 +69,7 @@ const Pond = ({
   }, [weather, hour, sceneSite?.timeZone]);
   const visual = visualState || fallback;
   const biting = status === "bite";
-  const pose = useTween(biting, 380);
+  const pose = useTween(biting ? 1 : actorPose, 260);
   const palette = useMemo(
     () => getPalette(visual.daylight.isDay === false ? "night" : "day",
       visual.precipitation.kind === 'rain' ? '小雨' : visual.precipitation.kind === 'snow' ? '雪'
@@ -113,6 +114,7 @@ const Pond = ({
         </> : <g data-scene-art={`minimal-${actualRegion}`}>
           <MinimalSky p={palette} sun={sun} visualState={visual} uid={uid}/>
           <MinimalWater p={palette} sun={sun} visualState={visual} uid={uid}/>
+          <RegionalLandmark regionId={actualRegion} p={palette}/>
         </g>}
         <WeatherLayer key={geometry.id} visualState={visual} geometry={geometry} uid={uid} timeMs={timeMs} reducedMotion={reducedMotion}/>
         <Fisherman key={`${geometry.id}:${equipped.character}`} p={palette} pose={pose} visualState={visual} geometry={geometry} character={equipped.character} rod={equipped.rod}/>
@@ -130,7 +132,7 @@ const Pond = ({
         </div>
       </div>
       {speech ? <SpeechBubble speech={speech} placement={actorPlacement} sceneStyle={equipped.scene}/> : null}
-      {!biting && <div className="pond-label pointer-events-none absolute left-[2.5%] top-[4%] rounded-full px-2 py-1 text-[10px] tracking-widest">静候鱼汛</div>}
+      {!biting && <div className="pond-label pointer-events-none absolute left-[2.5%] top-[4%] rounded-full px-2 py-1 text-[10px] tracking-widest">{status === 'stopped' ? '暂歇片刻' : status === 'casting' ? '挥竿探鱼' : status === 'active' ? '凝神收竿' : '静候鱼汛'}</div>}
 
       {!biting && onPoke ? <>
         <button type="button" onClick={onPoke} aria-label="点击浮漂" title="轻轻点一下浮漂"

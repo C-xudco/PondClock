@@ -27,13 +27,14 @@ function payload(loc = location, extra = {}) {
 }
 const snapshot = (loc = location, extra = {}) => parseWeatherSnapshot(payload(loc, extra), loc, NOW);
 
-test("12 scene sites preserve IDs, each has its own documented weather point and immutable route-independent scene", () => {
+test("17 scene sites preserve IDs, each has its own documented weather point and immutable route-independent scene", () => {
   assert.deepEqual(Object.keys(SCENE_SITES).sort(), REGIONS.map((region) => region.id).sort());
   for (const [regionId, site] of Object.entries(SCENE_SITES)) {
     assert.equal(site.regionId, regionId);
     assert.equal(SCENE_DEFINITIONS[regionId].siteId, site.siteId);
     assert.match(site.coordinateSource.url, /^https:\/\//);
-    assert.equal(site.coordinateSource.checkedOn, "2026-10-25");
+    assert.equal(site.coordinateSource.checkedOn, ['taihu', 'dongting', 'jialing', 'baiyangdian', 'jiaodong'].includes(regionId)
+      ? '2026-10-27' : '2026-10-25');
     assert.equal(site.timeZone, "Asia/Shanghai");
     assert.ok(Number.isFinite(site.weatherLocation.latitude));
   }
@@ -196,7 +197,7 @@ test("HTTP429 cools every point, preserves longer RetryAfter across remount, and
   scheduler.dispose();
 });
 
-test("header +12 scene prefetch is nonblocking, cached, view-only and follows separate real/game targets", async () => {
+test("header +17 scene prefetch is nonblocking, cached, view-only and follows separate real/game targets", async () => {
   let calls = 0;
   const store = createRegionWeatherStore({ now: () => NOW, storage: memory(),
     schedulerOptions: { autoWake: false }, config: { ...SERVICES_CONFIG.weather, startIntervalMs: 0 },
@@ -205,14 +206,14 @@ test("header +12 scene prefetch is nonblocking, cached, view-only and follows se
   assert.equal(calls, 0);
   store.setEnabled(true);
   await store.prefetchAll();
-  assert.equal(calls, 13);
+  assert.equal(calls, REGIONS.length + 1);
   assert.equal(store.getRegionEntry("dongbei").snapshot.weatherCode, 71);
   assert.equal(store.getHeaderEntry().snapshot.weatherCode, 61);
   const headerBefore = store.getHeaderEntry().targetKey;
   store.setCurrentRegion("dongbei"); store.setViewerRegion("hainan");
   await store.prefetchAll("geo-start");
   assert.equal(store.getHeaderEntry().targetKey, headerBefore);
-  assert.equal(calls, 13);
+  assert.equal(calls, REGIONS.length + 1);
   assert.equal(store.getSnapshot().entries[store.getRegionEntry("hainan").targetKey], store.getRegionEntry("hainan"));
   store.dispose();
 });
