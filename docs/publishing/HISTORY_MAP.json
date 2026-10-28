@@ -1,0 +1,168 @@
+{
+  "preparedAt": "2026-10-28T14:19:16.541Z",
+  "sourceCommit": "7a2a7d3a672ab5703e32e86a31929ba5ac958412",
+  "sourceUnchanged": true,
+  "excludedPaths": [
+    "docs/inkwash/references/landscape-reference.jpg",
+    "docs/inkwash/references/fisherman-reference.jpg",
+    "docs/default-character/references/scene-reference.png",
+    "docs/default-character/references/character-reference.png"
+  ],
+  "normalizedTextBlobs": [
+    {
+      "blob": "efad25362404c67d0294d2c7cf3134d3fb6a0248",
+      "file": "tests/lifecycle.test.js"
+    },
+    {
+      "blob": "5a2ba685751e870029a344eed87d94570fe68abd",
+      "file": "docs/inkwash/README.md"
+    },
+    {
+      "blob": "ed27cc1887f3f16aea63ff0e2b770d04c68e82c4",
+      "file": "docs/inkwash/roles/art-direction/README.md"
+    },
+    {
+      "blob": "81e88c0b950e97740bba5126829a2be3a9f3cd12",
+      "file": "docs/inkwash/roles/requirements/README.md"
+    },
+    {
+      "blob": "7867e2da0c2d52c754bbb83a98fbbf5b75e57939",
+      "file": "docs/inkwash/README.md"
+    },
+    {
+      "blob": "c1b3a0bfb8e8b49eec4d15aa16b65149c5fac73c",
+      "file": "docs/inkwash/roles/rendering/generation-prompts.json"
+    },
+    {
+      "blob": "7dfe456cc0ac3d7c59b6a2eb33a2f3df34d8de4b",
+      "file": "docs/default-character/README.md"
+    },
+    {
+      "blob": "272c6afe7c33dc89b760c96c68e1496831d919ff",
+      "file": "docs/development/FILE_MAP.md"
+    }
+  ],
+  "explanation": "Source SHAs are provenance identifiers only. Public commits have filtered trees and differ; two short tag aliases preserve historical tests. Original local history is unchanged.",
+  "commits": [
+    {
+      "source": "6f8a037d55cdba10d2d332974973d29717276a23",
+      "date": "2026-10-20T19:59:02+08:00",
+      "summary": "chore: preserve original pond clock prototype",
+      "public": "9db4d9b8f3af738bda480f18a7d02c91886c1a45"
+    },
+    {
+      "source": "e0c933e834eae70681a8c09c3872c5fefe9d57e7",
+      "date": "2026-10-20T20:40:04+08:00",
+      "summary": "feat: add offline saves, regional travel and Windows installer",
+      "public": "0ea520dba356cc5cf99557dd189e4fd5cae842af"
+    },
+    {
+      "source": "477a6aed24a85704edbcf3057122e3c4c0e9f92d",
+      "date": "2026-10-21T14:46:11+08:00",
+      "summary": "fix: repair installer process detection and application shutdown",
+      "public": "62c226efe1ecebc206123d37b27f765b41f38d37"
+    },
+    {
+      "source": "83ccaf0eb8f2d82386edc62b1100880246899730",
+      "date": "2026-10-21T15:57:21+08:00",
+      "summary": "feat: add floating desktop widget and responsive IP refresh",
+      "public": "10bbf551908d09c83192c35e1bb5079924f4b137"
+    },
+    {
+      "source": "6685447a1272c08e078d8ee9b9a0af7ac5d7da7f",
+      "date": "2026-10-21T16:35:38+08:00",
+      "summary": "fix: recover IP location and weather across provider and network failures",
+      "public": "b68a6b5d08db3805055c04e69ea0ab9e7790550e"
+    },
+    {
+      "source": "4d43e2c3b1de00818f2b58785268fd785a753baf",
+      "date": "2026-10-23T21:44:13+08:00",
+      "summary": "docs: define ink-wash redesign requirements and agent handoffs",
+      "public": "ec4bd587fcf80ac3ba26272b555b4cebab054502"
+    },
+    {
+      "source": "a270e841d0ecd7df7082c0af57d45f6ec94c26bf",
+      "date": "2026-10-24T22:11:55+08:00",
+      "summary": "docs: add team intake and next-iteration gameplay proposals",
+      "public": "92700ead06691d550adbed5b75b9bc4a6f903282"
+    },
+    {
+      "source": "91cc42946711c0d4dc5ed441c41fb041d3b03710",
+      "date": "2026-10-25T02:43:09+08:00",
+      "summary": "feat: deliver ink-wash fishing scenes and offline item gameplay",
+      "public": "bc01c9a48e8af86eb19916528f65f6efb7a97a01"
+    },
+    {
+      "source": "e4d87f344a8f07d42b61b878ce9dc90e69ae03c4",
+      "date": "2026-10-25T02:43:51+08:00",
+      "summary": "art: track packaged regional ink-wash backgrounds and fisherman sprites",
+      "public": "4db2d04fe6a4a2a6194b13c8c630f32c55dd53c1"
+    },
+    {
+      "source": "96fd23205308890c1d648c633eac503c50df5a34",
+      "date": "2026-10-25T16:07:00+08:00",
+      "summary": "feat: add purchasable visual packs and selectable scene weather",
+      "public": "c479294275c32be779785eadfcdc707e3e2d5d93"
+    },
+    {
+      "source": "1f1a7c73793ce489756da9b7871d93118a28dd75",
+      "date": "2026-10-26T01:06:56+08:00",
+      "summary": "docs: propose classic character return and small loot expansion for approval",
+      "public": "1b065cb1dfebcc083a06287ac2b5e8475cfb051d"
+    },
+    {
+      "source": "6d73636b87a5872cc746972bc95ea0ac07ad0fd0",
+      "date": "2026-10-27T14:08:21+08:00",
+      "summary": "docs: plan first edition focus and fishing split for review",
+      "public": "1c73331d9ed7b4ada790a5229395fde2ff8481ab"
+    },
+    {
+      "source": "dc421428bb603c180c7c73c89255d6be5b3272b3",
+      "date": "2026-10-27T17:25:19+08:00",
+      "summary": "docs: revise first edition loot rates and active rod coupon",
+      "public": "d1f17d3d353e7a061a013da1a9bb6494909bfe45"
+    },
+    {
+      "source": "874cdac6de703a1b47260b872e1fa607313c6328",
+      "date": "2026-10-27T17:31:07+08:00",
+      "summary": "chore: preserve pre-v2 working candidate and planning baseline",
+      "public": "262c61613537b5dd90abbca7c221ff89d1435c97"
+    },
+    {
+      "source": "620de14557bcc58ad605ab7db91a0a20fd2a475f",
+      "date": "2026-10-28T13:58:16+08:00",
+      "summary": "feat: implement first-focus edition v2.0.0",
+      "public": "b134ea89532a0e29e7d04440e814370c8aa96b08"
+    },
+    {
+      "source": "3709489a881fd41fc833c4a714502c06f4a39b28",
+      "date": "2026-10-28T14:21:37+08:00",
+      "summary": "docs: record v2 portable delivery and actual acceptance",
+      "public": "39c68e21eaba5f2329fcac9e1ee699b2be59f286"
+    },
+    {
+      "source": "54e80caccce46d32ac80b813caf60218a3f3bdfa",
+      "date": "2026-10-28T14:22:10+08:00",
+      "summary": "test: preserve final native preview check",
+      "public": "23f0c5ec24897d2d9e95499e219db3aa2f46852a"
+    },
+    {
+      "source": "34de0e678d32fdef99e74c616c3ca8c211501095",
+      "date": "2026-10-28T17:22:59+08:00",
+      "summary": "fix: fill scene backgrounds across widget sizes (v2.0.1)",
+      "public": "47aebd30b32a38ccd134c3b5e6de058cd2069cd8"
+    },
+    {
+      "source": "be097246a8bfaf6dd1761e61a29406a456339419",
+      "date": "2026-10-28T22:13:17+08:00",
+      "summary": "docs: prepare noncommercial GitHub edition and developer guides",
+      "public": "e5685f748eaeb77f61f67a800fa2b5facbbd1dd2"
+    },
+    {
+      "source": "7a2a7d3a672ab5703e32e86a31929ba5ac958412",
+      "date": "2026-10-28T22:19:08+08:00",
+      "summary": "fix: bound publication filtering for long historical lines",
+      "public": "c0b74a9585f979069dce091ad15480990707f461"
+    }
+  ]
+}
