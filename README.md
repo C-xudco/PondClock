@@ -12,7 +12,7 @@ Windows x64 桌面钓鱼挂件：无边框、可拖动、可置顶，完整资�
 
 ## 下载与运行
 
-先退出旧版，完整解压 `水塘时钟-V2.0.1-免安装版.zip`（开发输出 `PondClock-2.0.1-x64.zip`）到新文件夹，再运行 **PondClock.exe**；resources、locales 和 DLL 都要保留。已核对的解压副本位于 `X:/game/PondClock-2.0.1`。进度继续读取原专注版PondClock-Focus目录。本次不生成安装器。使用者不需要 Node、pnpm、WebView2 或开发服务器。
+先退出旧版，完整解压下载的 `PondClock-2.0.1-x64.zip` 到任意可写的新文件夹，再运行 **PondClock.exe**；resources、locales 和 DLL 都要保留。进度继续读取原专注版PondClock-Focus目录。本次不生成安装器。使用者不需要 Node、pnpm、WebView2 或开发服务器。GitHub分发包附有LICENSE、版权和第三方说明，游戏运行文件与原V2.0.1包一致。
 
 拖顶部时钟条移动；展开按钮切换420×350 / 640×490；图钉置顶，“—”最小化，“×”保存后退出。设置里的“移回屏幕”可找回窗口。功能面板内滚动，Esc收起。
 

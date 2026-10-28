@@ -222,7 +222,9 @@
 | [docs/next-iteration/roles/transactions/README.md](<../../docs/next-iteration/roles/transactions/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/DISTRIBUTION_CHECK.json](<../../docs/publishing/DISTRIBUTION_CHECK.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/HISTORY_MAP.json](<../../docs/publishing/HISTORY_MAP.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
+| [docs/publishing/LOCAL_CHECK.json](<../../docs/publishing/LOCAL_CHECK.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/README.md](<../../docs/publishing/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
+| [docs/publishing/RELEASE_NOTES.md](<../../docs/publishing/RELEASE_NOTES.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/roles/architecture/README.md](<../../docs/publishing/roles/architecture/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/roles/content/README.md](<../../docs/publishing/roles/content/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/roles/review/README.md](<../../docs/publishing/roles/review/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
@@ -313,6 +315,7 @@
 | [scripts/check-focus-installer.ps1](<../../scripts/check-focus-installer.ps1>) | 环境相关验收工具；先读版本、档案路径和启动条件 | 部分为历史脚本；安装成功未保证 |
 | [scripts/check-installer.ps1](<../../scripts/check-installer.ps1>) | 环境相关验收工具；先读版本、档案路径和启动条件 | 部分为历史脚本；安装成功未保证 |
 | [scripts/check-iteration-docs.cjs](<../../scripts/check-iteration-docs.cjs>) | 构建/导出/审计/发布工具；读输出目录后运行 | 维护工具，不参与游戏资产规则 |
+| [scripts/check-publication.cjs](<../../scripts/check-publication.cjs>) | 构建/导出/审计/发布工具；读输出目录后运行 | 维护工具，不参与游戏资产规则 |
 | [scripts/check-scene-cover.cjs](<../../scripts/check-scene-cover.cjs>) | 构建/导出/审计/发布工具；读输出目录后运行 | 维护工具，不参与游戏资产规则 |
 | [scripts/export-balance.mjs](<../../scripts/export-balance.mjs>) | 构建/导出/审计/发布工具；读输出目录后运行 | 维护工具，不参与游戏资产规则 |
 | [scripts/generate-bite-audio.cjs](<../../scripts/generate-bite-audio.cjs>) | 构建/导出/审计/发布工具；读输出目录后运行 | 维护工具，不参与游戏资产规则 |

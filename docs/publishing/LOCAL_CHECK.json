@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-10-28T14:26:10.989Z",
+  "passed": true,
+  "scope": "Every reachable public Git object; pattern scan is not a proof that no sensitive data exists",
+  "sourceHistoryMutated": false,
+  "excludedPaths": [
+    "docs/inkwash/references/landscape-reference.jpg",
+    "docs/inkwash/references/fisherman-reference.jpg",
+    "docs/default-character/references/scene-reference.png",
+    "docs/default-character/references/character-reference.png"
+  ],
+  "objects": 1076,
+  "blobs": 772,
+  "textBlobs": 736,
+  "publicCommits": 22,
+  "head": "d8280b522255b6fd4ae1677103f6cc871d29980c",
+  "originalAliasTags": [
+    "a270e84",
+    "96fd232",
+    "874cdac"
+  ],
+  "tests": {
+    "total": 329,
+    "passed": 328,
+    "failed": 0,
+    "skipped": 1
+  },
+  "testScope": "Isolated public source mirror, shared existing dependencies via local junction; default installer test skipped. Earlier missing-dependency and CRLF/hash failures retained under test-results and corrected.",
+  "lint": true,
+  "productionBuild": true,
+  "productionJs": "index-DGKAvx61.js",
+  "limitations": [
+    "Does not newly certify installer/native EXE/live IP weather/second PC or legal ownership.",
+    "Only high-confidence secret/path patterns scanned; third-party legal notices are not a title guarantee."
+  ]
+}
