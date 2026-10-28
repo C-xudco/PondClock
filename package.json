@@ -4,6 +4,7 @@
   "version": "2.0.1",
   "description": "水塘时钟：可离线保存的桌面钓鱼游戏",
   "author": "PondClock",
+  "license": "SEE LICENSE IN LICENSE",
   "main": "desktop/main.cjs",
   "packageManager": "pnpm@11.25.0",
   "type": "module",

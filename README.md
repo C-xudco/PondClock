@@ -1,6 +1,10 @@
 # 水塘时钟 · 专注版 V2.0.1
 
-**2026-10-28 场景修正版：** [V2.0.1免安装ZIP](X:/game/水塘时钟-V2.0.1-免安装版.zip)（约164.7MiB），修复场景两侧透明留白；背景、天气、人物与点击区等比铺满，低岸人物和对白同步适配。65项包内资源与解压后的76个运行文件已逐一核对。[本轮记录与检查边界](docs/v2.0.1/README.md)。
+**2026-10-28 场景修正版：** [下载V2.0.1免安装ZIP](https://github.com/C-xudco/PondClock/releases/tag/v2.0.1)（约165MB），修复场景两侧透明留白；背景、天气、人物与点击区等比铺满，低岸人物和对白同步适配。65项包内资源与原包76个运行文件已逐一核对；GitHub分发包另附许可/版权/第三方说明。[检查边界](docs/v2.0.1/README.md)。
+
+允许学习和非商业二次创作；商业使用需另行书面授权。见 [LICENSE](LICENSE)、[版权与来源](COPYRIGHT.md)、[第三方说明](THIRD_PARTY_NOTICES.md)。软件著作权材料说明不等于官方登记证书。
+
+**开发者入口：** [逐文件职责/开发状态](docs/development/FILE_MAP.md) · [改爆率/鱼类/物品/图鉴](docs/development/CONTENT_AND_BALANCE.md) · [架构](docs/development/ARCHITECTURE.md) · [Debug](docs/development/DEBUGGING.md) · [开发全过程](docs/development/HISTORY.md) · [二创/贡献](CONTRIBUTING.md)。
 
 Windows x64 桌面钓鱼挂件：无边框、可拖动、可置顶，完整资源内置，断网可玩，进度自动保存在本机。本轮为第一版“专注与钓鱼”；第二版尚未定义。
 
