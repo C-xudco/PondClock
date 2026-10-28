@@ -35,7 +35,10 @@ for(const [sha,bytes] of objects) {
     text=text.replace(/[A-Za-z]:[\\/]+Users[\\/]+[^\\/\s"'<>]+/gi,'C:/Users/PUBLIC-USER');
     text=text.replace(/wxid_[A-Za-z0-9_]+/g,'WECHAT-USER-REMOVED');
     text=text.replace(/[A-Za-z]:[\\/]+doucument[\\/]+WeChat[^\r\n"'`)]*/gi,'LOCAL-REFERENCE-PATH-REMOVED');
-    text=text.replace(/.*\|.*\[docs\/(?:inkwash|default-character)\/references\/[^\]]+\.(?:png|jpg)\].*\n/g,'');
+    // Test membership line by line; an unanchored .* pattern is quadratic on
+    // historical minified files and must not be run over the whole source blob.
+    text=text.split('\n').filter(line=>!(line.includes('|') && line.includes('[docs/')
+      && [...excluded].some(file=>line.includes('['+file+']')))).join('\n');
     text=text.replace(/!?\[[^\]]*\]\([^)]*(?:landscape-reference\.jpg|fisherman-reference\.jpg|scene-reference\.png|character-reference\.png)[^)]*\)/g,'（参考原图不包含在公开镜像，见版权说明）');
     if(text!==bytes.toString('utf8')) changed.push({blob:sha,file});
     safe=Buffer.from(text);
@@ -44,6 +47,7 @@ for(const [sha,bytes] of objects) {
 }
 const map=[]; const commitMarks=new Map();
 for(const commit of commits) {
+  console.log('Sanitizing source commit '+commit.slice(0,7));
   const fields=git(['show','-s','--format=%an%x00%at%x00%aI%x00%B%x00%P',commit]).toString().trimEnd().split('\0');
   const [originalAuthor,time,iso,message,parentText]=fields; const parents=(parentText||'').split(' ').filter(Boolean);
   const author=['Codex','NoCode'].includes(originalAuthor)?originalAuthor:'C-xudco';

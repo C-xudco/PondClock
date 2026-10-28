@@ -1,0 +1,14 @@
+{
+  "version": "2.0.1",
+  "file": "PondClock-2.0.1-x64.zip",
+  "bytes": 172694943,
+  "sha256": "5b9ece8ecdd845c5460cdcaa6954f5f89f8102ef550397ae47ee3afbb7b1a749",
+  "verifiedRuntimeFiles": 76,
+  "totalFiles": 79,
+  "addedNotices": [
+    "LICENSE",
+    "COPYRIGHT.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "unchangedGamePayload": true
+}
