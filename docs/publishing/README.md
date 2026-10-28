@@ -8,7 +8,7 @@
 
 公开镜像保留源提交的先后、日期、说明和父子关系，但过滤四张无再分发许可的用户参考原图，规范化个人目录和微信标识，并使用公开noreply邮箱。不会把本机整个工作目录、node_modules、真实存档、测试档案或Git凭据上传。
 
-源仓库与原始历史保留。`scripts/prepare-publication.cjs`在新的隔离目录创建镜像，不对源历史做force rewrite。`HISTORY_MAP.json`记录来源SHA与公开SHA的映射；原SHA只作追溯，不能当公开原对象仍可访问。96fd232和874cdac短标签指向过滤后的相应提交，用于现有历史回归测试；它们不等于原始提交哈希。
+源仓库与原始历史保留。`scripts/prepare-publication.cjs`在新的隔离目录创建镜像，不对源历史做force rewrite。`HISTORY_MAP.json`记录来源SHA与公开SHA的映射；原SHA只作追溯，不能当公开原对象仍可访问。a270e84、96fd232和874cdac短标签指向过滤后的相应提交，用于现有历史回归测试；它们不等于原始提交哈希。`.gitattributes`固定文本LF行尾，避免Windows签出自动改行尾后使源码哈希验收误报。
 
 参考原图路径：docs/inkwash/references/landscape-reference.jpg、fisherman-reference.jpg；docs/default-character/references/scene-reference.png、character-reference.png。这些是本地美术方向参考，没有查到公开再分发许可。文档会说明缺失原因，避免读者误以为是运行资源丢失。
 

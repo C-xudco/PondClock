@@ -58,14 +58,14 @@ for(const commit of commits) {
   write('deleteall\n');for(const row of trees.get(commit))write(`M ${row.mode} :${marks.get(row.sha)} ${JSON.stringify(row.file)}\n`);write('\n');
   map.push({source:commit,date:iso,summary:message.split('\n')[0],mark:id});
 }
-// These two short aliases preserve the existing historical audit test inputs.
-for(const ref of ['96fd232','874cdac']) {const source=commits.find(c=>c.startsWith(ref));if(source)write(`reset refs/tags/${ref}\nfrom :${commitMarks.get(source)}\n\n`);}
+// These short aliases preserve the existing historical audit test inputs.
+for(const ref of ['a270e84','96fd232','874cdac']) {const source=commits.find(c=>c.startsWith(ref));if(source)write(`reset refs/tags/${ref}\nfrom :${commitMarks.get(source)}\n\n`);}
 fs.mkdirSync(target,{recursive:true});git(['init','--initial-branch=main'],{cwd:target});
 git(['fast-import','--quiet','--export-marks='+path.join(target,'.git','publication-marks')],{cwd:target,input:Buffer.concat(chunks)});
 git(['reset','--hard','main'],{cwd:target});
 const exported=new Map(fs.readFileSync(path.join(target,'.git','publication-marks'),'utf8').trim().split('\n').map(line=>line.split(' ')));
 const history={preparedAt:new Date().toISOString(),sourceCommit:commits.at(-1),sourceUnchanged:true,excludedPaths:[...excluded],normalizedTextBlobs:changed,
-  explanation:'Source SHAs are provenance identifiers only. Public commits have filtered trees and differ; two short tag aliases preserve historical tests. Original local history is unchanged.',
+  explanation:'Source SHAs are provenance identifiers only. Public commits have filtered trees and differ; short tag aliases preserve historical tests. Original local history is unchanged.',
   commits:map.map(({mark,...row})=>({...row,public:exported.get(':'+mark)}))};
 fs.mkdirSync(path.join(target,'docs/publishing'),{recursive:true});
 fs.writeFileSync(path.join(target,'docs/publishing/HISTORY_MAP.json'),JSON.stringify(history,null,2)+'\n');

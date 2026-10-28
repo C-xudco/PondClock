@@ -7,6 +7,7 @@
 | 文件 | 职责/修改位置 | 开发情况/边界 |
 | --- | --- | --- |
 | [.eslintrc.cjs](<../../.eslintrc.cjs>) | 项目配置、许可或入口文档；不放个人数据/构建产物 | 项目维护文件 |
+| [.gitattributes](<../../.gitattributes>) | 项目配置、许可或入口文档；不放个人数据/构建产物 | 项目维护文件 |
 | [.gitignore](<../../.gitignore>) | 项目配置、许可或入口文档；不放个人数据/构建产物 | 项目维护文件 |
 | [.npmrc](<../../.npmrc>) | 项目配置、许可或入口文档；不放个人数据/构建产物 | 项目维护文件 |
 | [.nvmrc](<../../.nvmrc>) | 项目配置、许可或入口文档；不放个人数据/构建产物 | 项目维护文件 |
@@ -219,6 +220,8 @@
 | [docs/next-iteration/roles/review/2026-10-25-unit-rerun.tap](<../../docs/next-iteration/roles/review/2026-10-25-unit-rerun.tap>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/next-iteration/roles/review/README.md](<../../docs/next-iteration/roles/review/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/next-iteration/roles/transactions/README.md](<../../docs/next-iteration/roles/transactions/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
+| [docs/publishing/DISTRIBUTION_CHECK.json](<../../docs/publishing/DISTRIBUTION_CHECK.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
+| [docs/publishing/HISTORY_MAP.json](<../../docs/publishing/HISTORY_MAP.json>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/README.md](<../../docs/publishing/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/roles/architecture/README.md](<../../docs/publishing/roles/architecture/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
 | [docs/publishing/roles/content/README.md](<../../docs/publishing/roles/content/README.md>) | 说明/提案/验收/来源材料；按标题区分历史与当前 | 文档证据，不自动成为开发指令 |
