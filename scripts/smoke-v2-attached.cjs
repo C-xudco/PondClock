@@ -13,6 +13,7 @@ const { pathToFileURL } = require('node:url');
 const root = path.resolve(__dirname, '..');
 const results = path.join(root, 'test-results');
 const expectedExe = process.argv[2] || 'X:/game/PondClock-2.0.0/PondClock.exe';
+const resumeReportInput = process.argv[3];
 const report = { startedAt: new Date().toISOString(), passed: false, checks: [], screenshots: [], layouts: [], decodedImages: [], copies: [], pageErrors: [],
   scope: 'Real final EXE started separately through Windows Explorer/shortcut, then inspected over CDP. This script does not start the EXE. Debugging attachment and accelerated clocks distinguish this from an ordinary no-debug launch acceptance.',
   limitations: ['The starting coins, appearance rights and near-complete fourth focus plan are explicit Leader-prepared fixtures in an isolated profile.',
@@ -77,7 +78,15 @@ async function closePanel() {
   const control = page.getByRole('button', { name: '收起面板', exact: true });
   if (await control.count()) await control.click();
 }
-async function openPanel(name) { await closePanel(); await page.getByRole('button', { name, exact: true }).click(); }
+async function openPanel(name) {
+  await closePanel();
+  // Frozen test time also freezes notification dismissal. Let real UI timers
+  // finish, without removing overlays or forcing clicks through them.
+  if (await page.locator('[data-sonner-toast]').count()) {
+    await page.mouse.move(8, 8); await page.clock.runFor(6500);
+  }
+  await page.getByRole('button', { name, exact: true }).click();
+}
 async function setSize(size) {
   const info = await page.evaluate(() => window.pondDesktop.getAppInfo());
   if (info.sizePreset !== size) await page.getByRole('button', { name: size === 'compact' ? '缩小挂件' : '展开挂件', exact: true }).click();
@@ -111,6 +120,30 @@ async function connect() {
   }
   throw new Error('The already-running EXE CDP port did not become available within30s: ' + String(lastError));
 }
+async function inspectScenes() {
+  await openPanel('渔具店'); await page.getByRole('combobox', { name: '场景插画', exact: true }).selectOption('inkwash');
+  await waitState(state => state.appearance.equipped.scene === 'inkwash'); await closePanel();
+  const { REGIONS } = await import(pathToFileURL(path.join(root, 'src/lib/gameConfig.js')));
+  await openPanel('漫游');
+  assert.equal(REGIONS.length, 17);
+  for (const region of REGIONS) assert.ok(await page.getByRole('region', { name: '漫游', exact: true }).getByText(region.name, { exact: true }).count(), region.id);
+  await closePanel();
+  for (const id of ['taihu', 'dongting', 'jialing', 'baiyangdian', 'jiaodong']) {
+    if ((await saved()).currentRegion !== id) {
+      await openPanel('漫游');
+      await page.getByRole('combobox', { name: '机票支付方式', exact: true }).selectOption('coins');
+      const name = REGIONS.find(region => region.id === id).name;
+      const row = page.getByRole('region', { name: '漫游', exact: true }).getByText(name, { exact: true }).locator('..').locator('..').locator('..');
+      await row.getByRole('button', { name: /^机票 ¥/ }).click();
+      const flying = await waitState(state => state.travel !== null);
+      await closePanel(); await page.clock.setSystemTime(flying.travel.arriveAtMs + 1); await page.clock.runFor(500);
+      await waitState((state, id) => !state.travel && state.currentRegion === id, id);
+      await page.waitForFunction(id => document.querySelector('.pond-scene')?.getAttribute('data-scene-region') === id, id);
+    }
+    await decodeScene(id);
+  }
+  await copySave('after-five-scenes'); checked('A05', 'Actual travel UI lists17 regions and pays/arrives through all five added local SVG landscapes');
+}
 async function run() {
   await fs.mkdir(results, { recursive: true }); directory = await fs.mkdtemp(path.join(results, 'v2-attached-'));
   const expectedProfile = (await fs.readFile(path.join(results, 'v2-attached-profile.txt'), 'utf8')).trim();
@@ -130,6 +163,20 @@ async function run() {
   assert.equal(normalize(appInfo.userData), normalize(expectedProfile));
   await page.route('https://**/*', route => route.abort('blockedbyclient'));
   await page.route('http://**/*', route => route.abort('blockedbyclient'));
+  if (resumeReportInput) {
+    const previous = JSON.parse(await fs.readFile(resumeReportInput, 'utf8'));
+    assert.equal(normalize(previous.appInfo.userData), normalize(expectedProfile));
+    assert.equal(normalize(previous.appInfo.execPath), normalize(expectedExe));
+    for (const id of ['A01', 'A02', 'A03', 'A04']) assert.ok(previous.checks.some(check => check.id === id && check.passed));
+    report.continuation = { sourceReport: path.resolve(resumeReportInput), sourceReportPassed: previous.passed,
+      sourceError: previous.error, reason: 'Continue A05 after allowing notification timers to dismiss; A01-A04 are retained as their original evidence, not rerun.' };
+    report.previousPhaseChecks = previous.checks.filter(check => ['A01', 'A02', 'A03', 'A04'].includes(check.id));
+    const current = await copySave('resume-before-scenes');
+    assert.equal(current.focus.completedPlanIds.length, 4); assert.equal(current.activePass.remaining, 14);
+    assert.equal(current.fishing.mode, 'stopped');
+    checked('A-REATTACH', 'Continuation reconnects to the same isolated final EXE after the verified focus and active phase');
+    await inspectScenes(); assert.deepEqual(report.pageErrors, []); report.passed = true; return;
+  }
   const initial = await copySave('before');
   assert.equal(initial.schemaVersion, 4); assert.equal(initial.editionId, 'first-focus');
   assert.equal(initial.settings.onlineEnhancements, false); assert.equal(initial.fishing.mode, 'stopped');
@@ -177,28 +224,7 @@ async function run() {
   await page.getByRole('button', { name: '停止钓鱼', exact: true }).click(); await waitState(state => state.fishing.mode === 'stopped');
   await copySave('after-active');
   checked('A04', 'UI purchases15 chances; empty swings are free, gauge deducts one and focused green keyboard stop catches one fish without bait consumption');
-  await openPanel('渔具店'); await page.getByRole('combobox', { name: '场景插画', exact: true }).selectOption('inkwash');
-  await waitState(state => state.appearance.equipped.scene === 'inkwash'); await closePanel();
-  const { REGIONS } = await import(pathToFileURL(path.join(root, 'src/lib/gameConfig.js')));
-  await openPanel('漫游');
-  assert.equal(REGIONS.length, 17);
-  for (const region of REGIONS) assert.ok(await page.getByRole('region', { name: '漫游', exact: true }).getByText(region.name, { exact: true }).count(), region.id);
-  await closePanel();
-  for (const id of ['taihu', 'dongting', 'jialing', 'baiyangdian', 'jiaodong']) {
-    if ((await saved()).currentRegion !== id) {
-      await openPanel('漫游');
-      await page.getByRole('combobox', { name: '机票支付方式', exact: true }).selectOption('coins');
-      const name = REGIONS.find(region => region.id === id).name;
-      const row = page.getByRole('region', { name: '漫游', exact: true }).getByText(name, { exact: true }).locator('..').locator('..').locator('..');
-      await row.getByRole('button', { name: /^机票 ¥/ }).click();
-      const flying = await waitState(state => state.travel !== null);
-      await closePanel(); await page.clock.setSystemTime(flying.travel.arriveAtMs + 1); await page.clock.runFor(500);
-      await waitState((state, id) => !state.travel && state.currentRegion === id, id);
-      await page.waitForFunction(id => document.querySelector('.pond-scene')?.getAttribute('data-scene-region') === id, id);
-    }
-    await decodeScene(id);
-  }
-  await copySave('after-five-scenes'); checked('A05', 'Actual travel UI lists17 regions and pays/arrives through all five added local SVG landscapes');
+  await inspectScenes();
   assert.deepEqual(report.pageErrors, []); report.passed = true;
 }
 watchdog = setTimeout(() => { report.error ||= 'Attached acceptance exceeded180seconds'; report.passed = false; void finish().finally(() => process.exit(1)); }, 180000);

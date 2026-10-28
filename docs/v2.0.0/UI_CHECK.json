@@ -1,0 +1,72 @@
+{
+  "checkedAt": "2026-10-28T06:20:29.6823706Z",
+  "version": "2.0.0",
+  "scopes": "A01-A04 first report; A05 continuation; independent clean preview. First report preserves its notification-obstruction harness failure.",
+  "sourceCommit": "620de14",
+  "nativeGameChecksPassed": true,
+  "installerAccepted": false,
+  "portableDelivery": "PORTABLE_DELIVERY.json",
+  "sources": [
+    {
+      "passed": false,
+      "checks": [
+        {
+          "id": "A01",
+          "description": "Attached real2.0.0 packaged EXE reports expected isolated profile and no no-sandbox switch",
+          "passed": true
+        },
+        {
+          "id": "A02",
+          "description": "Both actual window sizes render controls within420x350 and640x490 and produce DOM screenshots",
+          "passed": true
+        },
+        {
+          "id": "A03",
+          "description": "Leader-prepared fourth-plan fixture completes via UI and grants exactly one bait pack and one daily ticket",
+          "passed": true
+        },
+        {
+          "id": "A04",
+          "description": "UI purchases15 chances; empty swings are free, gauge deducts one and focused green keyboard stop catches one fish without bait consumption",
+          "passed": true
+        }
+      ],
+      "path": "test-results/v2-attached-AzIE0e/v2-attached.json",
+      "sha256": "1E952BEC56085C95B6C2FBBA4E9B30A5ABB81005885EC4A1A0F75C77FDCE43EA"
+    },
+    {
+      "passed": true,
+      "checks": [
+        {
+          "id": "A-REATTACH",
+          "description": "Continuation reconnects to the same isolated final EXE after the verified focus and active phase",
+          "passed": true
+        },
+        {
+          "id": "A05",
+          "description": "Actual travel UI lists17 regions and pays/arrives through all five added local SVG landscapes",
+          "passed": true
+        }
+      ],
+      "path": "test-results/v2-attached-TSPYn8/v2-attached.json",
+      "sha256": "321C214A3164DDA099F738F01CD5D4B25B1B3561FDF6BE4C86E8D512E075E408"
+    },
+    {
+      "passed": true,
+      "checks": [
+        {
+          "id": "PREVIEW",
+          "passed": true,
+          "description": "Unobscured real window green gauge; one additional14-to13 chance resolves one fish and preserves prior focus rewards"
+        },
+        {
+          "id": "NORMAL-CLOSE",
+          "passed": true,
+          "description": "Own real bridge saves and closes the renderer; latest disk save has no unresolved fishing attempt"
+        }
+      ],
+      "path": "test-results/v2-preview-7Ki7nm/v2-preview.json",
+      "sha256": "FEBC5B91E3741E6F787588118035229753C1D5D0E069850A64BF8F10C045DC1F"
+    }
+  ]
+}
