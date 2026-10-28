@@ -3,6 +3,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const asar = require('@electron/asar');
 const root = path.resolve(__dirname, '..');
+const portableOnly = process.argv.includes('--portable-only');
 const { version } = require('../package.json');
 const { GAME_VERSION } = (() => {
   const config = fs.readFileSync(path.join(root, 'src/config/storage.js'), 'utf8');
@@ -30,14 +31,15 @@ for (const file of files) {
 }
 if (!fs.readFileSync(path.join(root, 'desktop/assets/icon.ico')).equals(fs.readFileSync(path.join(root, 'release/win-unpacked/resources/icon.ico')))) throw new Error('Application icon resource missing or mismatched');
 if (!fs.readFileSync(path.join(root, 'desktop/使用说明.txt')).equals(fs.readFileSync(path.join(root, 'release/win-unpacked/使用说明.txt')))) throw new Error('User guide missing or mismatched');
-const bytes = fs.readFileSync(installer);
-if (bytes.subarray(0, 2).toString() !== 'MZ') throw new Error('Not a Windows executable');
+const bytes = portableOnly ? null : fs.readFileSync(installer);
+if (bytes && bytes.subarray(0, 2).toString() !== 'MZ') throw new Error('Not a Windows executable');
 const portableBytes = fs.readFileSync(portable);
 if (portableBytes.subarray(0, 2).toString() !== 'PK') throw new Error('Not a ZIP archive');
 const packedPackage = JSON.parse(asar.extractFile(archive, 'package.json'));
 if (packedPackage.version !== version) throw new Error('Packed package version differs');
-const report = { checkedAt: new Date().toISOString(), version, installer: path.basename(installer), bytes: bytes.length,
-  sha256: crypto.createHash('sha256').update(bytes).digest('hex'),
+const report = { checkedAt: new Date().toISOString(), version, portableOnly,
+  installer: portableOnly ? null : path.basename(installer), bytes: bytes?.length ?? null,
+  sha256: bytes ? crypto.createHash('sha256').update(bytes).digest('hex') : null,
   portable: { file: path.basename(portable), bytes: portableBytes.length,
     sha256: crypto.createHash('sha256').update(portableBytes).digest('hex') },
   installerExtensionSha256: crypto.createHash('sha256').update(fs.readFileSync(path.join(root, 'desktop/installer.nsh'))).digest('hex'),

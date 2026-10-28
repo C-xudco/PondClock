@@ -15,6 +15,8 @@ import { resolveAppearanceVisuals } from "../../data/appearanceVisuals";
 import { useTween } from "./useTween";
 import { useVisualClock } from "./useVisualClock";
 import RegionalLandmark from './RegionalLandmark';
+import { useSceneViewport } from './useSceneViewport';
+import { visibleBubble, visibleCelestial } from './sceneViewport';
 
 const SOURCE_LABEL = { online: "实时天气", cached: "缓存天气", simulated: "离线模拟", manual: "手动设置" };
 const LEGACY_CODE = { 晴: 0, 多云: 2, 阴: 3, 小雨: 61, 雨: 63, 雪: 71, 小雪: 71 };
@@ -55,6 +57,7 @@ const Pond = ({
   const ink = equipped.scene === 'inkwash';
   const geometry = geometryForAppearance(sceneDefinition?.geometryId || actualRegion, equipped.scene);
   const actorPlacement = actorPlacementFor(geometry);
+  const viewport = useSceneViewport(Math.max(BOBBER.surfaceY + 12, actorPlacement.image.y + actorPlacement.image.height + 12));
   const snapshot = (weatherEntry || entry)?.snapshot;
   // Compatibility with old callers is explicit and isolated. Production supplies visualState.
   const fallback = useMemo(() => {
@@ -77,6 +80,8 @@ const Pond = ({
     [visual.daylight.isDay, visual.precipitation.kind, visual.sky.coverage],
   );
   const sun = useMemo(() => sunMoonOf(visual.daylight.isDay === false ? 23 : 12, palette.phase), [visual.daylight.isDay, palette.phase]);
+  const visibleSun = visibleCelestial(sun, geometry.horizonY, viewport.frame, sun.r);
+  const skyGeometry = { ...geometry, celestial: visibleCelestial(geometry.celestial, geometry.horizonY, viewport.frame) };
   const precipitation = visual.precipitation.kind;
   const { timeMs, reducedMotion } = useVisualClock(
     precipitation === "rain" || precipitation === "snow",
@@ -93,26 +98,27 @@ const Pond = ({
     snapshot?.observedAtMs ? new Date(snapshot.observedAtMs).toLocaleString("zh-CN") : ""].filter(Boolean).join(" · ");
 
   return (
-    <div className={`pond-scene ${ink ? 'ink-pond' : 'minimal-pond'} relative select-none overflow-hidden rounded-2xl border shadow-lg`}
+    <div ref={viewport.ref} className={`pond-scene ${ink ? 'ink-pond' : 'minimal-pond'} relative select-none overflow-hidden rounded-2xl border shadow-lg`}
       style={ink ? { borderColor: "#788b6b55", background: "#e6e9de", fontFamily: '"KaiTi","STKaiti","FangSong",serif' }
-        : { borderColor: '#c0d4dc26', background: 'transparent' }}
+        : { borderColor: '#c0d4dc26', background: palette.waterNear }}
       data-scene-style={equipped.scene} data-character-style={equipped.character} data-rod-style={equipped.rod}
       data-scene-region={actualRegion} data-scene-site={sceneSite?.siteId || ""}
       data-sky={visual.sky.coverage} data-precipitation={precipitation}
       data-water-response={visual.waterResponse} data-weather-source={source}
       data-reduced-motion={reducedMotion ? "true" : "false"}>
       <style>{POND_STYLES}</style>
-      <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} className="block h-auto w-full"
-        role="img" aria-label="水塘垂钓场景" preserveAspectRatio="xMidYMid meet">
+      <div className="pond-artboard absolute" style={viewport.style}>
+      <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} className="block h-full w-full"
+        role="img" aria-label="水塘垂钓场景" preserveAspectRatio="xMidYMid slice">
         <defs>
           <clipPath id={`${uid}-water`}><path d={geometry.waterPath}/></clipPath>
         </defs>
         {ink ? <>
           <image href={`${import.meta.env.BASE_URL}${geometry.asset}`} width={VIEW.w} height={VIEW.h} preserveAspectRatio="none" data-scene-art={actualRegion}/>
-          <SkyLayer visualState={visual} geometry={geometry} uid={uid}/>
+          <SkyLayer visualState={visual} geometry={skyGeometry} uid={uid}/>
           <WaterLayer visualState={visual} geometry={geometry} uid={uid}/>
         </> : <g data-scene-art={`minimal-${actualRegion}`}>
-          <MinimalSky p={palette} sun={sun} visualState={visual} uid={uid}/>
+          <MinimalSky p={palette} sun={visibleSun} visualState={visual} uid={uid}/>
           <MinimalWater p={palette} sun={sun} visualState={visual} uid={uid}/>
           <RegionalLandmark regionId={actualRegion} p={palette}/>
         </g>}
@@ -120,6 +126,29 @@ const Pond = ({
         <Fisherman key={`${geometry.id}:${equipped.character}`} p={palette} pose={pose} visualState={visual} geometry={geometry} character={equipped.character} rod={equipped.rod}/>
         <Bobber p={palette} biting={biting} sinkT={pose} uid={uid}/>
       </svg>
+
+      {!biting && onPoke ? <>
+        <button type="button" onClick={onPoke} aria-label="点击浮漂" title="轻轻点一下浮漂"
+          className="absolute z-20 -translate-x-1/2 cursor-pointer rounded-full bg-transparent"
+          style={{ left: `${BOBBER.x / VIEW.w * 100}%`, top: `${(BOBBER.surfaceY - BOBBER.height - 12) / VIEW.h * 100}%`, width: "10%", height: "17%" }}/>
+        <button type="button" onClick={onPoke} aria-label="点击渔翁" title="和渔翁说句话"
+          className="absolute z-20 cursor-pointer rounded-lg bg-transparent"
+          style={{ left: `${actorPlacement.image.x / VIEW.w * 100}%`, top: `${actorPlacement.image.y / VIEW.h * 100}%`, width: `${actorPlacement.image.width / VIEW.w * 100}%`, height: `${actorPlacement.image.height / VIEW.h * 100}%` }}/>
+      </> : null}
+      {biting && <div className="pointer-events-none absolute z-20 -translate-x-1/2" style={{ left: "52.8%", bottom: "36%" }}>
+        <div className="relative flex h-10 w-10 items-center justify-center rounded-full border shadow-md"
+          style={ink ? { background: "#f5f0dfe8", color: "#984c3d", borderColor: "#af7868" }
+            : { background: '#1b2d3be6', color: '#e5eeec', borderColor: '#a0bec280' }}>
+          <svg viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a8774c33" strokeWidth="1.8"/>
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a55340" strokeWidth="1.8" strokeLinecap="round"
+              strokeDasharray={circumference.toFixed(1)} strokeDashoffset={(circumference * (1 - leftPct / 100)).toFixed(1)}/>
+          </svg>
+          <span className="text-[15px] font-semibold tabular-nums">{windowLeft}</span>
+        </div>
+        <span className="pond-label mt-1 block rounded px-1.5 py-0.5 text-center text-[10px]">点击收竿</span>
+      </div>}
+      </div>
 
       <div className="pond-label pointer-events-none absolute bottom-[5%] left-[2.5%] z-10 max-w-[70%] rounded-md px-2 py-1"
         title={labelTitle}>
@@ -131,31 +160,10 @@ const Pond = ({
           <span style={{ color: ink ? (source === "simulated" ? "#986b46" : "#5e7361") : '#b1c9ca' }}>{weatherPresentation?.sourceLabel || SOURCE_LABEL[source] || "天气未知"}</span>
         </div>
       </div>
-      {speech ? <SpeechBubble speech={speech} placement={actorPlacement} sceneStyle={equipped.scene}/> : null}
+      {speech ? <SpeechBubble speech={speech} placement={visibleBubble(actorPlacement, viewport.frame)} sceneStyle={equipped.scene}/> : null}
       {!biting && <div className="pond-label pointer-events-none absolute left-[2.5%] top-[4%] rounded-full px-2 py-1 text-[10px] tracking-widest">{status === 'stopped' ? '暂歇片刻' : status === 'casting' ? '挥竿探鱼' : status === 'active' ? '凝神收竿' : '静候鱼汛'}</div>}
 
-      {!biting && onPoke ? <>
-        <button type="button" onClick={onPoke} aria-label="点击浮漂" title="轻轻点一下浮漂"
-          className="absolute z-20 -translate-x-1/2 cursor-pointer rounded-full bg-transparent"
-          style={{ left: `${BOBBER.x / VIEW.w * 100}%`, top: `${(BOBBER.surfaceY - BOBBER.height - 12) / VIEW.h * 100}%`, width: "10%", height: "17%" }}/>
-        <button type="button" onClick={onPoke} aria-label="点击渔翁" title="和渔翁说句话"
-          className="absolute z-20 cursor-pointer rounded-lg bg-transparent"
-          style={{ left: `${actorPlacement.image.x / VIEW.w * 100}%`, top: `${actorPlacement.image.y / VIEW.h * 100}%`, width: `${actorPlacement.image.width / VIEW.w * 100}%`, height: `${actorPlacement.image.height / VIEW.h * 100}%` }}/>
-      </> : null}
       {biting ? <>
-        <div className="pointer-events-none absolute z-20 -translate-x-1/2" style={{ left: "52.8%", bottom: "36%" }}>
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-full border shadow-md"
-            style={ink ? { background: "#f5f0dfe8", color: "#984c3d", borderColor: "#af7868" }
-              : { background: '#1b2d3be6', color: '#e5eeec', borderColor: '#a0bec280' }}>
-            <svg viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
-              <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a8774c33" strokeWidth="1.8"/>
-              <circle cx="18" cy="18" r="15.5" fill="none" stroke="#a55340" strokeWidth="1.8" strokeLinecap="round"
-                strokeDasharray={circumference.toFixed(1)} strokeDashoffset={(circumference * (1 - leftPct / 100)).toFixed(1)}/>
-            </svg>
-            <span className="text-[15px] font-semibold tabular-nums">{windowLeft}</span>
-          </div>
-          <span className="pond-label mt-1 block rounded px-1.5 py-0.5 text-center text-[10px]">点击收竿</span>
-        </div>
         <button type="button" onClick={onCatch} aria-label="点击收竿"
           className="absolute inset-0 z-30 h-full w-full cursor-pointer rounded-2xl bg-transparent ring-2 ring-inset"
           style={{ "--tw-ring-color": "#a5534066" }}/>

@@ -1,14 +1,14 @@
-# 水塘时钟 · 专注版 V2.0.0
+# 水塘时钟 · 专注版 V2.0.1
 
-**2026-10-28 交付：** 完整免安装包已生成并核对，位置为 "X:/game/水塘时钟-V2.0.0-免安装版.zip"（约164.7MiB）；完整解压后运行PondClock.exe。实际游戏界面、番茄奖励、主动收鱼和五新水域已验收；安装器仍未通过，本轮推荐ZIP。[验收记录](docs/v2.0.0/ACCEPTANCE.md)。
+**2026-10-28 场景修正版：** [V2.0.1免安装ZIP](X:/game/水塘时钟-V2.0.1-免安装版.zip)（约164.7MiB），修复场景两侧透明留白；背景、天气、人物与点击区等比铺满，低岸人物和对白同步适配。65项包内资源与解压后的76个运行文件已逐一核对。[本轮记录与检查边界](docs/v2.0.1/README.md)。
 
 Windows x64 桌面钓鱼挂件：无边框、可拖动、可置顶，完整资源内置，断网可玩，进度自动保存在本机。本轮为第一版“专注与钓鱼”；第二版尚未定义。
 
-用户已明确批准开发并指定版本 **V2.0.0**。当前实现、参数与分工见 [本轮开发记录](docs/v2.0.0/README.md)，实际测试及发行状态见 [验收记录](docs/v2.0.0/ACCEPTANCE.md)。旧计划的“待审批”段落保留为历史，不构成本轮重新审批要求。
+基础玩法按用户批准的 **V2.0.0** 开发，本轮2.0.1只修复背景显示并沿用原存档。玩法参数与历史分工见 [V2.0.0开发记录](docs/v2.0.0/README.md)，历史真实EXE验收见 [V2.0.0验收记录](docs/v2.0.0/ACCEPTANCE.md)。旧计划的“待审批”段落保留为历史，不构成本轮重新审批要求。
 
 ## 下载与运行
 
-完整解压 `PondClock-2.0.0-x64.zip`，再运行 **PondClock.exe**；不要只取出 EXE，resources、locales 和 DLL 都要保留。安装版为 `PondClock-Setup-2.0.0-x64.exe`，快捷方式“水塘时钟·专注版”。使用者不需要 Node、pnpm、WebView2 或开发服务器。包生成与安装实测分开记录，不把生成文件视为安装验收。
+先退出旧版，完整解压 `水塘时钟-V2.0.1-免安装版.zip`（开发输出 `PondClock-2.0.1-x64.zip`）到新文件夹，再运行 **PondClock.exe**；resources、locales 和 DLL 都要保留。已核对的解压副本位于 `X:/game/PondClock-2.0.1`。进度继续读取原专注版PondClock-Focus目录。本次不生成安装器。使用者不需要 Node、pnpm、WebView2 或开发服务器。
 
 拖顶部时钟条移动；展开按钮切换420×350 / 640×490；图钉置顶，“—”最小化，“×”保存后退出。设置里的“移回屏幕”可找回窗口。功能面板内滚动，Esc收起。
 
@@ -72,7 +72,7 @@ IP只累计解锁，不自动瞬移；可信城市匹配才解锁新增细区，
 
 封存基线：`archive/pre-v2-20261027` / `874cdac`；第一版分支 `edition/first-focus`。首次修改前201文件哈希见 [记录](docs/v2.0.0/PRE_IMPLEMENTATION.json)。第二版未定义；本轮不把它默认为旧完整版。
 
-Node24、pnpm11，沿用锁定依赖，无新增运行依赖。常用检查：`pnpm test`、`pnpm run lint`、`pnpm run build:desktop`、`pnpm run package:win`、`pnpm run verify:release`。真实EXE测试保持正常安全设置、独立测试档案与断网环境。单元测试、界面、EXE、安装器分别记录，不能互相替代。
+Node24、pnpm11，沿用锁定依赖，无新增运行依赖。常用检查：`pnpm test`、`pnpm run lint`、`pnpm run build:desktop`。免安装发行使用 `pnpm run package:portable`、`pnpm run verify:release -- --portable-only`；历史安装器双目标为 `pnpm run package:win`。真实EXE测试保持正常安全设置、独立测试档案与断网环境。单元测试、界面、EXE、安装器分别记录，不能互相替代。
 
 [流程架构图与模块说明](docs/v2.0.0/README.md) · [历史1.3.0](docs/HISTORY_1.3.0.md) · [发行记录](docs/RELEASE.md)
 

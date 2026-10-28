@@ -54,7 +54,7 @@ test('v2: schema4 identity and one-time legacy compensation preserve original by
   old.travel = { id: 'legacy-flight', fromId: 'jiangnan', toId: 'dongbei', departAtMs: NOW,
     arriveAtMs: NOW + 123456, farePaid: 4321, routesVersion: 1 };
   const before = JSON.stringify(old), migrated = validateSave(old);
-  assert.equal(migrated.schemaVersion, 4); assert.equal(migrated.gameVersion, '2.0.0');
+  assert.equal(migrated.schemaVersion, 4); assert.equal(migrated.gameVersion, '2.0.1');
   assert.equal(migrated.editionId, 'first-focus'); assert.equal(migrated.rodLevel, 0);
   assert.equal(migrated.coins, 3300); assert.equal(migrated.legacy.rodCompensation, 3200);
   assert.equal(migrated.travel.farePaid, 4321); assert.equal(migrated.travel.arriveAtMs, NOW + 123456);

@@ -39,7 +39,7 @@ const SpeechBubble = ({ speech, placement, sceneStyle = 'inkwash' }) => {
 
   return (
     <div
-      className="pointer-events-none absolute z-20"
+      className="pond-speech pointer-events-none absolute z-20 flex flex-col justify-end"
       style={{
         left: `${b.left}%`,
         right: `${b.right}%`,
@@ -49,14 +49,16 @@ const SpeechBubble = ({ speech, placement, sceneStyle = 'inkwash' }) => {
     >
       <div
         key={animKey}
-        className="mc-bubble relative overflow-hidden rounded-[10px] border px-2.5 py-1.5 text-[12px] leading-[1.45] shadow-md"
+        className="mc-bubble relative min-h-0 overflow-hidden rounded-[10px] border px-2.5 py-1.5 text-[12px] leading-[1.45] shadow-md"
         style={{ backgroundColor: tone.bg, borderColor: tone.border, color: tone.text }}
       >
+        <span title={speech.text} style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: b.maxLines || 3, overflow: 'hidden' }}>
         <span
           className="mr-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full align-[1px]"
           style={{ backgroundColor: tone.dot, boxShadow: `0 0 6px ${tone.dot}66` }}
         />
         <span className="align-middle">{speech.text}</span>
+        </span>
       </div>
       {/* 小尾巴：指向人物头部 */}
       <span
